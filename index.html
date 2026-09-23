@@ -7276,6 +7276,80 @@ body.posterBattleBodyV205{
 }
 </style>
 
+
+<style id="v249-home-fit-fix">
+/* V249: force story + 3 action cards into the visible lower command zone */
+.premiumHomeHeroV236{
+  top:62px!important;
+  height:49%!important;
+  max-height:405px!important;
+}
+.premiumHomeHeroArtV236{
+  width:45%!important;
+  height:80%!important;
+  top:2%!important;
+}
+.premiumHomeIdentityV236{
+  left:47%!important;
+  right:3%!important;
+  top:8%!important;
+}
+.premiumHomeIdentityV236 h1{font-size:23px!important;margin:6px 0!important}
+.premiumHomeIdentityV236 p{font-size:7px!important;margin:4px 0 6px!important}
+.premiumHomeAbilityV236{padding:5px 7px!important}
+.premiumHomeDetailV245{min-height:29px!important;padding:3px 7px!important}
+
+.premiumHomeCommandV236{
+  position:fixed!important;
+  left:10px!important;
+  right:10px!important;
+  bottom:72px!important;
+  gap:4px!important;
+  z-index:14!important;
+  pointer-events:auto!important;
+}
+.premiumHomeSortieV236{
+  min-height:43px!important;
+  padding:5px 10px!important;
+  border-radius:8px!important;
+}
+.premiumHomeSortieV236 small{font-size:4.5px!important}
+.premiumHomeSortieV236 b{font-size:11px!important}
+.premiumHomeSecondaryV236{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:4px!important;
+  height:auto!important;
+  overflow:visible!important;
+}
+.premiumHomeSecondaryV236 button{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  min-height:35px!important;
+  max-height:35px!important;
+  padding:4px 6px!important;
+  border-radius:7px!important;
+}
+.premiumHomeSecondaryV236 small{font-size:4px!important}
+.premiumHomeSecondaryV236 b{font-size:7.5px!important}
+.premiumHomeShortcutsV236{display:none!important}
+
+.premiumHomeV236 .primaryNavV116{
+  z-index:30!important;
+  min-height:56px!important;
+}
+@media(max-height:760px){
+ .premiumHomeHeroV236{height:46%!important;max-height:360px!important}
+ .premiumHomeHeroArtV236{width:44%!important;height:76%!important}
+ .premiumHomeIdentityV236{left:46%!important;top:7%!important}
+ .premiumHomeIdentityV236 h1{font-size:21px!important}
+ .premiumHomeCommandV236{bottom:68px!important}
+ .premiumHomeSortieV236{min-height:40px!important}
+ .premiumHomeSecondaryV236 button{min-height:32px!important;max-height:32px!important}
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=243"></script>
