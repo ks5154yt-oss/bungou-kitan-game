@@ -14265,6 +14265,98 @@ body.battleMode .stageBattleBtns .btn{
 /* Keep enemy/ally lane layout untouched from V314 */
 </style>
 
+
+<style id="v316-active-card-hard-fix">
+/* V316: hard-fix the legacy ACTIVE overlay that still covers the selected portrait */
+
+/* Hide any legacy direct-child overlay inside the selected party card.
+   Preserve only the actual portrait, name, HP and EP bars. */
+.cleanBattleV238 .posterLivePartyV217 button.on > *:not(img):not(.name):not(i){
+  display:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+/* Force the portrait itself to remain visible and above any legacy layers */
+.cleanBattleV238 .posterLivePartyV217 button.on img{
+  display:block!important;
+  opacity:.96!important;
+  visibility:visible!important;
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:50% 18%!important;
+  filter:saturate(.95) contrast(1.04)!important;
+  transform:scale(1.03)!important;
+  z-index:2!important;
+}
+
+/* No full-card pseudo layer whatsoever */
+.cleanBattleV238 .posterLivePartyV217 button.on:before,
+.cleanBattleV238 .posterLivePartyV217 button.on:after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+}
+
+/* Selected card stays dark with a gold border only */
+.cleanBattleV238 .posterLivePartyV217 button.on{
+  background:linear-gradient(180deg,rgba(10,28,39,.96),rgba(4,12,18,.99))!important;
+  border:2px solid #e0b75e!important;
+  box-shadow:
+    0 0 0 1px rgba(224,183,94,.18),
+    0 0 15px rgba(224,183,94,.18),
+    0 8px 18px rgba(0,0,0,.30)!important;
+}
+
+/* Keep labels and gauges clearly above portrait */
+.cleanBattleV238 .posterLivePartyV217 button.on .name{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  position:absolute!important;
+  left:4%!important;
+  right:4%!important;
+  bottom:17%!important;
+  z-index:5!important;
+  color:#f3eadc!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button.on i{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  z-index:5!important;
+}
+
+/* Tiny ACTIVE chip without covering the art */
+.cleanBattleV238 .posterLivePartyV217 button.on .name:before{
+  content:"ACTIVE"!important;
+  position:fixed!important;
+  width:auto!important;
+  height:auto!important;
+  margin:0!important;
+  padding:2px 4px!important;
+  transform:none!important;
+  border-radius:4px!important;
+  background:#d6ad54!important;
+  color:#081019!important;
+  font-size:4px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  box-shadow:0 2px 7px rgba(0,0,0,.28)!important;
+  /* place near the selected card's upper-left label area without masking portrait */
+  top:auto!important;
+  right:auto!important;
+  left:auto!important;
+  bottom:auto!important;
+}
+
+/* Keep current battlefield and command layout untouched */
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
