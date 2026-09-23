@@ -7458,6 +7458,109 @@ body.posterBattleBodyV205{
 }
 </style>
 
+
+<style id="v251-formation-premium">
+/* V251 Formation UI premium pass */
+body:not(.battleMode) .formation,
+body:not(.battleMode) .party,
+body:not(.battleMode) .deck,
+body:not(.battleMode) .team{
+  background:
+    radial-gradient(circle at 82% 8%,rgba(45,88,113,.15),transparent 27%),
+    linear-gradient(180deg,#071522,#030a11 64%,#06131f)!important;
+}
+
+/* Common formation headers */
+.formation h1,.formation h2,.formation h3,
+.party h1,.party h2,.party h3,
+.deck h1,.deck h2,.deck h3,
+.team h1,.team h2,.team h3{
+  font-family:serif!important;
+  letter-spacing:.08em!important;
+  color:#f0eadf!important;
+  text-shadow:0 2px 12px #000!important;
+}
+.formation h2:after,.party h2:after,.deck h2:after,.team h2:after{
+  content:"";display:block;width:42px;height:1px;margin-top:7px;
+  background:linear-gradient(90deg,#c4a45b,transparent);
+}
+
+/* Character / member cards */
+.formation .card,.party .card,.deck .card,.team .card,
+.formation .char,.party .char,.deck .char,.team .char{
+  position:relative!important;
+  overflow:hidden!important;
+  background:
+    linear-gradient(145deg,rgba(11,31,44,.97),rgba(3,12,19,.98))!important;
+  border:1px solid rgba(71,96,111,.88)!important;
+  border-radius:11px!important;
+  box-shadow:0 9px 24px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.025)!important;
+}
+.formation .card:before,.party .card:before,.deck .card:before,.team .card:before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(#d0ad5d,#6f5b31,transparent);
+  opacity:.85;
+}
+.formation img,.party img,.deck img,.team img{
+  object-fit:cover!important;
+  object-position:center 18%!important;
+}
+
+/* Slots and empty states */
+.formation [class*="slot"],.party [class*="slot"],
+.deck [class*="slot"],.team [class*="slot"]{
+  border-color:rgba(89,111,123,.72)!important;
+  background:linear-gradient(145deg,rgba(7,24,35,.88),rgba(3,12,18,.88))!important;
+  border-radius:10px!important;
+}
+.formation [class*="slot"]:empty:after,.party [class*="slot"]:empty:after,
+.deck [class*="slot"]:empty:after,.team [class*="slot"]:empty:after{
+  content:"+";
+  display:grid;place-items:center;min-height:72px;
+  color:#a98d50;font-size:25px;opacity:.55;
+}
+
+/* Buttons */
+.formation button,.party button,.deck button,.team button{
+  border-radius:8px!important;
+  border-color:rgba(83,105,117,.88)!important;
+  background:linear-gradient(180deg,rgba(10,32,45,.96),rgba(4,15,23,.98))!important;
+  box-shadow:0 5px 14px rgba(0,0,0,.25)!important;
+}
+.formation button.active,.formation button.selected,
+.party button.active,.party button.selected,
+.deck button.active,.deck button.selected,
+.team button.active,.team button.selected{
+  border-color:#b9954e!important;
+  box-shadow:inset 0 0 20px rgba(190,154,74,.10),0 0 12px rgba(190,154,74,.05)!important;
+}
+
+/* Stats, labels, rarity */
+.formation .gold,.party .gold,.deck .gold,.team .gold,
+.formation [class*="rarity"],.party [class*="rarity"],
+.deck [class*="rarity"],.team [class*="rarity"]{
+  color:#d1ad5b!important;
+}
+.formation .meter,.party .meter,.deck .meter,.team .meter{
+  height:5px!important;background:#162b38!important;border-radius:10px!important;
+}
+.formation .meter i,.party .meter i,.deck .meter i,.team .meter i{
+  background:linear-gradient(90deg,#8e743d,#d2b15f)!important;
+}
+
+/* Bottom navigation consistency */
+body:not(.battleMode) .primaryNavV116{
+  background:linear-gradient(180deg,rgba(7,25,38,.97),rgba(3,13,21,.98))!important;
+  border-color:rgba(66,92,108,.88)!important;
+  box-shadow:0 -8px 28px #0009,inset 0 1px rgba(255,255,255,.035)!important;
+  backdrop-filter:blur(18px)!important;
+}
+@media(max-width:430px){
+ .formation,.party,.deck,.team{padding-bottom:86px!important}
+ .formation .grid,.party .grid,.deck .grid,.team .grid{gap:7px!important}
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=243"></script>
