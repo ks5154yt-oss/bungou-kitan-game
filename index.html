@@ -15095,9 +15095,33 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V326</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v327-style">
+.v327PartyHost{position:relative!important;overflow:visible!important}
+.v327PartyHost>.v327PartyVisual{position:absolute!important;inset:0!important;display:flex!important;align-items:flex-end!important;justify-content:space-between!important;gap:0!important;z-index:80!important;pointer-events:none!important}
+.v327PartyHost>.v327PartyVisual~*{opacity:0!important;visibility:hidden!important}
+.v327PartyVisual .v327Unit{position:relative!important;flex:0 0 19.4%!important;height:100%!important;min-width:0!important;display:flex!important;align-items:flex-end!important;justify-content:center!important;overflow:visible!important;filter:drop-shadow(0 10px 12px #000b)}
+.v327PartyVisual .v327Unit img{display:block!important;width:124%!important;max-width:none!important;height:92%!important;object-fit:contain!important;object-position:center bottom!important;opacity:1!important;filter:none!important;transform:none!important}
+.v327PartyVisual .v327Unit:after{content:"";position:absolute;left:18%;right:18%;bottom:1%;height:8%;border-radius:50%;background:radial-gradient(ellipse,#000b,transparent 70%);filter:blur(3px);z-index:-1}
+.v327PartyVisual .v327Unit:nth-child(1){transform:translateY(8px) scale(.91)}
+.v327PartyVisual .v327Unit:nth-child(2){transform:translateY(0) scale(1.00)}
+.v327PartyVisual .v327Unit:nth-child(3){transform:translateY(-6px) scale(1.06)}
+.v327PartyVisual .v327Unit:nth-child(4){transform:translateY(0) scale(1.00)}
+.v327PartyVisual .v327Unit:nth-child(5){transform:translateY(8px) scale(.91)}
+.v327PartyVisual .v327Unit.active{filter:brightness(1.09) drop-shadow(0 0 9px #d8b56177) drop-shadow(0 12px 13px #000c)}
+.v327PartyVisual .v327Unit.active:before{content:"";position:absolute;left:18%;right:18%;bottom:-1%;height:10%;border-radius:50%;background:radial-gradient(ellipse,#d6ad5c88,transparent 72%);filter:blur(3px)}
+.cleanBattleV238 .posterAlliesWrapV237.v327PartyHost{left:1%!important;right:43%!important;bottom:22%!important;height:29%!important;overflow:visible!important}
+.bsv2Allies_175.v327PartyHost{left:2%!important;right:39%!important;bottom:6%!important;height:34%!important;overflow:visible!important}
+@media(max-width:430px){
+ .cleanBattleV238 .posterAlliesWrapV237.v327PartyHost{left:0!important;right:42%!important;bottom:23%!important;height:28%!important}
+ .bsv2Allies_175.v327PartyHost{left:1%!important;right:38%!important;bottom:6%!important;height:32%!important}
+ .v327PartyVisual .v327Unit img{width:128%!important;height:94%!important}
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V327</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=326"></script>
+<script src="app.js?v=327"></script>
 <script id="v326-script">
 (()=>{
   const KNOWN_AUTHORS = {
@@ -15278,4 +15302,30 @@ body.battleMode .stageBattleBtns .btn{
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
-</script></body></html>
+</script>
+<script id="v327-script">
+(()=>{
+ const roster=[
+  {key:'dazai',hair:'#18212e',hair2:'#34455b',coat:'#273f59',coat2:'#111a24',skin:'#f0d7c8',accent:'#c9a968',book:1},
+  {key:'chuuya',hair:'#6c4330',hair2:'#b17855',coat:'#6b2937',coat2:'#241016',skin:'#f1d1bd',accent:'#d4a166',hat:1},
+  {key:'akutagawa',hair:'#151923',hair2:'#5a6472',coat:'#2a2133',coat2:'#0e0d14',skin:'#ead7cd',accent:'#a880dd',blade:1},
+  {key:'kenji',hair:'#bea97d',hair2:'#e2d5b6',coat:'#536a5b',coat2:'#28362e',skin:'#efd9c0',accent:'#e8c968',star:1},
+  {key:'ranpo',hair:'#151c25',hair2:'#495866',coat:'#2e3943',coat2:'#13191f',skin:'#edd6c8',accent:'#8fbcd6',glasses:1,book:1}
+ ];
+ function svg(c){
+  const hat=c.hat?`<g><ellipse cx="160" cy="56" rx="67" ry="15" fill="#3b281e"/><path d="M112 24q48-18 96 0v30h-96z" fill="#684833" stroke="#24170f" stroke-width="4"/><rect x="111" y="44" width="98" height="7" rx="3.5" fill="#c99459"/></g>`:'';
+  const glasses=c.glasses?`<g fill="none" stroke="#60717f" stroke-width="4"><rect x="116" y="115" width="32" height="18" rx="6"/><rect x="172" y="115" width="32" height="18" rx="6"/><path d="M148 121h24"/></g>`:'';
+  const book=c.book?`<g transform="translate(222 238) rotate(-12)"><rect width="46" height="34" rx="4" fill="#4b3422" stroke="#c7a55f" stroke-width="3"/><path d="M23 2v30M7 10h11M28 10h11" stroke="#d7c8a7" stroke-width="2"/></g>`:'';
+  const blade=c.blade?`<g transform="translate(230 203) rotate(30)"><rect width="11" height="92" rx="6" fill="#a980df"/><rect x="-6" y="78" width="23" height="9" rx="4.5" fill="#44324f"/></g>`:'';
+  const star=c.star?`<path d="M247 168l7 15 16 1-13 10 4 16-14-9-14 9 4-16-13-10 16-1z" fill="#edcf6f"/>`:'';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400"><defs><linearGradient id="coat" x1="0" x2="1"><stop stop-color="${c.coat2}"/><stop offset=".52" stop-color="${c.coat}"/><stop offset="1" stop-color="${c.coat2}"/></linearGradient><linearGradient id="hair" x1="0" x2="1"><stop stop-color="${c.hair2}"/><stop offset="1" stop-color="${c.hair}"/></linearGradient><linearGradient id="skin" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#fff2eb"/><stop offset="1" stop-color="${c.skin}"/></linearGradient></defs><ellipse cx="160" cy="350" rx="72" ry="18" fill="#000" opacity=".28"/><rect x="114" y="274" width="28" height="72" rx="14" fill="#18212b"/><rect x="178" y="274" width="28" height="72" rx="14" fill="#18212b"/><ellipse cx="126" cy="347" rx="23" ry="9" fill="#0d1319"/><ellipse cx="194" cy="347" rx="23" ry="9" fill="#0d1319"/><path d="M102 176q58-28 116 0l18 127H84z" fill="url(#coat)" stroke="#ffffff10" stroke-width="3"/><path d="M143 171h34v27h-34z" fill="url(#skin)"/><rect x="73" y="190" width="24" height="96" rx="12" fill="url(#coat)" transform="rotate(8 85 238)"/><rect x="223" y="190" width="24" height="96" rx="12" fill="url(#coat)" transform="rotate(-8 235 238)"/><circle cx="82" cy="286" r="13" fill="url(#skin)"/><circle cx="238" cy="286" r="13" fill="url(#skin)"/><ellipse cx="160" cy="119" rx="61" ry="58" fill="url(#skin)"/><ellipse cx="126" cy="126" rx="8" ry="10" fill="#1f2a35"/><ellipse cx="194" cy="126" rx="8" ry="10" fill="#1f2a35"/><ellipse cx="123" cy="123" rx="2.5" ry="2.5" fill="#fff"/><ellipse cx="191" cy="123" rx="2.5" ry="2.5" fill="#fff"/><path d="M148 154q12 8 24 0" stroke="#a76069" stroke-width="4" stroke-linecap="round" fill="none"/>${glasses}<path d="M96 98q8-51 64-54 55 2 66 54v33q-7-22-23-26-9 26-32 38-8-23-29-37-9 22-27 28-14 4-19 20z" fill="url(#hair)"/><path d="M101 83q15-18 30-24 8 17 28 24 20-7 30-24 15 8 27 25" fill="none" stroke="#ffffff18" stroke-width="6" stroke-linecap="round"/>${hat}<path d="M145 200h30v58h-30z" fill="#ffffff0c"/>${book}${blade}${star}</svg>`;
+ }
+ function uri(s){return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(s.replace(/\n\s+/g,''));}
+ function makeVisual(){const stage=document.createElement('div');stage.className='v327PartyVisual';roster.forEach((c,i)=>{const u=document.createElement('div');u.className='v327Unit'+(i===0?' active':'');const img=document.createElement('img');img.alt='';img.src=uri(svg(c));u.appendChild(img);stage.appendChild(u)});return stage}
+ function install(host){if(!host||host.dataset.v327==='1')return;host.dataset.v327='1';host.classList.add('v327PartyHost');host.insertBefore(makeVisual(),host.firstChild)}
+ function run(){document.querySelectorAll('.cleanBattleV238 .posterAlliesWrapV237,.bsv2Allies_175').forEach(install);let ai=[...document.querySelectorAll('.posterLivePartyV217 button,.battleCardsV151>button,.bsv2Cards_175 button')].findIndex(b=>b.classList.contains('on')||b.classList.contains('active'));if(ai<0)ai=0;document.querySelectorAll('.v327PartyVisual').forEach(v=>[...v.children].forEach((u,i)=>u.classList.toggle('active',i===ai)))}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();let q=false;new MutationObserver(()=>{if(q)return;q=true;requestAnimationFrame(()=>{q=false;run()})}).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});setInterval(run,800)
+})();
+</script>
+
+</body></html>
