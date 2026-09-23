@@ -12336,6 +12336,105 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v301-battle-enemy-scale-pass">
+/* V301: enemies are too small in V300 — restore threat and reduce the dead center */
+
+/* Bring the combat line upward and closer together */
+.cleanBattleV238 .posterAlliesWrapV237{
+  bottom:15%!important;
+  right:43%!important;
+  transform:scale(1.06)!important;
+  transform-origin:left bottom!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237{
+  left:50%!important;
+  right:2%!important;
+  top:8%!important;
+  bottom:15%!important;
+  transform:scale(1.00)!important;
+  transform-origin:right bottom!important;
+  justify-content:space-evenly!important;
+  gap:8px!important;
+}
+
+/* Make each enemy materially larger while keeping both on screen */
+.cleanBattleV238 .posterEnemyWrapV237 > *{
+  flex:0 0 36%!important;
+  max-width:138px!important;
+  min-width:92px!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 [data-enemy].selected,
+.cleanBattleV238 .posterEnemyWrapV237 [data-enemy].active{
+  transform:translateY(-10px) scale(1.12)!important;
+  filter:
+    drop-shadow(0 0 15px rgba(255,78,109,.68))
+    drop-shadow(0 0 26px rgba(255,78,109,.24))
+    drop-shadow(0 12px 12px rgba(0,0,0,.46))!important;
+}
+
+/* Allies stay readable but do not dominate */
+.cleanBattleV238 .posterAlliesWrapV237 > *{
+  flex:0 1 18%!important;
+  max-width:96px!important;
+}
+.cleanBattleV238 .posterAlliesWrapV237 .selectedV154,
+.cleanBattleV238 .posterAlliesWrapV237 .active{
+  transform:translateY(-20px) scale(1.12)!important;
+}
+
+/* Shrink the empty target rectangle to a tiny cue */
+.cleanBattleV238 .cleanEnemyFocusV239{
+  opacity:.06!important;
+  transform:translateY(-10%) scale(.28)!important;
+}
+
+/* Shift enemy HUD slightly upward and left, leaving more visual room */
+.cleanBattleV238 .posterEnemyCompactV235{
+  top:50px!important;
+  right:10px!important;
+  width:47%!important;
+}
+
+/* Add a subtle floor light where the fight actually happens */
+.cleanBattleV238 .posterActorStageV237:before{
+  content:""!important;
+  position:absolute!important;
+  left:7%!important;
+  right:7%!important;
+  bottom:10%!important;
+  height:22%!important;
+  pointer-events:none!important;
+  background:
+    radial-gradient(ellipse at 32% 80%,rgba(205,169,82,.08),transparent 38%),
+    radial-gradient(ellipse at 76% 78%,rgba(198,61,88,.09),transparent 34%)!important;
+  z-index:0!important;
+}
+
+/* Maintain good lower UI */
+.cleanBattleV238 .posterLivePartyV217{bottom:186px!important}
+.cleanBattleV238 .posterSelectedCardV235{bottom:134px!important}
+.cleanBattleV238 .posterThumbBarV234{bottom:64px!important}
+.cleanBattleV238 .posterThumbSubV234{bottom:calc(18px + env(safe-area-inset-bottom))!important}
+
+/* Short iPhone fallback */
+@media(max-height:760px){
+  .cleanBattleV238 .posterAlliesWrapV237{
+    bottom:12%!important;
+    transform:scale(1.00)!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237{
+    left:51%!important;
+    bottom:12%!important;
+    transform:scale(.94)!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237 > *{
+    flex-basis:34%!important;
+    min-width:84px!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
