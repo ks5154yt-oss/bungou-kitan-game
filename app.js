@@ -804,7 +804,7 @@ function party(){
  shell(`<main class=formationV255>
    <section class=formationTitleV255>
      <div><small>FORMATION</small><h1>編成</h1><p>言葉は、いつだって、誰かを救う。</p></div>
-     <button class=formationCopyV255 data-loadout-save="0">編成保存</button>
+     <button class=formationCopyV255 data-formation-copy="1">編成コピー</button>
    </section>
 
    <section class=formationRosterV255>
@@ -7440,6 +7440,7 @@ let lsave=e.target.closest("[data-loadout-save]");if(lsave){if(!actionLock(400))
 let lload=e.target.closest("[data-loadout-load]");if(lload){if(!actionLock(400))return;return loadLoadout(+lload.dataset.loadoutLoad)}
 let tac=e.target.closest("[data-tactic]");if(tac){S.tactic=tac.dataset.tactic;save();toast("戦術："+currentTactic().name);return party()}
 let prep=e.target.closest("[data-prepareteam]");if(prep){if(!actionLock(600))return;prepareTeam();toast("編成と装備を最適化しました");return}
+let fcp=e.target.closest("[data-formation-copy]");if(fcp){ensureUnitSets();let aa=S.sets[S.set]||[];let txt="文豪綺譚 FORMATION "+(S.set+1)+"\n"+aa.map((i,n)=>(n+1)+". "+C[i][1]+" Lv."+lv(i)).join("\n")+"\n総戦力 "+unitPower(aa).toLocaleString();if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(()=>toast("編成をコピーしました")).catch(()=>toast("コピーできませんでした"))}else{toast("このブラウザではコピーできません")}return}
 let mfm=e.target.closest("[data-maxformation]");if(mfm){if(!actionLock(500))return;return maxPowerFormation()}
 let afm=e.target.closest("[data-autoformation]");if(afm){if(!actionLock(500))return;return autoFormation()}
 let sc=e.target.closest("[data-swap-close]");if(sc){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
