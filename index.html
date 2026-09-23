@@ -8730,6 +8730,109 @@ body:not(.battleMode) #app{overflow:hidden!important}
 }
 </style>
 
+
+<style id="v274-growth-card-home-action-fix">
+/* HOME: make the three primary actions unmistakably tappable */
+.premiumHomeCommandV236{
+  bottom:84px!important;
+}
+.premiumHomeSecondaryV236 button{
+  min-height:62px!important;
+  padding:10px 12px!important;
+  border-width:1px!important;
+}
+.premiumHomeSecondaryV236 button small{
+  font-size:7px!important;
+}
+.premiumHomeSecondaryV236 button b{
+  font-size:12.5px!important;
+}
+.premiumHomeSecondaryV236 button:active{
+  transform:scale(.96)!important;
+}
+
+/* GROWTH: force each selector card into a clean portrait-over-text layout */
+.growthRosterV115>button{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  grid-template-rows:68px 1fr!important;
+  align-items:start!important;
+  gap:4px!important;
+  padding:5px!important;
+  min-height:118px!important;
+  overflow:hidden!important;
+}
+.growthRosterV115>button>div{
+  width:100%!important;
+  height:68px!important;
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  border-radius:7px!important;
+  background:linear-gradient(180deg,#0a1f2d,#06131d)!important;
+}
+.growthRosterV115>button>div img{
+  width:100%!important;
+  height:68px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:0!important;
+  border-radius:7px!important;
+}
+/* shrink rarity badge so it no longer covers names/portraits */
+.growthRosterV115>button .rankBadge,
+.growthRosterV115>button [data-rank]{
+  position:absolute!important;
+  left:4px!important;
+  top:4px!important;
+  z-index:3!important;
+  padding:2px 5px!important;
+  border-radius:5px!important;
+  font-size:8px!important;
+  line-height:1!important;
+  transform:none!important;
+  max-width:52px!important;
+  white-space:nowrap!important;
+}
+.growthRosterV115>button section{
+  width:100%!important;
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:1fr auto!important;
+  grid-template-areas:
+    "name lv"
+    "work work"!important;
+  gap:2px 5px!important;
+  align-items:center!important;
+  padding:0 2px!important;
+}
+.growthRosterV115>button section b{
+  grid-area:name!important;
+  font-size:8.5px!important;
+}
+.growthRosterV115>button section strong{
+  grid-area:lv!important;
+  font-size:8.5px!important;
+}
+.growthRosterV115>button section small{
+  grid-area:work!important;
+  font-size:6.2px!important;
+}
+@media(max-height:760px){
+  .premiumHomeSecondaryV236 button{min-height:56px!important}
+  .growthRosterV115>button{
+    grid-template-rows:62px 1fr!important;
+    min-height:108px!important;
+  }
+  .growthRosterV115>button>div,
+  .growthRosterV115>button>div img{
+    height:62px!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
