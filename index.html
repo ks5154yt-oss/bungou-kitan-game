@@ -9703,6 +9703,97 @@ body:not(.battleMode) .primaryNavV116{
 }
 </style>
 
+
+<style id="v283-sortie-clean-final">
+/* V283: remove distracting placeholder artwork and stop title wrapping */
+
+/* Recommended */
+.stageQuickV131{
+  grid-template-columns:minmax(0,1fr) 72px!important;
+  min-height:76px!important;
+  padding:8px 80px 8px 12px!important;
+  background:
+    linear-gradient(90deg,rgba(5,18,28,.98),rgba(8,27,39,.95))!important;
+}
+.stageQuickV131 b{
+  font-size:15px!important;
+  line-height:1.05!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.stageQuickV131>button{
+  right:8px!important;
+  min-width:68px!important;
+  min-height:40px!important;
+  font-size:9px!important;
+}
+
+/* Previous */
+.resumeStage{
+  grid-template-columns:minmax(0,1fr) 74px!important;
+  min-height:80px!important;
+  padding:8px 82px 8px 12px!important;
+  background:
+    linear-gradient(90deg,rgba(5,18,28,.98),rgba(8,27,39,.95))!important;
+}
+.resumeStage h1{
+  font-size:15px!important;
+  line-height:1.05!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.resumeStage>button{
+  right:8px!important;
+  min-width:70px!important;
+  min-height:40px!important;
+  font-size:9px!important;
+}
+
+/* Remove all decorative pseudo-elements/background artifacts */
+.stageQuickV131::before,
+.stageQuickV131::after,
+.resumeStage::before,
+.resumeStage::after,
+.quickStageGrid>button::before,
+.quickStageGrid>button::after{
+  content:none!important;
+  display:none!important;
+}
+.quickStageGrid>button{
+  background:linear-gradient(180deg,#0a2130,#04111b)!important;
+}
+.quickStageGrid>button:disabled{
+  background:linear-gradient(180deg,#0a1822,#030a10)!important;
+  opacity:.42!important;
+  filter:none!important;
+}
+
+/* Keep stage cards compact and readable */
+.quickStageGrid>button{
+  min-height:68px!important;
+  padding:8px!important;
+}
+.quickStageGrid>button>b{
+  font-size:12.5px!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.quickStageGrid>button>span,
+.quickStageGrid>button>small{
+  font-size:6px!important;
+}
+
+/* make the blue selected border cleaner */
+.quickStageGrid>button.last{
+  border:2px solid #61c7ff!important;
+  background:linear-gradient(180deg,#0d2b3e,#061722)!important;
+  box-shadow:0 0 0 2px rgba(97,199,255,.12),0 0 14px rgba(74,184,255,.24)!important;
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
