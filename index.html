@@ -7713,6 +7713,76 @@ body:not(.battleMode) .primaryNavV116{
 }
 </style>
 
+
+<style id="v254-formation-rebuild">
+/* V254: formation screen structural rebuild */
+body:not(.battleMode) #app{
+  overflow-x:hidden!important;
+}
+.formation,.party,.deck,.team{
+  min-height:100dvh!important;
+  padding-bottom:86px!important;
+  background:linear-gradient(180deg,#071724,#030b12 70%,#071522)!important;
+}
+/* Collapse large spacer-like blocks between resources and formation summary */
+.formation .spacer,.party .spacer,.deck .spacer,.team .spacer,
+.formation [style*="min-height"],.party [style*="min-height"],
+.deck [style*="min-height"],.team [style*="min-height"]{
+  min-height:0!important;
+}
+/* Put formation summary directly after the roster area */
+.formation [class*="summary"],.party [class*="summary"],.deck [class*="summary"],.team [class*="summary"],
+.formation [class*="formationCard"],.party [class*="formationCard"],
+.deck [class*="formationCard"],.team [class*="formationCard"]{
+  margin-top:10px!important;
+  margin-bottom:10px!important;
+  min-height:auto!important;
+  padding:12px!important;
+  background:
+    radial-gradient(circle at 85% 15%,rgba(198,163,80,.13),transparent 30%),
+    linear-gradient(135deg,#0b2637,#04111b)!important;
+  border:1px solid #a98743!important;
+  border-radius:12px!important;
+  box-shadow:0 12px 30px #0008!important;
+}
+/* Six cards stay compact */
+.formation .grid,.party .grid,.deck .grid,.team .grid{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:6px!important;
+}
+.formation .char img,.party .char img,.deck .char img,.team .char img{
+  max-height:130px!important;
+}
+/* Compact helper and resource rows */
+.formation p,.party p,.deck p,.team p{margin-top:6px!important;margin-bottom:6px!important}
+.formation [class*="resource"],.party [class*="resource"],
+.deck [class*="resource"],.team [class*="resource"]{
+  min-height:34px!important;
+  padding:6px 10px!important;
+}
+/* Premium action buttons */
+.formation button,.party button,.deck button,.team button{
+  min-height:36px!important;
+}
+.formation button[data-action*="auto"],.party button[data-action*="auto"],
+.deck button[data-action*="auto"],.team button[data-action*="auto"]{
+  border-color:#a98743!important;
+}
+/* Bottom nav */
+body:not(.battleMode) .primaryNavV116{
+  position:fixed!important;
+  left:0!important;right:0!important;
+  bottom:0!important;
+  z-index:50!important;
+  min-height:64px!important;
+  border-radius:0!important;
+}
+@media(max-width:430px){
+ .formation,.party,.deck,.team{padding-bottom:76px!important}
+ .formation .char img,.party .char img,.deck .char img,.team .char img{max-height:124px!important}
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=243"></script>
