@@ -10269,6 +10269,78 @@ body:not(.battleMode) .primaryNavV116{
 }
 </style>
 
+
+<style id="v289-sortie-title-fix">
+/* V289: final title-width fix and visual cleanup */
+
+/* give text more width by narrowing action buttons */
+.stageQuickV131{
+  padding:9px 76px 9px 13px!important;
+}
+.stageQuickV131>button{
+  min-width:64px!important;
+  width:64px!important;
+  min-height:40px!important;
+  padding:6px!important;
+  font-size:8.5px!important;
+}
+.stageQuickV131 b{
+  font-size:15px!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:clip!important;
+}
+
+.resumeStage{
+  padding:9px 78px 9px 13px!important;
+}
+.resumeStage>button{
+  min-width:66px!important;
+  width:66px!important;
+  min-height:40px!important;
+  padding:6px!important;
+  font-size:8.5px!important;
+}
+.resumeStage h1{
+  font-size:15px!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:clip!important;
+}
+
+/* balance the top cards */
+.stageQuickV131,
+.resumeStage{
+  min-height:84px!important;
+}
+
+/* stage cards: slightly stronger titles without growing the screen */
+.quickStageGrid>button{
+  min-height:84px!important;
+}
+.quickStageGrid>button>b{
+  font-size:13.5px!important;
+}
+.quickStageGrid>button.last{
+  border-color:#63c8ff!important;
+  box-shadow:
+    0 0 0 2px rgba(99,200,255,.12),
+    0 0 18px rgba(74,184,255,.28)!important;
+}
+
+/* chapter jump buttons remain fully visible */
+.sortieShortcuts>button{
+  min-height:44px!important;
+  font-size:9.5px!important;
+}
+
+/* make the hierarchy feel less cramped */
+.stageSelectTitle{
+  margin-top:7px!important;
+  margin-bottom:4px!important;
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
