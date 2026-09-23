@@ -7561,6 +7561,97 @@ body:not(.battleMode) .primaryNavV116{
 }
 </style>
 
+
+<style id="v252-formation-layout-fix">
+/* V252: formation screen hierarchy + viewport fit */
+body:not(.battleMode) .formation,
+body:not(.battleMode) .party,
+body:not(.battleMode) .deck,
+body:not(.battleMode) .team{
+  padding-bottom:82px!important;
+}
+
+/* Six-member panel: compact, readable, premium */
+.formation .grid,.party .grid,.deck .grid,.team .grid{
+  gap:6px!important;
+}
+.formation .char,.party .char,.deck .char,.team .char{
+  border-radius:8px!important;
+}
+.formation .char img,.party .char img,.deck .char img,.team .char img{
+  aspect-ratio:3/3.15!important;
+  max-height:155px!important;
+  object-position:center 17%!important;
+}
+.formation .char b,.party .char b,.deck .char b,.team .char b{
+  font-size:8px!important;
+}
+.formation .char small,.party .char small,.deck .char small,.team .char small{
+  font-size:6px!important;
+}
+
+/* Make the formation title card useful instead of living below a huge void */
+.formation [class*="formation"],
+.party [class*="formation"],
+.deck [class*="formation"],
+.team [class*="formation"]{
+  scroll-margin-top:72px!important;
+}
+
+/* Reduce accidental vertical dead zones in formation content */
+.formation .p,.party .p,.deck .p,.team .p{
+  padding-top:7px!important;
+  padding-bottom:7px!important;
+}
+.formation section,.party section,.deck section,.team section{
+  margin-top:8px!important;
+  margin-bottom:8px!important;
+}
+
+/* Instruction becomes a compact helper strip */
+.formation p,.party p,.deck p,.team p{
+  line-height:1.35!important;
+}
+
+/* Resource strip */
+.formation [class*="resource"],.party [class*="resource"],
+.deck [class*="resource"],.team [class*="resource"]{
+  background:rgba(3,12,19,.82)!important;
+  border-top:1px solid rgba(91,111,122,.28)!important;
+  border-bottom:1px solid rgba(91,111,122,.28)!important;
+}
+
+/* Formation summary/card */
+.formation [class*="summary"],.party [class*="summary"],
+.deck [class*="summary"],.team [class*="summary"]{
+  background:
+    radial-gradient(circle at 86% 18%,rgba(194,158,79,.12),transparent 28%),
+    linear-gradient(135deg,rgba(10,34,49,.97),rgba(3,13,21,.98))!important;
+  border:1px solid rgba(190,154,74,.78)!important;
+  box-shadow:0 10px 28px #0007!important;
+}
+
+/* Keep bottom navigation above content, but not on top of important cards */
+body:not(.battleMode) .primaryNavV116{
+  min-height:58px!important;
+  bottom:max(6px,env(safe-area-inset-bottom))!important;
+}
+
+@media(max-width:430px){
+ .formation .grid,.party .grid,.deck .grid,.team .grid{
+   grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ }
+ .formation .char img,.party .char img,.deck .char img,.team .char img{
+   max-height:142px!important;
+ }
+}
+@media(max-height:760px){
+ .formation .char img,.party .char img,.deck .char img,.team .char img{
+   max-height:124px!important;
+ }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=243"></script>
