@@ -11041,6 +11041,161 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v293-battle-impact-pass">
+/* V293: stronger visual changes for the real battle screen */
+
+/* pull the fight downward slightly so units dominate the frame */
+.sdBattleV118{
+  padding-bottom:4px!important;
+}
+.sdAlliesV118{
+  transform:translateY(-4px) scale(1.12)!important;
+  transform-origin:left bottom!important;
+}
+.sdEnemiesV118{
+  transform:translateY(-8px) scale(1.12)!important;
+  transform-origin:right bottom!important;
+}
+
+/* active ally stands out clearly */
+.sdUnitV118.active,
+.sdUnitV118.selected{
+  transform:translateY(-12px) scale(1.12)!important;
+  filter:drop-shadow(0 0 10px rgba(211,170,86,.34)) drop-shadow(0 8px 8px rgba(0,0,0,.35))!important;
+}
+.sdUnitV118.active:before,
+.sdUnitV118.selected:before{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  bottom:-3px!important;
+  width:44px!important;
+  height:10px!important;
+  transform:translateX(-50%)!important;
+  border-radius:50%!important;
+  background:radial-gradient(ellipse,rgba(216,178,91,.46),rgba(216,178,91,0) 70%)!important;
+  z-index:-1!important;
+}
+
+/* enemies: brighter eyes + clearer target */
+.sdEnemyV118{
+  filter:drop-shadow(0 0 10px rgba(206,67,94,.22)) drop-shadow(0 8px 10px rgba(0,0,0,.42))!important;
+}
+.sdEnemyV118 .sdEyeV118{
+  box-shadow:0 0 8px rgba(255,58,92,.65)!important;
+}
+.enemyCardsV129>button.active,
+.enemyCardsV129>button.selected{
+  transform:translateY(-3px) scale(1.04)!important;
+}
+
+/* enemy HUD: larger name and cleaner bars */
+.advancedHudV125{
+  width:min(50%,360px)!important;
+  padding:8px 9px!important;
+}
+.advancedHudV125 b{
+  font-size:7px!important;
+}
+.advancedHudV125 small{
+  font-size:5.5px!important;
+}
+.advancedHudV125 span{
+  height:6px!important;
+}
+
+/* party portrait row: larger cards, less dead space */
+.battlePartyV119{
+  gap:6px!important;
+}
+.battlePartyV119>button{
+  min-height:68px!important;
+  grid-template-columns:54px 1fr!important;
+  padding:4px!important;
+}
+.battlePartyV119 img{
+  width:54px!important;
+  height:62px!important;
+}
+.battlePartyV119 section b{
+  font-size:7px!important;
+}
+.battlePartyV119 section span{
+  font-size:5.3px!important;
+}
+
+/* active character panel: make status readable */
+.battleActiveV119,
+[class*="battleActive"]{
+  min-height:58px!important;
+  padding:7px 9px!important;
+}
+.battleActiveV119 b,
+[class*="battleActive"] b{
+  font-size:10px!important;
+}
+.battleActiveV119 small,
+[class*="battleActive"] small{
+  font-size:6px!important;
+}
+
+/* command hierarchy */
+.battleCommandsV119{
+  grid-template-columns:1.15fr 1fr 1fr 1fr!important;
+  gap:7px!important;
+}
+.battleCommandsV119 button{
+  min-height:72px!important;
+  padding:8px!important;
+}
+.battleCommandsV119 button.attack{
+  box-shadow:
+    0 0 0 1px rgba(211,170,86,.18),
+    0 8px 18px rgba(0,0,0,.32),
+    inset 0 0 18px rgba(211,170,86,.05)!important;
+}
+.battleCommandsV119 i{
+  font-size:21px!important;
+}
+.battleCommandsV119 b{
+  font-size:10px!important;
+}
+.battleCommandsV119 small{
+  font-size:5px!important;
+}
+
+/* secondary controls easier to hit */
+.stageBattleBtns .btn{
+  min-height:36px!important;
+  min-width:68px!important;
+  font-size:7.5px!important;
+}
+
+/* reduce overly dominant decorative frame */
+.battleFieldV119 [class*="targetFrame"],
+.battleFieldV119 [class*="TargetFrame"]{
+  opacity:.58!important;
+}
+
+/* short-screen fallback */
+@media(max-height:760px){
+  .sdAlliesV118{transform:translateY(-2px) scale(1.06)!important}
+  .sdEnemiesV118{transform:translateY(-6px) scale(1.06)!important}
+  .battlePartyV119>button{
+    min-height:62px!important;
+    grid-template-columns:48px 1fr!important;
+  }
+  .battlePartyV119 img{
+    width:48px!important;
+    height:56px!important;
+  }
+  .battleCommandsV119 button{
+    min-height:64px!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
