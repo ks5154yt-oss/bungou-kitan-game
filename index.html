@@ -14850,9 +14850,83 @@ body.battleMode .stageBattleBtns .btn{
   .cleanBattleV238 .posterThumbBarV234 button{min-height:57px!important}
   .cleanBattleV238 .posterThumbSubV234{bottom:calc(13px + env(safe-area-inset-bottom))!important}
 }
+
+
+/* === V321 SD battle refresh === */
+.sdBattleV118{left:2.5%!important;right:19%!important;bottom:18px!important}
+.enemyStageV153{right:2%!important;bottom:42px!important;width:39%!important;gap:4px!important}
+.enemyArtV153{transform:scale(1.04);filter:drop-shadow(0 8px 14px #000a)}
+.enemyArtV153.boss{transform:scale(1.08)}
+.enemyPagesV153 i{width:20px!important;height:27px!important;box-shadow:0 0 0 1px #fff1,inset 0 0 0 2px #fff2,0 3px 10px #0008!important}
+.enemyAuraV153{background:radial-gradient(circle,#c1305536,transparent 68%)!important;filter:blur(8px)!important}
+
+.sdUnitV147{width:82px!important;height:154px!important;transform:scale(.88)!important;filter:drop-shadow(0 6px 8px #0008)}
+.sdUnitV147 .sdGroundV147{left:10%!important;right:10%!important;bottom:2px!important;height:10px!important}
+.sdUnitV147 .sdHeadV147{left:16px!important;top:7px!important;width:44px!important;height:46px!important;transform:scale(.97)!important}
+.sdUnitV147 .sdBackHairV147{left:14px!important;top:9px!important;width:50px!important;height:66px!important}
+.sdUnitV147 .sdFaceV147{left:5px!important;top:8px!important;width:34px!important;height:34px!important}
+.sdUnitV147 .sdNeckV147{left:33px!important;top:46px!important;width:9px!important;height:10px!important}
+.sdUnitV147 .sdDressV147{left:20px!important;top:50px!important;width:38px!important;height:65px!important;clip-path:polygon(18% 0,82% 0,94% 30%,100% 100%,0 100%,6% 30%)!important}
+.sdUnitV147 .sdArmV147{top:58px!important;width:11px!important;height:48px!important;border-radius:8px!important}
+.sdUnitV147 .sdArmV147[data-arm=l]{left:12px!important;transform:rotate(11deg)!important}
+.sdUnitV147 .sdArmV147[data-arm=r]{right:12px!important;transform:rotate(-10deg)!important}
+.sdUnitV147 .sdLegV147{top:111px!important;width:12px!important;height:30px!important;border-radius:5px!important}
+.sdUnitV147 .sdLegV147[data-leg=l]{left:26px!important;transform:rotate(2deg)}
+.sdUnitV147 .sdLegV147[data-leg=r]{right:26px!important;transform:rotate(-2deg)}
+.sdUnitV147 .sdWeaponV147{top:72px!important}
+.sdUnitV147 .sdFaceV147 .mouth{left:15px!important;top:27px!important;width:7px!important}
+.sdUnitV147 .sdFaceV147 em{top:22px!important;opacity:.66}
+.sdUnitV147 .sdDressV147:before{left:6px!important;width:8px!important}
+.sdUnitV147 .sdArmV147 i{width:9px!important;height:10px!important;left:1px!important}
+.sdUnitV147.selectedV154{transform:scale(.92)!important}
+
+/* broader silhouette variation per author */
+.sdUnitV147[data-author=dazai] .sdHairV147{clip-path:polygon(0 10%,16% 0,28% 18%,43% 0,62% 17%,100% 10%,94% 52%,80% 40%,69% 72%,56% 48%,44% 76%,29% 41%,17% 73%,8% 45%,2% 61%)!important}
+.sdUnitV147[data-author=dazai] .sdFaceV147:after{content:"";position:absolute;left:2px;top:8px;width:11px;height:4px;background:linear-gradient(90deg,#f4ede0,#d8d1c7);border-radius:4px;transform:rotate(-18deg);box-shadow:0 0 0 1px #8a7f73}
+.sdUnitV147[data-author=dazai] .sdArmV147[data-arm=r]{transform:rotate(-18deg)!important}
+.sdUnitV147[data-author=dazai] .sdWeaponV147{transform:rotate(-16deg) translateY(-1px)!important}
+
+.sdUnitV147[data-author=chuuya] .sdDressV147{background:linear-gradient(120deg,#4b1d26,#8a3b47 45%,#2a0f17)!important}
+.sdUnitV147[data-author=chuuya] .sdHeadV147:before{left:-6px!important;top:-7px!important;width:60px!important;height:15px!important}
+.sdUnitV147[data-author=chuuya] .sdArmV147[data-arm=l]{transform:rotate(24deg)!important}
+.sdUnitV147[data-author=chuuya] .sdArmV147[data-arm=r]{transform:rotate(-2deg)!important}
+.sdUnitV147[data-author=chuuya] .sdLegV147[data-leg=l]{transform:rotate(9deg)!important}
+.sdUnitV147[data-author=chuuya] .sdLegV147[data-leg=r]{transform:rotate(-8deg)!important}
+
+.sdUnitV147[data-author=akutagawa] .sdBackHairV147{height:76px!important;width:52px!important;top:7px!important;left:13px!important}
+.sdUnitV147[data-author=akutagawa] .sdHairV147{clip-path:polygon(0 7%,15% 0,33% 18%,46% 1%,60% 14%,78% 0,100% 11%,97% 64%,83% 54%,78% 83%,59% 49%,49% 84%,31% 52%,24% 81%,12% 50%,3% 61%)!important}
+.sdUnitV147[data-author=akutagawa] .sdDressV147{left:17px!important;width:44px!important;clip-path:polygon(26% 0,74% 0,100% 32%,90% 100%,10% 100%,0 32%)!important}
+.sdUnitV147[data-author=akutagawa] .sdArmV147[data-arm=l]{transform:rotate(2deg)!important}
+.sdUnitV147[data-author=akutagawa] .sdArmV147[data-arm=r]{transform:rotate(-30deg)!important}
+.sdUnitV147[data-author=akutagawa] .sdWeaponV147[data-weapon=ink-blade]{height:42px!important;transform:rotate(42deg)!important}
+
+.sdUnitV147[data-author=kenji] .sdFaceV147 .mouth{border-bottom-width:2px!important;border-bottom-color:#c06a72!important}
+.sdUnitV147[data-author=kenji] .sdAccessoryV139{filter:drop-shadow(0 0 5px #e7c26c)!important}
+.sdUnitV147[data-author=kenji] .sdArmV147[data-arm=l]{transform:rotate(15deg)!important}
+.sdUnitV147[data-author=kenji] .sdArmV147[data-arm=r]{transform:rotate(-16deg)!important}
+.sdUnitV147[data-author=kenji] .sdLegV147[data-leg=l]{transform:rotate(5deg)!important}
+.sdUnitV147[data-author=kenji] .sdLegV147[data-leg=r]{transform:rotate(-4deg)!important}
+
+.sdUnitV147[data-author=ranpo] .sdFaceV147:after,.sdUnitV147[data-author=doyle] .sdFaceV147:after{content:"";position:absolute;left:5px;top:14px;width:23px;height:9px;border:1.6px solid #293744;border-radius:6px;box-shadow:11px 0 0 -1.6px #293744}
+.sdUnitV147[data-author=ranpo] .sdFaceV147:before,.sdUnitV147[data-author=doyle] .sdFaceV147:before{content:"";position:absolute;left:15px;top:18px;width:6px;height:1.6px;background:#293744;z-index:3}
+.sdUnitV147[data-author=ranpo] .sdArmV147[data-arm=l],.sdUnitV147[data-author=doyle] .sdArmV147[data-arm=l]{transform:rotate(5deg)!important}
+.sdUnitV147[data-author=ranpo] .sdArmV147[data-arm=r],.sdUnitV147[data-author=doyle] .sdArmV147[data-arm=r]{transform:rotate(-20deg)!important}
+
+/* mobile density adjustments */
+@media(max-width:700px){
+  .sdBattleV118{left:1%!important;right:15%!important;bottom:8px!important}
+  .enemyStageV153{right:-1%!important;width:42%!important;bottom:34px!important}
+  .sdUnitV147{transform:scale(.83)!important;margin:0 -7px!important}
+}
+@media(max-width:390px){
+  .sdBattleV118{right:13%!important}
+  .enemyStageV153{width:44%!important}
+  .sdUnitV147{transform:scale(.79)!important;margin:0 -10px!important}
+}
+
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V320</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V321</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=320"></script>
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
