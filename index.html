@@ -14199,6 +14199,72 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v315-active-card-fix">
+/* V315: fix the gold ACTIVE overlay covering the portrait card */
+
+/* Remove any full-card pseudo overlay that masks the portrait */
+.cleanBattleV238 .posterLivePartyV217 button.on:before,
+.cleanBattleV238 .posterLivePartyV217 button.on:after{
+  content:none!important;
+  display:none!important;
+}
+
+/* Keep the selected portrait fully visible */
+.cleanBattleV238 .posterLivePartyV217 button.on{
+  position:relative!important;
+  transform:translateY(-3px)!important;
+  border:2px solid #e2b85d!important;
+  background:linear-gradient(180deg,#0b2332,#05131d)!important;
+  box-shadow:
+    0 0 0 1px rgba(226,184,93,.18),
+    0 0 16px rgba(226,184,93,.22),
+    0 8px 18px rgba(0,0,0,.30)!important;
+  overflow:hidden!important;
+}
+
+/* Small ACTIVE badge in the corner instead of a full overlay */
+.cleanBattleV238 .posterLivePartyV217 button.on .name:before{
+  content:"ACTIVE"!important;
+  position:absolute!important;
+  top:4px!important;
+  right:4px!important;
+  z-index:5!important;
+  padding:2px 4px!important;
+  border-radius:4px!important;
+  background:#d6ad54!important;
+  color:#081019!important;
+  font-size:4px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  box-shadow:0 2px 7px rgba(0,0,0,.28)!important;
+}
+
+/* Make sure image and labels sit above legacy decorative layers */
+.cleanBattleV238 .posterLivePartyV217 button img{
+  position:relative!important;
+  z-index:2!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button .name{
+  position:relative!important;
+  z-index:4!important;
+}
+
+/* Keep HP line visible */
+.cleanBattleV238 .posterLivePartyV217 button i{
+  position:relative!important;
+  z-index:4!important;
+}
+
+/* Slightly polish current active summary */
+.cleanBattleV238 .posterSelectedCardV235{
+  border-color:#8a7449!important;
+  box-shadow:0 5px 14px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.02)!important;
+}
+
+/* Keep enemy/ally lane layout untouched from V314 */
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
