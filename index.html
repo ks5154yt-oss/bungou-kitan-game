@@ -13238,6 +13238,147 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v308-battle-faceoff-clean">
+/* V308: clean face-off lanes after V307 brought enemies into the center */
+
+/* Allies occupy a clear left lane */
+.cleanBattleV238 .posterAlliesWrapV237{
+  left:1%!important;
+  right:48%!important;
+  bottom:32%!important;
+  height:45%!important;
+  justify-content:space-evenly!important;
+  transform:scale(1.00)!important;
+  transform-origin:left bottom!important;
+}
+
+/* Enemies occupy a distinct right lane with no overlap into allies */
+.cleanBattleV238 .posterEnemyWrapV237{
+  left:55%!important;
+  right:4%!important;
+  top:9%!important;
+  bottom:31%!important;
+  overflow:visible!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyStageV153{
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:flex-end!important;
+  gap:18px!important;
+  transform:none!important;
+  overflow:visible!important;
+}
+
+/* 1 enemy: centered in right lane */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:only-child{
+  width:142px!important;
+  height:190px!important;
+  flex:0 0 142px!important;
+  margin:0 auto!important;
+  transform:none!important;
+}
+
+/* 2 enemies: balanced and fully visible */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(2),
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(2) ~ .enemyArtV153{
+  width:100px!important;
+  height:146px!important;
+  flex:0 0 100px!important;
+}
+
+/* 3+ enemies: compact */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(n+3),
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(n+3) ~ .enemyArtV153{
+  width:82px!important;
+  height:126px!important;
+  flex:0 0 82px!important;
+}
+
+/* Keep pages near each enemy */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyPagesV153 i{
+  width:17px!important;
+  height:23px!important;
+  transform:rotate(calc(var(--k)*47deg)) translateY(-44px)!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:only-child .enemyPagesV153 i{
+  transform:rotate(calc(var(--k)*45deg)) translateY(-56px)!important;
+}
+
+/* Active ally gets visual priority but stays inside left lane */
+.cleanBattleV238 .posterAlliesWrapV237 .spriteUnitV160.selectedV154,
+.cleanBattleV238 .posterAlliesWrapV237 .spriteUnitV160.active{
+  transform:translateY(-22px) scale(1.12)!important;
+  z-index:28!important;
+  filter:
+    drop-shadow(0 0 14px rgba(234,195,98,.58))
+    drop-shadow(0 12px 12px rgba(0,0,0,.44))!important;
+}
+
+/* Selected enemy local red glow */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.selected,
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.active{
+  transform:translateY(-10px) scale(1.10)!important;
+  z-index:28!important;
+  filter:
+    drop-shadow(0 0 15px rgba(255,82,113,.72))
+    drop-shadow(0 0 28px rgba(255,82,113,.28))
+    drop-shadow(0 12px 12px rgba(0,0,0,.46))!important;
+}
+
+/* Enemy HUD sits directly above the right lane */
+.cleanBattleV238 .posterEnemyCompactV235{
+  top:54px!important;
+  right:14px!important;
+  width:44%!important;
+}
+
+/* Remove legacy target rectangle completely */
+.cleanBattleV238 .cleanEnemyFocusV239{
+  display:none!important;
+}
+
+/* Subtle opposing floor lights */
+.cleanBattleV238 .posterActorStageV237:before{
+  content:""!important;
+  position:absolute!important;
+  left:2%!important;
+  right:2%!important;
+  bottom:29%!important;
+  height:25%!important;
+  pointer-events:none!important;
+  background:
+    radial-gradient(ellipse at 28% 82%,rgba(221,182,92,.16),transparent 37%),
+    radial-gradient(ellipse at 75% 82%,rgba(232,69,100,.17),transparent 36%)!important;
+  z-index:0!important;
+}
+
+/* Keep lower HUD locked */
+.cleanBattleV238 .posterLivePartyV217{bottom:186px!important}
+.cleanBattleV238 .posterSelectedCardV235{bottom:134px!important}
+.cleanBattleV238 .posterThumbBarV234{bottom:64px!important}
+.cleanBattleV238 .posterThumbSubV234{bottom:calc(18px + env(safe-area-inset-bottom))!important}
+
+@media(max-height:760px){
+  .cleanBattleV238 .posterAlliesWrapV237{
+    right:49%!important;
+    bottom:29%!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237{
+    left:56%!important;
+    bottom:28%!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:only-child{
+    width:130px!important;
+    height:178px!important;
+    flex-basis:130px!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
