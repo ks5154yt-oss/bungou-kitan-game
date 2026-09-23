@@ -13687,6 +13687,118 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v311-battle-enemy-pair-fit">
+/* V311: latest iPhone screenshot pass
+   Goal: keep both enemies fully visible while preserving the good ally/command layout. */
+
+/* Keep ally lane as-is, just give a touch more separation from enemies */
+.cleanBattleV238 .posterAlliesWrapV237{
+  right:52%!important;
+}
+
+/* Enemy lane shifts left and becomes narrower/safer */
+.cleanBattleV238 .posterEnemyWrapV237{
+  left:53%!important;
+  right:10%!important;
+  top:10%!important;
+  bottom:30%!important;
+  overflow:visible!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyStageV153{
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:flex-end!important;
+  gap:10px!important;
+  transform:none!important;
+  overflow:visible!important;
+}
+
+/* One enemy: large */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:only-child{
+  width:130px!important;
+  height:178px!important;
+  flex:0 0 130px!important;
+  margin:0 auto!important;
+}
+
+/* Two enemies: specifically tuned for current screenshot */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(2),
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(2) ~ .enemyArtV153{
+  width:84px!important;
+  height:130px!important;
+  flex:0 0 84px!important;
+  margin:0!important;
+}
+
+/* Three+ enemies */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(n+3),
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(n+3) ~ .enemyArtV153{
+  width:68px!important;
+  height:110px!important;
+  flex:0 0 68px!important;
+}
+
+/* Orbiting paper effects stay close to enemy bodies */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyPagesV153 i{
+  width:14px!important;
+  height:19px!important;
+  transform:rotate(calc(var(--k)*47deg)) translateY(-31px)!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:only-child .enemyPagesV153 i{
+  transform:rotate(calc(var(--k)*45deg)) translateY(-43px)!important;
+}
+
+/* Selected enemy remains dramatic without growing outside the lane */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.selected,
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.active{
+  transform:translateY(-9px) scale(1.08)!important;
+  z-index:30!important;
+  filter:
+    drop-shadow(0 0 14px rgba(255,82,113,.74))
+    drop-shadow(0 0 24px rgba(255,82,113,.26))
+    drop-shadow(0 12px 12px rgba(0,0,0,.44))!important;
+}
+
+/* Enemy HUD aligns with the safer lane */
+.cleanBattleV238 .posterEnemyCompactV235{
+  right:14px!important;
+  width:44%!important;
+}
+
+/* Battle floor glow aligns to the two camps */
+.cleanBattleV238 .posterActorStageV237:before{
+  background:
+    radial-gradient(ellipse at 23% 82%,rgba(222,183,92,.17),transparent 32%),
+    radial-gradient(ellipse at 76% 82%,rgba(236,71,102,.18),transparent 30%)!important;
+}
+
+/* Keep old target frame completely hidden */
+.cleanBattleV238 .cleanEnemyFocusV239{
+  display:none!important;
+}
+
+/* iPhone short-height safeguard */
+@media(max-height:760px){
+  .cleanBattleV238 .posterAlliesWrapV237{
+    right:53%!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237{
+    left:54%!important;
+    right:11%!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(2),
+  .cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(2) ~ .enemyArtV153{
+    width:78px!important;
+    height:122px!important;
+    flex-basis:78px!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
