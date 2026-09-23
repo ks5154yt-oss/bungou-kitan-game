@@ -11196,6 +11196,223 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v294-poster-battle-real-fix">
+/* V294: target the ACTUAL clean/poster battle DOM currently rendered */
+
+/* Stage layout */
+.cleanBattleV238 .posterActorStageV237{
+  top:64px!important;
+  bottom:250px!important;
+}
+.cleanBattleV238 .posterAlliesWrapV237{
+  left:0%!important;
+  right:40%!important;
+  bottom:0%!important;
+  height:43%!important;
+  gap:1px!important;
+}
+.cleanBattleV238 .posterAlliesWrapV237 .spriteUnitV160{
+  flex:1!important;
+  max-width:108px!important;
+  min-width:52px!important;
+  transform:scale(1.02)!important;
+  transform-origin:center bottom!important;
+  filter:drop-shadow(0 11px 16px rgba(0,0,0,.46))!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237{
+  left:50%!important;
+  top:1%!important;
+  bottom:3%!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153{
+  transform:scale(1.08)!important;
+  transform-origin:right bottom!important;
+  filter:drop-shadow(0 0 14px rgba(203,66,91,.18)) drop-shadow(0 18px 22px rgba(0,0,0,.48))!important;
+}
+
+/* Active ally emphasis */
+.cleanBattleV238 .posterAlliesWrapV237 [data-sd-unit].selectedV154,
+.cleanBattleV238 .posterAlliesWrapV237 [data-sd-unit].active{
+  transform:translateY(-8px) scale(1.10)!important;
+  filter:drop-shadow(0 0 10px rgba(214,175,88,.32)) drop-shadow(0 12px 16px rgba(0,0,0,.45))!important;
+}
+.cleanBattleV238 .posterAlliesWrapV237 [data-sd-unit].selectedV154:after{
+  content:"ACTIVE"!important;
+  position:absolute!important;
+  left:50%!important;
+  bottom:-5px!important;
+  transform:translateX(-50%)!important;
+  padding:2px 5px!important;
+  border-radius:999px!important;
+  background:#c9a24f!important;
+  color:#071019!important;
+  font-size:4px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+}
+
+/* Enemy compact HUD */
+.cleanBattleV238 .posterEnemyCompactV235{
+  top:68px!important;
+  right:10px!important;
+  width:min(52%,330px)!important;
+  padding:8px 9px!important;
+  border-left:2px solid #c49d4c!important;
+  background:linear-gradient(90deg,rgba(5,15,23,.97),rgba(5,15,23,.72))!important;
+  box-shadow:0 8px 18px rgba(0,0,0,.30)!important;
+}
+.cleanBattleV238 .posterEnemyCompactV235 b{
+  font-size:8px!important;
+}
+.cleanBattleV238 .posterEnemyCompactV235 small{
+  font-size:5.5px!important;
+}
+.cleanBattleV238 .posterEnemyCompactV235 i{
+  height:6px!important;
+  border-radius:999px!important;
+}
+
+/* Target indicator */
+.cleanBattleV238 .cleanEnemyFocusV239{
+  opacity:.90!important;
+  transform:scale(.90)!important;
+}
+.cleanBattleV238 .cleanEnemyFocusV239 b{
+  color:#e0b95d!important;
+  font-size:5px!important;
+  letter-spacing:.18em!important;
+}
+
+/* Party portrait row: larger and clearer */
+.cleanBattleV238 .posterLivePartyV217{
+  left:10px!important;
+  right:10px!important;
+  bottom:188px!important;
+  height:82px!important;
+  gap:6px!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button{
+  min-height:82px!important;
+  border-radius:8px!important;
+  background:linear-gradient(180deg,#0a2130,#04111b)!important;
+  border:1px solid #3e5664!important;
+  box-shadow:0 6px 16px rgba(0,0,0,.28)!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button.on{
+  border-color:#d0aa56!important;
+  box-shadow:inset 0 0 15px rgba(208,170,86,.08),0 0 12px rgba(208,170,86,.08)!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button img{
+  object-position:center 18%!important;
+}
+.cleanBattleV238 .posterLivePartyV217 .name{
+  font-size:6px!important;
+  color:#eee8dc!important;
+}
+.cleanBattleV238 .posterLivePartyV217 i{
+  height:2px!important;
+}
+
+/* Selected character card */
+.cleanBattleV238 .posterSelectedCardV235{
+  left:10px!important;
+  right:10px!important;
+  bottom:138px!important;
+  min-height:42px!important;
+  padding:6px 8px!important;
+  border:1px solid #6e5d3c!important;
+  border-radius:9px!important;
+  background:linear-gradient(90deg,#0b2434,#06131f)!important;
+}
+
+/* Main commands: stronger hierarchy */
+.cleanBattleV238 .posterThumbBarV234{
+  left:10px!important;
+  right:10px!important;
+  bottom:70px!important;
+  height:60px!important;
+  grid-template-columns:1.35fr 1fr 1fr 1.10fr!important;
+  gap:7px!important;
+}
+.cleanBattleV238 .posterThumbBarV234 button{
+  min-height:60px!important;
+  border-radius:10px!important;
+  box-shadow:0 7px 18px rgba(0,0,0,.30)!important;
+}
+.cleanBattleV238 .posterThumbBarV234 .attack{
+  border:2px solid #d0aa56!important;
+  background:radial-gradient(circle at 28% 24%,#3b2f1d,#0a1014 72%)!important;
+  box-shadow:0 0 0 1px rgba(208,170,86,.16),0 8px 18px rgba(0,0,0,.32)!important;
+}
+.cleanBattleV238 .posterThumbBarV234 .skill{
+  border-color:#815eb0!important;
+  background:linear-gradient(180deg,#211439,#0a1016)!important;
+}
+.cleanBattleV238 .posterThumbBarV234 .support{
+  border-color:#6c8293!important;
+  background:linear-gradient(180deg,#102b39,#07151f)!important;
+}
+.cleanBattleV238 .posterThumbBarV234 .ougi{
+  border-color:#b34d67!important;
+  background:linear-gradient(180deg,#351522,#0d1118)!important;
+}
+.cleanBattleV238 .posterThumbBarV234 button i{
+  font-size:18px!important;
+}
+.cleanBattleV238 .posterThumbBarV234 button b{
+  font-size:10px!important;
+}
+
+/* Secondary controls */
+.cleanBattleV238 .posterThumbSubV234{
+  left:10px!important;
+  bottom:calc(22px + env(safe-area-inset-bottom))!important;
+  gap:6px!important;
+}
+.cleanBattleV238 .posterThumbSubV234 button{
+  min-width:70px!important;
+  height:34px!important;
+  font-size:7.5px!important;
+  border-radius:8px!important;
+}
+
+/* Labels over allies */
+.cleanBattleV238 .cleanActorLabelsV240 span{
+  font-size:5px!important;
+  color:#d6dde2!important;
+}
+.cleanBattleV238 .cleanActorLabelsV240 span.on{
+  color:#e1bd65!important;
+  text-shadow:0 0 8px rgba(225,189,101,.25)!important;
+}
+
+/* Reduce decorative dominance */
+.cleanBattleV238 .cleanStageArchV238,
+.cleanBattleV238 .cleanStagePillarsV239{
+  opacity:.52!important;
+}
+.cleanBattleV238 .cleanStageMoonV238{
+  opacity:.68!important;
+}
+.cleanBattleV238 .cleanStageMistV238{
+  opacity:.65!important;
+}
+
+/* short-screen tuning */
+@media(max-height:760px){
+  .cleanBattleV238 .posterActorStageV237{bottom:232px!important}
+  .cleanBattleV238 .posterAlliesWrapV237 .spriteUnitV160{transform:scale(.94)!important}
+  .cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153{transform:scale(1.00)!important}
+  .cleanBattleV238 .posterLivePartyV217{bottom:174px!important;height:72px!important}
+  .cleanBattleV238 .posterLivePartyV217 button{min-height:72px!important}
+  .cleanBattleV238 .posterSelectedCardV235{bottom:128px!important}
+  .cleanBattleV238 .posterThumbBarV234{bottom:64px!important;height:56px!important}
+  .cleanBattleV238 .posterThumbBarV234 button{min-height:56px!important}
+  .cleanBattleV238 .posterThumbSubV234{bottom:calc(19px + env(safe-area-inset-bottom))!important}
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
