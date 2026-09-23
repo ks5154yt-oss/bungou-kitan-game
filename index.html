@@ -11956,6 +11956,141 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v298-battle-field-final">
+/* V298: stronger battlefield composition fix */
+
+/* Move combatants higher so the stage feels active rather than empty */
+.cleanBattleV238 .posterAlliesWrapV237{
+  left:0!important;
+  right:41%!important;
+  bottom:5%!important;
+  height:48%!important;
+  transform:scale(1.06)!important;
+  transform-origin:left bottom!important;
+  justify-content:space-evenly!important;
+}
+.cleanBattleV238 .posterAlliesWrapV237 > *{
+  margin:0!important;
+  flex:0 1 18%!important;
+  max-width:102px!important;
+}
+
+/* Bring ALL enemies clearly inside the right lane */
+.cleanBattleV238 .posterEnemyWrapV237{
+  left:43%!important;
+  right:1%!important;
+  top:7%!important;
+  bottom:6%!important;
+  width:auto!important;
+  display:flex!important;
+  justify-content:space-evenly!important;
+  align-items:flex-end!important;
+  gap:8px!important;
+  transform:scale(.92)!important;
+  transform-origin:right bottom!important;
+  overflow:visible!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 > *{
+  flex:0 0 38%!important;
+  max-width:132px!important;
+  margin:0!important;
+}
+
+/* Active ally jumps forward more clearly */
+.cleanBattleV238 .posterAlliesWrapV237 .selectedV154,
+.cleanBattleV238 .posterAlliesWrapV237 .active{
+  transform:translateY(-22px) scale(1.14)!important;
+  z-index:20!important;
+  filter:
+    drop-shadow(0 0 13px rgba(228,190,96,.50))
+    drop-shadow(0 12px 12px rgba(0,0,0,.44))!important;
+}
+
+/* Selected enemy = glow, not giant rectangle */
+.cleanBattleV238 .posterEnemyWrapV237 .selected,
+.cleanBattleV238 .posterEnemyWrapV237 .active{
+  transform:translateY(-8px) scale(1.10)!important;
+  z-index:20!important;
+  filter:
+    drop-shadow(0 0 12px rgba(255,78,109,.58))
+    drop-shadow(0 0 24px rgba(255,78,109,.22))
+    drop-shadow(0 12px 12px rgba(0,0,0,.44))!important;
+}
+.cleanBattleV238 .cleanEnemyFocusV239{
+  opacity:.14!important;
+  transform:scale(.48)!important;
+}
+
+/* Make the enemy HUD slightly narrower to free visual space */
+.cleanBattleV238 .posterEnemyCompactV235{
+  right:12px!important;
+  width:45%!important;
+  top:60px!important;
+}
+
+/* Pull ally portrait strip a touch upward and keep it crisp */
+.cleanBattleV238 .posterLivePartyV217{
+  bottom:188px!important;
+  height:84px!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button{
+  min-height:84px!important;
+}
+
+/* Selected character panel */
+.cleanBattleV238 .posterSelectedCardV235{
+  bottom:136px!important;
+  min-height:44px!important;
+}
+
+/* Commands: preserve current good design, slightly stronger active response */
+.cleanBattleV238 .posterThumbBarV234 button:active{
+  transform:translateY(1px) scale(.97)!important;
+}
+.cleanBattleV238 .posterThumbBarV234 .attack{
+  box-shadow:
+    0 0 0 1px rgba(217,179,94,.20),
+    0 0 14px rgba(217,179,94,.10),
+    0 8px 18px rgba(0,0,0,.30)!important;
+}
+
+/* Secondary buttons a touch larger */
+.cleanBattleV238 .posterThumbSubV234 button{
+  min-width:78px!important;
+  height:37px!important;
+}
+
+/* Reduce scenery dominance further */
+.cleanBattleV238 .cleanStageArchV238,
+.cleanBattleV238 .cleanStagePillarsV239{
+  opacity:.22!important;
+}
+.cleanBattleV238 .cleanStageMoonV238{
+  opacity:.44!important;
+}
+.cleanBattleV238 .cleanStageMistV238{
+  opacity:.38!important;
+}
+
+@media(max-height:760px){
+  .cleanBattleV238 .posterAlliesWrapV237{
+    right:42%!important;
+    bottom:4%!important;
+    transform:scale(1.00)!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237{
+    left:45%!important;
+    right:2%!important;
+    transform:scale(.88)!important;
+  }
+  .cleanBattleV238 .posterAlliesWrapV237 .selectedV154,
+  .cleanBattleV238 .posterAlliesWrapV237 .active{
+    transform:translateY(-18px) scale(1.10)!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
