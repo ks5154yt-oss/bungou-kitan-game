@@ -7198,6 +7198,84 @@ body.posterBattleBodyV205{
 }
 </style>
 
+
+<style id="v248-home-layout-fix">
+/* V248: remove the large dead zone and keep story + 3 actions visible */
+.premiumHomeHeroV236{
+  top:64px!important;
+  bottom:auto!important;
+  height:58%!important;
+  max-height:470px!important;
+}
+.premiumHomeHeroArtV236{
+  left:0!important;top:2%!important;
+  width:47%!important;height:86%!important;
+  object-position:center 15%!important;
+}
+.premiumHomeIdentityV236{
+  left:49%!important;right:3%!important;top:10%!important;
+}
+.premiumHomeIdentityV236 h1{font-size:25px!important}
+.premiumHomeIdentityV236 p{font-size:7.5px!important;margin:5px 0 7px!important}
+.premiumHomeDetailV245{min-height:30px!important}
+
+.premiumHomeCommandV236{
+  position:absolute!important;
+  left:10px!important;right:10px!important;
+  bottom:70px!important;
+  gap:5px!important;
+  z-index:8!important;
+}
+.premiumHomeSortieV236{
+  min-height:46px!important;
+  padding:5px 10px!important;
+}
+.premiumHomeSecondaryV236{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:5px!important;
+}
+.premiumHomeSecondaryV236 button{
+  min-width:0!important;
+  min-height:36px!important;
+  padding:4px 6px!important;
+}
+.premiumHomeSecondaryV236 small{font-size:4px!important}
+.premiumHomeSecondaryV236 b{font-size:7.5px!important}
+.premiumHomeShortcutsV236{display:none!important}
+
+.premiumHomeV236 .primaryNavV116{
+  z-index:20!important;
+  min-height:56px!important;
+  bottom:max(7px,env(safe-area-inset-bottom))!important;
+}
+
+/* subtle depth */
+.premiumHomeIdentityV236{
+  text-shadow:0 2px 10px rgba(0,0,0,.72)!important;
+}
+.premiumHomeSortieV236,.premiumHomeSecondaryV236 button,.premiumHomeDetailV245{
+  box-shadow:0 7px 18px rgba(0,0,0,.30),inset 0 1px rgba(255,255,255,.025)!important;
+}
+
+@media(max-width:390px){
+ .premiumHomeHeroV236{height:56%!important;max-height:440px!important}
+ .premiumHomeHeroArtV236{width:46%!important;height:83%!important}
+ .premiumHomeIdentityV236{left:48%!important;top:9%!important}
+ .premiumHomeIdentityV236 h1{font-size:23px!important}
+}
+@media(max-height:760px){
+ .premiumHomeHeroV236{top:60px!important;height:54%!important;max-height:400px!important}
+ .premiumHomeHeroArtV236{height:80%!important;width:45%!important}
+ .premiumHomeIdentityV236{top:8%!important}
+ .premiumHomeIdentityV236 h1{font-size:22px!important}
+ .premiumHomeIdentityV236 p{font-size:6.8px!important}
+ .premiumHomeCommandV236{bottom:66px!important}
+ .premiumHomeSortieV236{min-height:42px!important}
+ .premiumHomeSecondaryV236 button{min-height:33px!important}
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=243"></script>
