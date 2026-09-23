@@ -7919,9 +7919,67 @@ body:not(.battleMode) .primaryNavV116{height:58px!important;min-height:58px!impo
  .formationActionsV255 button{min-height:26px!important}
 }
 </style>
+<style id="v260-readable-one-screen">
+/* V260: approved readable one-screen formation */
+body:not(.battleMode){overflow:hidden!important;height:100dvh!important}
+body:not(.battleMode) #app{height:100dvh!important;overflow:hidden!important}
+.formationV255{
+ height:100dvh!important;min-height:0!important;overflow:hidden!important;
+ padding:3px 10px 66px!important;gap:4px!important
+}
+/* compact header, larger readable type */
+.formationTitleV255{padding:3px 6px 5px!important;min-height:52px!important}
+.formationTitleV255 small{font-size:7px!important;letter-spacing:.28em!important}
+.formationTitleV255 h1{font-size:28px!important;line-height:1!important;margin:1px 0!important}
+.formationTitleV255 p{font-size:8px!important;line-height:1.15!important}
+.formationCopyV255{padding:6px 9px!important;font-size:8px!important;min-height:32px!important}
+
+/* roster */
+.formationRosterV255{padding:6px!important;margin:0!important}
+.formationRosterV255 header{margin-bottom:4px!important}
+.formationRosterV255 header b{font-size:17px!important}.formationRosterV255 header span{font-size:7px!important}.formationRosterV255 header strong{font-size:17px!important}
+.formationSlotsV255{gap:4px!important}
+.formationUnitV255{padding:2px 2px 4px!important}
+.formationUnitV255 img{height:70px!important;margin-bottom:2px!important}
+.formationUnitV255 b{font-size:7.5px!important;line-height:1.1!important}
+.formationUnitV255 small{font-size:6px!important;line-height:1.1!important}
+.formationUnitV255 em{font-size:6px!important;line-height:1.1!important;margin-top:2px!important}
+.formationUnitV255 .rankBadge{font-size:8px!important;padding:2px 5px!important}
+.leaderBadgeV255{font-size:5px!important;padding:2px 4px!important}
+
+/* summary */
+.formationSummaryV255{padding:7px!important;margin:0!important}
+.formationSummaryV255 small{font-size:6px!important}
+.formationSummaryHeadV255 h2{font-size:22px!important;line-height:1!important}
+.formationPowerV255 strong{font-size:25px!important}
+.formationTaglineV255{font-size:7px!important;margin:3px 0!important;padding-top:3px!important}
+.formationInfoV255{gap:4px!important}
+.leaderV255,.bonusV255{padding:4px 5px!important}
+.leaderV255 img{width:34px!important;height:39px!important}
+.leaderV255 small,.bonusV255 small{font-size:6px!important;color:#d4b05c!important}
+.leaderV255 b{font-size:11px!important}.leaderV255 span{font-size:6px!important}
+.bonusV255 span{font-size:6.5px!important;line-height:1.25!important}
+.formationReasonV257{font-size:6px!important;margin-top:3px!important;padding:3px 5px!important}
+
+/* buttons: legible labels */
+.formationActionsV255{gap:4px!important;margin-top:4px!important;grid-template-columns:1fr 1fr 1.18fr!important}
+.formationActionsV255 button{min-height:32px!important;padding:4px!important;font-size:7.5px!important;font-weight:700!important}
+.formationActionsV255 .save{font-size:8px!important}
+
+/* nav readability */
+body:not(.battleMode) .primaryNavV116{height:58px!important;min-height:58px!important}
+body:not(.battleMode) .primaryNavV116 button{font-size:8px!important}
+@media(max-height:760px){
+ .formationTitleV255{min-height:46px!important}.formationTitleV255 h1{font-size:25px!important}
+ .formationUnitV255 img{height:62px!important}
+ .formationUnitV255 b{font-size:7px!important}
+ .formationSummaryHeadV255 h2{font-size:20px!important}.formationPowerV255 strong{font-size:22px!important}
+ .formationActionsV255 button{min-height:29px!important;font-size:7px!important}
+}
+</style>
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=259"></script>
+<script src="app.js?v=260"></script>
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
 </script></body></html>
