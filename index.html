@@ -8562,6 +8562,64 @@ body:not(.battleMode) #app{overflow:hidden!important}
 }
 </style>
 
+
+<style id="v272-home-growth-polish">
+.premiumHomeCommandV236{left:10px!important;right:10px!important;bottom:78px!important;gap:8px!important}
+.premiumHomeSecondaryV236{gap:8px!important}
+.premiumHomeSecondaryV236 button{
+  min-height:52px!important;padding:9px 10px!important;border-radius:11px!important;
+  background:linear-gradient(180deg,rgba(11,35,49,.98),rgba(4,15,23,.98))!important;
+  border:1px solid rgba(86,111,126,.9)!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.36),inset 0 1px rgba(255,255,255,.04)!important
+}
+.premiumHomeSecondaryV236 button small{font-size:6.5px!important;letter-spacing:.08em!important}
+.premiumHomeSecondaryV236 button b{font-size:11px!important;line-height:1.15!important}
+.premiumHomeSecondaryV236 button:active{
+  transform:scale(.97)!important;border-color:#d0aa56!important;
+  background:linear-gradient(180deg,rgba(19,48,62,.98),rgba(7,23,33,.98))!important
+}
+
+.growthRosterV115{gap:7px!important}
+.growthRosterV115>button{
+  position:relative!important;grid-template-columns:56px 1fr!important;min-height:92px!important;
+  padding:6px!important;border-radius:10px!important;
+  background:radial-gradient(circle at 85% 15%,rgba(181,145,67,.08),transparent 28%),linear-gradient(180deg,#0a1f2d,#05131d)!important;
+  border:1px solid #3c5667!important;box-shadow:0 6px 16px rgba(0,0,0,.28)!important;overflow:hidden!important
+}
+.growthRosterV115>button.selected{
+  border:2px solid #d0a94f!important;
+  background:radial-gradient(circle at 85% 15%,rgba(208,169,79,.14),transparent 30%),linear-gradient(180deg,#102a3b,#071723)!important
+}
+.growthRosterV115 img{
+  width:56px!important;height:64px!important;object-fit:contain!important;object-position:center!important;
+  background:#071522!important;border-radius:7px!important
+}
+.growthRosterV115 section{
+  min-width:0!important;display:flex!important;flex-direction:column!important;justify-content:center!important;gap:2px!important
+}
+.growthRosterV115 section b{
+  font-size:8.5px!important;line-height:1.1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important
+}
+.growthRosterV115 section strong{font-size:9px!important;line-height:1.1!important;color:#e0b959!important}
+.growthRosterV115 section small{
+  font-size:6.5px!important;line-height:1.15!important;color:#b78fc3!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important
+}
+.growthRosterHeadV115>b{font-size:13px!important}
+.growthRosterHeadV115 input,.growthRosterHeadV115 select{font-size:8.5px!important;min-height:32px!important}
+
+@media(max-height:760px){
+  .premiumHomeCommandV236{bottom:72px!important}
+  .premiumHomeSecondaryV236 button{min-height:47px!important;padding:7px 9px!important}
+  .premiumHomeSecondaryV236 button b{font-size:10px!important}
+  .growthRosterV115>button{min-height:84px!important;grid-template-columns:50px 1fr!important;padding:5px!important}
+  .growthRosterV115 img{width:50px!important;height:58px!important}
+  .growthRosterV115 section b{font-size:8px!important}
+  .growthRosterV115 section strong{font-size:8.5px!important}
+  .growthRosterV115 section small{font-size:6px!important}
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
