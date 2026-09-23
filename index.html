@@ -7816,9 +7816,39 @@ body:not(.battleMode) .primaryNavV116{
 .formationSummaryV255{margin-top:7px!important;padding:9px!important}.formationSummaryHeadV255 h2{font-size:23px!important}.formationPowerV255 strong{font-size:25px!important}.formationTaglineV255{margin:6px 0!important;padding-top:6px!important;font-size:8px!important}.formationInfoV255{gap:6px!important}.leaderV255,.bonusV255{padding:6px!important}.leaderV255 img{width:42px!important;height:48px!important}.leaderV255 b{font-size:12px!important}.leaderV255 span,.bonusV255 span{font-size:6.5px!important}.formationActionsV255{gap:5px!important;margin-top:7px!important}.formationActionsV255 button{min-height:36px!important;padding:5px!important;font-size:7px!important}
 @media(max-width:390px){.formationUnitV255 img{height:98px!important}.formationTitleV255 h1{font-size:25px!important}.formationSummaryHeadV255 h2{font-size:21px!important}.formationPowerV255 strong{font-size:23px!important}}
 </style>
+<style id="v257-formation-polish">
+/* V257: expose actions, protect content from fixed nav, add recommendation feedback */
+.formationV255{padding-bottom:150px!important}
+.formationRosterV255{padding:7px!important}
+.formationUnitV255 img{height:98px!important}
+.formationUnitV255 b{font-size:6.8px!important}
+.formationSummaryV255{padding:8px!important}
+.formationSummaryHeadV255 h2{font-size:21px!important}
+.formationPowerV255 strong{font-size:23px!important}
+.formationTaglineV255{font-size:7.5px!important}
+.formationInfoV255{grid-template-columns:1.15fr 1fr!important}
+.leaderV255 img{width:38px!important;height:44px!important}
+.formationReasonV257{
+ margin-top:7px;padding:6px 8px;border-left:2px solid #c4a052;
+ background:linear-gradient(90deg,rgba(196,160,82,.10),transparent);
+ color:#c9c1b3;font-size:7px;line-height:1.45
+}
+.formationActionsV255{position:relative!important;z-index:5!important;margin-top:6px!important}
+.formationActionsV255 button{min-height:38px!important;font-size:7px!important}
+body:not(.battleMode) .primaryNavV116{
+ bottom:0!important;z-index:40!important;
+ box-shadow:0 -12px 30px rgba(0,0,0,.78)!important
+}
+@media(max-width:390px){
+ .formationV255{padding-bottom:145px!important}
+ .formationUnitV255 img{height:91px!important}
+ .formationActionsV255{grid-template-columns:1fr 1fr!important}
+ .formationActionsV255 .save{grid-column:1/-1!important}
+}
+</style>
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=256"></script>
+<script src="app.js?v=257"></script>
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
 </script></body></html>
