@@ -8188,9 +8188,44 @@ body:not(.battleMode) .primaryNavV116{height:56px!important;min-height:56px!impo
  .formationActionsV255 .save{min-height:32px!important}
 }
 </style>
+<style id="v266-formation-final-fit">
+/* V266: preserve portrait readability, fit all 3 actions above nav */
+.formationSummaryV255{padding:5px 7px 4px!important}
+.formationInfoV255{margin-bottom:2px!important}
+.formationReasonV257{display:none!important}
+.formationActionsV255{
+ display:grid!important;
+ grid-template-columns:1fr 1fr 1.18fr!important;
+ gap:4px!important;
+ margin-top:3px!important;
+ margin-bottom:0!important
+}
+.formationActionsV255 button{
+ min-height:32px!important;
+ max-height:32px!important;
+ padding:3px 4px!important;
+ font-size:8px!important;
+ white-space:nowrap!important
+}
+.formationActionsV255 .save{
+ grid-column:auto!important;
+ min-height:32px!important;
+ max-height:32px!important;
+ font-size:8px!important
+}
+/* protect the action row from the fixed nav */
+.formationV255{padding-bottom:60px!important}
+body:not(.battleMode) .primaryNavV116{height:55px!important;min-height:55px!important}
+
+/* prevent artwork-internal lower labels from visually colliding with UI labels */
+.formationUnitV255 img{
+ display:block!important;
+ clip-path:inset(0 0 3px 0)!important;
+}
+</style>
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=265"></script>
+<script src="app.js?v=266"></script>
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
 </script></body></html>
