@@ -12091,6 +12091,138 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v299-battle-lane-fit">
+/* V299: keep all enemies on-screen and tighten battlefield composition */
+
+/* Allies stay readable, but leave more room for the enemy lane */
+.cleanBattleV238 .posterAlliesWrapV237{
+  left:0!important;
+  right:43%!important;
+  bottom:5%!important;
+  height:47%!important;
+  transform:scale(1.03)!important;
+  transform-origin:left bottom!important;
+  justify-content:space-evenly!important;
+}
+.cleanBattleV238 .posterAlliesWrapV237 > *{
+  flex:0 1 18%!important;
+  max-width:96px!important;
+}
+
+/* Active ally still steps forward */
+.cleanBattleV238 .posterAlliesWrapV237 .selectedV154,
+.cleanBattleV238 .posterAlliesWrapV237 .active{
+  transform:translateY(-20px) scale(1.12)!important;
+  z-index:20!important;
+}
+
+/* Enemy lane: fit up to three enemies cleanly inside the screen */
+.cleanBattleV238 .posterEnemyWrapV237{
+  left:54%!important;
+  right:3%!important;
+  top:10%!important;
+  bottom:6%!important;
+  display:flex!important;
+  justify-content:space-around!important;
+  align-items:flex-end!important;
+  gap:4px!important;
+  transform:scale(.80)!important;
+  transform-origin:right bottom!important;
+  overflow:visible!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 > *{
+  flex:0 0 30%!important;
+  max-width:110px!important;
+  min-width:70px!important;
+  margin:0!important;
+}
+
+/* Selected enemy gets the emphasis instead of being oversized */
+.cleanBattleV238 .posterEnemyWrapV237 .selected,
+.cleanBattleV238 .posterEnemyWrapV237 .active{
+  transform:translateY(-10px) scale(1.12)!important;
+  z-index:25!important;
+  filter:
+    drop-shadow(0 0 12px rgba(255,80,112,.62))
+    drop-shadow(0 0 22px rgba(255,80,112,.24))
+    drop-shadow(0 10px 12px rgba(0,0,0,.45))!important;
+}
+
+/* Make target cue compact and close to the enemy */
+.cleanBattleV238 .cleanEnemyFocusV239{
+  opacity:.10!important;
+  transform:scale(.42)!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 .selected:after,
+.cleanBattleV238 .posterEnemyWrapV237 .active:after{
+  content:"TARGET"!important;
+  position:absolute!important;
+  top:-13px!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  padding:2px 5px!important;
+  border-radius:999px!important;
+  background:rgba(72,8,21,.86)!important;
+  border:1px solid rgba(255,112,139,.64)!important;
+  color:#ff91a6!important;
+  font-size:4.5px!important;
+  font-weight:800!important;
+  letter-spacing:.14em!important;
+  white-space:nowrap!important;
+}
+
+/* Enemy HUD shifts slightly left to avoid competing with enemies */
+.cleanBattleV238 .posterEnemyCompactV235{
+  top:58px!important;
+  right:12px!important;
+  width:46%!important;
+}
+
+/* Raise SD combat line a little for stronger face-off */
+.cleanBattleV238 .posterActorStageV237{
+  top:54px!important;
+  bottom:240px!important;
+}
+
+/* Preserve the already-good lower HUD */
+.cleanBattleV238 .posterLivePartyV217{
+  bottom:186px!important;
+}
+.cleanBattleV238 .posterSelectedCardV235{
+  bottom:134px!important;
+}
+
+/* Background becomes quieter so combatants read first */
+.cleanBattleV238 .cleanStageArchV238,
+.cleanBattleV238 .cleanStagePillarsV239{
+  opacity:.18!important;
+}
+.cleanBattleV238 .cleanStageMoonV238{
+  opacity:.38!important;
+}
+.cleanBattleV238 .cleanStageMistV238{
+  opacity:.32!important;
+}
+
+/* short iPhone safety */
+@media(max-height:760px){
+  .cleanBattleV238 .posterAlliesWrapV237{
+    right:44%!important;
+    transform:scale(.98)!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237{
+    left:55%!important;
+    right:4%!important;
+    transform:scale(.76)!important;
+  }
+  .cleanBattleV238 .posterAlliesWrapV237 .selectedV154,
+  .cleanBattleV238 .posterAlliesWrapV237 .active{
+    transform:translateY(-16px) scale(1.09)!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
