@@ -7783,6 +7783,32 @@ body:not(.battleMode) .primaryNavV116{
 }
 </style>
 
+
+<style id="v255-real-formation">
+.formationV255{min-height:100dvh;padding:10px 10px 92px;background:radial-gradient(circle at 78% 5%,#17364a55,transparent 26%),linear-gradient(180deg,#061522,#020910 72%,#071522);color:#eee9df}
+.formationTitleV255{display:flex;align-items:flex-end;justify-content:space-between;padding:10px 6px 12px;border-bottom:1px solid #8f743d}
+.formationTitleV255 small,.formationSummaryV255 small{color:#b99a55;letter-spacing:.22em;font-size:7px}
+.formationTitleV255 h1{font:32px/1.05 serif;margin:3px 0}.formationTitleV255 p{font:10px/1.4 serif;color:#c9c1b3;margin:0}
+.formationCopyV255{padding:8px 10px;border:1px solid #8f743d;border-radius:8px;background:#06131f;color:#e9dfc9}
+.formationRosterV255{margin-top:10px;padding:10px;border:1px solid #806a3d;border-radius:12px;background:#06131fe8;box-shadow:0 12px 30px #0008}
+.formationRosterV255 header{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-bottom:8px}.formationRosterV255 header b{font:18px serif}.formationRosterV255 header span{font-size:8px;color:#aab5bd}.formationRosterV255 header strong{font:18px serif}
+.formationSlotsV255{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.formationUnitV255,.formationSlotsV255 .empty{position:relative;min-width:0;padding:4px 4px 6px;border:1px solid #405867;border-radius:9px;background:linear-gradient(#0b2332,#04111b);color:#eee;overflow:hidden}
+.formationUnitV255 img{width:100%;height:128px;object-fit:cover;object-position:center 17%;border-radius:6px;display:block;margin-bottom:5px}
+.formationUnitV255 b{display:block;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.formationUnitV255 small{font-size:6px}.formationUnitV255 em{display:block;margin-top:3px;color:#d2b05d;font-size:6px;font-style:normal}
+.formationUnitV255 .rankBadge{position:absolute;z-index:2;top:7px;left:7px;padding:4px 7px;background:#06101be8;border:1px solid #c8a24d;border-radius:5px;color:#e8c86d;font:700 10px serif}
+.leaderBadgeV255{position:absolute;z-index:2;right:6px;top:7px;padding:3px 5px;border-radius:4px;background:#c49a43;color:#081018;font-size:6px;font-weight:800}
+.formationSlotsV255 .empty{min-height:164px;display:grid;place-items:center}.formationSlotsV255 .empty span{font-size:28px;color:#b99a55}
+.formationSummaryV255{margin-top:10px;padding:12px;border:1px solid #a78743;border-radius:12px;background:radial-gradient(circle at 88% 12%,#b8964422,transparent 28%),linear-gradient(135deg,#0b283a,#04111b);box-shadow:0 12px 30px #0008}
+.formationSummaryHeadV255{display:flex;justify-content:space-between;align-items:end}.formationSummaryHeadV255 h2{font:28px serif;margin:2px 0}.formationPowerV255{text-align:right}.formationPowerV255 strong{display:block;color:#d4b05c;font:30px serif}
+.formationTaglineV255{font:11px serif;color:#bdb5a7;border-top:1px solid #5e5238;padding-top:8px}
+.formationInfoV255{display:grid;grid-template-columns:1.2fr 1fr;gap:8px}.leaderV255,.bonusV255{padding:8px;border:1px solid #304b5c;border-radius:8px;background:#061522aa}
+.leaderV255{display:flex;gap:8px;align-items:center}.leaderV255 img{width:52px;height:62px;object-fit:cover;border-radius:6px}.leaderV255 b,.leaderV255 span{display:block}.leaderV255 b{font:15px serif}.leaderV255 span{font-size:7px;color:#aab5bd}
+.bonusV255{display:grid;gap:3px}.bonusV255 span{display:flex;justify-content:space-between;font-size:8px}.bonusV255 b{color:#d4b05c}
+.formationActionsV255{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:6px;margin-top:10px}.formationActionsV255 button{min-height:42px;border:1px solid #536b78;border-radius:8px;background:linear-gradient(#0a2637,#04131e);color:#eee;font-size:8px}.formationActionsV255 .save{border-color:#c29c4b;background:linear-gradient(#d1ad5b,#9b7634);color:#111;font-weight:800}
+@media(max-width:390px){.formationUnitV255 img{height:116px}.formationTitleV255 h1{font-size:28px}.formationSummaryHeadV255 h2{font-size:25px}.formationPowerV255 strong{font-size:27px}}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=243"></script>

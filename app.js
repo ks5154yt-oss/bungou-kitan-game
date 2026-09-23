@@ -688,6 +688,14 @@ function openFormationSwap(pos){
  o.innerHTML=`<div class=resultCard><div class=collectionBar><div><small>FORMATION ${S.set+1}</small><h2>${pos+1}枠目を交代</h2></div><button class=btn data-swap-close=1>閉じる</button></div><div class=swapGrid>${C.map((c,i)=>`<button class="swapChar ${i===current?"selected":""}" data-swap="${pos}:${i}"><img src="${characterImage(c[0])}"><b>${c[1]}</b><small>Lv.${lv(i)} / ${c[4]}</small></button>`).join("")}</div></div>`;
  document.body.appendChild(o)
 }
+function maxPowerFormation(){
+ ensureUnitSets();
+ let pick=C.map((_,i)=>i).sort((a,b)=>boostedPower(b)-boostedPower(a)).slice(0,6);
+ S.sets[S.set]=pick;
+ save();persistentSaveWrite();
+ toast("戦力最高編成：総戦力 "+unitPower(pick).toLocaleString());
+ return party()
+}
 function autoFormation(){
  ensureUnitSets();let roles=["回復","防御","支援","攻撃","速度","妨害"],used=new Set(),pick=[];
  for(let role of roles){let best=-1,bp=-1;C.forEach((c,i)=>{if(!used.has(i)&&c[4]===role&&boostedPower(i)>bp){best=i;bp=boostedPower(i)}});if(best>=0){pick.push(best);used.add(best)}}
@@ -789,8 +797,60 @@ function loadLoadout(slot){
  ensureUnitSets();S.sets[S.set]=l.team.map(x=>Math.max(0,Math.min(C.length-1,+x||0))).slice(0,6);while(S.sets[S.set].length<6)S.sets[S.set].push(S.sets[S.set].length);
  if(l.tactic&&TACTICS[l.tactic])S.tactic=l.tactic;save();toast("書架"+(slot+1)+"を読み込み");return party()
 }
-function party(){ensureUnitSets();let a=S.sets[S.set],syn=teamSynergy(a);shell(`${formationEditorV136()}${uiPageHead("party")}<div class=p><div class=formationCine><div class=collectionBar><div><small>FORMATION ${S.set+1}</small><h1>文壇編成</h1></div><div class=power>${unitPower(a).toLocaleString()}</div></div><div class=systemStrip><div>司書Lv<b>${accountLevel()}</b></div><div>相性<b>${syn.score}</b></div><div>リンク<b>${links(a).length}</b></div><div>装備<b>${S.gear?.length||0}</b></div></div></div>${(()=>{let r=teamReadiness();return `${(()=>{let a=S.sets[S.set],sy=literarySynergy(a),rb=teamRoleBonus(a);return `<div class=formationTools><div class=formationSearch><input data-party-search value="${String(S.qol?.partySearch||"").replace(/"/g,"&quot;")}" placeholder="名前・能力で検索"></div><div class=partySortBar><b>並べ替え</b><button data-party-sort=power>戦闘力</button><button data-party-sort=rank>ランク</button><button data-party-sort=level>Lv</button><button data-party-sort=name>名前</button></div><div class=partyFilterBar>${["all","UR","SSR","SR","攻撃","妨害","支援","回復","modern"].map(x=>`<button class="${S.qol?.partyFilter===x?"on":""}" data-party-filter="${x}">${x==="all"?"全員":x==="modern"?"現代":x}</button>`).join("")}</div></div>${(()=>{let mb=modernLiteraryBonus(S.sets?.[S.set]||[]);return `<div class="modernBonus ${mb.rate?"active":""}"><div><small>現代文豪ボーナス</small><b>${mb.name||"未発動"}</b></div><strong>${mb.count}/6</strong><span>${mb.rate?`戦闘力 +${Math.round(mb.rate*100)}%　初動ゲージ +${mb.gauge}%`:"2人以上で発動"}</span></div>`})()}${(()=>{let t=S.sets?.[S.set]||[],bb=bundanBonus(t);return `<div class="bundanBonus ${bb.rate?"active":""}"><div><small>文壇ボーナス</small><b>${bb.name}</b></div><strong>${bb.count}/6</strong><span>${bb.rate?`戦闘力 +${Math.round(bb.rate*100)}%　初動ゲージ +${bb.gauge}%`:"同じ文壇系統を3人以上編成で発動"}</span></div>`})()}${partySummaryV131()}${formationRoleStripV132()}${formationPresetUIV132()}${formationSelectedPanel()}${formationAdvicePanel()}<div class=uiSectionTitle>編成ステータス</div><div class=formationSummary><span>戦術<b>${currentTactic().name}</b></span><span>文学共鳴<b>+${sy.score}%</b></span><span>役割<b>${new Set(a.map(i=>C[i][4])).size}種</b></span><span>戦闘力<b>${unitPower(a).toLocaleString()}</b></span></div>`})()}<div class=readiness><div class=collectionBar><b>出撃準備度</b><span class=gold>${r.score}%</span></div><div class=readinessGrid><span>戦闘力<b>${r.power.toLocaleString()}</b></span><span>平均Lv<b>${r.avg.toFixed(0)}</b></span><span>3枠装備<b>${r.geared}/6</b></span><span>役割<b>${r.roles}種</b></span></div></div>`})()}<div class=formationTools><button class="btn autoFormationBtn" data-autoformation=1>✨ おすすめ編成</button><button class="btn prepareBtn" data-prepareteam=1>⚡ 編成＋装備を一括最適化</button></div><div class=presetCine>${S.sets.map((_,i)=>`<button class="btn ${i===S.set?"active":""}" data-set="${i}">${i+1}</button>`).join("")}</div>${(()=>{let ls=literarySynergy(a);return `${(()=>{let rb=teamRoleBonus(a);return `<div class=loadoutPanel><div class=collectionBar><b>編成書架</b><small>3 SLOT</small></div><div class=loadoutGrid>${[0,1,2].map(n=>`<div><b>書架${n+1}</b><small>${S.savedLoadouts[n]?`${S.savedLoadouts[n].team.length}人 / ${TACTICS[S.savedLoadouts[n].tactic]?.name||"均衡"}`:"未保存"}</small><div><button class=btn data-loadout-save="${n}">保存</button><button class=btn data-loadout-load="${n}" ${S.savedLoadouts[n]?"":"disabled"}>読込</button></div></div>`).join("")}</div></div><div class=tacticPanel><div class=collectionBar><b>戦術方針</b><span class=gold>${currentTactic().name}</span></div><div class=tacticGrid>${Object.entries(TACTICS).map(([k,t])=>`<button class="btn ${S.tactic===k?"active":""}" data-tactic="${k}"><b>${t.name}</b><small>${t.desc}</small></button>`).join("")}</div></div><div class=roleBonusPanel><div class=collectionBar><b>役割ボーナス</b><span>6人編成</span></div><div class=roleBonusGrid><span>⚔ 攻撃<b>+${rb.atk}%</b></span><span>✚ 回復<b>+${rb.heal}%</b></span><span>🛡 防御<b>+${rb.guard}</b></span><span>⚡ ゲージ<b>+${rb.gauge}</b></span><span>☾ 弱体<b>+${rb.weaken}</b></span><span>✦ 特殊<b>+${rb.special}%</b></span></div></div>`})()}<div class=literarySynergyPanel><div class=collectionBar><b>文学共鳴</b><span class=gold>+${ls.score}%</span></div><div class=synergyTags>${ls.tags.map(x=>`<span>✦ ${x}</span>`).join("")||"<span>役割を組み合わせて共鳴を発生させよう</span>"}</div><small>攻撃補正 +${ls.atk}% / 防御補正 +${ls.def}% / ゲージ補正 +${ls.gauge}%</small></div>`})()}<div class=synergyPanel><div class=collectionBar><b>編成相性</b><span class=synergyScore>${syn.score}</span></div><div class=synergyTags><span>${syn.label}</span><span>攻撃 ${syn.atk}</span><span>支援 ${syn.sup}</span><span>妨害 ${syn.ctrl}</span></div></div><div class=partyGridCine>${a.map((i,pos)=>{let c=C[i],sp=gearSpecialization(i);return `<div class=partyCine><span class=slotNo>${pos+1}</span><span class=rarTag>${charRank(i)}</span><img src="${characterImage(c[0])}"><b>${c[1]}</b><small>Lv.${lv(i)}/${cap(i)}　${sp.type}</small><div class=gold>${c[2]}</div><small class=literaryTrait>✦ ${literaryTrait(i).name}</small><button class=btn data-change="${pos}">交代</button></div>`}).join("")}</div><div class=card><h3>文壇リンク</h3>${links(a).map(x=>`<p class=gold>${x}</p>`).join("")||"<small>組み合わせでリンク効果が発生します。</small>"}</div></div>`)}
-const BATTLE_ENEMIES=[{name:"頁喰い",trait:"序章異形",desc:"基本型。役割スキルを試す相手。",rage:5},{name:"黒栞の司書",trait:"封印",desc:"4ターンごとに味方ゲージを削る。",rage:4},{name:"深海の校正者",trait:"侵食",desc:"長期戦ほど反撃が強くなる。",rage:4},{name:"終稿の審判",trait:"終稿",desc:"HP40%以下で攻撃が激化する。",rage:3}];
+function party(){
+ ensureUnitSets();
+ let a=S.sets[S.set]||[],syn=teamSynergy(a),rb=teamRoleBonus(a),ls=literarySynergy(a);
+ let leader=a[0]??0;
+ shell(`<main class=formationV255>
+   <section class=formationTitleV255>
+     <div><small>FORMATION</small><h1>編成</h1><p>言葉は、いつだって、誰かを救う。</p></div>
+     <button class=formationCopyV255 data-loadout-save="0">編成保存</button>
+   </section>
+
+   <section class=formationRosterV255>
+     <header><b>6人編成</b><span>枠をタップして文豪を変更</span><strong>${a.length}/6</strong></header>
+     <div class=formationSlotsV255>
+       ${Array.from({length:6},(_,pos)=>{
+         let i=a[pos];
+         if(i==null)return `<button class=empty data-formation-slot="${pos}"><span>＋</span><small>空き枠</small></button>`;
+         let c=C[i],role=c[4];
+         return `<button class=formationUnitV255 data-formation-slot="${pos}">
+           <span class=rankBadge data-rank="${charRank(i)}">${charRank(i)}</span>
+           ${pos===0?`<span class=leaderBadgeV255>隊長</span>`:""}
+           <img src="${characterImage(c[0])}">
+           <b>${c[1]}</b><small>Lv.${lv(i)}</small>
+           <em>${role}</em>
+         </button>`
+       }).join("")}
+     </div>
+   </section>
+
+   <section class=formationSummaryV255>
+     <div class=formationSummaryHeadV255>
+       <div><small>FORMATION ${S.set+1}</small><h2>文豪編成</h2></div>
+       <div class=formationPowerV255><small>総戦力</small><strong>${unitPower(a).toLocaleString()}</strong></div>
+     </div>
+     <p class=formationTaglineV255>── まだ見ぬ物語を、共に。</p>
+     <div class=formationInfoV255>
+       <div class=leaderV255>
+         <img src="${characterImage(C[leader][0])}">
+         <div><small>隊長</small><b>${C[leader][1]}</b><span>全体を支える先導役</span></div>
+       </div>
+       <div class=bonusV255>
+         <small>編成効果</small>
+         <span>攻撃力 <b>+${rb.atk}%</b></span>
+         <span>支援力 <b>+${Math.max(0,rb.heal||0)}%</b></span>
+         <span>文学共鳴 <b>+${ls.score}%</b></span>
+       </div>
+     </div>
+     <div class=formationActionsV255>
+       <button data-maxformation=1>⚔ 戦力最高編成</button>
+       <button data-autoformation=1>📖 おすすめ編成</button>
+       <button class=save data-loadout-save="0">✓ 編成を保存</button>
+     </div>
+   </section>
+ </main>`)
+}
 function roleSkill(i){let r=C[i][4],L=lv(i);if(r==="攻撃")return{name:"強襲",damage:160+L*3};if(r==="回復")return{name:"再読",damage:75+L,heal:18+Math.floor(L/15)};if(r==="防御")return{name:"堅牢",damage:90+L,guard:3};if(r==="支援")return{name:"推敲",damage:85+L,gauge:20};if(r==="速度")return{name:"速筆",damage:125+L*2,gauge:10};if(r==="妨害")return{name:"錯綜",damage:105+L*2,debuff:3};return{name:"異稿",damage:110+L*2,heal:8,gauge:8,guard:1}}
 function openHowToPlay(){let old=document.getElementById("howToPlay");if(old)old.remove();let o=document.createElement("div");o.id="howToPlay";o.className="resultOverlay";o.innerHTML=`<div class="resultCard howCard"><div class=collectionBar><div><small>QUICK GUIDE</small><h2>30秒でわかる遊び方</h2></div><button class=btn data-how-close=1>閉じる</button></div><div class=howSteps><div><b>1. 出撃</b><small>EXP・原稿片・レア装備を集める。</small></div><div><b>2. 召喚</b><small>重複でLv上限50→最大150。</small></div><div><b>3. 育成</b><small>装備3枠と蔵書平均Lvで全体を強化。</small></div><div><b>4. 編成</b><small>6人の役割と文壇リンクを組み合わせる。</small></div></div><div class=roleLegend>${["攻撃","回復","防御","支援","速度","妨害","特殊"].map(x=>`<span>${x}</span>`).join("")}</div><button class=btn data-how-start=1>第1章へ</button></div>`;document.body.appendChild(o)}
 function chapterReward(ch){return[{name:"第一章踏破",tickets:50,gold:500,ink:0},{name:"第二章踏破",tickets:75,gold:800,ink:30},{name:"第三章踏破",tickets:100,gold:1200,ink:60},{name:"第四章踏破",tickets:150,gold:2000,ink:100}][ch]}
@@ -7380,6 +7440,7 @@ let lsave=e.target.closest("[data-loadout-save]");if(lsave){if(!actionLock(400))
 let lload=e.target.closest("[data-loadout-load]");if(lload){if(!actionLock(400))return;return loadLoadout(+lload.dataset.loadoutLoad)}
 let tac=e.target.closest("[data-tactic]");if(tac){S.tactic=tac.dataset.tactic;save();toast("戦術："+currentTactic().name);return party()}
 let prep=e.target.closest("[data-prepareteam]");if(prep){if(!actionLock(600))return;prepareTeam();toast("編成と装備を最適化しました");return}
+let mfm=e.target.closest("[data-maxformation]");if(mfm){if(!actionLock(500))return;return maxPowerFormation()}
 let afm=e.target.closest("[data-autoformation]");if(afm){if(!actionLock(500))return;return autoFormation()}
 let sc=e.target.closest("[data-swap-close]");if(sc){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
 let swp=e.target.closest("[data-swap]");if(swp){let [p,i]=swp.dataset.swap.split(":").map(Number);ensureUnitSets();S.sets[S.set][p]=i;save();let o=e.target.closest(".resultOverlay");if(o)o.remove();return party()}
