@@ -10171,6 +10171,104 @@ body:not(.battleMode) .primaryNavV116{
 }
 </style>
 
+
+<style id="v288-sortie-final-clean">
+/* V288: restore full titles and keep shortcut buttons visible above the nav */
+
+/* top cards: more room for text, slightly smaller action buttons */
+.stageQuickV131{
+  min-height:82px!important;
+  padding:9px 86px 9px 13px!important;
+}
+.stageQuickV131 b{
+  display:block!important;
+  max-width:none!important;
+  font-size:15.5px!important;
+  line-height:1.12!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+.stageQuickV131>button{
+  min-width:72px!important;
+  min-height:40px!important;
+  font-size:9px!important;
+}
+
+.resumeStage{
+  min-height:86px!important;
+  padding:9px 88px 9px 13px!important;
+}
+.resumeStage h1{
+  max-width:none!important;
+  font-size:15.5px!important;
+  line-height:1.12!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+.resumeStage>button{
+  min-width:74px!important;
+  min-height:40px!important;
+  font-size:9px!important;
+}
+
+/* compact the 2x2 grid just enough to free space for shortcuts */
+.stageSelectTitle{
+  margin:5px 10px 3px!important;
+}
+.quickStageGrid{
+  gap:7px!important;
+}
+.quickStageGrid>button{
+  min-height:82px!important;
+  padding:8px!important;
+}
+.quickStageGrid>button>b{
+  font-size:13px!important;
+  margin-top:3px!important;
+}
+.quickStageGrid>button>small,
+.quickStageGrid>button>span{
+  font-size:6px!important;
+}
+
+/* shortcuts must always be visible above bottom nav */
+.sortieShortcuts{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+  padding:7px 10px 0!important;
+  position:relative!important;
+  z-index:8!important;
+}
+.sortieShortcuts>button{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  min-height:42px!important;
+  font-size:9px!important;
+}
+
+/* add a guaranteed safety buffer above fixed nav */
+.sortieV102{
+  padding-bottom:108px!important;
+}
+body:not(.battleMode) .primaryNavV116{
+  min-height:52px!important;
+  height:52px!important;
+  z-index:50!important;
+}
+
+/* no decorative artifacts */
+.stageQuickV131::before,.stageQuickV131::after,
+.resumeStage::before,.resumeStage::after,
+.quickStageGrid>button::before,.quickStageGrid>button::after{
+  display:none!important;
+  content:none!important;
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
