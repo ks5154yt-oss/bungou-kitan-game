@@ -9994,6 +9994,96 @@ body:not(.battleMode) .primaryNavV116{
 }
 </style>
 
+
+<style id="v286-sortie-fill-screen">
+/* V286: use the large empty lower area while preserving one-screen operation */
+
+/* Give the stage area more visual weight */
+.stageSelectTitle{
+  margin:10px 10px 6px!important;
+}
+.stageSelectTitle b{
+  font-size:20px!important;
+}
+.stageSelectTitle small{
+  font-size:8px!important;
+}
+
+/* Expand the 2x2 stage cards into the free vertical space */
+.quickStageGrid{
+  gap:10px!important;
+}
+.quickStageGrid>button{
+  min-height:122px!important;
+  padding:12px!important;
+  border-radius:12px!important;
+}
+.quickStageGrid>button>span{
+  font-size:7px!important;
+}
+.quickStageGrid>button>b{
+  font-size:16px!important;
+  margin-top:6px!important;
+}
+.quickStageGrid>button>small{
+  font-size:7px!important;
+  margin-top:8px!important;
+}
+
+/* Keep selected stage strong */
+.quickStageGrid>button.last{
+  border:2px solid #66caff!important;
+  box-shadow:
+    0 0 0 2px rgba(102,202,255,.13),
+    0 0 20px rgba(74,184,255,.30),
+    inset 0 1px rgba(255,255,255,.04)!important;
+}
+
+/* Locked stages remain visible enough to understand */
+.quickStageGrid>button:disabled{
+  opacity:.55!important;
+}
+
+/* Make the chapter-jump buttons use more of the free area */
+.sortieShortcuts{
+  padding:12px 10px 0!important;
+  gap:10px!important;
+}
+.sortieShortcuts>button{
+  min-height:58px!important;
+  font-size:11px!important;
+  border-radius:11px!important;
+}
+
+/* Slight breathing room between the major blocks */
+.stageQuickV131{
+  margin-top:10px!important;
+  margin-bottom:10px!important;
+}
+.resumeStage{
+  margin-top:10px!important;
+  margin-bottom:10px!important;
+}
+
+/* Still protect the fixed bottom navigation */
+.sortieV102{
+  padding-bottom:64px!important;
+}
+body:not(.battleMode) .primaryNavV116{
+  min-height:54px!important;
+  height:54px!important;
+}
+
+@media(max-height:780px){
+  .quickStageGrid>button{
+    min-height:112px!important;
+  }
+  .sortieShortcuts>button{
+    min-height:52px!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
