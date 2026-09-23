@@ -8260,6 +8260,109 @@ body:not(.battleMode) .primaryNavV116{height:55px!important;min-height:55px!impo
   transform:translateY(1px)!important;
 }
 </style>
+<style id="v268-growth-premium">
+/* V268: premium, readable, no-scroll growth screen */
+body:not(.battleMode) #app{overflow:hidden!important}
+.growthV115{
+ height:calc(100dvh - 116px)!important;
+ overflow:hidden!important;
+ display:grid!important;
+ grid-template-rows:auto auto auto auto auto 1fr auto!important;
+ gap:5px!important;
+ padding:7px 10px 66px!important;
+ background:
+   radial-gradient(circle at 82% 7%,rgba(42,88,115,.16),transparent 28%),
+   linear-gradient(180deg,#061522,#030a11 70%,#071522)!important;
+}
+
+/* selected author */
+.growthFocusV115{
+ grid-template-columns:86px 1fr 72px!important;
+ gap:9px!important;
+ padding:8px!important;
+ border:1px solid #9b7e43!important;
+ border-radius:12px!important;
+ background:
+   radial-gradient(circle at 84% 15%,rgba(201,165,82,.10),transparent 28%),
+   linear-gradient(135deg,#0b283a,#05131e)!important;
+ box-shadow:0 10px 24px rgba(0,0,0,.34)!important
+}
+.growthPortraitV115 img{
+ width:86px!important;height:96px!important;
+ object-fit:contain!important;object-position:center!important;
+ background:linear-gradient(180deg,#0a1f2d,#06131d)!important;
+ border-radius:8px!important
+}
+.growthIdentityV115 small{font-size:8px!important;color:#c7a85c!important;letter-spacing:.12em!important}
+.growthIdentityV115 h1{font-size:26px!important;line-height:1.05!important;color:#f0eadf!important;margin:2px 0!important}
+.growthIdentityV115>b{font-size:22px!important;color:#e7c05e!important}
+.growthIdentityV115>b span{font-size:10px!important}
+.growthIdentityV115 p{font-size:9px!important;line-height:1.25!important;color:#c6b6d2!important}
+.growthPotentialV115 small{font-size:7px!important}
+.growthPotentialV115 strong{font-size:27px!important;color:#e3bd5d!important}
+.growthPotentialV115 span{font-size:8px!important}
+
+/* resources and preview */
+.growthResourceV115{gap:6px!important}
+.growthResourceV115 span{padding:5px!important;font-size:7px!important;border-color:#394f5f!important}
+.growthResourceV115 b{font-size:13px!important}
+.growthPreviewV132{gap:5px!important}
+.growthPreviewV132 span{padding:5px 8px!important;font-size:6px!important;border-color:#3b5060!important}
+.growthPreviewV132 b{font-size:11px!important}.growthPreviewV132 small{font-size:6px!important}
+
+/* level-up actions */
+.growthActionV115{gap:6px!important}
+.growthActionV115 button{
+ min-height:58px!important;
+ border-radius:9px!important;
+ background:linear-gradient(180deg,#0c2a3e,#061724)!important;
+ border:1px solid #527086!important
+}
+.growthActionV115 .primary{background:linear-gradient(180deg,#1b5f8d,#0b3550)!important;border-color:#75b9e8!important}
+.growthActionV115 .max{background:linear-gradient(180deg,#7a6028,#473818)!important;border-color:#e1b85b!important}
+.growthActionV115 small{font-size:7px!important}
+.growthActionV115 b{font-size:20px!important}
+.growthActionV115 span{font-size:7px!important}
+
+/* author switch area */
+.growthRosterHeadV115{gap:7px!important}
+.growthRosterHeadV115>b{font-size:13px!important;color:#eee7da!important}
+.growthRosterHeadV115 input,.growthRosterHeadV115 select{
+ min-height:32px!important;font-size:8px!important;
+ background:#071522!important;border-color:#3b5060!important;color:#fff!important
+}
+.growthRosterV115{
+ grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ grid-template-rows:repeat(2,minmax(0,1fr))!important;
+ gap:5px!important
+}
+.growthRosterV115>button{
+ grid-template-columns:50px 1fr!important;
+ gap:5px!important;padding:4px!important;
+ border-radius:8px!important;
+ background:linear-gradient(180deg,#091d2a,#05131d)!important;
+ border-color:#344c5c!important
+}
+.growthRosterV115>button.selected{border-color:#d0a94f!important;background:#122a39!important}
+.growthRosterV115 img{
+ width:50px!important;height:58px!important;
+ object-fit:contain!important;object-position:center!important;
+ background:#071522!important
+}
+.growthRosterV115 section b{font-size:7.5px!important}
+.growthRosterV115 section strong{font-size:8px!important;color:#e0b959!important}
+.growthRosterV115 section small{font-size:6px!important}
+.growthV115 .noScrollPager button{min-height:28px!important;font-size:7px!important}
+
+@media(max-height:760px){
+ .growthV115{height:calc(100dvh - 96px)!important;padding-bottom:58px!important;gap:4px!important}
+ .growthFocusV115{grid-template-columns:74px 1fr 62px!important;padding:6px!important}
+ .growthPortraitV115 img{width:74px!important;height:82px!important}
+ .growthIdentityV115 h1{font-size:22px!important}.growthIdentityV115>b{font-size:19px!important}
+ .growthActionV115 button{min-height:50px!important}
+ .growthRosterV115 img{width:46px!important;height:52px!important}
+}
+</style>
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
