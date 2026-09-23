@@ -15283,9 +15283,69 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V330</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v331-premium-sd">
+/* V331: premium dedicated SD pass */
+.v329PartyStage{display:none!important}
+.v331PartyStage{
+  position:absolute!important;
+  left:0.5%!important;
+  right:43.5%!important;
+  bottom:17.5%!important;
+  height:34%!important;
+  z-index:28!important;
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  overflow:visible!important;
+  pointer-events:none!important;
+}
+.v331Unit{
+  position:relative!important;
+  flex:0 0 19%!important;
+  height:100%!important;
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:center!important;
+  transform-origin:center bottom!important;
+  overflow:visible!important;
+}
+.v331Unit img{
+  width:148%!important;
+  height:100%!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  background:transparent!important;
+  filter:drop-shadow(0 11px 12px rgba(0,0,0,.72))!important;
+}
+.v331Unit:nth-child(1){transform:translateY(9px) scale(.92)}
+.v331Unit:nth-child(2){transform:translateY(1px) scale(1.00)}
+.v331Unit:nth-child(3){transform:translateY(-5px) scale(1.05)}
+.v331Unit:nth-child(4){transform:translateY(1px) scale(1.00)}
+.v331Unit:nth-child(5){transform:translateY(9px) scale(.92)}
+.v331Unit:after{
+  content:"";position:absolute;left:14%;right:14%;bottom:0;height:10%;
+  border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.72),transparent 72%);
+  filter:blur(3px);z-index:-1
+}
+.v331Unit.active{
+  filter:brightness(1.08) drop-shadow(0 0 10px rgba(226,188,92,.45))
+}
+.v331Unit.active:before{
+  content:"";position:absolute;left:12%;right:12%;bottom:-2%;height:12%;
+  border-radius:50%;background:radial-gradient(ellipse,rgba(226,188,92,.62),transparent 72%);
+  filter:blur(4px)
+}
+@media(max-width:430px){
+  .v331PartyStage{left:-1%!important;right:42%!important;bottom:17%!important;height:33%!important}
+  .v331Unit img{width:152%!important}
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V331</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=330"></script>
+<script src="app.js?v=331"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -15440,6 +15500,91 @@ body.battleMode .stageBattleBtns .btn{
   });
   mo.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
   setInterval(run,800);
+})();
+</script>
+
+
+<script id="v331-script">
+(()=>{
+ const roster=[
+  {key:'dazai',hair1:'#0f1620',hair2:'#263649',coat1:'#0f1c29',coat2:'#395b78',skin:'#f1d8ca',eye:'#617186',accent:'#d2b26c',book:1,bandage:1},
+  {key:'chuuya',hair1:'#56301f',hair2:'#b06d43',coat1:'#281017',coat2:'#7d3244',skin:'#f2d3bf',eye:'#a95e4c',accent:'#d6a264',hat:1},
+  {key:'akutagawa',hair1:'#0d1118',hair2:'#5d6674',coat1:'#110f16',coat2:'#302339',skin:'#ecd8cf',eye:'#77728e',accent:'#aa84e2',blade:1,whitecollar:1},
+  {key:'kenji',hair1:'#9e8b65',hair2:'#e5d7b4',coat1:'#26332c',coat2:'#657b6b',skin:'#efd9c0',eye:'#6e8c68',accent:'#e7ca6b',star:1},
+  {key:'ranpo',hair1:'#0e151d',hair2:'#3e4e5c',coat1:'#141a20',coat2:'#3d4954',skin:'#edd6c8',eye:'#6e8e9e',accent:'#8fbad4',glasses:1,book:1}
+ ];
+
+ function svg(c){
+   const hat=c.hat?`<g><ellipse cx="160" cy="61" rx="72" ry="16" fill="#3f2b20"/><path d="M108 25q52-19 104 0v32H108z" fill="#6b4934" stroke="#24170f" stroke-width="5"/><rect x="108" y="46" width="104" height="8" rx="4" fill="#c89559"/></g>`:'';
+   const glasses=c.glasses?`<g fill="none" stroke="#5f7280" stroke-width="4"><rect x="114" y="119" width="34" height="20" rx="7"/><rect x="172" y="119" width="34" height="20" rx="7"/><path d="M148 126h24"/></g>`:'';
+   const book=c.book?`<g transform="translate(218 238) rotate(-12)"><rect width="52" height="38" rx="5" fill="#4c3522" stroke="#c8a75f" stroke-width="3"/><path d="M26 3v32M8 11h12M32 11h12" stroke="#d8c8a6" stroke-width="2"/></g>`:'';
+   const blade=c.blade?`<g transform="translate(230 203) rotate(29)"><rect width="12" height="96" rx="6" fill="#ad86e6"/><rect x="2" y="5" width="3" height="80" rx="1.5" fill="#fff" opacity=".55"/><rect x="-7" y="81" width="26" height="10" rx="5" fill="#44324f"/></g>`:'';
+   const star=c.star?`<g transform="translate(245 168)"><path d="M0-18 6-6 20-5 9 4 13 18 0 10-13 18-9 4-20-5-6-6Z" fill="#edd06c"/><circle r="29" fill="none" stroke="#edd06c" stroke-opacity=".3" stroke-width="3"/></g>`:'';
+   const bandage=c.bandage?`<path d="M105 118q12-8 23-4" stroke="#e9dfcf" stroke-width="8" stroke-linecap="round"/><path d="M104 125q10-5 21-2" stroke="#cfc3b1" stroke-width="3" stroke-linecap="round"/>`:'';
+   const collar=c.whitecollar?`<path d="M124 181h72l-18 32-18-15-18 15z" fill="#eee9df" opacity=".92"/>`:'';
+   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 410">
+   <defs>
+    <linearGradient id="coat" x1="0" x2="1"><stop stop-color="${c.coat1}"/><stop offset=".52" stop-color="${c.coat2}"/><stop offset="1" stop-color="${c.coat1}"/></linearGradient>
+    <linearGradient id="hair" x1="0" x2="1"><stop stop-color="${c.hair2}"/><stop offset="1" stop-color="${c.hair1}"/></linearGradient>
+    <linearGradient id="skin" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#fff4ed"/><stop offset="1" stop-color="${c.skin}"/></linearGradient>
+    <linearGradient id="leg" x1="0" x2="1"><stop stop-color="#0e151d"/><stop offset=".5" stop-color="#26333d"/><stop offset="1" stop-color="#0e151d"/></linearGradient>
+   </defs>
+   <ellipse cx="160" cy="358" rx="76" ry="18" fill="#000" opacity=".25"/>
+   <rect x="110" y="276" width="29" height="76" rx="14" fill="url(#leg)"/>
+   <rect x="181" y="276" width="29" height="76" rx="14" fill="url(#leg)"/>
+   <ellipse cx="124" cy="353" rx="25" ry="10" fill="#0b1117"/>
+   <ellipse cx="196" cy="353" rx="25" ry="10" fill="#0b1117"/>
+   <path d="M99 178q61-30 122 0l19 132H80z" fill="url(#coat)" stroke="#ffffff10" stroke-width="3"/>
+   ${collar}
+   <path d="M145 171h30v30h-30z" fill="url(#skin)"/>
+   <rect x="69" y="190" width="25" height="100" rx="12" fill="url(#coat)" transform="rotate(9 82 240)"/>
+   <rect x="226" y="190" width="25" height="100" rx="12" fill="url(#coat)" transform="rotate(-9 238 240)"/>
+   <circle cx="79" cy="288" r="13" fill="url(#skin)"/><circle cx="241" cy="288" r="13" fill="url(#skin)"/>
+   <ellipse cx="160" cy="120" rx="63" ry="60" fill="url(#skin)" stroke="#ffffff10" stroke-width="2"/>
+   <ellipse cx="123" cy="127" rx="9" ry="11" fill="#202a34"/><ellipse cx="197" cy="127" rx="9" ry="11" fill="#202a34"/>
+   <ellipse cx="120" cy="123" rx="3" ry="3" fill="#fff"/><ellipse cx="194" cy="123" rx="3" ry="3" fill="#fff"/>
+   <path d="M146 156q14 9 28 0" stroke="#a45f69" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+   <ellipse cx="119" cy="149" rx="11" ry="5" fill="#e896a2" opacity=".22"/><ellipse cx="201" cy="149" rx="11" ry="5" fill="#e896a2" opacity=".22"/>
+   ${bandage}${glasses}
+   <path d="M94 101q7-54 66-58 58 2 68 58v35q-6-24-24-28-10 28-33 40-9-25-29-39-10 23-29 29-14 5-19 21z" fill="url(#hair)"/>
+   <path d="M100 83q16-18 32-24 9 19 29 25 21-7 31-24 16 8 29 25" fill="none" stroke="#ffffff20" stroke-width="6" stroke-linecap="round"/>
+   <path d="M103 104q10 15 14 34M216 104q-10 15-14 34" stroke="#00000020" stroke-width="6" stroke-linecap="round"/>
+   ${hat}
+   <path d="M146 205h28v58h-28z" fill="#ffffff0c"/>
+   ${book}${blade}${star}
+   </svg>`;
+ }
+ function uri(s){return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(s.replace(/\n\s+/g,''));}
+
+ function makeStage(){
+   const s=document.createElement('div'); s.className='v331PartyStage';
+   roster.forEach((c,i)=>{
+     const u=document.createElement('div'); u.className='v331Unit'+(i===0?' active':'');
+     const img=document.createElement('img'); img.src=uri(svg(c)); img.alt='';
+     u.appendChild(img); s.appendChild(u);
+   });
+   return s;
+ }
+ function activeIndex(){
+   for(const q of ['.posterLivePartyV217 button','.battleCardsV151>button','.bsv2Cards_175 button']){
+     const a=[...document.querySelectorAll(q)];
+     const i=a.findIndex(b=>b.classList.contains('on')||b.classList.contains('active'));
+     if(i>=0)return i;
+   }
+   return 0;
+ }
+ function run(){
+   document.querySelectorAll('.v331PartyStage').forEach(n=>n.remove());
+   const host=document.querySelector('.cleanBattleV238 .posterActorStageV237')||document.querySelector('.bsv2Field_175');
+   if(!host)return;
+   const s=makeStage(); host.appendChild(s);
+   const ai=activeIndex();
+   [...s.children].forEach((u,i)=>u.classList.toggle('active',i===ai));
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
+ let q=false; const mo=new MutationObserver(()=>{if(q)return;q=true;requestAnimationFrame(()=>{q=false;run();});});
+ mo.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+ setInterval(run,850);
 })();
 </script>
 
