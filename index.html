@@ -9136,6 +9136,213 @@ body:not(.battleMode) #app{overflow:hidden!important}
 @media(max-width:430px){.sortieHero{min-height:120px!important}.sortieHero h1{font-size:30px!important}.stageCine{min-height:205px!important}.stageCine>img{height:205px!important}.stageCineInfo{right:82px!important}.stageCineInfo h2{font-size:19px!important}.stageCineInfo p{font-size:8px!important}.stageCine .btn{min-width:62px!important;min-height:38px!important}}
 </style>
 
+
+<style id="v279-sortie-real-classes">
+/* V279: target the actual sortie classes used by app.js */
+
+/* Recommended */
+.stageQuickV131{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:1fr 96px!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-height:96px!important;
+  margin:8px 10px!important;
+  padding:11px 11px 11px 14px!important;
+  border:1px solid #b9954e!important;
+  border-radius:12px!important;
+  overflow:hidden!important;
+  background:
+    linear-gradient(90deg,rgba(5,18,28,.97) 0 50%,rgba(5,18,28,.74) 78%,rgba(5,18,28,.94)),
+    url("assets/characters/dazai.jpg") right 15% center/35% auto no-repeat!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.30)!important;
+}
+.stageQuickV131 small{
+  color:#d7b258!important;
+  font-size:7px!important;
+  letter-spacing:.16em!important;
+}
+.stageQuickV131 b{
+  display:block!important;
+  margin-top:4px!important;
+  font:20px/1.1 serif!important;
+  color:#f1eadf!important;
+}
+.stageQuickV131 span{
+  display:block!important;
+  margin-top:4px!important;
+  font-size:7px!important;
+  color:#b8c2c9!important;
+}
+.stageQuickV131>button{
+  min-height:52px!important;
+  border-radius:10px!important;
+  border:1px solid #dfba67!important;
+  background:linear-gradient(180deg,#d1ad59,#977238)!important;
+  color:#111!important;
+  font-size:12px!important;
+  font-weight:800!important;
+  box-shadow:0 6px 16px rgba(0,0,0,.34)!important;
+}
+
+/* Previous stage */
+.resumeStage{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:1fr 102px!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-height:112px!important;
+  margin:8px 10px!important;
+  padding:12px 11px 12px 14px!important;
+  border:1px solid #a98743!important;
+  border-radius:12px!important;
+  background:
+    linear-gradient(90deg,rgba(5,18,28,.98) 0 52%,rgba(5,18,28,.78)),
+    url("assets/stages/chapter1.jpg") right center/46% 100% no-repeat!important;
+  box-shadow:0 9px 22px rgba(0,0,0,.27)!important;
+}
+.resumeStage small{
+  color:#d3ad54!important;
+  font-size:7px!important;
+}
+.resumeStage h1{
+  margin:5px 0 4px!important;
+  font:22px/1.08 serif!important;
+  color:#f0eadf!important;
+}
+.resumeStage span{
+  font-size:8px!important;
+  color:#bdc6cc!important;
+}
+.resumeStage>button{
+  min-height:52px!important;
+  border-radius:10px!important;
+  border:1px solid #70c0ed!important;
+  background:linear-gradient(180deg,#2d7eb2,#15547a)!important;
+  color:white!important;
+  font-size:11px!important;
+  font-weight:800!important;
+}
+
+/* Title row */
+.stageSelectTitle{
+  display:flex!important;
+  justify-content:space-between!important;
+  align-items:center!important;
+  margin:8px 10px 5px!important;
+  padding:0!important;
+}
+.stageSelectTitle b{
+  font:19px serif!important;
+  color:#eee8dd!important;
+}
+.stageSelectTitle small{
+  font-size:8px!important;
+  color:#aeb8bf!important;
+}
+
+/* Real 2x2 stage grid */
+.quickStageGrid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+  padding:0 10px!important;
+}
+.quickStageGrid>button{
+  position:relative!important;
+  min-height:112px!important;
+  padding:11px!important;
+  text-align:left!important;
+  border:1px solid #3d5564!important;
+  border-radius:10px!important;
+  overflow:hidden!important;
+  background:
+    linear-gradient(180deg,rgba(7,23,34,.58),rgba(4,13,20,.92)),
+    url("assets/stages/chapter1.jpg") center/cover no-repeat!important;
+  box-shadow:0 7px 18px rgba(0,0,0,.25)!important;
+}
+.quickStageGrid>button.last{
+  border:2px solid #62c3ff!important;
+  box-shadow:0 0 0 2px rgba(98,195,255,.13),0 0 16px rgba(74,184,255,.28)!important;
+}
+.quickStageGrid>button:disabled{
+  opacity:.42!important;
+  filter:grayscale(.5) brightness(.68)!important;
+}
+.quickStageGrid>button>span{
+  display:block!important;
+  font-size:7px!important;
+  color:#d5ae54!important;
+}
+.quickStageGrid>button>b{
+  display:block!important;
+  margin-top:5px!important;
+  font:16px/1.12 serif!important;
+  color:#f0eadf!important;
+}
+.quickStageGrid>button>small{
+  display:block!important;
+  margin-top:8px!important;
+  font-size:7px!important;
+  color:#b6c0c6!important;
+}
+
+/* First/latest chapter */
+.sortieShortcuts{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+  padding:8px 10px 0!important;
+}
+.sortieShortcuts>button{
+  min-height:47px!important;
+  border-radius:9px!important;
+  border:1px solid #52758d!important;
+  background:linear-gradient(180deg,#15364d,#0a2232)!important;
+  color:#eee!important;
+  font-size:10px!important;
+}
+
+/* Recent bar, if it appears */
+.recentStagesV133{
+  display:flex!important;
+  gap:6px!important;
+  align-items:center!important;
+  padding:5px 10px!important;
+  overflow:hidden!important;
+}
+.recentStagesV133 small{
+  color:#b99a55!important;
+  font-size:6px!important;
+}
+.recentStagesV133 button{
+  min-height:27px!important;
+  padding:4px 7px!important;
+  border-radius:6px!important;
+  font-size:7px!important;
+}
+
+/* tighten whole sortie area */
+.sortieV102{
+  padding:0 0 72px!important;
+}
+
+@media(max-width:430px){
+  .stageQuickV131{grid-template-columns:1fr 88px!important;min-height:90px!important}
+  .stageQuickV131 b{font-size:18px!important}
+  .stageQuickV131>button{min-height:48px!important;font-size:11px!important}
+
+  .resumeStage{grid-template-columns:1fr 92px!important;min-height:102px!important}
+  .resumeStage h1{font-size:19px!important}
+  .resumeStage>button{min-height:48px!important;font-size:10px!important}
+
+  .quickStageGrid>button{min-height:106px!important}
+  .quickStageGrid>button>b{font-size:15px!important}
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
