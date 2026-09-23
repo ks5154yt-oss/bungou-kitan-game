@@ -10714,6 +10714,333 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v292-battle-layout-final">
+/* V292: battle layout based on the approved block design */
+
+/* Overall vertical balance */
+.battleV119{
+  grid-template-rows:0 minmax(0,1fr) 214px!important;
+  background:#030a11!important;
+}
+.battleFieldV119{
+  position:relative!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 68% 16%,rgba(77,119,149,.12),transparent 28%),
+    linear-gradient(180deg,#081827,#030a11)!important;
+}
+
+/* Top battle status: thin and quiet */
+.battleTopBarV151{
+  left:8px!important;
+  right:8px!important;
+  top:4px!important;
+  height:42px!important;
+  padding:4px 7px!important;
+  background:linear-gradient(90deg,rgba(4,15,23,.94),rgba(4,15,23,.62),transparent)!important;
+  border-bottom:1px solid rgba(169,137,68,.55)!important;
+}
+.battleTopBarV151 small{
+  font-size:7.5px!important;
+  letter-spacing:.08em!important;
+}
+.battleTopBarV151 span{
+  font-size:5px!important;
+}
+.battleTopBarV151 button{
+  min-width:44px!important;
+  height:29px!important;
+  font-size:6px!important;
+}
+
+/* Enemy status closer to enemy zone */
+.advancedHudV125{
+  top:54px!important;
+  right:10px!important;
+  width:min(48%,350px)!important;
+  padding:7px 8px!important;
+  border-left:2px solid #c39d4d!important;
+  background:linear-gradient(90deg,rgba(5,15,23,.96),rgba(5,15,23,.70))!important;
+  box-shadow:0 7px 18px rgba(0,0,0,.30)!important;
+}
+.advancedHudV125 small,
+.advancedHudV125 b{
+  font-size:5.5px!important;
+}
+.advancedHudV125 span{
+  height:5px!important;
+  border-radius:999px!important;
+  background:#172832!important;
+}
+.advancedHudV125 span i{
+  border-radius:999px!important;
+}
+
+/* Enemy group: more central and legible */
+.enemyCardsV129{
+  right:10px!important;
+  top:118px!important;
+  gap:8px!important;
+  z-index:5!important;
+}
+.enemyCardsV129>button{
+  min-width:70px!important;
+  min-height:96px!important;
+  border:1px solid #745165!important;
+  border-radius:10px!important;
+  background:linear-gradient(180deg,rgba(47,18,37,.94),rgba(18,7,15,.97))!important;
+  box-shadow:0 8px 18px rgba(0,0,0,.36)!important;
+}
+.enemyCardsV129>button.active,
+.enemyCardsV129>button.selected{
+  border-color:#d25a73!important;
+  box-shadow:
+    0 0 0 2px rgba(210,90,115,.12),
+    0 0 16px rgba(210,90,115,.28)!important;
+}
+
+/* Battlefield and SD units */
+.sdBattleV118{
+  border-bottom:1px solid #3c4d58!important;
+  background:#07141f!important;
+}
+.sdBattleBgV118{
+  background:
+    radial-gradient(circle at 69% 19%,rgba(221,235,246,.23) 0 7%,transparent 8%),
+    linear-gradient(180deg,#172b3f 0%,#0b1824 58%,#07121b 59%,#040d14 100%)!important;
+}
+.sdBattleBgV118:before{
+  opacity:.38!important;
+}
+.sdBattleBgV118:after{
+  background:#6f8da044!important;
+  box-shadow:0 8px 20px #72b6e022!important;
+}
+
+/* Bigger allies with active emphasis */
+.sdUnitV118{
+  width:78px!important;
+  height:124px!important;
+  filter:drop-shadow(0 8px 8px rgba(0,0,0,.36))!important;
+}
+.sdEnemyV118{
+  width:82px!important;
+  height:132px!important;
+  filter:drop-shadow(0 8px 10px rgba(0,0,0,.42))!important;
+}
+.sdUnitV118.active,
+.sdUnitV118.selected{
+  transform:translateY(-8px) scale(1.07)!important;
+  z-index:7!important;
+}
+.sdUnitV118.active:after,
+.sdUnitV118.selected:after{
+  content:"ACTIVE"!important;
+  position:absolute!important;
+  left:50%!important;
+  bottom:-6px!important;
+  transform:translateX(-50%)!important;
+  padding:2px 5px!important;
+  border-radius:999px!important;
+  background:#c79f4c!important;
+  color:#071019!important;
+  font-size:4px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+}
+.sdUnitV118 small,
+.sdEnemyV118 small{
+  font-size:6px!important;
+  color:#d7dfe4!important;
+}
+.sdShadowV118,
+.sdEnemyShadowV118{
+  background:#000a!important;
+  filter:blur(3px)!important;
+}
+.sdFaceV118{
+  box-shadow:inset 0 -4px 0 rgba(160,100,93,.08)!important;
+}
+.sdHairV118{
+  filter:drop-shadow(0 2px 1px rgba(0,0,0,.38))!important;
+}
+
+/* Target clarity */
+.enemyCardsV129>button.active:after,
+.enemyCardsV129>button.selected:after{
+  content:"TARGET"!important;
+  position:absolute!important;
+  top:-11px!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  color:#e4c061!important;
+  font-size:4.5px!important;
+  letter-spacing:.14em!important;
+}
+
+/* Bottom HUD */
+.battleHudV119{
+  grid-template-columns:1fr 252px!important;
+  gap:8px!important;
+  padding:6px 8px 10px!important;
+  background:linear-gradient(180deg,#07141f,#030a11)!important;
+  border-top:1px solid #8f743d!important;
+  box-shadow:0 -8px 24px rgba(0,0,0,.38)!important;
+}
+
+/* Party strip with clearer HP/EP */
+.battlePartyV119{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:5px!important;
+}
+.battlePartyV119>button{
+  grid-template-columns:50px 1fr!important;
+  gap:5px!important;
+  min-height:64px!important;
+  padding:4px!important;
+  border-radius:8px!important;
+  background:linear-gradient(180deg,#0a2130,#04111b)!important;
+  border:1px solid #3e5664!important;
+}
+.battlePartyV119>button.active{
+  border-color:#d0aa56!important;
+  box-shadow:
+    inset 0 0 16px rgba(208,170,86,.09),
+    0 0 12px rgba(208,170,86,.06)!important;
+}
+.battlePartyV119 img{
+  width:50px!important;
+  height:60px!important;
+  object-fit:cover!important;
+  object-position:center 18%!important;
+  border-radius:6px!important;
+}
+.battlePartyV119 section b{
+  font-size:6.8px!important;
+}
+.battlePartyV119 section span{
+  font-size:5px!important;
+}
+.battlePartyV119 section span i{
+  height:4px!important;
+  border-radius:999px!important;
+}
+
+/* Active character summary */
+.battleActiveV119,
+[class*="battleActive"]{
+  min-height:54px!important;
+  padding:6px 8px!important;
+  border:1px solid #6b5b3b!important;
+  border-radius:9px!important;
+  background:linear-gradient(90deg,#0b2434,#06131f)!important;
+}
+.battleActiveV119 b,
+[class*="battleActive"] b{
+  font-size:9px!important;
+}
+.battleActiveV119 small,
+[class*="battleActive"] small{
+  font-size:5.5px!important;
+}
+
+/* Main commands */
+.battleCommandsV119{
+  gap:7px!important;
+}
+.battleCommandsV119 button{
+  min-height:68px!important;
+  padding:7px!important;
+  border-radius:10px!important;
+  box-shadow:0 6px 16px rgba(0,0,0,.28)!important;
+}
+.battleCommandsV119 button.attack{
+  border:1px solid #d0aa56!important;
+  background:linear-gradient(145deg,#332711,#08131d)!important;
+}
+.battleCommandsV119 button:nth-child(2){
+  border:1px solid #8058a8!important;
+  background:linear-gradient(180deg,#271b3c,#0b1320)!important;
+}
+.battleCommandsV119 button:nth-child(3){
+  border:1px solid #6a8090!important;
+  background:linear-gradient(180deg,#102b39,#07151f)!important;
+}
+.battleCommandsV119 button:nth-child(4){
+  border:1px solid #b14f69!important;
+  background:linear-gradient(180deg,#351725,#0c121c)!important;
+}
+.battleCommandsV119 button:disabled{
+  opacity:.42!important;
+  filter:grayscale(.28)!important;
+}
+.battleCommandsV119 i{
+  font-size:19px!important;
+}
+.battleCommandsV119 b{
+  font-size:9.5px!important;
+}
+.battleCommandsV119 small{
+  font-size:4.8px!important;
+}
+
+/* secondary controls */
+.stageBattleBtns{
+  gap:6px!important;
+}
+.stageBattleBtns .btn{
+  min-height:32px!important;
+  min-width:64px!important;
+  font-size:7px!important;
+  border-radius:7px!important;
+}
+
+/* Battle log and cut-in */
+.battlelog{
+  max-height:72px!important;
+  padding:6px 7px!important;
+  font-size:8px!important;
+  line-height:1.3!important;
+  background:#04111b!important;
+  border:1px solid #2e4655!important;
+}
+.cutin{
+  padding:7px!important;
+  border-color:#c7a154!important;
+  background:linear-gradient(90deg,#0b2535,#06131f)!important;
+}
+
+/* compact variant for short devices */
+@media(max-height:760px){
+  .battleV119{
+    grid-template-rows:0 minmax(0,1fr) 198px!important;
+  }
+  .sdUnitV118{
+    width:70px!important;
+    height:114px!important;
+  }
+  .sdEnemyV118{
+    width:75px!important;
+    height:120px!important;
+  }
+  .battleHudV119{
+    grid-template-columns:1fr 232px!important;
+  }
+  .battlePartyV119>button{
+    grid-template-columns:46px 1fr!important;
+    min-height:60px!important;
+  }
+  .battlePartyV119 img{
+    width:46px!important;
+    height:56px!important;
+  }
+  .battleCommandsV119 button{
+    min-height:62px!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
