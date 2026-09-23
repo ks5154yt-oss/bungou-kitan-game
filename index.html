@@ -12715,6 +12715,136 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v304-battle-enemy-fit-polish">
+/* V304: keep enemy bodies and orbiting pages fully on-screen */
+
+/* Shift the real inner enemy stage left and add right breathing room */
+.cleanBattleV238 .posterEnemyWrapV237{
+  left:50%!important;
+  right:4%!important;
+  top:8%!important;
+  bottom:20%!important;
+  overflow:visible!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyStageV153{
+  position:relative!important;
+  left:auto!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:auto!important;
+  width:90%!important;
+  height:100%!important;
+  margin-left:auto!important;
+  margin-right:8%!important;
+  display:flex!important;
+  justify-content:space-evenly!important;
+  align-items:flex-end!important;
+  gap:12px!important;
+  transform:scale(.94)!important;
+  transform-origin:center bottom!important;
+  overflow:visible!important;
+}
+
+/* Enemy bodies remain substantial */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153{
+  width:112px!important;
+  height:156px!important;
+  flex:0 0 112px!important;
+  margin:0!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.boss{
+  width:138px!important;
+  height:184px!important;
+  flex-basis:138px!important;
+}
+
+/* Tighten orbiting paper effects so they do not spill off-screen */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyPagesV153 i{
+  transform:rotate(calc(var(--k)*47deg)) translateY(-54px)!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.boss .enemyPagesV153 i{
+  transform:rotate(calc(var(--k)*45deg)) translateY(-68px)!important;
+}
+
+/* Keep enemy selection local and dramatic */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.selected,
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.active{
+  transform:translateY(-10px) scale(1.10)!important;
+  z-index:30!important;
+  filter:
+    drop-shadow(0 0 15px rgba(255,82,112,.72))
+    drop-shadow(0 0 26px rgba(255,82,112,.26))
+    drop-shadow(0 12px 12px rgba(0,0,0,.46))!important;
+}
+
+/* Move the combat line upward another notch */
+.cleanBattleV238 .posterAlliesWrapV237{
+  bottom:24%!important;
+  right:44%!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237{
+  bottom:23%!important;
+}
+
+/* Active ally gets an obvious floor glow even if the sprite itself is subtle */
+.cleanBattleV238 .posterAlliesWrapV237 .spriteUnitV160.selectedV154:after,
+.cleanBattleV238 .posterAlliesWrapV237 .spriteUnitV160.active:after{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  bottom:-4px!important;
+  width:58px!important;
+  height:13px!important;
+  transform:translateX(-50%)!important;
+  border-radius:50%!important;
+  background:radial-gradient(ellipse,rgba(229,190,93,.62),rgba(229,190,93,0) 72%)!important;
+  pointer-events:none!important;
+}
+
+/* Almost eliminate the old target box */
+.cleanBattleV238 .cleanEnemyFocusV239{
+  opacity:.012!important;
+  transform:scale(.12)!important;
+}
+
+/* Stronger battlefield floor separation */
+.cleanBattleV238 .posterActorStageV237:before{
+  content:""!important;
+  position:absolute!important;
+  left:2%!important;
+  right:2%!important;
+  bottom:20%!important;
+  height:25%!important;
+  pointer-events:none!important;
+  background:
+    radial-gradient(ellipse at 30% 82%,rgba(215,177,87,.12),transparent 38%),
+    radial-gradient(ellipse at 75% 80%,rgba(224,65,96,.13),transparent 36%)!important;
+  z-index:0!important;
+}
+
+/* Preserve lower controls exactly where they work well */
+.cleanBattleV238 .posterLivePartyV217{bottom:186px!important}
+.cleanBattleV238 .posterSelectedCardV235{bottom:134px!important}
+.cleanBattleV238 .posterThumbBarV234{bottom:64px!important}
+.cleanBattleV238 .posterThumbSubV234{bottom:calc(18px + env(safe-area-inset-bottom))!important}
+
+@media(max-height:760px){
+  .cleanBattleV238 .posterEnemyWrapV237{
+    right:5%!important;
+    bottom:20%!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237 .enemyStageV153{
+    width:88%!important;
+    margin-right:10%!important;
+    transform:scale(.88)!important;
+  }
+  .cleanBattleV238 .posterAlliesWrapV237{
+    bottom:21%!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
