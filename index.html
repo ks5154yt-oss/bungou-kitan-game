@@ -14357,6 +14357,136 @@ body.battleMode .stageBattleBtns .btn{
 /* Keep current battlefield and command layout untouched */
 </style>
 
+
+<style id="v317-party-card-readability">
+/* V317: restore readable names/HP on the portrait strip after the ACTIVE overlay fix */
+
+/* Give the portrait strip a little more vertical room */
+.cleanBattleV238 .posterLivePartyV217{
+  bottom:188px!important;
+  height:88px!important;
+  gap:6px!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button{
+  position:relative!important;
+  min-height:88px!important;
+  height:88px!important;
+  overflow:hidden!important;
+  border-radius:9px!important;
+  background:#06131f!important;
+}
+
+/* Portrait stays visible but leaves visual room for labels */
+.cleanBattleV238 .posterLivePartyV217 button img{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center 18%!important;
+  z-index:1!important;
+}
+
+/* Dark lower fade for name readability, without masking the face */
+.cleanBattleV238 .posterLivePartyV217 button:not(.on):after{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:34%!important;
+  display:block!important;
+  background:linear-gradient(180deg,transparent,rgba(2,8,13,.90))!important;
+  z-index:2!important;
+  pointer-events:none!important;
+}
+
+/* Selected card uses the same subtle lower fade */
+.cleanBattleV238 .posterLivePartyV217 button.on{
+  background:#06131f!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button.on:after{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:34%!important;
+  display:block!important;
+  background:linear-gradient(180deg,transparent,rgba(2,8,13,.90))!important;
+  z-index:2!important;
+  pointer-events:none!important;
+}
+
+/* Name sits safely above the HP line */
+.cleanBattleV238 .posterLivePartyV217 button .name{
+  display:block!important;
+  position:absolute!important;
+  left:5%!important;
+  right:5%!important;
+  bottom:10px!important;
+  z-index:4!important;
+  margin:0!important;
+  padding:0!important;
+  font-size:6.7px!important;
+  line-height:1!important;
+  color:#f2eadf!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  text-shadow:0 1px 4px rgba(0,0,0,.9)!important;
+}
+
+/* HP bar anchored at the very bottom */
+.cleanBattleV238 .posterLivePartyV217 button i{
+  display:block!important;
+  position:absolute!important;
+  left:5%!important;
+  right:5%!important;
+  bottom:4px!important;
+  height:3px!important;
+  z-index:5!important;
+  border-radius:999px!important;
+  overflow:hidden!important;
+}
+
+/* Selected portrait: gold border only, never a full overlay */
+.cleanBattleV238 .posterLivePartyV217 button.on{
+  transform:translateY(-3px)!important;
+  border:2px solid #e0b75e!important;
+  box-shadow:
+    0 0 0 1px rgba(224,183,94,.18),
+    0 0 16px rgba(224,183,94,.20),
+    0 8px 18px rgba(0,0,0,.30)!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button.on:before{
+  content:none!important;
+  display:none!important;
+}
+
+/* Small ACTIVE chip in the corner */
+.cleanBattleV238 .posterLivePartyV217 button.on .name:before{
+  content:"ACTIVE"!important;
+  position:absolute!important;
+  right:0!important;
+  bottom:16px!important;
+  padding:2px 4px!important;
+  border-radius:4px!important;
+  background:#d6ad54!important;
+  color:#081019!important;
+  font-size:4px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  box-shadow:0 2px 7px rgba(0,0,0,.28)!important;
+}
+
+/* Keep the lower HUD aligned with the slightly taller portrait strip */
+.cleanBattleV238 .posterSelectedCardV235{
+  bottom:134px!important;
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
