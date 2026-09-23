@@ -8223,9 +8223,46 @@ body:not(.battleMode) .primaryNavV116{height:55px!important;min-height:55px!impo
  clip-path:inset(0 0 3px 0)!important;
 }
 </style>
+<style id="v267-formation-polish">
+/* V267: final polish for the approved no-scroll formation screen */
+.formationUnitV255{
+  box-shadow:0 6px 14px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.025)!important;
+}
+.formationUnitV255 img{
+  border-bottom:1px solid rgba(177,145,70,.16)!important;
+}
+/* The second source artwork contains text near its lower edge; crop only that artwork slightly. */
+.formationUnitV255:nth-child(2) img{
+  object-fit:cover!important;
+  object-position:center 18%!important;
+  clip-path:inset(0 0 12% 0)!important;
+  margin-bottom:-8px!important;
+}
+.formationUnitV255:nth-child(2) b{
+  position:relative!important;
+  z-index:2!important;
+  background:linear-gradient(180deg,rgba(4,17,27,.78),#04111b 70%)!important;
+  padding-top:3px!important;
+}
+.formationSummaryV255{
+  box-shadow:0 10px 24px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.025)!important;
+}
+.formationActionsV255 button{
+  box-shadow:0 4px 10px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.025)!important;
+}
+.formationActionsV255 .save{
+  background:linear-gradient(180deg,#d7b35e,#a57d34)!important;
+  color:#111!important;
+  border-color:#d7b35e!important;
+}
+.formationActionsV255 .save:active,
+.formationActionsV255 button:active{
+  transform:translateY(1px)!important;
+}
+</style>
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=266"></script>
+<script src="app.js?v=267"></script>
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
 </script></body></html>
