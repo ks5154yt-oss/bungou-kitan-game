@@ -14071,6 +14071,134 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v314-battle-polish">
+/* V314: polish the now-stable battle screen */
+
+/* Bring the combatants a little closer together visually */
+.cleanBattleV238 .posterAlliesWrapV237{
+  left:1%!important;
+  right:50%!important;
+  bottom:32%!important;
+  transform:scale(.99)!important;
+  transform-origin:left bottom!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237{
+  left:54%!important;
+  right:7%!important;
+  bottom:31%!important;
+}
+
+/* Two-enemy composition from the latest screen */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(2),
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:first-child:nth-last-child(2) ~ .enemyArtV153{
+  width:92px!important;
+  height:138px!important;
+  flex:0 0 92px!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyStageV153{
+  gap:12px!important;
+}
+
+/* Tighten the orbiting paper effect */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyPagesV153 i{
+  width:14px!important;
+  height:19px!important;
+  transform:rotate(calc(var(--k)*47deg)) translateY(-33px)!important;
+}
+
+/* Enemy HUD: stronger contrast, slightly closer to the fight */
+.cleanBattleV238 .posterEnemyCompactV235{
+  top:58px!important;
+  right:12px!important;
+  width:46%!important;
+  background:linear-gradient(90deg,rgba(4,14,22,.98),rgba(4,14,22,.82))!important;
+  border-left:3px solid #d2556d!important;
+}
+.cleanBattleV238 .posterEnemyCompactV235 b{
+  font-size:11px!important;
+}
+.cleanBattleV238 .posterEnemyCompactV235 i{
+  height:7px!important;
+}
+
+/* A subtle divider between battlefield and portrait HUD */
+.cleanBattleV238 .posterLivePartyV217:before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:-7px!important;
+  height:1px!important;
+  background:linear-gradient(90deg,transparent,#7c6842 18%,#7c6842 82%,transparent)!important;
+  opacity:.55!important;
+}
+
+/* Portrait cards: slightly brighter labels */
+.cleanBattleV238 .posterLivePartyV217 .name{
+  font-size:6.4px!important;
+  color:#f0e8db!important;
+  text-shadow:0 1px 4px rgba(0,0,0,.8)!important;
+}
+
+/* Active summary: make EP and character identity easier to scan */
+.cleanBattleV238 .posterSelectedCardV235{
+  min-height:48px!important;
+  border-color:#816d45!important;
+}
+.cleanBattleV238 .posterSelectedCardV235 b{
+  font-size:11px!important;
+}
+.cleanBattleV238 .posterSelectedCardV235 small{
+  font-size:6px!important;
+}
+.cleanBattleV238 .posterSelectedCardV235 [class*="ep"],
+.cleanBattleV238 .posterSelectedCardV235 [class*="EP"]{
+  color:#8fc7e8!important;
+  font-weight:700!important;
+}
+
+/* Main commands: improve label legibility without resizing the row */
+.cleanBattleV238 .posterThumbBarV234 button b{
+  font-size:10.5px!important;
+}
+.cleanBattleV238 .posterThumbBarV234 button i{
+  font-size:20px!important;
+}
+.cleanBattleV238 .posterThumbBarV234 .attack{
+  box-shadow:
+    0 0 0 1px rgba(227,186,95,.24),
+    0 0 16px rgba(227,186,95,.15),
+    0 8px 18px rgba(0,0,0,.32)!important;
+}
+
+/* Secondary controls are now uniform */
+.cleanBattleV238 .posterThumbSubV234{
+  display:grid!important;
+  grid-template-columns:repeat(3,1fr)!important;
+  width:450px!important;
+  max-width:64%!important;
+}
+.cleanBattleV238 .posterThumbSubV234 button{
+  min-width:0!important;
+  width:100%!important;
+  height:38px!important;
+  font-size:8px!important;
+}
+
+/* Reduce background architecture a touch more */
+.cleanBattleV238 .cleanStageArchV238,
+.cleanBattleV238 .cleanStagePillarsV239{
+  opacity:.12!important;
+}
+.cleanBattleV238 .cleanStageMoonV238{
+  opacity:.30!important;
+}
+.cleanBattleV238 .cleanStageMistV238{
+  opacity:.22!important;
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
