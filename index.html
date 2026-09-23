@@ -14720,6 +14720,170 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v320-party-card-hard-reset">
+/* V320: hard-reset the portrait strip to eliminate the persistent black band */
+
+.cleanBattleV238 .posterLivePartyV217{
+  bottom:188px!important;
+  height:92px!important;
+  gap:6px!important;
+  overflow:visible!important;
+}
+
+/* Card shell */
+.cleanBattleV238 .posterLivePartyV217 button{
+  position:relative!important;
+  height:92px!important;
+  min-height:92px!important;
+  overflow:hidden!important;
+  border-radius:9px!important;
+  background:#06131f!important;
+  isolation:isolate!important;
+}
+
+/* Remove every pseudo layer on the card and its direct UI children */
+.cleanBattleV238 .posterLivePartyV217 button::before,
+.cleanBattleV238 .posterLivePartyV217 button::after,
+.cleanBattleV238 .posterLivePartyV217 button .name::before,
+.cleanBattleV238 .posterLivePartyV217 button .name::after,
+.cleanBattleV238 .posterLivePartyV217 button i::before,
+.cleanBattleV238 .posterLivePartyV217 button i::after,
+.cleanBattleV238 .posterLivePartyV217 button em::before,
+.cleanBattleV238 .posterLivePartyV217 button em::after{
+  content:none!important;
+  display:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  background:none!important;
+  box-shadow:none!important;
+}
+
+/* Portrait must be the full visible base layer */
+.cleanBattleV238 .posterLivePartyV217 button img{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:cover!important;
+  object-position:center 18%!important;
+  opacity:1!important;
+  visibility:visible!important;
+  filter:none!important;
+  transform:none!important;
+  mix-blend-mode:normal!important;
+  mask:none!important;
+  -webkit-mask:none!important;
+  z-index:1!important;
+}
+
+/* Remove backgrounds from every real child first */
+.cleanBattleV238 .posterLivePartyV217 button > *{
+  background-color:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+}
+
+/* Name gets only a compact lower readability patch */
+.cleanBattleV238 .posterLivePartyV217 button .name{
+  position:absolute!important;
+  left:6%!important;
+  right:6%!important;
+  bottom:9px!important;
+  z-index:20!important;
+  display:block!important;
+  margin:0!important;
+  padding:2px 3px!important;
+  border-radius:3px!important;
+  background:rgba(2,8,13,.62)!important;
+  color:#f3eadf!important;
+  font-size:6.8px!important;
+  line-height:1!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  text-shadow:0 1px 4px rgba(0,0,0,.95)!important;
+}
+
+/* HP / EP only, pinned to the bottom */
+.cleanBattleV238 .posterLivePartyV217 button i{
+  position:absolute!important;
+  left:6%!important;
+  right:6%!important;
+  height:3px!important;
+  z-index:25!important;
+  display:block!important;
+  border-radius:999px!important;
+  overflow:hidden!important;
+  background:rgba(2,8,13,.92)!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button i.hp{
+  bottom:4px!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button i.ep{
+  bottom:1px!important;
+  height:2px!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button i.hp em{
+  display:block!important;
+  height:100%!important;
+  background:#55c785!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button i.ep em{
+  display:block!important;
+  height:100%!important;
+  background:#4ebde9!important;
+}
+
+/* Selected card = border/glow only. Never a fill overlay. */
+.cleanBattleV238 .posterLivePartyV217 button.on{
+  transform:translateY(-3px)!important;
+  border:2px solid #e0b75e!important;
+  background:#06131f!important;
+  box-shadow:
+    0 0 0 1px rgba(224,183,94,.18),
+    0 0 16px rgba(224,183,94,.20),
+    0 8px 18px rgba(0,0,0,.30)!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button.on img{
+  opacity:1!important;
+  filter:none!important;
+  transform:none!important;
+}
+
+/* ACTIVE appears as a tiny inline tag before the name only */
+.cleanBattleV238 .posterLivePartyV217 button.on .name{
+  color:#fff3d4!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button.on .name::before{
+  content:"ACTIVE"!important;
+  display:inline-block!important;
+  opacity:1!important;
+  visibility:visible!important;
+  margin-right:3px!important;
+  padding:1px 3px!important;
+  border-radius:3px!important;
+  background:#d6ad54!important;
+  color:#081019!important;
+  font-size:3.8px!important;
+  font-weight:800!important;
+  letter-spacing:.06em!important;
+  vertical-align:1px!important;
+}
+
+/* Defensive: hide any unexpected extra child that might be injected later */
+.cleanBattleV238 .posterLivePartyV217 button > *:not(img):not(.name):not(i){
+  display:none!important;
+}
+
+/* Keep lower HUD alignment */
+.cleanBattleV238 .posterSelectedCardV235{
+  bottom:134px!important;
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
