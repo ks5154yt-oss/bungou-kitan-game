@@ -7846,9 +7846,46 @@ body:not(.battleMode) .primaryNavV116{
  .formationActionsV255 .save{grid-column:1/-1!important}
 }
 </style>
+<style id="v258-formation-scroll-final">
+/* V258: preserve card size, make the whole formation page genuinely scrollable */
+html,body{overscroll-behavior-y:auto!important}
+body:not(.battleMode){overflow-y:auto!important;height:auto!important;min-height:100dvh!important}
+body:not(.battleMode) #app{height:auto!important;min-height:100dvh!important;overflow:visible!important}
+.formationV255{
+ height:auto!important;min-height:100dvh!important;
+ overflow:visible!important;
+ padding-bottom:calc(150px + env(safe-area-inset-bottom))!important
+}
+/* Keep the V257 card proportions */
+.formationUnitV255 img{height:98px!important}
+.formationSummaryV255{overflow:visible!important}
+.formationInfoV255{overflow:visible!important}
+.formationReasonV257{display:block!important}
+.formationActionsV255{
+ display:grid!important;
+ position:relative!important;
+ visibility:visible!important;
+ opacity:1!important;
+ margin-bottom:18px!important
+}
+/* Fixed nav stays fixed, content gets enough runway to pass above it */
+body:not(.battleMode) .primaryNavV116{
+ position:fixed!important;
+ left:0!important;right:0!important;bottom:0!important;
+ z-index:50!important
+}
+.formationV255:after{
+ content:"";display:block;height:88px;width:100%;pointer-events:none
+}
+@media(max-width:390px){
+ .formationV255{padding-bottom:calc(160px + env(safe-area-inset-bottom))!important}
+ .formationActionsV255{grid-template-columns:1fr 1fr!important}
+ .formationActionsV255 .save{grid-column:1/-1!important}
+}
+</style>
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=257"></script>
+<script src="app.js?v=258"></script>
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
 </script></body></html>
