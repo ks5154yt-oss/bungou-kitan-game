@@ -11413,6 +11413,209 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v295-battle-strong-pass">
+/* V295: stronger visible changes on the actual poster battle */
+
+/* Battlefield composition */
+.cleanBattleV238 .posterActorStageV237{
+  top:56px!important;
+  bottom:242px!important;
+}
+
+/* Make ally and enemy groups visibly larger by scaling the WRAPPERS */
+.cleanBattleV238 .posterAlliesWrapV237{
+  left:-2%!important;
+  right:39%!important;
+  bottom:-1%!important;
+  height:48%!important;
+  transform:scale(1.14)!important;
+  transform-origin:left bottom!important;
+  gap:0!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237{
+  left:47%!important;
+  right:-2%!important;
+  top:0%!important;
+  bottom:0%!important;
+  transform:scale(1.16)!important;
+  transform-origin:right bottom!important;
+}
+
+/* active ally visibly steps forward */
+.cleanBattleV238 .posterAlliesWrapV237 [data-sd-unit].selectedV154,
+.cleanBattleV238 .posterAlliesWrapV237 [data-sd-unit].active{
+  transform:translateY(-16px) scale(1.12)!important;
+  z-index:12!important;
+  filter:
+    drop-shadow(0 0 12px rgba(224,184,89,.42))
+    drop-shadow(0 10px 10px rgba(0,0,0,.40))!important;
+}
+
+/* selected enemy target emphasis */
+.cleanBattleV238 .posterEnemyWrapV237 [data-enemy].selected,
+.cleanBattleV238 .posterEnemyWrapV237 [data-enemy].active{
+  transform:translateY(-6px) scale(1.10)!important;
+  filter:
+    drop-shadow(0 0 14px rgba(225,70,99,.38))
+    drop-shadow(0 10px 12px rgba(0,0,0,.42))!important;
+}
+
+/* enemy status much more readable */
+.cleanBattleV238 .posterEnemyCompactV235{
+  top:62px!important;
+  right:12px!important;
+  width:50%!important;
+  padding:9px 10px!important;
+  border-left:3px solid #d05267!important;
+}
+.cleanBattleV238 .posterEnemyCompactV235>div small{
+  font-size:6px!important;
+}
+.cleanBattleV238 .posterEnemyCompactV235>div b{
+  font-size:12px!important;
+}
+.cleanBattleV238 .posterEnemyCompactV235 i{
+  height:7px!important;
+}
+
+/* make decorative target frame quieter */
+.cleanBattleV238 .cleanEnemyFocusV239{
+  opacity:.45!important;
+  transform:scale(.80)!important;
+  transform-origin:center!important;
+}
+
+/* party cards */
+.cleanBattleV238 .posterLivePartyV217{
+  left:8px!important;
+  right:8px!important;
+  bottom:184px!important;
+  height:90px!important;
+  gap:6px!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button{
+  min-height:90px!important;
+  border-radius:9px!important;
+  overflow:hidden!important;
+}
+.cleanBattleV238 .posterLivePartyV217 button img{
+  object-position:center 15%!important;
+}
+.cleanBattleV238 .posterLivePartyV217 .name{
+  font-size:6.5px!important;
+}
+
+/* ACTIVE panel bigger */
+.cleanBattleV238 .posterSelectedCardV235{
+  left:8px!important;
+  right:8px!important;
+  bottom:132px!important;
+  min-height:46px!important;
+  padding:7px 9px!important;
+}
+.cleanBattleV238 .posterSelectedCardV235 img{
+  width:40px!important;
+  height:40px!important;
+}
+.cleanBattleV238 .posterSelectedCardV235 b{
+  font-size:10px!important;
+}
+.cleanBattleV238 .posterSelectedCardV235 small{
+  font-size:6px!important;
+}
+
+/* commands */
+.cleanBattleV238 .posterThumbBarV234{
+  left:8px!important;
+  right:8px!important;
+  bottom:64px!important;
+  height:62px!important;
+  grid-template-columns:1.40fr 1fr 1fr 1.12fr!important;
+  gap:7px!important;
+}
+.cleanBattleV238 .posterThumbBarV234 button{
+  min-height:62px!important;
+  border-radius:11px!important;
+}
+.cleanBattleV238 .posterThumbBarV234 .attack{
+  border:2px solid #d9b35d!important;
+  background:
+    radial-gradient(circle at 30% 18%,rgba(218,180,93,.10),transparent 35%),
+    linear-gradient(145deg,#30230e,#08131d)!important;
+}
+.cleanBattleV238 .posterThumbBarV234 .skill{
+  background:linear-gradient(180deg,#2c1b45,#0b1320)!important;
+}
+.cleanBattleV238 .posterThumbBarV234 .support{
+  background:linear-gradient(180deg,#123245,#07151f)!important;
+}
+.cleanBattleV238 .posterThumbBarV234 .ougi{
+  background:linear-gradient(180deg,#3a1828,#0c121c)!important;
+}
+.cleanBattleV238 .posterThumbBarV234 button i{
+  font-size:20px!important;
+}
+.cleanBattleV238 .posterThumbBarV234 button b{
+  font-size:10.5px!important;
+}
+
+/* secondary controls */
+.cleanBattleV238 .posterThumbSubV234{
+  left:8px!important;
+  bottom:calc(18px + env(safe-area-inset-bottom))!important;
+  gap:7px!important;
+}
+.cleanBattleV238 .posterThumbSubV234 button{
+  min-width:74px!important;
+  height:36px!important;
+  font-size:8px!important;
+}
+
+/* make battlefield architecture quieter */
+.cleanBattleV238 .cleanStageArchV238,
+.cleanBattleV238 .cleanStagePillarsV239{
+  opacity:.30!important;
+}
+.cleanBattleV238 .cleanStageMoonV238{
+  opacity:.52!important;
+}
+.cleanBattleV238 .cleanStageMistV238{
+  opacity:.46!important;
+}
+
+/* tighter short-device fallback */
+@media(max-height:760px){
+  .cleanBattleV238 .posterActorStageV237{
+    top:52px!important;
+    bottom:222px!important;
+  }
+  .cleanBattleV238 .posterAlliesWrapV237{
+    transform:scale(1.06)!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237{
+    transform:scale(1.08)!important;
+  }
+  .cleanBattleV238 .posterLivePartyV217{
+    bottom:170px!important;
+    height:80px!important;
+  }
+  .cleanBattleV238 .posterLivePartyV217 button{
+    min-height:80px!important;
+  }
+  .cleanBattleV238 .posterSelectedCardV235{
+    bottom:122px!important;
+  }
+  .cleanBattleV238 .posterThumbBarV234{
+    bottom:60px!important;
+    height:58px!important;
+  }
+  .cleanBattleV238 .posterThumbBarV234 button{
+    min-height:58px!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
