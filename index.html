@@ -9343,6 +9343,132 @@ body:not(.battleMode) #app{overflow:hidden!important}
 }
 </style>
 
+
+<style id="v280-sortie-fit-final">
+/* V280: compact one-screen sortie, remove leftover decorative shapes */
+.sortieV102{
+  padding-bottom:66px!important;
+  overflow:hidden!important;
+}
+
+/* remove legacy decorative circles / boxes inside stage cards */
+.quickStageGrid>button::before,
+.quickStageGrid>button::after,
+.stageQuickV131::before,
+.stageQuickV131::after,
+.resumeStage::before,
+.resumeStage::after{
+  content:none!important;
+  display:none!important;
+}
+
+/* compact recommended */
+.stageQuickV131{
+  min-height:82px!important;
+  margin:7px 10px!important;
+  padding:9px 100px 9px 13px!important;
+  grid-template-columns:1fr 82px!important;
+}
+.stageQuickV131 b{
+  font-size:18px!important;
+  margin-top:3px!important;
+}
+.stageQuickV131 span{
+  font-size:6.5px!important;
+  margin-top:3px!important;
+}
+.stageQuickV131>button{
+  min-height:44px!important;
+  font-size:10px!important;
+}
+
+/* compact previous-stage block */
+.resumeStage{
+  min-height:92px!important;
+  margin:7px 10px!important;
+  padding:10px 98px 10px 13px!important;
+  grid-template-columns:1fr 86px!important;
+}
+.resumeStage h1{
+  font-size:19px!important;
+  margin:3px 0!important;
+}
+.resumeStage span{
+  font-size:7px!important;
+}
+.resumeStage>button{
+  min-height:44px!important;
+  font-size:9.5px!important;
+}
+
+/* compact stage heading */
+.stageSelectTitle{
+  margin:6px 10px 4px!important;
+}
+.stageSelectTitle b{
+  font-size:18px!important;
+}
+.stageSelectTitle small{
+  font-size:7px!important;
+}
+
+/* 2x2 stage cards */
+.quickStageGrid{
+  gap:7px!important;
+}
+.quickStageGrid>button{
+  min-height:92px!important;
+  padding:9px!important;
+  background:linear-gradient(180deg,rgba(7,23,34,.72),rgba(4,13,20,.96))!important;
+}
+.quickStageGrid>button>span{
+  font-size:6.5px!important;
+}
+.quickStageGrid>button>b{
+  font-size:15px!important;
+  margin-top:4px!important;
+}
+.quickStageGrid>button>small{
+  font-size:6.5px!important;
+  margin-top:6px!important;
+}
+
+/* keep selected stage vivid, locked stage understated */
+.quickStageGrid>button.last{
+  border:2px solid #5fc7ff!important;
+  box-shadow:0 0 0 2px rgba(95,199,255,.13),0 0 14px rgba(76,187,255,.28)!important;
+}
+.quickStageGrid>button:disabled{
+  opacity:.36!important;
+  filter:grayscale(.55) brightness(.65)!important;
+}
+
+/* first/latest always visible above fixed nav */
+.sortieShortcuts{
+  gap:7px!important;
+  padding:7px 10px 0!important;
+}
+.sortieShortcuts>button{
+  min-height:42px!important;
+  font-size:9px!important;
+  border-radius:8px!important;
+}
+
+/* fixed nav gets a little slimmer */
+body:not(.battleMode) .primaryNavV116{
+  min-height:54px!important;
+  height:54px!important;
+}
+
+/* iPhone short-height tuning */
+@media(max-height:780px){
+  .stageQuickV131{min-height:76px!important}
+  .resumeStage{min-height:84px!important}
+  .quickStageGrid>button{min-height:84px!important}
+  .sortieShortcuts>button{min-height:38px!important}
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
