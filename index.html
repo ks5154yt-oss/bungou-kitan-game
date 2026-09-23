@@ -9124,6 +9124,18 @@ body:not(.battleMode) #app{overflow:hidden!important}
 }
 </style>
 
+
+<style id="v278-sortie-approved">
+.sortieHero{min-height:132px!important;padding:14px 14px 12px!important;background:linear-gradient(90deg,rgba(4,15,23,.96),rgba(4,15,23,.76)),url("assets/stages/battle_library.jpg") center 58%/cover no-repeat!important;border:0!important;border-bottom:1px solid #9d8043!important;border-radius:0!important;box-shadow:none!important}
+.sortieHero:before{content:"SORTIE"!important;font-size:7px!important;letter-spacing:.34em!important}
+.sortieHero h1{font-size:34px!important;margin-top:5px!important}.sortieHero small{font-size:10px!important;color:#c7d0d6!important}
+.stageCine{min-height:220px!important;border-color:#6c5a38!important;border-radius:12px!important}.stageCine>img{height:220px!important;filter:brightness(.60) saturate(.88) contrast(1.04)!important}.stageCineInfo{left:12px!important;right:90px!important;bottom:11px!important}.stageCineInfo h2{font-size:22px!important}.stageCineInfo p{font-size:9px!important;line-height:1.35!important}.stageCineMeta span{padding:3px 6px!important;font-size:7px!important}
+.stageCine .btn{right:10px!important;bottom:11px!important;top:auto!important;min-width:68px!important;min-height:40px!important;padding:7px 9px!important;border-radius:8px!important;font-size:8px!important;font-weight:700!important;background:linear-gradient(180deg,#c9a653,#8d6c31)!important;border-color:#d6b35e!important;color:#111!important}
+.stageCine.selected{border:2px solid #62c3ff!important;box-shadow:0 0 0 2px rgba(98,195,255,.14),0 0 16px rgba(74,184,255,.32)!important}
+.stageCine.locked{filter:grayscale(.35) brightness(.45)!important}
+@media(max-width:430px){.sortieHero{min-height:120px!important}.sortieHero h1{font-size:30px!important}.stageCine{min-height:205px!important}.stageCine>img{height:205px!important}.stageCineInfo{right:82px!important}.stageCineInfo h2{font-size:19px!important}.stageCineInfo p{font-size:8px!important}.stageCine .btn{min-width:62px!important;min-height:38px!important}}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
