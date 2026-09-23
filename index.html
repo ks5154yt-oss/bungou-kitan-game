@@ -15222,9 +15222,70 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V329</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v330-sd-transparent-fix">
+/* V330: the dark vertical blocks were the global img background showing
+   through each transparent SVG canvas. Force battle SD art fully transparent. */
+.v329PartyStage,
+.v329Unit{
+  background:transparent!important;
+}
+.v329Unit img,
+.v329PartyStage img{
+  background:transparent!important;
+  background-color:transparent!important;
+  box-shadow:none!important;
+  border:0!important;
+}
+
+/* clean the clash line now that the image canvases are transparent */
+.cleanBattleV238 .posterActorStageV237{
+  overflow:visible!important;
+}
+.cleanBattleV238 .posterActorStageV237>.v329PartyStage{
+  left:1%!important;
+  right:44%!important;
+  bottom:18%!important;
+  height:31%!important;
+}
+.v329Unit img{
+  width:138%!important;
+  height:100%!important;
+}
+.v329Unit:nth-child(1){transform:translateY(7px) scale(.92)!important}
+.v329Unit:nth-child(2){transform:translateY(0) scale(1.00)!important}
+.v329Unit:nth-child(3){transform:translateY(-6px) scale(1.06)!important}
+.v329Unit:nth-child(4){transform:translateY(0) scale(1.00)!important}
+.v329Unit:nth-child(5){transform:translateY(7px) scale(.92)!important}
+
+/* keep any old experimental sprite layers invisible */
+.v328PartyStage,
+.v327PartyVisual,
+.v326-authored{
+  pointer-events:none!important;
+}
+.v328PartyStage,
+.v327PartyVisual{
+  display:none!important;
+}
+
+@media(max-width:430px){
+  .cleanBattleV238 .posterActorStageV237>.v329PartyStage{
+    left:0!important;
+    right:42%!important;
+    bottom:18%!important;
+    height:30%!important;
+  }
+  .v329Unit img{
+    width:142%!important;
+    height:100%!important;
+  }
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V330</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=329"></script>
+<script src="app.js?v=330"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
