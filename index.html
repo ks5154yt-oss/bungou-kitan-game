@@ -15074,9 +15074,208 @@ body.battleMode .stageBattleBtns .btn{
 
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V325</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+<style id="v326">
+/* === V326 dedicated authored SD sprites === */
+.spriteUnitV160.v326-authored{overflow:visible!important;isolation:isolate}
+.spriteUnitV160.v326-authored .spriteArtV160{opacity:1!important;filter:drop-shadow(0 12px 18px #000c)!important}
+.spriteUnitV160.v326-authored .spriteFallbackV160{display:none!important}
+.spriteUnitV160.v326-authored>small{opacity:.4!important;bottom:-2px!important}
+.spriteUnitV160.v326-authored.selectedV154 .spriteArtV160,
+.spriteUnitV160.v326-authored.active .spriteArtV160,
+.spriteUnitV160.v326-authored.bsv2Chosen177 .spriteArtV160{filter:drop-shadow(0 12px 18px #000c) drop-shadow(0 0 10px #d2b05d88)!important}
+.spriteUnitV160.v326-authored:after{content:"";position:absolute;left:18%;right:18%;bottom:4px;height:13px;border-radius:50%;background:radial-gradient(ellipse,#000d,#0000 70%);filter:blur(3px);z-index:0}
+.spriteUnitV160.v326-authored .spriteArtV160{position:absolute;z-index:2}
+.spriteUnitV160.v326-authored .spriteShadowV160{opacity:.78}
+.spriteUnitV160.v326-authored [data-debug-fallback]{display:none!important}
+@media(max-width:700px){
+  .bsv2Allies_175 .spriteUnitV160.v326-authored,.posterAlliesWrapV237 .spriteUnitV160.v326-authored{transform:scale(.70)!important;margin:0 -16px!important}
+}
+@media(max-width:390px){
+  .bsv2Allies_175 .spriteUnitV160.v326-authored,.posterAlliesWrapV237 .spriteUnitV160.v326-authored{transform:scale(.64)!important;margin:0 -18px!important}
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V326</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=325"></script>
+<script src="app.js?v=326"></script>
+<script id="v326-script">
+(()=>{
+  const KNOWN_AUTHORS = {
+    dazai:{jp:'太宰 治'},
+    chuuya:{jp:'中原 中也'},
+    akutagawa:{jp:'芥川 龍之介'},
+    kenji:{jp:'宮沢 賢治'},
+    ranpo:{jp:'江戸川 乱歩'}
+  };
+  const syncClasses = ['selectedV154','active','bsv2Chosen177','act178-attack','act178-skill','act178-ougi','act178-heal'];
+
+  function normalizeAuthor(raw){
+    const v=(raw||'').toString().trim().toLowerCase();
+    if(!v) return '';
+    if(v.includes('dazai')||/太宰/.test(raw)) return 'dazai';
+    if(v.includes('chuuya')||v.includes('chuya')||/中原/.test(raw)) return 'chuuya';
+    if(v.includes('akutagawa')||/芥川/.test(raw)) return 'akutagawa';
+    if(v.includes('kenji')||/宮沢/.test(raw)) return 'kenji';
+    if(v.includes('ranpo')||v.includes('rampo')||/江戸川/.test(raw)) return 'ranpo';
+    return '';
+  }
+
+  function spriteSvg(key){
+    const defs = {
+      dazai:{hair:'#111822',hair2:'#2a3647',coat:'#2a4560',coat2:'#121d27',accent:'#d7b36a',skin:'#f0d6c6',eye:'#6f7f93',label:'太宰',glasses:false,hat:false,book:true,scarf:false,aura:'#6ea5e0'},
+      chuuya:{hair:'#4a2c1f',hair2:'#8a5b3e',coat:'#5b2331',coat2:'#241017',accent:'#d9a96a',skin:'#f2d3bf',eye:'#bc6f55',label:'中也',glasses:false,hat:true,book:false,scarf:true,aura:'#d26d7a'},
+      akutagawa:{hair:'#11151e',hair2:'#49525f',coat:'#241d31',coat2:'#0f0d15',accent:'#a980df',skin:'#ead8cd',eye:'#877fa5',label:'芥川',glasses:false,hat:false,book:false,scarf:false,blade:true,aura:'#b78ff0'},
+      kenji:{hair:'#c0ab7f',hair2:'#e4d6b5',coat:'#4f6658',coat2:'#29362f',accent:'#efcf71',skin:'#efd9bf',eye:'#78956f',label:'賢治',glasses:false,hat:false,book:false,scarf:false,star:true,aura:'#e8d06a'},
+      ranpo:{hair:'#111820',hair2:'#3d4b59',coat:'#2b343d',coat2:'#12181d',accent:'#8fc2dc',skin:'#edd5c6',eye:'#7da0b0',label:'乱歩',glasses:true,hat:false,book:true,scarf:false,aura:'#93b8dc'}
+    };
+    const c = defs[key]; if(!c) return '';
+    const hat = c.hat ? `<ellipse cx="162" cy="60" rx="70" ry="16" fill="#4e3526"/><path d="M112 26 q49 -20 100 0 v30 h-100z" fill="#6f4a35" stroke="#2a1a10" stroke-width="4"/><rect x="110" y="47" width="104" height="8" rx="4" fill="#d4a265" opacity=".85"/>` : '';
+    const glasses = c.glasses ? `<rect x="118" y="113" width="32" height="18" rx="6" fill="none" stroke="#627785" stroke-width="4"/><rect x="173" y="113" width="32" height="18" rx="6" fill="none" stroke="#627785" stroke-width="4"/><rect x="149" y="119" width="24" height="4" rx="2" fill="#627785"/>` : '';
+    const scarf = c.scarf ? `<path d="M128 198 q22 -22 46 0 q-8 16 -4 34 q-18 6 -36 0 q4 -19 -6 -34z" fill="#c66057" opacity=".95"/>` : '';
+    const book = c.book ? `<g transform="translate(219 242) rotate(-10)"><rect x="0" y="0" width="50" height="36" rx="4" fill="#4b3422" stroke="#cdaa67" stroke-width="3"/><line x1="24" y1="2" x2="24" y2="34" stroke="#d7c8a7" stroke-width="2"/><line x1="7" y1="11" x2="19" y2="11" stroke="#d7c8a7" stroke-width="2"/><line x1="29" y1="11" x2="41" y2="11" stroke="#d7c8a7" stroke-width="2"/></g>` : '';
+    const blade = c.blade ? `<g transform="translate(226 210) rotate(30)"><rect x="0" y="0" width="12" height="92" rx="6" fill="#a980df"/><rect x="0" y="0" width="12" height="92" rx="6" fill="url(#bladeGlow)" opacity=".85"/><rect x="-6" y="78" width="24" height="10" rx="5" fill="#44324f"/></g>` : '';
+    const star = c.star ? `<g transform="translate(230 170)"><path d="M18 0 23 12 36 12 26 20 30 33 18 25 6 33 10 20 0 12 13 12Z" fill="#efcf71"/><circle cx="18" cy="18" r="28" fill="none" stroke="#efcf71" stroke-opacity=".35" stroke-width="3"/></g>` : '';
+    return `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400">
+  <defs>
+    <linearGradient id="coat" x1="0" x2="1"><stop offset="0" stop-color="${c.coat2}"/><stop offset=".52" stop-color="${c.coat}"/><stop offset="1" stop-color="${c.coat2}"/></linearGradient>
+    <linearGradient id="hair" x1="0" x2="1"><stop offset="0" stop-color="${c.hair2}"/><stop offset="1" stop-color="${c.hair}"/></linearGradient>
+    <linearGradient id="skin" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff2eb"/><stop offset="1" stop-color="${c.skin}"/></linearGradient>
+    <radialGradient id="aura" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="${c.aura}" stop-opacity=".22"/><stop offset="1" stop-color="${c.aura}" stop-opacity="0"/></radialGradient>
+    <linearGradient id="bladeGlow" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".9"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+  </defs>
+  <ellipse cx="160" cy="330" rx="82" ry="28" fill="#00000022"/>
+  <circle cx="160" cy="178" r="110" fill="url(#aura)"/>
+  <g>
+    <rect x="114" y="266" width="28" height="82" rx="14" fill="#1b222b"/>
+    <rect x="178" y="266" width="28" height="82" rx="14" fill="#1b222b"/>
+    <ellipse cx="128" cy="350" rx="24" ry="10" fill="#10151b"/>
+    <ellipse cx="192" cy="350" rx="24" ry="10" fill="#10151b"/>
+  </g>
+  <path d="M104 176 q56 -30 112 0 l16 128 h-144z" fill="url(#coat)"/>
+  <path d="M104 176 q56 -30 112 0" fill="none" stroke="#ffffff18" stroke-width="6"/>
+  <path d="M141 172 h38 v28 h-38z" fill="url(#skin)"/>
+  ${scarf}
+  <g>
+    <rect x="77" y="188" width="24" height="98" rx="12" fill="url(#coat)" transform="rotate(8 89 237)"/>
+    <rect x="219" y="188" width="24" height="98" rx="12" fill="url(#coat)" transform="rotate(-8 231 237)"/>
+    <circle cx="84" cy="285" r="13" fill="url(#skin)"/>
+    <circle cx="236" cy="285" r="13" fill="url(#skin)"/>
+  </g>
+  <g>
+    <ellipse cx="160" cy="116" rx="62" ry="58" fill="url(#skin)"/>
+    <ellipse cx="136" cy="114" rx="10" ry="13" fill="#ffffff" opacity=".15"/>
+    <path d="M108 111 q17 -10 31 2" stroke="#1d2630" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M181 112 q17 -10 31 2" stroke="#1d2630" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <ellipse cx="125" cy="123" rx="8" ry="9" fill="#1d2630"/>
+    <ellipse cx="195" cy="123" rx="8" ry="9" fill="#1d2630"/>
+    <ellipse cx="122" cy="120" rx="2.5" ry="2.5" fill="#fff"/>
+    <ellipse cx="192" cy="120" rx="2.5" ry="2.5" fill="#fff"/>
+    <path d="M148 152 q12 8 24 0" stroke="#a35f68" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <ellipse cx="121" cy="145" rx="10" ry="5" fill="#e2939f" opacity=".25"/>
+    <ellipse cx="199" cy="145" rx="10" ry="5" fill="#e2939f" opacity=".25"/>
+    ${glasses}
+  </g>
+  <g>
+    <path d="M95 96 q7 -49 65 -52 q55 2 66 52 v34 q-4 -21 -22 -26 q-10 28 -33 38 q-9 -24 -29 -37 q-8 22 -26 28 q-17 5 -21 23z" fill="url(#hair)"/>
+    <path d="M98 85 q10 -16 28 -25 q10 18 27 24 q17 -6 28 -23 q19 8 31 25" fill="none" stroke="#ffffff18" stroke-width="6" stroke-linecap="round"/>
+    <path d="M99 112 q14 5 19 24" fill="none" stroke="#00000022" stroke-width="6" stroke-linecap="round"/>
+    <path d="M221 109 q-13 8 -17 25" fill="none" stroke="#00000022" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  ${hat}
+  <circle cx="160" cy="178" r="4" fill="${c.accent}" opacity=".7"/>
+  <rect x="148" y="196" width="24" height="60" rx="10" fill="#ffffff10"/>
+  ${book}
+  ${blade}
+  ${star}
+</svg>`;
+  }
+
+  function dataUri(svg){
+    return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg.replace(/\n\s+/g,''));
+  }
+
+  function makeWrapper(unit,key){
+    const wrapper = document.createElement('div');
+    wrapper.className = 'spriteUnitV160 asset-authored quality-production v326-authored';
+    wrapper.dataset.sdUnit = '1';
+    wrapper.dataset.author = key;
+    wrapper.dataset.v326 = '1';
+    const nameText = (unit.querySelector('small')?.textContent || KNOWN_AUTHORS[key]?.jp || '').trim();
+    wrapper.innerHTML = `<div class="spriteShadowV160"></div><img class="spriteArtV160" alt="" loading="eager"><div class="spriteFallbackV160" data-debug-fallback></div><small>${nameText}</small>`;
+    const img = wrapper.querySelector('.spriteArtV160');
+    img.src = dataUri(spriteSvg(key));
+    img.dataset.key = key;
+    const fallbackHolder = wrapper.querySelector('.spriteFallbackV160');
+    fallbackHolder.appendChild(unit);
+    return wrapper;
+  }
+
+  function upgradeUnit(unit){
+    if(!unit || unit.closest('.spriteUnitV160.v326-authored')) return;
+    if(unit.dataset.v326Wrapped === '1') return;
+    const raw = unit.getAttribute('data-author') || unit.dataset.author || unit.querySelector('small')?.textContent || '';
+    const key = normalizeAuthor(raw);
+    if(!KNOWN_AUTHORS[key]) return;
+    const wrapper = makeWrapper(unit,key);
+    unit.dataset.v326Wrapped='1';
+    const classes = Array.from(unit.classList).filter(c=>syncClasses.includes(c));
+    if(classes.length) wrapper.classList.add(...classes);
+    const pose = (classes.find(c=>c.startsWith('act178-'))||'').replace('act178-','');
+    if(pose) wrapper.dataset.pose = pose;
+    unit.parentNode?.insertBefore(wrapper, unit);
+  }
+
+  function syncWrapper(wrapper){
+    const fb = wrapper.querySelector('.spriteFallbackV160 > .sdUnitV147');
+    if(!fb) return;
+    syncClasses.forEach(cls=>wrapper.classList.remove(cls));
+    const next = Array.from(fb.classList).filter(c=>syncClasses.includes(c));
+    if(next.length) wrapper.classList.add(...next);
+    const pose = (next.find(c=>c.startsWith('act178-'))||'').replace('act178-','');
+    if(pose) wrapper.dataset.pose = pose; else wrapper.removeAttribute('data-pose');
+  }
+
+  function patchExistingSprite(wrapper){
+    if(!wrapper || wrapper.dataset.v326Patched==='1') return;
+    const fb = wrapper.querySelector('.sdUnitV147');
+    const raw = wrapper.getAttribute('data-author') || fb?.getAttribute('data-author') || wrapper.textContent || '';
+    const key = normalizeAuthor(raw);
+    if(!KNOWN_AUTHORS[key]) return;
+    wrapper.dataset.v326Patched='1';
+    wrapper.classList.add('asset-authored','quality-production','v326-authored');
+    wrapper.classList.remove('useFallback','asset-fallback');
+    let img = wrapper.querySelector('.spriteArtV160');
+    if(!img){ img=document.createElement('img'); img.className='spriteArtV160'; wrapper.prepend(img); }
+    img.src = dataUri(spriteSvg(key));
+    let shadow = wrapper.querySelector('.spriteShadowV160');
+    if(!shadow){ shadow=document.createElement('div'); shadow.className='spriteShadowV160'; wrapper.prepend(shadow); }
+    let fallback = wrapper.querySelector('.spriteFallbackV160');
+    if(!fallback){ fallback=document.createElement('div'); fallback.className='spriteFallbackV160'; wrapper.appendChild(fallback); }
+    if(fb && fb.parentNode!==fallback) fallback.appendChild(fb);
+    syncWrapper(wrapper);
+  }
+
+  function applyDedicatedSprites(root=document){
+    root.querySelectorAll('.bsv2Allies_175 .sdUnitV147[data-author], .posterAlliesWrapV237 .sdUnitV147[data-author]').forEach(upgradeUnit);
+    root.querySelectorAll('.bsv2Allies_175 .spriteUnitV160, .posterAlliesWrapV237 .spriteUnitV160').forEach(patchExistingSprite);
+    document.querySelectorAll('.spriteUnitV160.v326-authored').forEach(syncWrapper);
+  }
+
+  const kick = ()=>applyDedicatedSprites(document);
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', kick, {once:true});
+  else kick();
+  let scheduled=false;
+  const mo = new MutationObserver(()=>{
+    if(scheduled) return;
+    scheduled=true;
+    requestAnimationFrame(()=>{ scheduled=false; applyDedicatedSprites(document); });
+  });
+  mo.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','data-author']});
+  setInterval(()=>applyDedicatedSprites(document),900);
+})();
+</script>
+
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
 </script></body></html>
