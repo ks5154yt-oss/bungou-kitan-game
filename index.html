@@ -15343,9 +15343,28 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V331</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v332-visibility-fix">
+.v331PartyStage.v332Stable{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+.v331PartyStage.v332Stable .v331Unit{
+  visibility:visible!important;
+  opacity:1!important;
+}
+.v331PartyStage.v332Stable .v331Unit img{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  background:transparent!important;
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V332</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=331"></script>
+<script src="app.js?v=332"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -15504,14 +15523,14 @@ body.battleMode .stageBattleBtns .btn{
 </script>
 
 
-<script id="v331-script">
+<script id="v332-script">
 (()=>{
  const roster=[
-  {key:'dazai',hair1:'#0f1620',hair2:'#263649',coat1:'#0f1c29',coat2:'#395b78',skin:'#f1d8ca',eye:'#617186',accent:'#d2b26c',book:1,bandage:1},
-  {key:'chuuya',hair1:'#56301f',hair2:'#b06d43',coat1:'#281017',coat2:'#7d3244',skin:'#f2d3bf',eye:'#a95e4c',accent:'#d6a264',hat:1},
-  {key:'akutagawa',hair1:'#0d1118',hair2:'#5d6674',coat1:'#110f16',coat2:'#302339',skin:'#ecd8cf',eye:'#77728e',accent:'#aa84e2',blade:1,whitecollar:1},
-  {key:'kenji',hair1:'#9e8b65',hair2:'#e5d7b4',coat1:'#26332c',coat2:'#657b6b',skin:'#efd9c0',eye:'#6e8c68',accent:'#e7ca6b',star:1},
-  {key:'ranpo',hair1:'#0e151d',hair2:'#3e4e5c',coat1:'#141a20',coat2:'#3d4954',skin:'#edd6c8',eye:'#6e8e9e',accent:'#8fbad4',glasses:1,book:1}
+  {key:'dazai',hair1:'#0f1620',hair2:'#263649',coat1:'#0f1c29',coat2:'#395b78',skin:'#f1d8ca',book:1,bandage:1},
+  {key:'chuuya',hair1:'#56301f',hair2:'#b06d43',coat1:'#281017',coat2:'#7d3244',skin:'#f2d3bf',hat:1},
+  {key:'akutagawa',hair1:'#0d1118',hair2:'#5d6674',coat1:'#110f16',coat2:'#302339',skin:'#ecd8cf',blade:1,whitecollar:1},
+  {key:'kenji',hair1:'#9e8b65',hair2:'#e5d7b4',coat1:'#26332c',coat2:'#657b6b',skin:'#efd9c0',star:1},
+  {key:'ranpo',hair1:'#0e151d',hair2:'#3e4e5c',coat1:'#141a20',coat2:'#3d4954',skin:'#edd6c8',glasses:1,book:1}
  ];
 
  function svg(c){
@@ -15554,37 +15573,79 @@ body.battleMode .stageBattleBtns .btn{
    ${book}${blade}${star}
    </svg>`;
  }
- function uri(s){return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(s.replace(/\n\s+/g,''));}
 
- function makeStage(){
-   const s=document.createElement('div'); s.className='v331PartyStage';
+ function uri(s){
+   return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(s.replace(/\n\s+/g,''));
+ }
+
+ function createStage(){
+   const s=document.createElement('div');
+   s.className='v331PartyStage v332Stable';
    roster.forEach((c,i)=>{
-     const u=document.createElement('div'); u.className='v331Unit'+(i===0?' active':'');
-     const img=document.createElement('img'); img.src=uri(svg(c)); img.alt='';
-     u.appendChild(img); s.appendChild(u);
+     const u=document.createElement('div');
+     u.className='v331Unit'+(i===0?' active':'');
+     u.dataset.index=String(i);
+     const img=document.createElement('img');
+     img.alt='';
+     img.src=uri(svg(c));
+     u.appendChild(img);
+     s.appendChild(u);
    });
    return s;
  }
- function activeIndex(){
+
+ function getActiveIndex(){
    for(const q of ['.posterLivePartyV217 button','.battleCardsV151>button','.bsv2Cards_175 button']){
-     const a=[...document.querySelectorAll(q)];
-     const i=a.findIndex(b=>b.classList.contains('on')||b.classList.contains('active'));
-     if(i>=0)return i;
+     const arr=[...document.querySelectorAll(q)];
+     const i=arr.findIndex(b=>b.classList.contains('on')||b.classList.contains('active'));
+     if(i>=0) return i;
    }
    return 0;
  }
- function run(){
-   document.querySelectorAll('.v331PartyStage').forEach(n=>n.remove());
-   const host=document.querySelector('.cleanBattleV238 .posterActorStageV237')||document.querySelector('.bsv2Field_175');
-   if(!host)return;
-   const s=makeStage(); host.appendChild(s);
-   const ai=activeIndex();
-   [...s.children].forEach((u,i)=>u.classList.toggle('active',i===ai));
+
+ function ensure(){
+   const host=document.querySelector('.cleanBattleV238 .posterActorStageV237') || document.querySelector('.bsv2Field_175');
+   if(!host) return;
+
+   let stage=host.querySelector(':scope > .v332Stable');
+   if(!stage){
+     document.querySelectorAll('.v331PartyStage').forEach(n=>n.remove());
+     stage=createStage();
+     host.appendChild(stage);
+   }
+
+   const ai=getActiveIndex();
+   [...stage.children].forEach((u,i)=>{
+     const should=i===ai;
+     if(u.classList.contains('active')!==should){
+       u.classList.toggle('active',should);
+     }
+   });
  }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
- let q=false; const mo=new MutationObserver(()=>{if(q)return;q=true;requestAnimationFrame(()=>{q=false;run();});});
- mo.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
- setInterval(run,850);
+
+ if(document.readyState==='loading'){
+   document.addEventListener('DOMContentLoaded',ensure,{once:true});
+ }else{
+   ensure();
+ }
+
+ let queued=false;
+ const mo=new MutationObserver(()=>{
+   if(queued) return;
+   queued=true;
+   requestAnimationFrame(()=>{
+     queued=false;
+     ensure();
+   });
+ });
+ mo.observe(document.documentElement,{
+   subtree:true,
+   childList:true,
+   attributes:true,
+   attributeFilter:['class']
+ });
+
+ setInterval(ensure,2500);
 })();
 </script>
 
