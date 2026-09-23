@@ -1435,7 +1435,7 @@ function dedicatedHome(){
          <small>SIGNATURE ABILITY</small>
          <b>${a.name}</b>
        </div>
-       <p>${q}</p>
+       <p>${q}</p><button class=premiumHomeDetailV245 data-char="${i}">詳細を見る <span>›</span></button>
      </div>
    </section>
 
