@@ -7883,9 +7883,45 @@ body:not(.battleMode) .primaryNavV116{
  .formationActionsV255 .save{grid-column:1/-1!important}
 }
 </style>
+<style id="v259-one-screen-formation">
+/* V259: iPhone one-screen formation, no page scrolling */
+body:not(.battleMode){overflow:hidden!important;height:100dvh!important}
+body:not(.battleMode) #app{height:100dvh!important;min-height:0!important;overflow:hidden!important}
+.formationV255{
+ height:100dvh!important;min-height:0!important;overflow:hidden!important;
+ padding:4px 9px 68px!important;display:flex!important;flex-direction:column!important;gap:5px!important
+}
+.formationTitleV255{flex:0 0 auto!important;padding:4px 5px 6px!important}
+.formationTitleV255 small{font-size:5px!important}.formationTitleV255 h1{font-size:23px!important;margin:1px 0!important}.formationTitleV255 p{font-size:6.5px!important}
+.formationCopyV255{padding:5px 7px!important;font-size:6.5px!important}
+.formationRosterV255{flex:0 0 auto!important;margin:0!important;padding:6px!important}
+.formationRosterV255 header{margin-bottom:4px!important}.formationRosterV255 header b,.formationRosterV255 header strong{font-size:14px!important}.formationRosterV255 header span{font-size:6px!important}
+.formationSlotsV255{gap:4px!important}
+.formationUnitV255{padding:2px 2px 3px!important;border-radius:7px!important}
+.formationUnitV255 img{height:72px!important;margin-bottom:2px!important;border-radius:5px!important}
+.formationUnitV255 b{font-size:6px!important;line-height:1.05!important}.formationUnitV255 small,.formationUnitV255 em{font-size:4.5px!important;line-height:1.05!important;margin-top:1px!important}
+.formationUnitV255 .rankBadge{top:4px!important;left:4px!important;padding:2px 5px!important;font-size:7px!important}.leaderBadgeV255{top:4px!important;right:4px!important;padding:2px 4px!important;font-size:4px!important}
+.formationSummaryV255{flex:1 1 auto!important;min-height:0!important;margin:0!important;padding:6px!important;overflow:hidden!important}
+.formationSummaryHeadV255 h2{font-size:18px!important;margin:1px 0!important}.formationSummaryV255 small{font-size:5px!important}.formationPowerV255 strong{font-size:20px!important}
+.formationTaglineV255{margin:3px 0!important;padding-top:3px!important;font-size:6px!important}
+.formationInfoV255{gap:4px!important}.leaderV255,.bonusV255{padding:4px!important;border-radius:6px!important}
+.leaderV255 img{width:31px!important;height:36px!important}.leaderV255 b{font-size:9px!important}.leaderV255 span,.bonusV255 span{font-size:5px!important}
+.formationReasonV257{margin-top:3px!important;padding:3px 5px!important;font-size:5.5px!important;line-height:1.2!important}
+.formationActionsV255{gap:4px!important;margin-top:4px!important;margin-bottom:0!important;grid-template-columns:1fr 1fr 1.2fr!important}
+.formationActionsV255 button{min-height:29px!important;padding:3px!important;font-size:5.8px!important}
+.formationV255:after{display:none!important}
+body:not(.battleMode) .primaryNavV116{height:58px!important;min-height:58px!important;bottom:0!important}
+@media(max-height:760px){
+ .formationUnitV255 img{height:64px!important}
+ .formationTitleV255 h1{font-size:20px!important}
+ .formationSummaryHeadV255 h2{font-size:16px!important}
+ .formationPowerV255 strong{font-size:18px!important}
+ .formationActionsV255 button{min-height:26px!important}
+}
+</style>
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=258"></script>
+<script src="app.js?v=259"></script>
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
 </script></body></html>
