@@ -15025,11 +15025,58 @@ body.battleMode .stageBattleBtns .btn{
 .bsv2Allies_175 .sdUnitV147:nth-child(1){translate:0 7px}.bsv2Allies_175 .sdUnitV147:nth-child(2){translate:0 1px}.bsv2Allies_175 .sdUnitV147:nth-child(3){translate:0 -5px}.bsv2Allies_175 .sdUnitV147:nth-child(4){translate:0 1px}.bsv2Allies_175 .sdUnitV147:nth-child(5){translate:0 7px}
 .enemyMaskV153{box-shadow:inset 0 0 12px #2b1f25,0 3px 10px #0008!important}.enemyMaskV153 i,.enemyMaskV153 b{width:9px!important;height:7px!important}.enemyCoreV153{box-shadow:0 0 18px #d82e51!important}
 
+
+/* === V325 battle energy pass === */
+/* Improve character readability and make the formation feel more alive without breaking mobile layout. */
+@media(max-width:700px){
+  .sdBattleV118{left:0.5%!important;right:5.2%!important;bottom:12px!important;transform:translateY(-5px)!important}
+  .bsv2Allies_175{min-height:194px!important;align-items:flex-end!important;overflow:visible!important}
+  .sdUnitV147{margin:0 -13px!important;filter:brightness(1.1) saturate(1.08) drop-shadow(0 12px 13px #000c)!important}
+  .sdUnitV147.selectedV154{filter:brightness(1.16) saturate(1.12) drop-shadow(0 0 9px #d2b05d66) drop-shadow(0 12px 14px #000c)!important}
+  .enemyStageV153{right:-4.8%!important;width:40%!important;bottom:24px!important}
+}
+@media(max-width:390px){
+  .sdBattleV118{right:4.4%!important}
+  .sdUnitV147{margin:0 -15px!important}
+  .enemyStageV153{width:41.5%!important;right:-5.5%!important}
+}
+/* raise the party slightly and stagger depth more clearly */
+.bsv2Allies_175 .sdUnitV147:nth-child(1){translate:0 12px;z-index:2}
+.bsv2Allies_175 .sdUnitV147:nth-child(2){translate:0 3px;z-index:4}
+.bsv2Allies_175 .sdUnitV147:nth-child(3){translate:0 -8px;z-index:6}
+.bsv2Allies_175 .sdUnitV147:nth-child(4){translate:0 1px;z-index:5}
+.bsv2Allies_175 .sdUnitV147:nth-child(5){translate:0 10px;z-index:3}
+/* lighter faces / hair edges so they do not sink into the dark background */
+.sdUnitV147 .sdFaceV147{background:radial-gradient(circle at 35% 24%,#fff8 0 9%,transparent 23%),linear-gradient(145deg,color-mix(in srgb,var(--sd-skin) 92%,#fff),var(--sd-skin) 60%,color-mix(in srgb,var(--sd-skin) 80%,#9a5d66))!important;box-shadow:0 0 0 1px #ffffff12,0 2px 5px #0008!important}
+.sdUnitV147 .sdHairV147{box-shadow:0 0 0 1px #0002,inset 0 10px 12px #ffffff10!important}
+.sdUnitV147 .sdBackHairV147{box-shadow:inset 0 10px 10px #ffffff08!important}
+.sdUnitV147 .sdDressV147{box-shadow:inset 0 9px 14px #ffffff08,inset 0 -8px 12px #0004!important}
+.sdUnitV147 .sdArmV147,.sdUnitV147 .sdLegV147{box-shadow:inset 0 0 0 1px #0002!important}
+.sdUnitV147 .sdWeaponV147{filter:drop-shadow(0 1px 3px #000a)!important}
+/* stronger character identity per slot */
+.sdUnitV147[data-author=dazai] .sdDressV147{background:linear-gradient(100deg,#142232,#314f69 46%,#10202d)!important}
+.sdUnitV147[data-author=dazai] .sdWeaponV147[data-weapon=open-book],.sdUnitV147[data-author=dazai] .sdWeaponV147[data-weapon=book]{background:#4c3624!important;border-color:#d0af69!important}
+.sdUnitV147[data-author=chuuya] .sdDressV147{background:linear-gradient(110deg,#3b161d,#7d3140 46%,#220d14)!important}
+.sdUnitV147[data-author=chuuya] .sdArmV147[data-arm=l]{transform:rotate(28deg)!important}
+.sdUnitV147[data-author=chuuya] .sdHeadV147:before{box-shadow:0 4px 7px #0008,inset 0 -2px 0 #1b120d!important}
+.sdUnitV147[data-author=akutagawa] .sdDressV147{background:linear-gradient(108deg,#16131d,#2c2235 46%,#0f0d15)!important}
+.sdUnitV147[data-author=akutagawa] .sdWeaponV147[data-weapon=ink-blade]{background:linear-gradient(#caa7ff,#7d4ea8)!important;box-shadow:0 0 9px #9a5fd0!important}
+.sdUnitV147[data-author=kenji] .sdDressV147{background:linear-gradient(108deg,#33463b,#607969 48%,#25352d)!important}
+.sdUnitV147[data-author=kenji] .sdAccessoryV139{filter:drop-shadow(0 0 5px #f0d56a) drop-shadow(0 0 9px #f0d56a44)!important}
+.sdUnitV147[data-author=ranpo] .sdDressV147,.sdUnitV147[data-author=doyle] .sdDressV147{background:linear-gradient(108deg,#1f252d,#37424e 46%,#161c22)!important}
+.sdUnitV147[data-author=ranpo] .sdFaceV147:after,.sdUnitV147[data-author=doyle] .sdFaceV147:after{border-color:#566674!important;opacity:1!important}
+/* less cage, more formation field */
+.bsv2Allies_175>div,.battleUnitSlotV175{border-color:#3c56611f!important;background:linear-gradient(180deg,#0b182012,#08111805)!important;box-shadow:inset 0 0 10px #0001!important}
+/* enemy looks more threatening and less static */
+.enemyAuraV153{background:radial-gradient(circle,#d233583e,transparent 68%)!important;filter:blur(10px)!important}
+.enemyPagesV153 i{width:21px!important;height:28px!important;box-shadow:0 0 0 1px #fff1,inset 0 0 0 2px #fff3,0 4px 10px #0009!important}
+.enemyArtV153{filter:drop-shadow(0 10px 16px #000d)!important}
+
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V324</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V325</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=324"></script>
+<script src="app.js?v=325"></script>
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
 </script></body></html>
