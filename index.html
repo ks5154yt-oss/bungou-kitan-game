@@ -12223,6 +12223,119 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v300-battle-density-pass">
+/* V300: reduce the huge dead zone and make the face-off feel closer */
+
+/* Lift the actual combat line upward */
+.cleanBattleV238 .posterAlliesWrapV237{
+  bottom:10%!important;
+  height:50%!important;
+  transform:scale(1.05)!important;
+  transform-origin:left bottom!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237{
+  top:6%!important;
+  bottom:12%!important;
+  transform:scale(.82)!important;
+  transform-origin:right bottom!important;
+}
+
+/* Keep active ally clearly forward */
+.cleanBattleV238 .posterAlliesWrapV237 .selectedV154,
+.cleanBattleV238 .posterAlliesWrapV237 .active{
+  transform:translateY(-22px) scale(1.13)!important;
+  z-index:22!important;
+  filter:
+    drop-shadow(0 0 13px rgba(231,193,95,.50))
+    drop-shadow(0 12px 12px rgba(0,0,0,.45))!important;
+}
+
+/* Enemy selection stronger and more local */
+.cleanBattleV238 .posterEnemyWrapV237 .selected,
+.cleanBattleV238 .posterEnemyWrapV237 .active{
+  transform:translateY(-10px) scale(1.14)!important;
+  z-index:22!important;
+  filter:
+    drop-shadow(0 0 14px rgba(255,80,112,.62))
+    drop-shadow(0 0 24px rgba(255,80,112,.24))
+    drop-shadow(0 12px 12px rgba(0,0,0,.46))!important;
+}
+
+/* Pull target frame upward and make it less dominant */
+.cleanBattleV238 .cleanEnemyFocusV239{
+  opacity:.08!important;
+  transform:translateY(-8%) scale(.36)!important;
+}
+
+/* Move enemy HUD a little higher and slimmer */
+.cleanBattleV238 .posterEnemyCompactV235{
+  top:54px!important;
+  width:45%!important;
+  padding:7px 9px!important;
+}
+.cleanBattleV238 .posterEnemyCompactV235 b{
+  font-size:10px!important;
+}
+.cleanBattleV238 .posterEnemyCompactV235 i{
+  height:6px!important;
+}
+
+/* Give the battlefield slightly more contrast around combatants */
+.cleanBattleV238 .posterActorStageV237:after{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:46%!important;
+  pointer-events:none!important;
+  background:linear-gradient(180deg,transparent,rgba(3,10,16,.16) 42%,rgba(3,10,16,.44) 100%)!important;
+  z-index:0!important;
+}
+
+/* Preserve the good lower HUD but separate it from the field */
+.cleanBattleV238 .posterLivePartyV217{
+  bottom:186px!important;
+  box-shadow:0 -6px 18px rgba(0,0,0,.18)!important;
+}
+.cleanBattleV238 .posterSelectedCardV235{
+  bottom:134px!important;
+}
+.cleanBattleV238 .posterThumbBarV234{
+  bottom:64px!important;
+}
+.cleanBattleV238 .posterThumbSubV234{
+  bottom:calc(18px + env(safe-area-inset-bottom))!important;
+}
+
+/* Make labels slightly more readable */
+.cleanBattleV238 .cleanActorLabelsV240 span{
+  font-size:5.4px!important;
+  letter-spacing:.02em!important;
+}
+.cleanBattleV238 .cleanActorLabelsV240 span.on{
+  color:#e4bf66!important;
+  text-shadow:0 0 9px rgba(228,191,102,.28)!important;
+}
+
+/* short-screen fallback */
+@media(max-height:760px){
+  .cleanBattleV238 .posterAlliesWrapV237{
+    bottom:8%!important;
+    transform:scale(1.00)!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237{
+    bottom:10%!important;
+    transform:scale(.78)!important;
+  }
+  .cleanBattleV238 .posterAlliesWrapV237 .selectedV154,
+  .cleanBattleV238 .posterAlliesWrapV237 .active{
+    transform:translateY(-18px) scale(1.10)!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
