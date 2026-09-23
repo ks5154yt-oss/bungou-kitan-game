@@ -9794,6 +9794,101 @@ body:not(.battleMode) .primaryNavV116{
 }
 </style>
 
+
+<style id="v284-sortie-space-balance">
+/* V284: use the empty lower area without bringing scroll back */
+
+/* Recommended / previous cards: slightly taller and more balanced */
+.stageQuickV131{
+  min-height:84px!important;
+  padding:9px 84px 9px 13px!important;
+}
+.stageQuickV131 b{
+  font-size:16px!important;
+}
+.stageQuickV131>button{
+  min-height:44px!important;
+  min-width:72px!important;
+  font-size:9.5px!important;
+}
+
+.resumeStage{
+  min-height:88px!important;
+  padding:9px 86px 9px 13px!important;
+}
+.resumeStage h1{
+  font-size:16px!important;
+}
+.resumeStage>button{
+  min-height:44px!important;
+  min-width:74px!important;
+  font-size:9.5px!important;
+}
+
+/* Stage grid: enlarge cards into the unused lower space */
+.quickStageGrid{
+  gap:8px!important;
+}
+.quickStageGrid>button{
+  min-height:88px!important;
+  padding:9px!important;
+  border-radius:11px!important;
+}
+.quickStageGrid>button>b{
+  font-size:13.5px!important;
+}
+.quickStageGrid>button>span{
+  font-size:6.3px!important;
+}
+.quickStageGrid>button>small{
+  font-size:6.3px!important;
+}
+
+/* Selected chapter gets a clearer premium treatment */
+.quickStageGrid>button.last{
+  border:2px solid #61c7ff!important;
+  background:
+    linear-gradient(180deg,#0f3146,#061823)!important;
+  box-shadow:
+    0 0 0 2px rgba(97,199,255,.12),
+    0 0 18px rgba(74,184,255,.28),
+    inset 0 1px rgba(255,255,255,.04)!important;
+}
+
+/* Locked cards stay subdued but text remains legible */
+.quickStageGrid>button:disabled{
+  opacity:.48!important;
+  background:linear-gradient(180deg,#081822,#030b11)!important;
+}
+
+/* Chapter jump row: taller, clearer and closer to the grid */
+.sortieShortcuts{
+  padding:8px 10px 0!important;
+  gap:8px!important;
+}
+.sortieShortcuts>button{
+  min-height:46px!important;
+  border-radius:10px!important;
+  font-size:9.5px!important;
+  font-weight:700!important;
+  background:linear-gradient(180deg,#15384f,#0a2232)!important;
+}
+
+/* Pull content slightly downward so the composition feels full, not top-heavy */
+.stageSelectTitle{
+  margin-top:7px!important;
+}
+
+/* Keep everything above the fixed nav */
+.sortieV102{
+  padding-bottom:58px!important;
+}
+body:not(.battleMode) .primaryNavV116{
+  min-height:52px!important;
+  height:52px!important;
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
