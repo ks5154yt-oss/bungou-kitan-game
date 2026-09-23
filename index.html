@@ -12579,6 +12579,142 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
+
+<style id="v303-battle-midfield-pass">
+/* V303: fill the empty middle of the battlefield and strengthen the face-off */
+
+/* Move the actual combat line clearly upward */
+.cleanBattleV238 .posterAlliesWrapV237{
+  left:0!important;
+  right:44%!important;
+  bottom:23%!important;
+  height:48%!important;
+  display:flex!important;
+  justify-content:space-evenly!important;
+  align-items:flex-end!important;
+  gap:2px!important;
+  transform:scale(1.04)!important;
+  transform-origin:left bottom!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237{
+  left:50%!important;
+  right:2%!important;
+  top:8%!important;
+  bottom:22%!important;
+  display:flex!important;
+  justify-content:space-evenly!important;
+  align-items:flex-end!important;
+  gap:10px!important;
+  transform:none!important;
+  overflow:visible!important;
+}
+
+/* Real nested enemy stage */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyStageV153{
+  position:relative!important;
+  inset:auto!important;
+  width:100%!important;
+  height:100%!important;
+  display:flex!important;
+  justify-content:space-evenly!important;
+  align-items:flex-end!important;
+  gap:10px!important;
+  transform:none!important;
+}
+
+/* Bigger enemies, still fully inside the right lane */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153{
+  width:108px!important;
+  height:152px!important;
+  flex:0 0 108px!important;
+  margin:0!important;
+  filter:
+    drop-shadow(0 0 10px rgba(220,64,94,.26))
+    drop-shadow(0 12px 14px rgba(0,0,0,.46))!important;
+}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.boss{
+  width:132px!important;
+  height:178px!important;
+  flex-basis:132px!important;
+}
+
+/* Active ally really steps forward */
+.cleanBattleV238 .posterAlliesWrapV237 .spriteUnitV160.selectedV154,
+.cleanBattleV238 .posterAlliesWrapV237 .spriteUnitV160.active{
+  transform:translateY(-20px) scale(1.12)!important;
+  z-index:25!important;
+  filter:
+    drop-shadow(0 0 13px rgba(232,193,96,.54))
+    drop-shadow(0 12px 12px rgba(0,0,0,.44))!important;
+}
+
+/* Selected enemy becomes the local focal point */
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.selected,
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.active{
+  transform:translateY(-10px) scale(1.10)!important;
+  z-index:25!important;
+  filter:
+    drop-shadow(0 0 15px rgba(255,80,111,.70))
+    drop-shadow(0 0 26px rgba(255,80,111,.28))
+    drop-shadow(0 12px 12px rgba(0,0,0,.46))!important;
+}
+
+/* Enemy HUD closer to actual enemies */
+.cleanBattleV238 .posterEnemyCompactV235{
+  top:72px!important;
+  right:10px!important;
+  width:46%!important;
+}
+
+/* Remove the remaining giant target frame almost entirely */
+.cleanBattleV238 .cleanEnemyFocusV239{
+  opacity:.025!important;
+  transform:scale(.18)!important;
+}
+
+/* Put a subtle battle-floor light behind the combatants */
+.cleanBattleV238 .posterActorStageV237:before{
+  content:""!important;
+  position:absolute!important;
+  left:3%!important;
+  right:3%!important;
+  bottom:18%!important;
+  height:30%!important;
+  pointer-events:none!important;
+  background:
+    radial-gradient(ellipse at 28% 84%,rgba(216,178,89,.10),transparent 38%),
+    radial-gradient(ellipse at 75% 82%,rgba(224,65,95,.11),transparent 36%)!important;
+  z-index:0!important;
+}
+
+/* Keep lower HUD unchanged */
+.cleanBattleV238 .posterLivePartyV217{bottom:186px!important}
+.cleanBattleV238 .posterSelectedCardV235{bottom:134px!important}
+.cleanBattleV238 .posterThumbBarV234{bottom:64px!important}
+.cleanBattleV238 .posterThumbSubV234{bottom:calc(18px + env(safe-area-inset-bottom))!important}
+
+/* Quiet the architecture further */
+.cleanBattleV238 .cleanStageArchV238,
+.cleanBattleV238 .cleanStagePillarsV239{opacity:.14!important}
+.cleanBattleV238 .cleanStageMoonV238{opacity:.32!important}
+.cleanBattleV238 .cleanStageMistV238{opacity:.26!important}
+
+@media(max-height:760px){
+  .cleanBattleV238 .posterAlliesWrapV237{
+    bottom:20%!important;
+    transform:scale(.98)!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237{
+    bottom:19%!important;
+  }
+  .cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153{
+    width:98px!important;
+    height:142px!important;
+    flex-basis:98px!important;
+  }
+}
+</style>
+
 </head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V243</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=267"></script>
