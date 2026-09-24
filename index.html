@@ -16616,9 +16616,84 @@ body.v352-turn-lock [data-page="home"]{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V383</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v384-enemy-sync-polish">
+/* V384: polish independent enemy art and sync target emphasis.
+   No battle logic or layout changes. */
+
+@keyframes v384ShadowIdle{
+  0%,100%{transform:translateY(0) rotate(-.6deg) scale(.985)}
+  50%{transform:translateY(-5px) rotate(.8deg) scale(1.01)}
+}
+@keyframes v384VoidIdle{
+  0%,100%{transform:translateY(0) scale(.99)}
+  50%{transform:translateY(-3px) scale(1.018)}
+}
+@keyframes v384HoundIdle{
+  0%,100%{transform:translateY(0) rotate(-.5deg) scale(.99)}
+  50%{transform:translateY(-4px) rotate(.8deg) scale(1.012)}
+}
+
+.v383EnemyOverlay .v383Enemy{
+  transition:
+    opacity .18s ease,
+    filter .18s ease,
+    transform .18s ease!important;
+}
+
+/* Character-specific idle motion */
+.v383EnemyOverlay .e1{animation:v384ShadowIdle 3.0s ease-in-out infinite!important}
+.v383EnemyOverlay .e2{animation:v384HoundIdle 2.5s ease-in-out infinite!important}
+.v383EnemyOverlay .e3{animation:v384VoidIdle 3.4s ease-in-out infinite!important}
+
+/* When one enemy is selected, de-emphasize the others slightly */
+.v383EnemyOverlay.hasTarget .v383Enemy{
+  opacity:.74!important;
+  filter:
+    contrast(1.06)
+    saturate(.94)
+    brightness(.82)
+    drop-shadow(0 12px 13px rgba(0,0,0,.52))!important;
+}
+.v383EnemyOverlay.hasTarget .v383Enemy.v384Target{
+  opacity:1!important;
+  filter:
+    contrast(1.14)
+    saturate(1.10)
+    brightness(1.03)
+    drop-shadow(0 0 12px rgba(255,88,120,.30))
+    drop-shadow(0 16px 16px rgba(0,0,0,.62))!important;
+}
+
+/* Target ground ring, purely visual */
+.v384TargetRing{
+  position:absolute!important;
+  bottom:0!important;
+  width:31%!important;
+  height:18px!important;
+  border-radius:50%!important;
+  border:1px solid rgba(255,88,120,.42)!important;
+  background:radial-gradient(ellipse,rgba(255,88,120,.12),transparent 68%)!important;
+  box-shadow:0 0 12px rgba(255,88,120,.18)!important;
+  pointer-events:none!important;
+  opacity:0!important;
+  transition:left .18s ease,right .18s ease,width .18s ease,opacity .18s ease!important;
+}
+.v383EnemyOverlay.hasTarget .v384TargetRing{opacity:1!important}
+
+/* Keep art crisp on iPhone */
+@media(max-width:430px){
+  .v383EnemyOverlay .v383Enemy{
+    image-rendering:auto!important;
+    -webkit-backface-visibility:hidden!important;
+    backface-visibility:hidden!important;
+  }
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V384</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=383"></script>
+<script src="app.js?v=384"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -18348,6 +18423,99 @@ body.v352-turn-lock [data-page="home"]{
 
   const mo=new MutationObserver(()=>requestAnimationFrame(ensure));
   mo.observe(document.documentElement,{subtree:true,childList:true});
+})();
+</script>
+
+
+<script id="v384-enemy-sync-polish-script">
+(()=>{
+  function wrap(){
+    return document.querySelector('.cleanBattleV238 .posterEnemyWrapV237');
+  }
+
+  function overlay(){
+    return wrap()?.querySelector('.v383EnemyOverlay') || null;
+  }
+
+  function visibleEnemies(){
+    const w=wrap();
+    if(!w) return [];
+    return [...w.querySelectorAll('.enemyArtV153')].filter(n=>n.offsetParent!==null);
+  }
+
+  function ensureRing(layer){
+    let ring=layer.querySelector('.v384TargetRing');
+    if(!ring){
+      ring=document.createElement('div');
+      ring.className='v384TargetRing';
+      layer.appendChild(ring);
+    }
+    return ring;
+  }
+
+  function sync(){
+    const layer=overlay();
+    if(!layer) return;
+
+    const old=layer.querySelectorAll('.v384Target');
+    old.forEach(x=>x.classList.remove('v384Target'));
+    layer.classList.remove('hasTarget');
+
+    const enemies=visibleEnemies();
+    let idx=enemies.findIndex(n=>n.classList.contains('selected')||n.classList.contains('active'));
+
+    if(idx<0){
+      const all=[...wrap().querySelectorAll('.enemyArtV153')];
+      idx=all.findIndex(n=>n.classList.contains('selected')||n.classList.contains('active'));
+    }
+    if(idx<0) return;
+
+    const count=Math.max(1,Math.min(3,enemies.length || wrap().querySelectorAll('.enemyArtV153').length || 1));
+
+    let art=null;
+    if(count===1){
+      art=layer.querySelector('.e1');
+    }else if(count===2){
+      art=idx===0 ? layer.querySelector('.e1') : layer.querySelector('.e2');
+    }else{
+      art=layer.querySelector('.e'+(Math.min(idx,2)+1));
+    }
+
+    if(!art) return;
+    art.classList.add('v384Target');
+    layer.classList.add('hasTarget');
+
+    const ring=ensureRing(layer);
+    if(count===1){
+      ring.style.right='12%';
+      ring.style.left='auto';
+      ring.style.width='54%';
+    }else if(count===2){
+      ring.style.width='38%';
+      ring.style.right='auto';
+      ring.style.left=(idx===0?'11%':'57%');
+    }else{
+      ring.style.width='27%';
+      ring.style.right='auto';
+      ring.style.left=(idx===0?'3%':idx===1?'37%':'70%');
+    }
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>setTimeout(sync,120),{once:true});
+  }else{
+    setTimeout(sync,120);
+  }
+
+  const mo=new MutationObserver(()=>requestAnimationFrame(sync));
+  mo.observe(document.documentElement,{
+    subtree:true,
+    childList:true,
+    attributes:true,
+    attributeFilter:['class']
+  });
+
+  setInterval(sync,1200);
 })();
 </script>
 
