@@ -16657,9 +16657,268 @@ body.v352-turn-lock [data-page="home"]{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V356</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v357-cutins">
+/* V357: character-specific ultimate cut-ins + boss special warning */
+
+@keyframes v357CutInIn{
+  0%{opacity:0;transform:translateX(-110%) skewX(-10deg)}
+  34%{opacity:1;transform:translateX(0) skewX(-10deg)}
+  76%{opacity:1}
+  100%{opacity:0;transform:translateX(8%) skewX(-10deg)}
+}
+@keyframes v357CutInPortrait{
+  0%{opacity:0;transform:translateX(-34px) scale(.88)}
+  28%{opacity:1;transform:translateX(0) scale(1.04)}
+  100%{opacity:1;transform:translateX(0) scale(1)}
+}
+@keyframes v357Warning{
+  0%,100%{opacity:.35}
+  50%{opacity:1}
+}
+@keyframes v357BossCharge{
+  0%{opacity:0;transform:scale(.4)}
+  26%{opacity:.95}
+  100%{opacity:0;transform:scale(1.75)}
+}
+
+.v357CutIn{
+  position:absolute!important;
+  left:-4%!important;right:-4%!important;
+  top:24%!important;height:116px!important;
+  z-index:260!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+  border-top:1px solid rgba(230,190,95,.5)!important;
+  border-bottom:1px solid rgba(230,190,95,.5)!important;
+  background:
+    linear-gradient(100deg,rgba(4,12,20,.98) 0 48%,rgba(17,35,48,.94) 74%,rgba(4,12,20,.92) 100%)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.52)!important;
+  animation:v357CutInIn 1.15s cubic-bezier(.16,.8,.2,1) forwards!important;
+}
+.v357CutIn img{
+  position:absolute!important;
+  left:5%!important;bottom:-38%!important;
+  height:176%!important;width:auto!important;
+  object-fit:contain!important;
+  filter:drop-shadow(0 10px 12px rgba(0,0,0,.55))!important;
+  animation:v357CutInPortrait .5s ease-out forwards!important;
+}
+.v357CutInText{
+  position:absolute!important;
+  left:42%!important;right:5%!important;top:22%!important;
+  text-align:right!important;
+  color:#f7ecd4!important;
+  font-family:serif!important;
+  text-shadow:0 0 10px rgba(230,190,95,.28)!important;
+}
+.v357CutInText small{
+  display:block!important;
+  color:#b8c5cf!important;
+  font-size:9px!important;
+  letter-spacing:.2em!important;
+}
+.v357CutInText b{
+  display:block!important;
+  margin-top:6px!important;
+  font-size:24px!important;
+  letter-spacing:.08em!important;
+}
+.v357CutInText em{
+  display:block!important;
+  margin-top:4px!important;
+  color:#dfbd68!important;
+  font-size:10px!important;
+  font-style:normal!important;
+  letter-spacing:.08em!important;
+}
+.v357BossWarning{
+  position:absolute!important;
+  inset:0!important;
+  z-index:250!important;
+  pointer-events:none!important;
+  background:
+    linear-gradient(180deg,rgba(120,0,25,.08),rgba(120,0,25,.18)),
+    repeating-linear-gradient(135deg,transparent 0 18px,rgba(255,50,90,.035) 18px 36px)!important;
+  box-shadow:inset 0 0 60px rgba(205,20,55,.28)!important;
+  animation:v357Warning .72s ease-in-out 3!important;
+}
+.v357BossWarningText{
+  position:absolute!important;
+  left:50%!important;top:35%!important;
+  transform:translateX(-50%)!important;
+  z-index:251!important;
+  color:#ffdce3!important;
+  font:900 21px/1 serif!important;
+  letter-spacing:.22em!important;
+  text-shadow:0 0 12px rgba(255,55,96,.7)!important;
+  pointer-events:none!important;
+}
+.v357BossCharge{
+  position:absolute!important;
+  right:10%!important;top:30%!important;
+  width:180px!important;height:180px!important;
+  z-index:252!important;
+  pointer-events:none!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle,rgba(255,255,255,.92) 0 5%,rgba(255,65,104,.58) 16%,rgba(115,55,220,.22) 43%,transparent 70%)!important;
+  animation:v357BossCharge .9s ease-out forwards!important;
+}
+</style>
+
+
+<style id="v358-skill-boss-patterns">
+/* V358: stronger per-character skill identity + boss attack patterns */
+
+@keyframes v358RingExpand{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.22)}
+  28%{opacity:.9}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.35)}
+}
+@keyframes v358SlashSweep{
+  0%{opacity:0;transform:translate(-45px,18px) rotate(-24deg) scaleX(.25)}
+  26%{opacity:1}
+  100%{opacity:0;transform:translate(110px,-28px) rotate(-24deg) scaleX(1.35)}
+}
+@keyframes v358StarRise{
+  0%{opacity:0;transform:translateY(22px) scale(.55) rotate(0deg)}
+  30%{opacity:1}
+  100%{opacity:0;transform:translateY(-60px) scale(1.2) rotate(120deg)}
+}
+@keyframes v358Scan{
+  0%{opacity:0;transform:translateY(-34px)}
+  24%{opacity:.9}
+  100%{opacity:0;transform:translateY(84px)}
+}
+@keyframes v358NullWave{
+  0%{opacity:0;transform:scale(.35)}
+  25%{opacity:.8}
+  100%{opacity:0;transform:scale(1.45)}
+}
+@keyframes v358BossOrb{
+  0%{opacity:0;transform:scale(.3) translateY(20px)}
+  28%{opacity:1}
+  70%{opacity:1;transform:scale(1) translateY(0)}
+  100%{opacity:0;transform:scale(1.2) translateY(8px)}
+}
+@keyframes v358BossBeam{
+  0%{opacity:0;transform:scaleX(.1)}
+  20%{opacity:1}
+  100%{opacity:0;transform:scaleX(1.25)}
+}
+@keyframes v358BossRain{
+  0%{opacity:0;transform:translateY(-26px)}
+  30%{opacity:.9}
+  100%{opacity:0;transform:translateY(72px)}
+}
+
+.v358FxLayer{
+  position:absolute!important;
+  inset:0!important;
+  z-index:205!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+}
+
+/* 太宰: nullification wave */
+.v358DazaiWave{
+  position:absolute!important;
+  left:28%!important;top:48%!important;
+  width:120px!important;height:120px!important;
+  margin:-60px 0 0 -60px!important;
+  border-radius:50%!important;
+  border:2px solid rgba(235,242,255,.72)!important;
+  box-shadow:0 0 18px rgba(220,235,255,.44), inset 0 0 18px rgba(220,235,255,.18)!important;
+  animation:v358NullWave .7s ease-out forwards!important;
+}
+.v358DazaiWave::after{
+  content:""!important;position:absolute!important;inset:18%!important;border-radius:50%!important;
+  border:1px solid rgba(255,255,255,.48)!important;
+}
+
+/* 中也: gravity ring */
+.v358ChuuyaRing{
+  position:absolute!important;
+  left:62%!important;top:47%!important;
+  width:160px!important;height:70px!important;
+  border-radius:50%!important;
+  border:4px solid rgba(255,76,94,.76)!important;
+  box-shadow:0 0 24px rgba(255,55,80,.52), inset 0 0 20px rgba(255,55,80,.22)!important;
+  animation:v358RingExpand .72s ease-out forwards!important;
+}
+
+/* 芥川: rashomon slash */
+.v358AkutagawaSlash{
+  position:absolute!important;
+  left:34%!important;top:46%!important;
+  width:44%!important;height:10px!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.9) 20%,rgba(164,88,255,.92) 48%,rgba(72,21,120,.15) 82%,transparent)!important;
+  box-shadow:0 0 18px rgba(154,76,255,.46)!important;
+  animation:v358SlashSweep .58s ease-out forwards!important;
+}
+
+/* 賢治: rising stars */
+.v358Star{
+  position:absolute!important;
+  width:20px!important;height:20px!important;
+  clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 95%,50% 73%,21% 95%,32% 57%,2% 35%,39% 35%)!important;
+  background:radial-gradient(circle,#fffbd1,#f5d25f 55%,#d49b24)!important;
+  filter:drop-shadow(0 0 8px rgba(245,210,95,.62))!important;
+  animation:v358StarRise .9s ease-out forwards!important;
+}
+
+/* 乱歩: detective scan */
+.v358ScanLine{
+  position:absolute!important;
+  left:18%!important;right:18%!important;top:28%!important;
+  height:2px!important;
+  background:linear-gradient(90deg,transparent,#9ad7ff,#fff,transparent)!important;
+  box-shadow:0 0 10px rgba(110,205,255,.55)!important;
+  animation:v358Scan .82s ease-out forwards!important;
+}
+.v358ScanGrid{
+  position:absolute!important;
+  left:16%!important;right:16%!important;top:24%!important;bottom:24%!important;
+  background:
+    linear-gradient(rgba(110,205,255,.09) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(110,205,255,.09) 1px,transparent 1px)!important;
+  background-size:22px 22px!important;
+  mask-image:radial-gradient(circle at center,#000 20%,transparent 78%)!important;
+  opacity:.55!important;
+}
+
+/* Boss patterns */
+.v358BossOrb{
+  position:absolute!important;
+  right:12%!important;top:28%!important;
+  width:115px!important;height:115px!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle,#fff 0 6%,#ff5674 18%,#7737d6 45%,transparent 72%)!important;
+  filter:drop-shadow(0 0 20px rgba(255,70,104,.65))!important;
+  animation:v358BossOrb .9s ease-out forwards!important;
+}
+.v358BossBeam{
+  position:absolute!important;
+  right:20%!important;top:48%!important;
+  width:58%!important;height:14px!important;
+  transform-origin:right center!important;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.9) 18%,rgba(255,55,94,.84) 62%,rgba(115,44,210,.55))!important;
+  box-shadow:0 0 22px rgba(255,55,94,.58)!important;
+  animation:v358BossBeam .62s ease-out forwards!important;
+}
+.v358BossRain i{
+  position:absolute!important;
+  width:3px!important;height:52px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(164,80,255,.72),transparent)!important;
+  box-shadow:0 0 8px rgba(160,80,255,.45)!important;
+  animation:v358BossRain .74s ease-out forwards!important;
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V358</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=356"></script>
+<script src="app.js?v=358"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -18377,6 +18636,199 @@ body.v352-turn-lock [data-page="home"]{
   const mo=new MutationObserver(scan);
   mo.observe(document.documentElement,{subtree:true,childList:true,characterData:true});
   setInterval(scan,1200);
+})();
+</script>
+
+
+<script id="v357-cutins-script">
+(()=>{
+  const names={
+    dazai:{jp:'太宰 治',skill:'人間失格'},
+    chuuya:{jp:'中原 中也',skill:'汚れつちまつた悲しみに'},
+    akutagawa:{jp:'芥川 龍之介',skill:'羅生門'},
+    kenji:{jp:'宮沢 賢治',skill:'銀河鉄道の夜'},
+    ranpo:{jp:'江戸川 乱歩',skill:'人間椅子'}
+  };
+
+  function stage(){
+    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
+           document.querySelector('.bsv2Field_175');
+  }
+  function activeUnit(){
+    const us=[...document.querySelectorAll('.v343HQParty .v343Unit')];
+    return us.find(u=>u.classList.contains('active')) || us[0] || null;
+  }
+  function isOugi(target){
+    const el=target && target.closest ? target.closest('button,[role="button"],[data-sd-action],.cmd,.command,.action') : null;
+    if(!el) return false;
+    const ds=(el.getAttribute('data-sd-action')||'').toLowerCase();
+    const txt=(el.textContent||'').replace(/\s+/g,'');
+    return ds.includes('ougi') || ds.includes('ultimate') || txt.includes('奥義');
+  }
+  function cutin(){
+    const host=stage(), unit=activeUnit();
+    if(!host || !unit) return;
+    const key=unit.getAttribute('data-key') || 'dazai';
+    const info=names[key] || names.dazai;
+    const img=unit.querySelector('img');
+
+    const box=document.createElement('div');
+    box.className='v357CutIn';
+    if(img){
+      const pic=document.createElement('img');
+      pic.src=img.src;
+      pic.alt=info.jp;
+      box.appendChild(pic);
+    }
+    const tx=document.createElement('div');
+    tx.className='v357CutInText';
+    tx.innerHTML='<small>ULTIMATE</small><b>'+info.jp+'</b><em>'+info.skill+'</em>';
+    box.appendChild(tx);
+    host.appendChild(box);
+    setTimeout(()=>box.remove(),1220);
+  }
+
+  function bossWarning(){
+    const host=stage(); if(!host) return;
+    const veil=document.createElement('div');
+    veil.className='v357BossWarning';
+    const txt=document.createElement('div');
+    txt.className='v357BossWarningText';
+    txt.textContent='DANGER';
+    const charge=document.createElement('div');
+    charge.className='v357BossCharge';
+    host.append(veil,txt,charge);
+    setTimeout(()=>veil.remove(),2200);
+    setTimeout(()=>txt.remove(),2200);
+    setTimeout(()=>charge.remove(),1000);
+  }
+
+  document.addEventListener('click',(e)=>{
+    if(isOugi(e.target)) cutin();
+  },true);
+
+  window.bungoV357={cutin,bossWarning};
+
+  // Trigger a warning once when a boss enters the second phase.
+  let warned=false;
+  function scan(){
+    const boss=document.querySelector('.v353-boss');
+    const body=(document.body.innerText||'');
+    const hp=[...body.matchAll(/HP\s*(\d+)%/gi)].map(m=>parseInt(m[1],10));
+    const enemyHp=hp.length?hp[0]:null;
+    if(boss && enemyHp!==null && enemyHp<=50 && !warned){
+      warned=true;
+      bossWarning();
+    }
+    if(!boss) warned=false;
+  }
+  setInterval(scan,1000);
+})();
+</script>
+
+
+<script id="v358-skill-boss-patterns-script">
+(()=>{
+  let bossPattern=0;
+
+  function stage(){
+    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
+           document.querySelector('.bsv2Field_175');
+  }
+  function activeUnit(){
+    const us=[...document.querySelectorAll('.v343HQParty .v343Unit')];
+    return us.find(u=>u.classList.contains('active')) || us[0] || null;
+  }
+  function getAction(target){
+    const el=target && target.closest ? target.closest('button,[role="button"],[data-sd-action],.cmd,.command,.action') : null;
+    if(!el) return '';
+    const ds=(el.getAttribute('data-sd-action')||'').toLowerCase();
+    const txt=(el.textContent||'').replace(/\s+/g,'');
+    if(ds.includes('skill')||txt.includes('スキル')) return 'skill';
+    return '';
+  }
+  function layer(){
+    const host=stage(); if(!host) return null;
+    const l=document.createElement('div');
+    l.className='v358FxLayer';
+    host.appendChild(l);
+    setTimeout(()=>l.remove(),1200);
+    return l;
+  }
+  function skillFx(){
+    const u=activeUnit(), l=layer();
+    if(!u || !l) return;
+    const key=u.getAttribute('data-key')||'dazai';
+
+    if(key==='dazai'){
+      const x=document.createElement('div');
+      x.className='v358DazaiWave'; l.appendChild(x);
+    }else if(key==='chuuya'){
+      const x=document.createElement('div');
+      x.className='v358ChuuyaRing'; l.appendChild(x);
+    }else if(key==='akutagawa'){
+      const x=document.createElement('div');
+      x.className='v358AkutagawaSlash'; l.appendChild(x);
+    }else if(key==='kenji'){
+      for(let i=0;i<7;i++){
+        const s=document.createElement('i');
+        s.className='v358Star';
+        s.style.left=(16+i*8)+'%';
+        s.style.top=(62-(i%2)*6)+'%';
+        s.style.animationDelay=(i*.05)+'s';
+        l.appendChild(s);
+      }
+    }else{
+      const g=document.createElement('div');
+      g.className='v358ScanGrid';
+      const line=document.createElement('div');
+      line.className='v358ScanLine';
+      l.append(g,line);
+    }
+  }
+
+  function bossSpecial(){
+    const l=layer(); if(!l) return;
+    bossPattern=(bossPattern+1)%3;
+
+    if(bossPattern===0){
+      const orb=document.createElement('div');
+      orb.className='v358BossOrb';
+      l.appendChild(orb);
+    }else if(bossPattern===1){
+      const beam=document.createElement('div');
+      beam.className='v358BossBeam';
+      l.appendChild(beam);
+    }else{
+      const rain=document.createElement('div');
+      rain.className='v358BossRain';
+      for(let i=0;i<9;i++){
+        const r=document.createElement('i');
+        r.style.left=(12+i*9)+'%';
+        r.style.top=(20+(i%3)*4)+'%';
+        r.style.animationDelay=(i*.04)+'s';
+        rain.appendChild(r);
+      }
+      l.appendChild(rain);
+    }
+  }
+
+  document.addEventListener('click',(e)=>{
+    if(getAction(e.target)==='skill') skillFx();
+  },true);
+
+  window.bungoV358={skillFx,bossSpecial};
+
+  // When boss warning appears, chain a readable special-attack cue.
+  let lastWarn=0;
+  const mo=new MutationObserver(()=>{
+    const warn=document.querySelector('.v357BossWarning');
+    if(warn && Date.now()-lastWarn>1800){
+      lastWarn=Date.now();
+      setTimeout(bossSpecial,500);
+    }
+  });
+  mo.observe(document.documentElement,{subtree:true,childList:true});
 })();
 </script>
 
