@@ -16037,9 +16037,78 @@ body.battleMode .stageBattleBtns .btn{
 @keyframes v347Aura{0%{opacity:0;transform:scale(.8);}20%{opacity:1;}100%{opacity:0;transform:scale(1.12);}}
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V347</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v348-hit-and-character-motion">
+@keyframes v348EnemyHit {
+  0%,100% { transform:translateX(0) rotate(0deg); filter:brightness(1); }
+  18% { transform:translateX(8px) rotate(2deg); filter:brightness(1.45); }
+  42% { transform:translateX(-6px) rotate(-1deg); }
+  68% { transform:translateX(3px) rotate(.5deg); }
+}
+@keyframes v348EnemyHeavyHit {
+  0%,100% { transform:translateX(0) scale(1); filter:brightness(1); }
+  22% { transform:translateX(12px) scale(.98); filter:brightness(1.7) contrast(1.1); }
+  50% { transform:translateX(-8px) scale(1.02); }
+  76% { transform:translateX(4px); }
+}
+@keyframes v348HitFlash {
+  0%{opacity:0;transform:scale(.3)}
+  28%{opacity:.95}
+  100%{opacity:0;transform:scale(1.65)}
+}
+@keyframes v348DazaiAttack {
+  0%{translate:0 0;rotate:0deg}
+  34%{translate:28px -9px;rotate:-3deg}
+  58%{translate:45px -15px;rotate:2deg}
+  100%{translate:0 0;rotate:0deg}
+}
+@keyframes v348ChuuyaAttack {
+  0%{translate:0 0;rotate:0deg}
+  28%{translate:24px -10px;rotate:-7deg}
+  55%{translate:52px -17px;rotate:4deg}
+  100%{translate:0 0;rotate:0deg}
+}
+@keyframes v348AkutagawaAttack {
+  0%{translate:0 0;scale:1}
+  28%{translate:18px -7px;scale:1.05}
+  50%{translate:58px -16px;scale:1.13}
+  100%{translate:0 0;scale:1}
+}
+@keyframes v348KenjiAttack {
+  0%{translate:0 0;scale:1}
+  32%{translate:20px -13px;scale:1.08}
+  55%{translate:42px -20px;scale:1.12}
+  100%{translate:0 0;scale:1}
+}
+@keyframes v348RanpoAttack {
+  0%{translate:0 0;rotate:0deg}
+  30%{translate:16px -5px;rotate:-2deg}
+  55%{translate:34px -10px;rotate:1deg}
+  100%{translate:0 0;rotate:0deg}
+}
+.v343HQParty .v343Unit.v348-char-attack[data-key="dazai"]{animation:v348DazaiAttack .56s cubic-bezier(.2,.8,.2,1) 1!important}
+.v343HQParty .v343Unit.v348-char-attack[data-key="chuuya"]{animation:v348ChuuyaAttack .52s cubic-bezier(.2,.82,.2,1) 1!important}
+.v343HQParty .v343Unit.v348-char-attack[data-key="akutagawa"]{animation:v348AkutagawaAttack .54s cubic-bezier(.16,.84,.2,1) 1!important}
+.v343HQParty .v343Unit.v348-char-attack[data-key="kenji"]{animation:v348KenjiAttack .58s cubic-bezier(.18,.8,.22,1) 1!important}
+.v343HQParty .v343Unit.v348-char-attack[data-key="ranpo"]{animation:v348RanpoAttack .52s cubic-bezier(.2,.78,.25,1) 1!important}
+.cleanBattleV238 .posterEnemyWrapV237.v348-hit,.bsv2Enemies_175.v348-hit{animation:v348EnemyHit .34s ease-out 1!important}
+.cleanBattleV238 .posterEnemyWrapV237.v348-heavy-hit,.bsv2Enemies_175.v348-heavy-hit{animation:v348EnemyHeavyHit .52s ease-out 1!important}
+.v348Impact{
+  position:absolute!important;right:14%!important;top:41%!important;width:110px!important;height:110px!important;
+  z-index:120!important;pointer-events:none!important;border-radius:50%!important;
+  background:radial-gradient(circle,rgba(255,255,255,.94) 0 7%,rgba(255,221,156,.92) 8% 16%,rgba(255,95,125,.62) 18% 34%,rgba(196,70,255,.22) 38% 52%,transparent 70%)!important;
+  filter:drop-shadow(0 0 14px rgba(255,95,125,.5))!important;animation:v348HitFlash .42s ease-out 1!important;
+}
+.v348DamageText{
+  position:absolute!important;right:17%!important;top:42%!important;z-index:122!important;color:#fff7df!important;
+  font:800 13px/1 serif!important;letter-spacing:.03em!important;
+  text-shadow:0 0 8px #fff,0 0 14px rgba(255,78,105,.8)!important;pointer-events:none!important;
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V348</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=347"></script>
+<script src="app.js?v=348"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -17019,6 +17088,84 @@ body.battleMode .stageBattleBtns .btn{
   }
   document.addEventListener('click', handler, true);
   document.addEventListener('touchend', handler, {capture:true, passive:true});
+})();
+</script>
+
+
+<script id="v348-hit-and-character-motion-script">
+(()=>{
+  function activeUnit(){
+    const units=[...document.querySelectorAll('.v343HQParty .v343Unit')];
+    return units.find(u=>u.classList.contains('active')) || units[0] || null;
+  }
+  function stage(){
+    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
+           document.querySelector('.bsv2Field_175');
+  }
+  function enemies(){
+    return document.querySelector('.cleanBattleV238 .posterEnemyWrapV237') ||
+           document.querySelector('.bsv2Enemies_175');
+  }
+  function flash(heavy){
+    const host=stage();
+    if(!host) return;
+    const impact=document.createElement('div');
+    impact.className='v348Impact';
+    if(heavy){
+      impact.style.width='150px';
+      impact.style.height='150px';
+      impact.style.right='11%';
+      impact.style.top='35%';
+    }
+    const txt=document.createElement('div');
+    txt.className='v348DamageText';
+    txt.textContent=heavy?'CRITICAL':'HIT';
+    host.append(impact,txt);
+    setTimeout(()=>impact.remove(),520);
+    setTimeout(()=>txt.remove(),640);
+  }
+  function play(type){
+    const u=activeUnit();
+    const e=enemies();
+    if(!u) return;
+    if(type==='attack'){
+      u.classList.add('v348-char-attack');
+      setTimeout(()=>{
+        if(e)e.classList.add('v348-hit');
+        flash(false);
+      },220);
+      setTimeout(()=>{
+        u.classList.remove('v348-char-attack');
+        if(e)e.classList.remove('v348-hit');
+      },620);
+    }else if(type==='skill'){
+      setTimeout(()=>{
+        if(e)e.classList.add('v348-heavy-hit');
+        flash(true);
+      },300);
+      setTimeout(()=>{if(e)e.classList.remove('v348-heavy-hit');},760);
+    }else if(type==='ougi'){
+      setTimeout(()=>{
+        if(e)e.classList.add('v348-heavy-hit');
+        flash(true);
+      },360);
+      setTimeout(()=>{if(e)e.classList.remove('v348-heavy-hit');},900);
+    }
+  }
+  function detect(target){
+    const el=target.closest('button,[role="button"],.cmd,.command,.action,[data-sd-action]');
+    if(!el) return '';
+    const ds=(el.getAttribute('data-sd-action')||'').toLowerCase();
+    const txt=(el.textContent||'').replace(/\s+/g,'');
+    if(ds.includes('ougi')||ds.includes('ultimate')||txt.includes('奥義')) return 'ougi';
+    if(ds.includes('skill')||txt.includes('スキル')) return 'skill';
+    if(ds.includes('attack')||txt.includes('攻撃')) return 'attack';
+    return '';
+  }
+  document.addEventListener('click',e=>{
+    const t=detect(e.target);
+    if(t)play(t);
+  },true);
 })();
 </script>
 
