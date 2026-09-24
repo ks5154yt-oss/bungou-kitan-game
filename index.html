@@ -15993,9 +15993,53 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V346</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v347-action-motion">
+/* V347: visible action motion for the HQ SD party */
+.v343HQParty .v343Unit{will-change:transform,filter!important;}
+.v343HQParty .v343Unit.v347-attack{animation:v347Attack .56s cubic-bezier(.2,.75,.2,1) 1!important;z-index:9!important;}
+.v343HQParty .v343Unit.v347-skill{animation:v347Skill .70s cubic-bezier(.2,.72,.2,1) 1!important;z-index:9!important;filter:brightness(1.14) drop-shadow(0 0 14px rgba(148,109,255,.48)) drop-shadow(0 16px 16px rgba(0,0,0,.70))!important;}
+.v343HQParty .v343Unit.v347-support{animation:v347Support .62s ease-out 1!important;z-index:9!important;filter:brightness(1.08) drop-shadow(0 0 12px rgba(112,206,255,.36)) drop-shadow(0 16px 16px rgba(0,0,0,.70))!important;}
+.v343HQParty .v343Unit.v347-ougi{animation:v347Ougi .86s cubic-bezier(.16,.8,.18,1) 1!important;z-index:10!important;filter:brightness(1.2) drop-shadow(0 0 18px rgba(255,92,150,.54)) drop-shadow(0 18px 18px rgba(0,0,0,.72))!important;}
+@keyframes v347Attack{
+  0%{transform:translateY(var(--v346-y,0px)) scale(var(--v346-scale,1));}
+  32%{transform:translate(26px,-12px) scale(calc(var(--v346-scale,1) * 1.1));}
+  56%{transform:translate(46px,-18px) scale(calc(var(--v346-scale,1) * 1.14));}
+  100%{transform:translateY(var(--v346-y,0px)) scale(var(--v346-scale,1));}
+}
+@keyframes v347Skill{
+  0%{transform:translateY(var(--v346-y,0px)) scale(var(--v346-scale,1));}
+  30%{transform:translate(18px,-16px) scale(calc(var(--v346-scale,1) * 1.08));}
+  55%{transform:translate(34px,-20px) scale(calc(var(--v346-scale,1) * 1.12));}
+  100%{transform:translateY(var(--v346-y,0px)) scale(var(--v346-scale,1));}
+}
+@keyframes v347Support{
+  0%{transform:translateY(var(--v346-y,0px)) scale(var(--v346-scale,1));}
+  22%{transform:translateY(calc(var(--v346-y,0px) - 12px)) scale(calc(var(--v346-scale,1) * 1.05));}
+  55%{transform:translateY(calc(var(--v346-y,0px) - 2px)) scale(calc(var(--v346-scale,1) * 1.08));}
+  100%{transform:translateY(var(--v346-y,0px)) scale(var(--v346-scale,1));}
+}
+@keyframes v347Ougi{
+  0%{transform:translateY(var(--v346-y,0px)) scale(var(--v346-scale,1));}
+  26%{transform:translate(24px,-20px) scale(calc(var(--v346-scale,1) * 1.12));}
+  58%{transform:translate(56px,-30px) scale(calc(var(--v346-scale,1) * 1.22));}
+  100%{transform:translateY(var(--v346-y,0px)) scale(var(--v346-scale,1));}
+}
+.v347StageFx{position:absolute!important;inset:0!important;pointer-events:none!important;z-index:60!important;overflow:hidden!important;}
+.v347Slash,.v347Burst,.v347Aura{
+  position:absolute!important;pointer-events:none!important;opacity:0!important;
+}
+.v347Slash{left:34%!important;top:42%!important;width:34%!important;height:9px!important;border-radius:999px!important;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9) 20%,rgba(255,181,132,.92) 52%,rgba(255,255,255,.1) 84%,transparent)!important;filter:blur(1px)!important;transform:translate(-40px,10px) rotate(-18deg) scaleX(.35)!important;animation:v347Slash .42s ease-out 1!important;}
+@keyframes v347Slash{0%{opacity:0;transform:translate(-40px,10px) rotate(-18deg) scaleX(.35);}30%{opacity:1;}100%{opacity:0;transform:translate(88px,-22px) rotate(-18deg) scaleX(1.18);}}
+.v347Burst{left:56%!important;top:36%!important;width:22%!important;height:22%!important;border-radius:50%!important;background:radial-gradient(circle,rgba(255,255,255,.92) 0 8%,rgba(255,130,160,.65) 18%,rgba(198,92,255,.28) 44%,transparent 72%)!important;transform:scale(.2)!important;animation:v347Burst .48s ease-out 1!important;}
+@keyframes v347Burst{0%{opacity:0;transform:scale(.2);}26%{opacity:.88;}100%{opacity:0;transform:scale(1.55);}}
+.v347Aura{left:6%!important;right:32%!important;bottom:14%!important;height:26%!important;background:radial-gradient(ellipse at 50% 85%,rgba(226,188,92,.28),transparent 62%)!important;animation:v347Aura .52s ease-out 1!important;}
+@keyframes v347Aura{0%{opacity:0;transform:scale(.8);}20%{opacity:1;}100%{opacity:0;transform:scale(1.12);}}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V347</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=346"></script>
+<script src="app.js?v=347"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -16886,6 +16930,95 @@ body.battleMode .stageBattleBtns .btn{
   });
   mo.observe(document.documentElement, {subtree:true, childList:true, attributes:true, attributeFilter:['class']});
   setInterval(applyRealSprites, 1200);
+})();
+</script>
+
+
+<script id="v347-action-motion-script">
+(()=>{
+  function getStage(){
+    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
+           document.querySelector('.bsv2Field_175');
+  }
+  function getActiveIndex(){
+    const selectors=['.posterLivePartyV217 button','.battleCardsV151>button','.bsv2Cards_175 button'];
+    for(const sel of selectors){
+      const arr=[...document.querySelectorAll(sel)];
+      if(!arr.length) continue;
+      for(let i=0;i<arr.length;i++){
+        const el=arr[i];
+        if(el.classList.contains('on') || el.classList.contains('active') || el.classList.contains('current') || el.classList.contains('selected')) return Math.min(i,4);
+      }
+      return 0;
+    }
+    return 0;
+  }
+  function getVisibleUnit(){
+    const idx=getActiveIndex();
+    const units=[...document.querySelectorAll('.v343HQParty .v343Unit')];
+    return units[idx] || units[0] || null;
+  }
+  function clearMotion(unit){
+    if(!unit) return;
+    unit.classList.remove('v347-attack','v347-skill','v347-support','v347-ougi');
+  }
+  function addFx(type){
+    const host=getStage();
+    if(!host) return;
+    const fx=document.createElement('div');
+    fx.className='v347StageFx';
+    if(type==='attack'){
+      const slash=document.createElement('div'); slash.className='v347Slash';
+      const burst=document.createElement('div'); burst.className='v347Burst';
+      fx.append(slash,burst);
+      setTimeout(()=>fx.remove(),460);
+    } else if(type==='skill'){
+      const burst=document.createElement('div'); burst.className='v347Burst';
+      burst.style.left='50%'; burst.style.top='32%'; burst.style.width='28%'; burst.style.height='28%';
+      fx.append(burst);
+      setTimeout(()=>fx.remove(),520);
+    } else if(type==='support'){
+      const aura=document.createElement('div'); aura.className='v347Aura';
+      fx.append(aura);
+      setTimeout(()=>fx.remove(),560);
+    } else if(type==='ougi'){
+      const burst=document.createElement('div'); burst.className='v347Burst';
+      burst.style.left='48%'; burst.style.top='25%'; burst.style.width='36%'; burst.style.height='36%';
+      const slash=document.createElement('div'); slash.className='v347Slash';
+      slash.style.left='28%'; slash.style.top='48%'; slash.style.width='44%';
+      fx.append(burst,slash);
+      setTimeout(()=>fx.remove(),780);
+    }
+    host.appendChild(fx);
+  }
+  function play(type){
+    const unit=getVisibleUnit();
+    if(!unit) return;
+    clearMotion(unit);
+    // force reflow so repeated taps retrigger
+    void unit.offsetWidth;
+    unit.classList.add('v347-'+type);
+    addFx(type);
+    const duration = type==='ougi' ? 900 : type==='skill' ? 740 : type==='support' ? 640 : 580;
+    setTimeout(()=>clearMotion(unit), duration);
+  }
+  function detectAction(target){
+    const el=target.closest('button,[role="button"],.cmd,.command,.action,[data-sd-action]');
+    if(!el) return '';
+    const ds=(el.getAttribute('data-sd-action')||'').toLowerCase();
+    const txt=(el.textContent||'').replace(/\s+/g,'');
+    if(ds.includes('ougi') || ds.includes('ultimate') || txt.includes('奥義')) return 'ougi';
+    if(ds.includes('skill') || txt.includes('スキル')) return 'skill';
+    if(ds.includes('support') || txt.includes('支援')) return 'support';
+    if(ds.includes('attack') || txt.includes('攻撃')) return 'attack';
+    return '';
+  }
+  function handler(e){
+    const type=detectAction(e.target);
+    if(type) play(type);
+  }
+  document.addEventListener('click', handler, true);
+  document.addEventListener('touchend', handler, {capture:true, passive:true});
 })();
 </script>
 
