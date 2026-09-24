@@ -16274,9 +16274,46 @@ body.v352-turn-lock [data-page="home"]{
 /* V361: recovery build. Keep battle boot/navigation logic untouched. */
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V361</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v362-enemy-hit-only">
+/* V362: stability-first. Add only enemy hit feedback. */
+@keyframes v362EnemyHit {
+  0%,100% { transform:translateX(0) rotate(0deg); filter:brightness(1); }
+  18% { transform:translateX(7px) rotate(1.4deg); filter:brightness(1.35); }
+  42% { transform:translateX(-5px) rotate(-1deg); }
+  68% { transform:translateX(2px) rotate(.4deg); }
+}
+@keyframes v362Impact {
+  0% { opacity:0; transform:scale(.35); }
+  30% { opacity:.92; }
+  100% { opacity:0; transform:scale(1.45); }
+}
+.cleanBattleV238 .posterEnemyWrapV237.v362-hit,
+.bsv2Enemies_175.v362-hit {
+  animation:v362EnemyHit .34s ease-out 1!important;
+}
+.v362Impact {
+  position:absolute!important;
+  right:13%!important;
+  top:39%!important;
+  width:100px!important;
+  height:100px!important;
+  border-radius:50%!important;
+  pointer-events:none!important;
+  z-index:80!important;
+  background:radial-gradient(circle,
+    rgba(255,255,255,.95) 0 7%,
+    rgba(255,220,150,.85) 10% 18%,
+    rgba(255,90,120,.45) 26% 40%,
+    transparent 68%)!important;
+  filter:drop-shadow(0 0 12px rgba(255,90,120,.38))!important;
+  animation:v362Impact .38s ease-out 1!important;
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V362</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=361"></script>
+<script src="app.js?v=362"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -17621,6 +17658,48 @@ body.v352-turn-lock [data-page="home"]{
     }
   });
   mo.observe(document.documentElement,{subtree:true,childList:true});
+})();
+</script>
+
+
+<script id="v362-enemy-hit-only-script">
+(()=>{
+  function enemyWrap(){
+    return document.querySelector('.cleanBattleV238 .posterEnemyWrapV237') ||
+           document.querySelector('.bsv2Enemies_175');
+  }
+  function stage(){
+    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
+           document.querySelector('.bsv2Field_175');
+  }
+  function isAttackButton(target){
+    if(!target || !target.closest) return false;
+    const el = target.closest('button,[role="button"],[data-sd-action],.cmd,.command,.action');
+    if(!el) return false;
+    const ds = (el.getAttribute('data-sd-action')||'').toLowerCase();
+    const txt = (el.textContent||'').replace(/\s+/g,'');
+    return ds.includes('attack') || txt.includes('攻撃');
+  }
+  function hit(){
+    const enemy = enemyWrap();
+    const host = stage();
+    if(!enemy || !host) return;
+
+    enemy.classList.remove('v362-hit');
+    void enemy.offsetWidth;
+    enemy.classList.add('v362-hit');
+
+    const fx = document.createElement('div');
+    fx.className = 'v362Impact';
+    host.appendChild(fx);
+
+    setTimeout(()=>enemy.classList.remove('v362-hit'), 420);
+    setTimeout(()=>fx.remove(), 430);
+  }
+
+  document.addEventListener('click', (e)=>{
+    if(isAttackButton(e.target)) setTimeout(hit, 180);
+  }, true);
 })();
 </script>
 
