@@ -15647,9 +15647,9 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V338</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V339</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=338"></script>
+<script src="app.js?v=339"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -16253,7 +16253,7 @@ body.battleMode .stageBattleBtns .btn{
 </script>
 
 
-<script id="v338-script">
+<script id="v339-script">
 (()=>{
   const roster=[
     {key:'dazai', hair1:'#0e151d', hair2:'#31475f', coat1:'#131f2a', coat2:'#496f8b', skin:'#f0d8ca', eye:'#54657a', accent:'#cfb26f', tie:'#6f7f95', bandage:1, book:1, mood:'lazy'},
@@ -16264,16 +16264,34 @@ body.battleMode .stageBattleBtns .btn{
   ];
 
   function face(c){
-    const mouth = c.mood==='sharp' ? '<path d="M169 204q15 7 31 -1" stroke="#a95f67" stroke-width="4.5" stroke-linecap="round" fill="none"/>' : \
-                  c.mood==='cold' ? '<path d="M167 204q15 3 31 0" stroke="#9e5d67" stroke-width="4.2" stroke-linecap="round" fill="none"/>' : \
-                  c.mood==='clever' ? '<path d="M167 203q16 11 32 -1" stroke="#aa6570" stroke-width="4.3" stroke-linecap="round" fill="none"/>' : \
-                  c.mood==='soft' ? '<path d="M168 203q14 12 30 1" stroke="#ad6770" stroke-width="4.2" stroke-linecap="round" fill="none"/>' : \
-                  '<path d="M167 203q15 8 31 0" stroke="#a7656e" stroke-width="4.2" stroke-linecap="round" fill="none"/>';
-    const brows = c.mood==='sharp' ? '<path d="M122 136q18 -14 37 -7" fill="none" stroke="#27333f" stroke-width="5.5" stroke-linecap="round"/><path d="M204 129q17 -6 34 6" fill="none" stroke="#27333f" stroke-width="5.5" stroke-linecap="round"/>' : \
-                  c.mood==='cold' ? '<path d="M122 133q18 -7 36 1" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/><path d="M204 133q18 -7 36 1" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/>' : \
-                  '<path d="M122 132q18 -11 36 -3" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/><path d="M203 132q18 -11 36 -3" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/>';
-    const lashes = c.mood==='sharp' ? '<path d="M125 156q16 19 35 1" fill="none" stroke="#1d2731" stroke-width="4.3" stroke-linecap="round"/><path d="M203 156q16 19 35 1" fill="none" stroke="#1d2731" stroke-width="4.3" stroke-linecap="round"/>' : \
-                   '<path d="M126 154q15 15 33 2" fill="none" stroke="#1d2731" stroke-width="4" stroke-linecap="round"/><path d="M203 154q15 15 33 2" fill="none" stroke="#1d2731" stroke-width="4" stroke-linecap="round"/>';
+    let mouth;
+    if(c.mood==='sharp'){
+      mouth='<path d="M169 204q15 7 31 -1" stroke="#a95f67" stroke-width="4.5" stroke-linecap="round" fill="none"/>';
+    }else if(c.mood==='cold'){
+      mouth='<path d="M167 204q15 3 31 0" stroke="#9e5d67" stroke-width="4.2" stroke-linecap="round" fill="none"/>';
+    }else if(c.mood==='clever'){
+      mouth='<path d="M167 203q16 11 32 -1" stroke="#aa6570" stroke-width="4.3" stroke-linecap="round" fill="none"/>';
+    }else if(c.mood==='soft'){
+      mouth='<path d="M168 203q14 12 30 1" stroke="#ad6770" stroke-width="4.2" stroke-linecap="round" fill="none"/>';
+    }else{
+      mouth='<path d="M167 203q15 8 31 0" stroke="#a7656e" stroke-width="4.2" stroke-linecap="round" fill="none"/>';
+    }
+
+    let brows;
+    if(c.mood==='sharp'){
+      brows='<path d="M122 136q18 -14 37 -7" fill="none" stroke="#27333f" stroke-width="5.5" stroke-linecap="round"/><path d="M204 129q17 -6 34 6" fill="none" stroke="#27333f" stroke-width="5.5" stroke-linecap="round"/>';
+    }else if(c.mood==='cold'){
+      brows='<path d="M122 133q18 -7 36 1" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/><path d="M204 133q18 -7 36 1" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/>';
+    }else{
+      brows='<path d="M122 132q18 -11 36 -3" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/><path d="M203 132q18 -11 36 -3" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/>';
+    }
+
+    let lashes;
+    if(c.mood==='sharp'){
+      lashes='<path d="M125 156q16 19 35 1" fill="none" stroke="#1d2731" stroke-width="4.3" stroke-linecap="round"/><path d="M203 156q16 19 35 1" fill="none" stroke="#1d2731" stroke-width="4.3" stroke-linecap="round"/>';
+    }else{
+      lashes='<path d="M126 154q15 15 33 2" fill="none" stroke="#1d2731" stroke-width="4" stroke-linecap="round"/><path d="M203 154q15 15 33 2" fill="none" stroke="#1d2731" stroke-width="4" stroke-linecap="round"/>';
+    }
     return brows + lashes + mouth;
   }
 
@@ -16299,6 +16317,7 @@ body.battleMode .stageBattleBtns .btn{
     <linearGradient id="shoe" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#131a22"/><stop offset="1" stop-color="#090e13"/></linearGradient>
     <radialGradient id="faceGlow" cx="34%" cy="24%" r="65%"><stop offset="0" stop-color="#ffffff" stop-opacity=".36"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
   </defs>
+
   <ellipse cx="180" cy="422" rx="92" ry="20" fill="#000" opacity=".28"/>
   <ellipse cx="180" cy="415" rx="74" ry="11" fill="#081018" opacity=".72"/>
 
@@ -16341,20 +16360,35 @@ body.battleMode .stageBattleBtns .btn{
 </svg>`;
   }
 
-  function uri(s){return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(s.replace(/\n\s+/g,''));}
+  function uri(s){
+    return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(s.replace(/\n\s+/g,''));
+  }
+
   function apply(){
     const imgs=document.querySelectorAll('.v331PartyStage.v332Stable .v331Unit img');
     if(imgs.length<5) return;
     imgs.forEach((img,i)=>{
       img.src=uri(art(roster[i]));
-      img.dataset.v338Ready='1';
+      img.dataset.v339Ready='1';
       img.alt=roster[i].key;
     });
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', apply, {once:true});
-  else apply();
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', apply, {once:true});
+  }else{
+    apply();
+  }
+
   let queued=false;
-  const mo=new MutationObserver(()=>{ if(queued) return; queued=true; requestAnimationFrame(()=>{ queued=false; apply(); }); });
+  const mo=new MutationObserver(()=>{
+    if(queued) return;
+    queued=true;
+    requestAnimationFrame(()=>{
+      queued=false;
+      apply();
+    });
+  });
   mo.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
   setInterval(apply,1800);
 })();
