@@ -17186,7 +17186,12 @@ body.v352-turn-lock [data-page="home"]{
   animation:v373RainFall 1.8s linear infinite!important;
 }
 
-
+/* Keep game pieces above atmosphere */
+.cleanBattleV238 .posterActorStageV237 > *:not(.v373Ground):not(.v373Mist):not(.v373Rain),
+.bsv2Field_175 > *:not(.v373Ground):not(.v373Mist):not(.v373Rain){
+  position:relative;
+  z-index:10;
+}
 </style>
 
 
@@ -17654,164 +17659,15 @@ body.v352-turn-lock [data-page="home"]{
 </style>
 
 
-<style id="v377-targeting-cohesion">
-/* V377: target readability + battlefield cohesion. No battle logic changes. */
-
-@keyframes v377TargetPulse{
-  0%,100%{opacity:.46;transform:translateX(-50%) scale(.96)}
-  50%{opacity:.9;transform:translateX(-50%) scale(1.04)}
-}
-@keyframes v377CornerPulse{
-  0%,100%{filter:brightness(.9)}
-  50%{filter:brightness(1.25)}
-}
-
-/* Target ring under selected enemy */
-.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.selected::before,
-.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.active::before{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  bottom:-16px!important;
-  width:82%!important;
-  height:24px!important;
-  transform:translateX(-50%)!important;
-  border-radius:50%!important;
-  border:1px solid rgba(255,92,124,.54)!important;
-  background:
-    radial-gradient(ellipse,rgba(255,86,118,.17),transparent 68%)!important;
-  box-shadow:
-    inset 0 0 10px rgba(255,76,110,.2),
-    0 0 14px rgba(255,76,110,.28)!important;
-  animation:v377TargetPulse 1.35s ease-in-out infinite!important;
-  z-index:-1!important;
-}
-
-/* Four-corner reticle */
-.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.selected .enemyMaskV153,
-.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.active .enemyMaskV153{
-  outline:1px solid rgba(255,255,255,.08)!important;
-  outline-offset:4px!important;
-}
-
-/* Enemy labels feel integrated */
-.cleanBattleV238 .posterEnemyWrapV237 [class*="name"],
-.cleanBattleV238 .posterEnemyWrapV237 [class*="label"],
-.bsv2Enemies_175 [class*="name"],
-.bsv2Enemies_175 [class*="label"]{
-  text-shadow:0 2px 4px rgba(0,0,0,.8)!important;
-  letter-spacing:.04em!important;
-}
-
-/* Small top edge glint on enemy cards/HUD */
-.cleanBattleV238 .posterEnemyCompactV235{
-  position:relative!important;
-  overflow:hidden!important;
-}
-.cleanBattleV238 .posterEnemyCompactV235::after{
-  content:""!important;
-  position:absolute!important;
-  left:10%!important;right:10%!important;top:0!important;
-  height:1px!important;
-  background:linear-gradient(90deg,transparent,rgba(255,229,170,.32),transparent)!important;
-  pointer-events:none!important;
-}
-
-/* Harmonize ally/enemy floor lighting */
-.cleanBattleV238 .posterActorStageV237 .v373Ground{
-  background:
-    linear-gradient(180deg,transparent,rgba(6,20,30,.16) 22%,rgba(3,12,19,.55) 100%),
-    radial-gradient(ellipse at 25% 74%,rgba(224,184,95,.14),transparent 28%),
-    radial-gradient(ellipse at 73% 72%,rgba(224,58,96,.14),transparent 29%)!important;
-}
-
-/* Slight cinematic vignette inside the field */
-.cleanBattleV238 .posterActorStageV237 .v377Vignette,
-.bsv2Field_175 .v377Vignette{
-  position:absolute!important;
-  inset:0!important;
-  z-index:5!important;
-  pointer-events:none!important;
-  box-shadow:
-    inset 0 0 50px rgba(0,0,0,.28),
-    inset 0 -28px 42px rgba(0,0,0,.16)!important;
-}
-
-/* Fine particles, sparse and cheap */
-@keyframes v377Particle{
-  0%{opacity:0;transform:translateY(8px) scale(.7)}
-  25%{opacity:.45}
-  100%{opacity:0;transform:translateY(-28px) scale(1)}
-}
-.v377Particles{
-  position:absolute!important;
-  inset:0!important;
-  z-index:6!important;
-  pointer-events:none!important;
-}
-.v377Particles i{
-  position:absolute!important;
-  width:2px!important;height:2px!important;
-  border-radius:50%!important;
-  background:rgba(220,232,240,.65)!important;
-  box-shadow:0 0 5px rgba(220,232,240,.35)!important;
-  animation:v377Particle 3.2s ease-in-out infinite!important;
-}
-
-/* Slight card image polish */
-.cleanBattleV238 .posterLivePartyV217 button img{
-  filter:contrast(1.03) saturate(.96) brightness(1.02)!important;
-}
-.cleanBattleV238 .posterLivePartyV217 button.on img{
-  filter:contrast(1.05) saturate(1.02) brightness(1.06)!important;
-}
+<style id="v379-layout-stable">
+/* V379: layout recovery build.
+   Enemy-quality V369-V375 + premium HUD V376 retained.
+   V377/V378 stacking/layout experiments intentionally excluded. */
 </style>
 
-
-<style id="v378-layout-recovery">
-/* V378: recover original battle positioning after V377 stacking rule. */
-.cleanBattleV238 .posterActorStageV237 .v373Ground,
-.cleanBattleV238 .posterActorStageV237 .v373Mist,
-.cleanBattleV238 .posterActorStageV237 .v373Rain,
-.cleanBattleV238 .posterActorStageV237 .v377Vignette,
-.cleanBattleV238 .posterActorStageV237 .v377Particles,
-.bsv2Field_175 .v373Ground,
-.bsv2Field_175 .v373Mist,
-.bsv2Field_175 .v373Rain,
-.bsv2Field_175 .v377Vignette,
-.bsv2Field_175 .v377Particles{
-  pointer-events:none!important;
-}
-
-/* Restore known battle elements to their intended absolute layout. */
-.cleanBattleV238 .posterEnemyWrapV237,
-.cleanBattleV238 .posterLivePartyV217,
-.cleanBattleV238 .posterSelectedCardV235,
-.cleanBattleV238 .battleCommandsV119,
-.cleanBattleV238 .actionClusterV164,
-.cleanBattleV238 .posterThumbBarV234{
-  position:absolute!important;
-}
-
-/* Make sure decorative atmosphere stays behind characters/HUD. */
-.cleanBattleV238 .posterActorStageV237 .v373Ground{z-index:0!important}
-.cleanBattleV238 .posterActorStageV237 .v373Mist{z-index:1!important}
-.cleanBattleV238 .posterActorStageV237 .v373Rain{z-index:2!important}
-.cleanBattleV238 .posterActorStageV237 .v377Vignette{z-index:3!important}
-.cleanBattleV238 .posterActorStageV237 .v377Particles{z-index:4!important}
-
-.cleanBattleV238 .posterEnemyWrapV237{z-index:20!important}
-.cleanBattleV238 .v343HQParty{z-index:30!important}
-.cleanBattleV238 .posterLivePartyV217{z-index:40!important}
-.cleanBattleV238 .posterSelectedCardV235{z-index:41!important}
-.cleanBattleV238 .battleCommandsV119,
-.cleanBattleV238 .actionClusterV164,
-.cleanBattleV238 .posterThumbBarV234{z-index:42!important}
-</style>
-
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V378</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V379</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=378"></script>
+<script src="app.js?v=379"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -19543,53 +19399,6 @@ body.v352-turn-lock [data-page="home"]{
     host.prepend(mistB);
     host.prepend(mistA);
     host.prepend(ground);
-  }
-
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',apply,{once:true});
-  }else{
-    apply();
-  }
-
-  const mo=new MutationObserver(()=>requestAnimationFrame(apply));
-  mo.observe(document.documentElement,{subtree:true,childList:true});
-})();
-</script>
-
-
-<script id="v377-targeting-cohesion-script">
-(()=>{
-  function stage(){
-    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
-           document.querySelector('.bsv2Field_175');
-  }
-
-  function apply(){
-    const host=stage();
-    if(!host || host.dataset.v377Cohesion==='1') return;
-    host.dataset.v377Cohesion='1';
-
-    const vignette=document.createElement('div');
-    vignette.className='v377Vignette';
-
-    const particles=document.createElement('div');
-    particles.className='v377Particles';
-
-    const positions=[
-      [12,28],[20,44],[31,22],[43,36],[55,18],[64,48],
-      [73,31],[82,42],[89,24],[37,58],[58,63],[76,57]
-    ];
-    positions.forEach((p,i)=>{
-      const dot=document.createElement('i');
-      dot.style.left=p[0]+'%';
-      dot.style.top=p[1]+'%';
-      dot.style.animationDelay=(i*.23)+'s';
-      dot.style.animationDuration=(2.7+(i%4)*.35)+'s';
-      particles.appendChild(dot);
-    });
-
-    host.prepend(particles);
-    host.prepend(vignette);
   }
 
   if(document.readyState==='loading'){
