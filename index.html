@@ -16917,7 +16917,73 @@ body.v352-turn-lock [data-page="home"]{
 @media(prefers-reduced-motion:reduce){.v389HitText,.v389Slash,.v389ActionBanner,.v389Shock,.v389BossDanger{animation-duration:.01ms!important}.cleanBattleV238.v389Impact .posterEnemyWrapV237{animation:none!important}}
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V389</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v390-ougi-cutin-fix">
+/* V390: 奥義カットインをコンパクト化。戦場が見えるサイズに調整 */
+@keyframes v390CompactCutIn{
+  0%{opacity:0;transform:translateX(-18%) scale(.96)}
+  22%{opacity:1;transform:translateX(0) scale(1)}
+  76%{opacity:1;transform:translateX(0) scale(1)}
+  100%{opacity:0;transform:translateX(8%) scale(.99)}
+}
+.v365CutIn{
+  left:8%!important;right:8%!important;
+  top:14%!important;height:78px!important;
+  border-radius:12px!important;
+  background:linear-gradient(100deg,rgba(4,12,20,.82) 0 42%,rgba(18,36,49,.76) 72%,rgba(4,12,20,.72) 100%)!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.34)!important;
+  animation:v390CompactCutIn .78s cubic-bezier(.16,.8,.2,1) forwards!important;
+}
+.v365CutIn img{
+  left:2%!important;bottom:-14%!important;
+  height:140%!important;max-width:34%!important;width:auto!important;
+  opacity:.92!important;
+  filter:drop-shadow(0 8px 10px rgba(0,0,0,.42))!important;
+}
+.v365CutInText{
+  left:34%!important;right:6%!important;top:17%!important;
+  text-align:left!important;
+}
+.v365CutInText small{font-size:8px!important;letter-spacing:.16em!important}
+.v365CutInText b{font-size:17px!important;line-height:1.08!important}
+.v365CutInText em{font-size:9px!important;margin-top:3px!important}
+/* 旧シネマカットインも圧縮して画面を塞がない */
+.cutinV153{
+  inset:auto 7% auto 7%!important;
+  top:11%!important;height:86px!important;
+  background:linear-gradient(90deg,rgba(2,6,10,.18),rgba(2,6,10,.72) 12%,rgba(6,18,30,.84) 72%,rgba(2,6,10,.18))!important;
+  border-top:1px solid rgba(141,120,72,.72)!important;
+  border-bottom:1px solid rgba(141,120,72,.72)!important;
+  border-radius:12px!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.28)!important;
+}
+.cutinPortraitV153{
+  left:0!important;top:-11%!important;
+  width:34%!important;height:132%!important;
+  clip-path:none!important;
+}
+.cutinPortraitV153 img{object-position:center 18%!important;opacity:.92!important}
+.cutinSlashV153{left:30%!important;right:6%!important;top:49%!important;height:1px!important}
+.cutinV153 section{left:33%!important;right:6%!important;top:16%!important;padding:6px 0!important;border-width:1px!important}
+.cutinV153 small{font-size:7px!important}
+.cutinV153 b{font-size:15px!important;line-height:1.1!important}
+.ougiSealV159{top:29%!important;left:62%!important;width:82px!important;height:82px!important}
+.ougiSealV159 b{font-size:7px!important;max-width:68px!important}
+@media(max-width:700px){
+  .v365CutIn{left:7%!important;right:7%!important;top:12%!important;height:68px!important}
+  .v365CutIn img{left:1%!important;bottom:-8%!important;height:126%!important;max-width:36%!important}
+  .v365CutInText{left:32%!important;right:6%!important;top:15%!important}
+  .v365CutInText b{font-size:14px!important}
+  .v365CutInText em{font-size:8px!important}
+  .cutinV153{left:6%!important;right:6%!important;top:10%!important;height:74px!important}
+  .cutinPortraitV153{width:36%!important;height:128%!important}
+  .cutinV153 section{left:34%!important;top:15%!important}
+  .cutinV153 b{font-size:13px!important}
+  .ougiSealV159{top:25%!important;left:61%!important;width:72px!important;height:72px!important}
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V390</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=387"></script>
 
