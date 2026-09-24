@@ -16426,9 +16426,101 @@ body.v352-turn-lock [data-page="home"]{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V354</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v355-damage-defeat">
+/* V355: enemy attack feedback, damage popups, defeat effect */
+
+@keyframes v355EnemyLunge{
+  0%{transform:translateX(0) scale(1)}
+  30%{transform:translateX(-18px) scale(1.05)}
+  52%{transform:translateX(-30px) scale(1.08)}
+  100%{transform:translateX(0) scale(1)}
+}
+@keyframes v355PartyHit{
+  0%,100%{filter:brightness(1);transform:translateX(0)}
+  22%{filter:brightness(1.7) saturate(.7);transform:translateX(-7px)}
+  44%{transform:translateX(5px)}
+  68%{transform:translateX(-2px)}
+}
+@keyframes v355DamagePop{
+  0%{opacity:0;transform:translateY(8px) scale(.72)}
+  25%{opacity:1;transform:translateY(-5px) scale(1.12)}
+  72%{opacity:1}
+  100%{opacity:0;transform:translateY(-24px) scale(.96)}
+}
+@keyframes v355EnemyDefeat{
+  0%{opacity:1;filter:brightness(1);transform:scale(1)}
+  26%{filter:brightness(2.1) contrast(1.2);transform:scale(1.04)}
+  58%{opacity:.72;filter:brightness(.65) blur(1px);transform:scale(.94)}
+  100%{opacity:0;filter:brightness(.25) blur(5px);transform:scale(.72) translateY(18px)}
+}
+@keyframes v355DefeatBurst{
+  0%{opacity:0;transform:scale(.2) rotate(0deg)}
+  28%{opacity:.95}
+  100%{opacity:0;transform:scale(1.8) rotate(18deg)}
+}
+@keyframes v355LowHpPulse{
+  0%,100%{opacity:.16}
+  50%{opacity:.42}
+}
+
+.v355EnemyAttack{
+  animation:v355EnemyLunge .58s cubic-bezier(.2,.8,.2,1) 1!important;
+  z-index:20!important;
+}
+.v343HQParty .v343Unit.v355-hit{
+  animation:v355PartyHit .42s ease-out 1!important;
+}
+.v355Damage{
+  position:absolute!important;
+  z-index:180!important;
+  pointer-events:none!important;
+  min-width:48px!important;
+  text-align:center!important;
+  font:900 25px/1 serif!important;
+  color:#fff5e8!important;
+  letter-spacing:.02em!important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.55),
+    0 0 16px rgba(255,82,113,.7),
+    0 4px 10px rgba(0,0,0,.8)!important;
+  animation:v355DamagePop .86s ease-out forwards!important;
+}
+.v355Damage.crit{
+  color:#ffd66e!important;
+  font-size:32px!important;
+  text-shadow:
+    0 0 9px rgba(255,247,200,.7),
+    0 0 18px rgba(255,170,55,.8),
+    0 4px 12px rgba(0,0,0,.85)!important;
+}
+.v355DefeatFx{
+  position:absolute!important;
+  width:150px!important;height:150px!important;
+  border-radius:50%!important;
+  z-index:175!important;
+  pointer-events:none!important;
+  background:
+    radial-gradient(circle,rgba(255,255,255,.92) 0 6%,rgba(255,92,126,.68) 16%,rgba(146,74,255,.30) 42%,transparent 70%)!important;
+  animation:v355DefeatBurst .72s ease-out forwards!important;
+}
+.v355Defeating{
+  animation:v355EnemyDefeat .78s ease-in forwards!important;
+  pointer-events:none!important;
+}
+.v355LowHpVignette{
+  position:absolute!important;
+  inset:0!important;
+  z-index:45!important;
+  pointer-events:none!important;
+  box-shadow:inset 0 0 70px rgba(190,16,46,.34)!important;
+  animation:v355LowHpPulse 1.35s ease-in-out infinite!important;
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V355</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=354"></script>
+<script src="app.js?v=355"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -17928,6 +18020,132 @@ body.v352-turn-lock [data-page="home"]{
   const mo=new MutationObserver(scan);
   mo.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
   setInterval(scan,900);
+})();
+</script>
+
+
+<script id="v355-damage-defeat-script">
+(()=>{
+  let lastEnemyCount=-1;
+  let lowHpFx=null;
+
+  function stage(){
+    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
+           document.querySelector('.bsv2Field_175');
+  }
+  function enemyNodes(){
+    const a=[...document.querySelectorAll('.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153')];
+    if(a.length) return a;
+    return [...document.querySelectorAll('.bsv2Enemies_175 > *')].filter(x=>x.offsetParent!==null);
+  }
+  function activeUnit(){
+    const us=[...document.querySelectorAll('.v343HQParty .v343Unit')];
+    return us.find(u=>u.classList.contains('active')) || us[0] || null;
+  }
+  function damageAt(x,y,crit=false){
+    const host=stage(); if(!host) return;
+    const d=document.createElement('div');
+    d.className='v355Damage'+(crit?' crit':'');
+    d.textContent=crit?'CRIT '+(1200+Math.floor(Math.random()*700)):(420+Math.floor(Math.random()*430));
+    d.style.left=x+'%';
+    d.style.top=y+'%';
+    host.appendChild(d);
+    setTimeout(()=>d.remove(),900);
+  }
+  function enemyAttack(){
+    const enemies=enemyNodes();
+    const unit=activeUnit();
+    if(!enemies.length || !unit) return;
+    const enemy=enemies[0];
+    enemy.classList.add('v355EnemyAttack');
+    setTimeout(()=>{
+      unit.classList.add('v355-hit');
+      damageAt(24,66,false);
+    },260);
+    setTimeout(()=>{
+      enemy.classList.remove('v355EnemyAttack');
+      unit.classList.remove('v355-hit');
+    },700);
+  }
+  function defeatEnemy(node,index){
+    if(!node || node.classList.contains('v355Defeating')) return;
+    const host=stage(); if(!host) return;
+    const rect=node.getBoundingClientRect();
+    const hrect=host.getBoundingClientRect();
+    const fx=document.createElement('div');
+    fx.className='v355DefeatFx';
+    const cx=((rect.left+rect.width/2-hrect.left)/hrect.width)*100;
+    const cy=((rect.top+rect.height/2-hrect.top)/hrect.height)*100;
+    fx.style.left=`calc(${cx}% - 75px)`;
+    fx.style.top=`calc(${cy}% - 75px)`;
+    host.appendChild(fx);
+    node.classList.add('v355Defeating');
+    setTimeout(()=>fx.remove(),760);
+    setTimeout(()=>node.classList.remove('v355Defeating'),900);
+  }
+  function maybeEnemyDefeat(){
+    const nodes=enemyNodes();
+    if(lastEnemyCount<0){lastEnemyCount=nodes.length;return;}
+    if(nodes.length<lastEnemyCount){
+      const prev=[...document.querySelectorAll('.v355-last-enemy')];
+      const gone=prev.find(x=>!nodes.includes(x));
+      if(gone) defeatEnemy(gone,0);
+    }
+    document.querySelectorAll('.v355-last-enemy').forEach(x=>x.classList.remove('v355-last-enemy'));
+    nodes.forEach(x=>x.classList.add('v355-last-enemy'));
+    lastEnemyCount=nodes.length;
+  }
+  function maybeLowHp(){
+    const host=stage(); if(!host) return;
+    const body=(document.body.innerText||'');
+    const matches=[...body.matchAll(/HP\s*(\d+)%/gi)].map(m=>parseInt(m[1],10));
+    const playerHp=matches.length>1?matches[matches.length-1]:null;
+    const low=playerHp!==null && playerHp<=30;
+    if(low && !lowHpFx){
+      lowHpFx=document.createElement('div');
+      lowHpFx.className='v355LowHpVignette';
+      host.appendChild(lowHpFx);
+    }else if(!low && lowHpFx){
+      lowHpFx.remove(); lowHpFx=null;
+    }
+  }
+
+  // Lightweight hook for the game's battle logic if wired later.
+  window.bungoV355={
+    enemyAttack,
+    damage:(crit=false)=>damageAt(24,66,crit),
+    defeat:(i=0)=>defeatEnemy(enemyNodes()[i],i)
+  };
+
+  // Heuristic: when the turn indicator changes away from player action,
+  // play one readable enemy attack animation.
+  let lastTurnText='';
+  function scanTurn(){
+    const t=[...document.querySelectorAll('*')].find(el=>{
+      const s=(el.textContent||'').trim();
+      return /^TURN\s*\d+/i.test(s) && el.children.length===0;
+    });
+    if(t){
+      const now=t.textContent.trim();
+      if(now!==lastTurnText){
+        if(lastTurnText) setTimeout(enemyAttack,360);
+        lastTurnText=now;
+      }
+    }
+  }
+
+  function scan(){
+    maybeEnemyDefeat();
+    maybeLowHp();
+    scanTurn();
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',scan,{once:true});
+  else scan();
+
+  const mo=new MutationObserver(scan);
+  mo.observe(document.documentElement,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class']});
+  setInterval(scan,1100);
 })();
 </script>
 
