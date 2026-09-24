@@ -17212,7 +17212,40 @@ body.v397AutoMode .farmExecuteV100{box-shadow:none!important}
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V399</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v400-auto-hardfix">
+/* V400: hard-fix AUTO touch + ultra compact cut-in */
+#v397AutoHud{pointer-events:auto!important;touch-action:manipulation!important;-webkit-user-select:none!important;user-select:none!important}
+#v397AutoHud *{pointer-events:auto!important}
+#v397AutoHud button{touch-action:manipulation!important;-webkit-tap-highlight-color:rgba(255,255,255,.08)!important}
+#v397AutoHud.v400Pressed{transform:scale(.985)!important;filter:brightness(1.12)!important}
+
+/* Kill all large cinematic layers. Keep only tiny top ribbon. */
+.cutinV153,.ougiSealV159,.finisherV141,.v389ActionBanner,.v389Slash,.v389Shock,.v389HitText.ougi{display:none!important}
+.v365CutIn{
+  left:17%!important;right:17%!important;top:7%!important;height:42px!important;
+  border-radius:9px!important;border-width:1px!important;
+  background:linear-gradient(90deg,rgba(4,12,20,.88),rgba(16,31,41,.84),rgba(4,12,20,.76))!important;
+  box-shadow:0 5px 14px rgba(0,0,0,.24)!important;
+}
+.v365CutIn img{
+  left:4px!important;bottom:2px!important;height:38px!important;width:38px!important;max-width:38px!important;
+  object-fit:cover!important;object-position:center 18%!important;border-radius:7px!important;opacity:.92!important;
+}
+.v365CutInText{left:50px!important;right:8px!important;top:5px!important;text-align:left!important}
+.v365CutInText small{font-size:6px!important;line-height:1!important;letter-spacing:.12em!important}
+.v365CutInText b{font-size:11px!important;line-height:1.05!important;margin-top:2px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.v365CutInText em{font-size:6px!important;line-height:1!important;margin-top:2px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+body.v397AutoMode .v365CutIn{display:none!important}
+@media(max-width:700px){
+  .v365CutIn{left:14%!important;right:14%!important;top:6%!important;height:40px!important}
+  .v365CutIn img{height:36px!important;width:36px!important;max-width:36px!important}
+  .v365CutInText{left:47px!important;top:5px!important}
+  .v365CutInText b{font-size:10px!important}
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V400</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=387"></script>
 
@@ -19705,6 +19738,63 @@ body.battleMode .battlelog.v388LogPulse{animation:v388LogPulse .22s ease}
     e.stopPropagation();
     btn.click();
   },true);
+})();
+</script>
+
+
+<script id="v400-auto-hardfix-script">
+(()=>{
+  const KEY='bk12_v400_auto';
+  let on=localStorage.getItem(KEY)==='1';
+  let lastAction=0;
+  function isVisible(el){if(!el||el.disabled)return false;const s=getComputedStyle(el);if(s.display==='none'||s.visibility==='hidden'||s.pointerEvents==='none'||+s.opacity===0)return false;const r=el.getBoundingClientRect();return r.width>10&&r.height>10&&r.bottom>0&&r.right>0&&r.top<innerHeight&&r.left<innerWidth}
+  function text(el){return (el?.innerText||el?.textContent||'').replace(/\s+/g,' ').trim()}
+  function hud(){return document.getElementById('v397AutoHud')}
+  function draw(){
+    const h=hud(); if(!h)return;
+    h.classList.toggle('off',!on);
+    h.innerHTML=`<div><small>AUTO</small><b>${on?'ON':'OFF'}</b></div><button id="v400AutoButton" type="button" aria-pressed="${on}">${on?'停止':'開始'}</button>`;
+  }
+  function set(v){on=!!v;localStorage.setItem(KEY,on?'1':'0');document.body.classList.toggle('v397AutoMode',on);draw()}
+  function toggle(){set(!on)}
+  function bind(){
+    const h=hud(); if(!h)return;
+    // Make the whole panel a large touch target. pointerup works reliably on iPhone Safari.
+    if(h.dataset.v400Bound==='1')return;
+    h.dataset.v400Bound='1';
+    h.addEventListener('pointerdown',e=>{h.classList.add('v400Pressed')},{passive:true});
+    h.addEventListener('pointercancel',()=>h.classList.remove('v400Pressed'),{passive:true});
+    h.addEventListener('pointerup',e=>{
+      h.classList.remove('v400Pressed');
+      e.preventDefault();e.stopPropagation();
+      toggle();
+    },{capture:true});
+  }
+  function action(){
+    if(!on)return;
+    const now=Date.now(); if(now-lastAction<520)return;
+    const qs=[
+      '.actionClusterV164 [data-sd-action="ougi"].readyV198',
+      '.actionClusterV164 .ougi.ready',
+      '.bsv2Selected176 button.ready',
+      '.selectedSkillsV152 button.ready',
+      '.actionClusterV164 [data-sd-action="skill"]',
+      '.actionClusterV164 .skill',
+      '.actionClusterV164 [data-sd-action="attack"]',
+      '.actionClusterV164 .attack'
+    ];
+    for(const q of qs){const b=document.querySelector(q);if(isVisible(b)){lastAction=now;b.click();return}}
+    // Result / next battle controls only. Never touch quick-farm or locked difficulty.
+    const buttons=[...document.querySelectorAll('button')].filter(isVisible);
+    const next=buttons.find(b=>!/AUTO|オート|周回|FARM|HARD|未解放/i.test(text(b))&&/再戦|次へ|続行|OK|出撃|挑戦|通常戦闘|NORMAL/i.test(text(b)));
+    if(next){lastAction=now;next.click()}
+  }
+  function init(){
+    draw();bind();document.body.classList.toggle('v397AutoMode',on);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+  new MutationObserver(()=>{draw();bind()}).observe(document.documentElement,{subtree:true,childList:true});
+  setInterval(action,650);
 })();
 </script>
 
