@@ -16106,9 +16106,212 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V348</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v349-signature-skills">
+/* V349: character-specific skill identities + stronger ougi staging */
+.v349FxLayer{position:absolute!important;inset:0!important;z-index:130!important;pointer-events:none!important;overflow:hidden!important}
+.v349FxLayer span{position:absolute!important;display:block!important;pointer-events:none!important}
+
+@keyframes v349FadeScale{0%{opacity:0;transform:scale(.25)}24%{opacity:1}100%{opacity:0;transform:scale(1.45)}}
+@keyframes v349Rise{0%{opacity:0;transform:translateY(26px) scale(.65)}25%{opacity:.9}100%{opacity:0;transform:translateY(-80px) scale(1.25)}}
+@keyframes v349Sweep{0%{opacity:0;transform:translateX(-70px) skewX(-18deg)}25%{opacity:1}100%{opacity:0;transform:translateX(170px) skewX(-18deg)}}
+@keyframes v349Spin{0%{opacity:0;transform:rotate(0deg) scale(.3)}20%{opacity:1}100%{opacity:0;transform:rotate(260deg) scale(1.25)}}
+@keyframes v349Pulse{0%,100%{opacity:0;transform:scale(.5)}30%{opacity:1;transform:scale(1)}70%{opacity:.55;transform:scale(1.22)}}
+@keyframes v349OugiDarken{0%{opacity:0}25%{opacity:.72}70%{opacity:.72}100%{opacity:0}}
+@keyframes v349OugiLine{0%{opacity:0;transform:scaleX(.15)}30%{opacity:1}100%{opacity:0;transform:scaleX(1.5)}}
+
+/* Dazai: pale bandage ribbons */
+.v349-dazai-ribbon{left:8%!important;top:40%!important;width:52%!important;height:8px!important;border-radius:999px!important;background:linear-gradient(90deg,transparent,rgba(243,235,218,.95),rgba(212,199,174,.55),transparent)!important;box-shadow:0 0 8px rgba(245,238,220,.45)!important;animation:v349Sweep .72s ease-out 1!important}
+.v349-dazai-ribbon.r2{top:49%!important;width:44%!important;animation-delay:.08s!important;transform:rotate(-9deg)}
+
+/* Chuuya: crimson gravity rings */
+.v349-chuuya-ring{right:17%!important;top:31%!important;width:120px!important;height:120px!important;border:3px solid rgba(231,63,91,.72)!important;border-radius:50%!important;box-shadow:0 0 18px rgba(231,63,91,.55),inset 0 0 18px rgba(231,63,91,.25)!important;animation:v349Spin .7s ease-out 1!important}
+.v349-chuuya-core{right:21%!important;top:37%!important;width:72px!important;height:72px!important;border-radius:50%!important;background:radial-gradient(circle,rgba(255,225,225,.85),rgba(232,64,91,.55) 28%,transparent 68%)!important;animation:v349FadeScale .64s ease-out 1!important}
+
+/* Akutagawa: purple slash field */
+.v349-akutagawa-slash{left:38%!important;top:35%!important;width:46%!important;height:10px!important;background:linear-gradient(90deg,transparent,rgba(196,137,255,.15),rgba(198,137,255,.98),rgba(255,255,255,.92),transparent)!important;filter:drop-shadow(0 0 9px rgba(180,102,255,.72))!important;transform-origin:left center!important;animation:v349Sweep .54s ease-out 1!important}
+.v349-akutagawa-slash.a2{top:48%!important;transform:rotate(13deg);animation-delay:.07s!important}
+
+/* Kenji: golden stars rising */
+.v349-kenji-star{left:var(--x)!important;bottom:22%!important;width:18px!important;height:18px!important;background:#efd069!important;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 92%,50% 70%,21% 92%,32% 57%,2% 35%,39% 35%)!important;filter:drop-shadow(0 0 8px rgba(239,208,105,.55))!important;animation:v349Rise var(--dur) ease-out 1!important;animation-delay:var(--delay)!important}
+
+/* Ranpo: cyan clue circles */
+.v349-ranpo-clue{right:20%!important;top:33%!important;width:104px!important;height:104px!important;border:2px solid rgba(114,190,228,.65)!important;border-radius:50%!important;box-shadow:0 0 14px rgba(114,190,228,.35)!important;animation:v349Pulse .7s ease-out 1!important}
+.v349-ranpo-clue:before,.v349-ranpo-clue:after{content:"";position:absolute;left:50%;top:50%;background:rgba(160,221,244,.82);transform:translate(-50%,-50%)}
+.v349-ranpo-clue:before{width:70%;height:1px}.v349-ranpo-clue:after{width:1px;height:70%}
+
+.v349OugiDark{position:absolute!important;inset:0!important;background:rgba(2,5,10,.72)!important;animation:v349OugiDarken .95s ease-out 1!important;z-index:128!important}
+.v349OugiLine{left:20%!important;right:12%!important;top:46%!important;height:3px!important;background:linear-gradient(90deg,transparent,#fff,rgba(255,74,119,.95),transparent)!important;box-shadow:0 0 14px rgba(255,74,119,.7)!important;transform-origin:center!important;animation:v349OugiLine .72s ease-out 1!important;z-index:132!important}
+.v349OugiTitle{position:absolute!important;left:50%!important;top:29%!important;transform:translateX(-50%)!important;color:#fff3ef!important;font:700 14px/1.15 serif!important;letter-spacing:.16em!important;text-shadow:0 0 10px rgba(255,255,255,.7),0 0 20px rgba(255,74,119,.62)!important;animation:v349FadeScale .82s ease-out 1!important;z-index:133!important;white-space:nowrap!important}
+</style>
+
+
+<style id="v350-battle-cinema">
+/* V350: wave / damage / victory cinematic feedback */
+
+@keyframes v350WaveIn {
+  0%{opacity:0;transform:scale(.84) translateY(-10px)}
+  28%{opacity:1;transform:scale(1.04) translateY(0)}
+  76%{opacity:1}
+  100%{opacity:0;transform:scale(1) translateY(5px)}
+}
+@keyframes v350ScreenHit {
+  0%,100%{transform:translate(0,0)}
+  18%{transform:translate(-4px,2px)}
+  36%{transform:translate(4px,-2px)}
+  58%{transform:translate(-2px,1px)}
+}
+@keyframes v350PlayerHit {
+  0%,100%{transform:translateX(0);filter:brightness(1)}
+  22%{transform:translateX(-8px) rotate(-2deg);filter:brightness(1.5)}
+  48%{transform:translateX(5px) rotate(1deg)}
+}
+@keyframes v350VictoryUnit {
+  0%{transform:translateY(var(--v346-y,0px)) scale(var(--v346-scale,1))}
+  26%{transform:translateY(calc(var(--v346-y,0px) - 18px)) scale(calc(var(--v346-scale,1) * 1.08))}
+  52%{transform:translateY(var(--v346-y,0px)) scale(calc(var(--v346-scale,1) * 1.04))}
+  76%{transform:translateY(calc(var(--v346-y,0px) - 7px)) scale(calc(var(--v346-scale,1) * 1.05))}
+  100%{transform:translateY(var(--v346-y,0px)) scale(var(--v346-scale,1))}
+}
+@keyframes v350VictoryTitle {
+  0%{opacity:0;letter-spacing:.8em;filter:blur(8px)}
+  30%{opacity:1;letter-spacing:.18em;filter:blur(0)}
+  78%{opacity:1}
+  100%{opacity:0;letter-spacing:.12em}
+}
+
+.v350WaveBanner{
+  position:absolute!important;
+  left:50%!important;top:28%!important;
+  transform:translateX(-50%)!important;
+  z-index:180!important;
+  pointer-events:none!important;
+  min-width:180px!important;
+  padding:10px 24px!important;
+  text-align:center!important;
+  color:#f3e5bd!important;
+  font:700 19px/1.1 serif!important;
+  letter-spacing:.18em!important;
+  background:linear-gradient(90deg,transparent,rgba(5,13,20,.9) 18%,rgba(5,13,20,.96) 82%,transparent)!important;
+  border-top:1px solid rgba(208,171,86,.42)!important;
+  border-bottom:1px solid rgba(208,171,86,.42)!important;
+  text-shadow:0 0 10px rgba(229,188,91,.38)!important;
+  animation:v350WaveIn 1.15s ease-out forwards!important;
+}
+.v350HitOverlay{
+  position:absolute!important;inset:0!important;z-index:170!important;pointer-events:none!important;
+  background:
+    radial-gradient(circle at 28% 68%,rgba(255,255,255,.22),transparent 18%),
+    linear-gradient(90deg,rgba(255,52,78,.22),transparent 26%)!important;
+  animation:v350WaveIn .36s ease-out forwards!important;
+}
+.v343HQParty .v343Unit.v350-hit{
+  animation:v350PlayerHit .36s ease-out 1!important;
+}
+.v343HQParty .v343Unit.v350-victory{
+  animation:v350VictoryUnit .92s cubic-bezier(.2,.8,.2,1) 1!important;
+}
+.v350VictoryTitle{
+  position:absolute!important;
+  left:50%!important;top:34%!important;
+  transform:translateX(-50%)!important;
+  z-index:190!important;
+  color:#f4df9f!important;
+  font:800 30px/1 serif!important;
+  letter-spacing:.18em!important;
+  text-shadow:
+    0 0 12px rgba(255,223,141,.6),
+    0 4px 18px rgba(0,0,0,.8)!important;
+  pointer-events:none!important;
+  animation:v350VictoryTitle 1.8s ease-out forwards!important;
+}
+.v350VictoryLine{
+  position:absolute!important;
+  left:18%!important;right:18%!important;top:42%!important;height:1px!important;
+  z-index:189!important;
+  background:linear-gradient(90deg,transparent,#d9b661,transparent)!important;
+  box-shadow:0 0 12px rgba(217,182,97,.4)!important;
+  pointer-events:none!important;
+  animation:v350WaveIn 1.8s ease-out forwards!important;
+}
+</style>
+
+
+<style id="v351-ios-turn-hotfix">
+/* V351: iOS battle command safety */
+.battleMode .primaryNavV116,
+.battleV119 .primaryNavV116,
+.cleanBattleV238 .primaryNavV116{
+  pointer-events:none!important;
+}
+.battleCommandsV119 button,
+.actionClusterV164 button,
+.posterThumbBarV234 button,
+.bsv2Hud_175 button{
+  touch-action:manipulation!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+</style>
+
+
+<style id="v352-turn-lock">
+/* V352: hard lock against iOS click-through while a battle turn is resolving */
+body.v352-turn-lock .primaryNavV116,
+body.v352-turn-lock .homeNavV116,
+body.v352-turn-lock .bottomNav,
+body.v352-turn-lock .quickDock,
+body.v352-turn-lock .quickDockV2,
+body.v352-turn-lock .floatingDock,
+body.v352-turn-lock a[href*="home"],
+body.v352-turn-lock [data-route="home"],
+body.v352-turn-lock [data-page="home"]{
+  pointer-events:none!important;
+}
+</style>
+
+
+<style id="v353-enemy-polish">
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153,
+.bsv2Enemies_175 > *{transition:filter .18s ease,transform .18s ease!important}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:nth-child(1){filter:drop-shadow(0 0 12px rgba(255,68,105,.18))!important}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:nth-child(2){filter:drop-shadow(0 0 12px rgba(150,87,255,.18))!important}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153:nth-child(3){filter:drop-shadow(0 0 12px rgba(80,185,228,.16))!important}
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.selected,
+.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153.active,
+.bsv2Enemies_175 .selected,.bsv2Enemies_175 .active{
+ filter:brightness(1.08) drop-shadow(0 0 10px rgba(255,82,113,.55))
+ drop-shadow(0 0 24px rgba(255,82,113,.26)) drop-shadow(0 12px 14px rgba(0,0,0,.55))!important
+}
+.cleanBattleV238 .posterEnemyWrapV237.v353-boss,
+.bsv2Enemies_175.v353-boss{isolation:isolate!important}
+.cleanBattleV238 .posterEnemyWrapV237.v353-boss::before,
+.bsv2Enemies_175.v353-boss::before{
+ content:""!important;position:absolute!important;inset:4% 2% 7%!important;z-index:-1!important;pointer-events:none!important;
+ background:radial-gradient(circle at 68% 46%,rgba(169,53,95,.28),transparent 30%),
+ radial-gradient(circle at 67% 48%,rgba(110,64,180,.18),transparent 48%)!important;
+ filter:blur(8px)!important;animation:v353BossPulse 2.5s ease-in-out infinite!important
+}
+@keyframes v353BossPulse{0%,100%{opacity:.55;transform:scale(.97)}50%{opacity:1;transform:scale(1.03)}}
+.v353BossIntro{
+ position:absolute!important;left:50%!important;top:28%!important;transform:translateX(-50%)!important;z-index:210!important;
+ pointer-events:none!important;min-width:220px!important;padding:12px 28px!important;text-align:center!important;
+ color:#f7e7dd!important;font:800 22px/1.05 serif!important;letter-spacing:.2em!important;
+ background:linear-gradient(90deg,transparent,rgba(35,7,18,.94) 20%,rgba(35,7,18,.96) 80%,transparent)!important;
+ border-top:1px solid rgba(255,82,113,.52)!important;border-bottom:1px solid rgba(255,82,113,.52)!important;
+ text-shadow:0 0 12px rgba(255,82,113,.52)!important;animation:v353BossIntro 1.55s ease-out forwards!important
+}
+@keyframes v353BossIntro{0%{opacity:0;letter-spacing:.7em;filter:blur(7px)}28%{opacity:1;letter-spacing:.22em;filter:blur(0)}78%{opacity:1}100%{opacity:0;letter-spacing:.18em}}
+.v353BossSweep{
+ position:absolute!important;left:8%!important;right:8%!important;top:42%!important;height:2px!important;z-index:209!important;pointer-events:none!important;
+ background:linear-gradient(90deg,transparent,#ff5578,rgba(255,255,255,.9),#ff5578,transparent)!important;
+ box-shadow:0 0 14px rgba(255,82,113,.5)!important;transform:scaleX(.05)!important;animation:v353Sweep .9s ease-out forwards!important
+}
+@keyframes v353Sweep{0%{opacity:0;transform:scaleX(.05)}22%{opacity:1}100%{opacity:0;transform:scaleX(1)}}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V353</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=348"></script>
+<script src="app.js?v=353"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -16570,9 +16773,6 @@ body.battleMode .stageBattleBtns .btn{
   document.addEventListener('click',(e)=>{
     if(isAttackButton(e.target)) playAttack();
   },true);
-  document.addEventListener('touchend',(e)=>{
-    if(isAttackButton(e.target)) playAttack();
-  },{capture:true,passive:true});
 })();
 </script>
 
@@ -17087,7 +17287,6 @@ body.battleMode .stageBattleBtns .btn{
     if(type) play(type);
   }
   document.addEventListener('click', handler, true);
-  document.addEventListener('touchend', handler, {capture:true, passive:true});
 })();
 </script>
 
@@ -17166,6 +17365,342 @@ body.battleMode .stageBattleBtns .btn{
     const t=detect(e.target);
     if(t)play(t);
   },true);
+})();
+</script>
+
+
+<script id="v349-signature-skills-script">
+(()=>{
+  function host(){return document.querySelector('.cleanBattleV238 .posterActorStageV237')||document.querySelector('.bsv2Field_175')}
+  function activeUnit(){const a=[...document.querySelectorAll('.v343HQParty .v343Unit')];return a.find(x=>x.classList.contains('active'))||a[0]||null}
+  function key(){const u=activeUnit();return u?u.getAttribute('data-key')||'dazai':'dazai'}
+  function layer(){const h=host();if(!h)return null;const l=document.createElement('div');l.className='v349FxLayer';h.appendChild(l);return l}
+  function clearLater(el,ms){setTimeout(()=>{if(el&&el.remove)el.remove()},ms)}
+  function skillFx(){
+    const l=layer(); if(!l)return; const k=key();
+    if(k==='dazai'){
+      const a=document.createElement('span');a.className='v349-dazai-ribbon';
+      const b=document.createElement('span');b.className='v349-dazai-ribbon r2';l.append(a,b);
+    }else if(k==='chuuya'){
+      const a=document.createElement('span');a.className='v349-chuuya-ring';
+      const b=document.createElement('span');b.className='v349-chuuya-core';l.append(a,b);
+    }else if(k==='akutagawa'){
+      const a=document.createElement('span');a.className='v349-akutagawa-slash';
+      const b=document.createElement('span');b.className='v349-akutagawa-slash a2';l.append(a,b);
+    }else if(k==='kenji'){
+      for(let i=0;i<6;i++){
+        const s=document.createElement('span');s.className='v349-kenji-star';
+        s.style.setProperty('--x',(12+i*9)+'%');s.style.setProperty('--dur',(.55+i*.08)+'s');s.style.setProperty('--delay',(i*.04)+'s');l.appendChild(s);
+      }
+    }else{
+      const a=document.createElement('span');a.className='v349-ranpo-clue';l.appendChild(a);
+    }
+    clearLater(l,900);
+  }
+  function ougiFx(){
+    const h=host();if(!h)return;
+    const dark=document.createElement('div');dark.className='v349OugiDark';
+    const line=document.createElement('div');line.className='v349OugiLine';
+    const title=document.createElement('div');title.className='v349OugiTitle';
+    const labels={dazai:'人間失格',chuuya:'重力制圧',akutagawa:'羅生門',kenji:'星巡り',ranpo:'完全推理'};
+    title.textContent=labels[key()]||'奥義';
+    h.append(dark,line,title);
+    clearLater(dark,1050);clearLater(line,900);clearLater(title,950);
+  }
+  function detect(target){
+    const e=target.closest('button,[role="button"],.cmd,.command,.action,[data-sd-action]');if(!e)return'';
+    const d=(e.getAttribute('data-sd-action')||'').toLowerCase();const t=(e.textContent||'').replace(/\s+/g,'');
+    if(d.includes('ougi')||d.includes('ultimate')||t.includes('奥義'))return'ougi';
+    if(d.includes('skill')||t.includes('スキル'))return'skill';
+    return'';
+  }
+  document.addEventListener('click',e=>{const a=detect(e.target);if(a==='skill')skillFx();else if(a==='ougi')ougiFx()},true);
+})();
+</script>
+
+
+<script id="v350-battle-cinema-script">
+(()=>{
+  function stage(){
+    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
+           document.querySelector('.bsv2Field_175');
+  }
+  function banner(text){
+    const host=stage();
+    if(!host) return;
+    const b=document.createElement('div');
+    b.className='v350WaveBanner';
+    b.textContent=text;
+    host.appendChild(b);
+    setTimeout(()=>b.remove(),1250);
+  }
+  function flashPlayerHit(){
+    const host=stage();
+    if(!host) return;
+    const idx=0;
+    const units=[...document.querySelectorAll('.v343HQParty .v343Unit')];
+    const active=units.find(u=>u.classList.contains('active')) || units[idx];
+    if(active){
+      active.classList.add('v350-hit');
+      setTimeout(()=>active.classList.remove('v350-hit'),430);
+    }
+    const fx=document.createElement('div');
+    fx.className='v350HitOverlay';
+    host.appendChild(fx);
+    setTimeout(()=>fx.remove(),420);
+  }
+  function victory(){
+    const host=stage();
+    if(!host) return;
+    const units=[...document.querySelectorAll('.v343HQParty .v343Unit')];
+    units.forEach((u,i)=>{
+      setTimeout(()=>{
+        u.classList.add('v350-victory');
+        setTimeout(()=>u.classList.remove('v350-victory'),1000);
+      },i*90);
+    });
+    const title=document.createElement('div');
+    title.className='v350VictoryTitle';
+    title.textContent='VICTORY';
+    const line=document.createElement('div');
+    line.className='v350VictoryLine';
+    host.append(title,line);
+    setTimeout(()=>{title.remove();line.remove();},1900);
+  }
+
+  // Expose lightweight hooks for future battle logic integration.
+  window.bungoV350 = {
+    wave(n){ banner('WAVE '+n); },
+    hit(){ flashPlayerHit(); },
+    victory(){ victory(); }
+  };
+
+  // Observe text/state changes so existing logic can trigger the new visuals without rewiring the game.
+  let lastWave='';
+  let lastResult='';
+  const scan=()=>{
+    const waveNode=[...document.querySelectorAll('body *')].find(el=>{
+      const t=(el.textContent||'').trim();
+      return /^WAVE\s*\d+\/\d+$/i.test(t) && el.children.length===0;
+    });
+    if(waveNode){
+      const t=waveNode.textContent.trim();
+      if(t!==lastWave){
+        lastWave=t;
+        const m=t.match(/WAVE\s*(\d+)/i);
+        if(m) banner(m[1]==='1'?'WAVE 1':'WAVE '+m[1]);
+      }
+    }
+
+    const bodyText=document.body.innerText||'';
+    const result=/勝利|VICTORY/i.test(bodyText)?'victory':'';
+    if(result && result!==lastResult){
+      lastResult=result;
+      victory();
+    }
+  };
+
+  setInterval(scan,1200);
+})();
+</script>
+
+
+<script id="v351-ios-turn-hotfix-script">
+(()=>{
+  let lastBattleTouch=0;
+
+  function isBattleVisible(){
+    return !!(
+      document.querySelector('.cleanBattleV238') ||
+      document.querySelector('.battleV119') ||
+      document.querySelector('.bsv2_175')
+    );
+  }
+
+  function isBattleCommand(target){
+    if(!target || !target.closest) return false;
+    const el=target.closest('button,[role="button"],[data-sd-action],.cmd,.command,.action');
+    if(!el) return false;
+    const txt=(el.textContent||'').replace(/\s+/g,'');
+    const ds=(el.getAttribute('data-sd-action')||'').toLowerCase();
+    return (
+      ds.includes('attack') || ds.includes('skill') ||
+      ds.includes('support') || ds.includes('ougi') ||
+      ds.includes('ultimate') ||
+      txt.includes('攻撃') || txt.includes('スキル') ||
+      txt.includes('支援') || txt.includes('奥義')
+    );
+  }
+
+  // Record the touch only. Do not run visual/game logic on touchend.
+  document.addEventListener('touchend',(e)=>{
+    if(isBattleVisible() && isBattleCommand(e.target)){
+      lastBattleTouch=Date.now();
+    }
+  },{capture:true,passive:true});
+
+  // iOS can synthesize a delayed click after touchend. If the battle has
+  // just re-rendered, that click can land on the Home nav underneath.
+  document.addEventListener('click',(e)=>{
+    if(!isBattleVisible()) return;
+    const nav=e.target && e.target.closest
+      ? e.target.closest('.primaryNavV116,.homeNavV116,.bottomNav,.quickDock,.quickDockV2,.floatingDock')
+      : null;
+    if(nav && Date.now()-lastBattleTouch < 900){
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }
+  },true);
+})();
+</script>
+
+
+<script id="v352-turn-lock-script">
+(()=>{
+  let lockUntil = 0;
+  let lockTimer = 0;
+
+  function battleAction(target){
+    if(!target || !target.closest) return false;
+    const el = target.closest('button,[role="button"],[data-sd-action],.cmd,.command,.action');
+    if(!el) return false;
+    const txt = (el.textContent || '').replace(/\s+/g,'');
+    const ds = (el.getAttribute('data-sd-action') || '').toLowerCase();
+    return (
+      ds.includes('attack') || ds.includes('skill') || ds.includes('support') ||
+      ds.includes('ougi') || ds.includes('ultimate') ||
+      txt.includes('攻撃') || txt.includes('スキル') ||
+      txt.includes('支援') || txt.includes('奥義')
+    );
+  }
+
+  function isHomeLike(target){
+    if(!target || !target.closest) return false;
+    const el = target.closest(
+      '.primaryNavV116,.homeNavV116,.bottomNav,.quickDock,.quickDockV2,.floatingDock,'+
+      'a,[data-route],[data-page],button'
+    );
+    if(!el) return false;
+
+    const txt = (el.textContent || '').replace(/\s+/g,'');
+    const href = (el.getAttribute('href') || '').toLowerCase();
+    const route = (el.getAttribute('data-route') || '').toLowerCase();
+    const page = (el.getAttribute('data-page') || '').toLowerCase();
+
+    return (
+      !!el.closest('.primaryNavV116,.homeNavV116,.bottomNav,.quickDock,.quickDockV2,.floatingDock') ||
+      txt === 'ホーム' || txt.includes('ホーム') ||
+      href.includes('home') || route === 'home' || page === 'home'
+    );
+  }
+
+  function lockTurn(ms=3200){
+    lockUntil = Math.max(lockUntil, Date.now() + ms);
+    document.body.classList.add('v352-turn-lock');
+    clearTimeout(lockTimer);
+    lockTimer = setTimeout(()=>{
+      if(Date.now() >= lockUntil){
+        document.body.classList.remove('v352-turn-lock');
+      }
+    }, ms + 80);
+  }
+
+  function locked(){
+    return Date.now() < lockUntil;
+  }
+
+  // Start the lock at pointer/touch DOWN, before the battle DOM has any chance to re-render.
+  document.addEventListener('pointerdown',(e)=>{
+    if(battleAction(e.target)) lockTurn();
+  },true);
+
+  document.addEventListener('touchstart',(e)=>{
+    if(battleAction(e.target)) lockTurn();
+  },{capture:true,passive:true});
+
+  // Keep it armed on the real click too.
+  document.addEventListener('click',(e)=>{
+    if(battleAction(e.target)) lockTurn();
+
+    if(locked() && isHomeLike(e.target)){
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      return false;
+    }
+  },true);
+
+  // iOS may synthesize delayed touch/click events after the command DOM changes.
+  document.addEventListener('touchend',(e)=>{
+    if(locked() && isHomeLike(e.target)){
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }
+  },{capture:true,passive:false});
+
+  // Also suppress accidental pointer-up on navigation during the lock window.
+  document.addEventListener('pointerup',(e)=>{
+    if(locked() && isHomeLike(e.target)){
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }
+  },true);
+
+  // If a nav element appears during a battle re-render, keep it inert until the turn settles.
+  const mo = new MutationObserver(()=>{
+    if(locked()){
+      document.body.classList.add('v352-turn-lock');
+    }
+  });
+  mo.observe(document.documentElement,{subtree:true,childList:true});
+})();
+</script>
+
+
+<script id="v353-enemy-polish-script">
+(()=>{
+  let bossSeen=false;
+  function stage(){
+    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
+           document.querySelector('.bsv2Field_175');
+  }
+  function enemyWrap(){
+    return document.querySelector('.cleanBattleV238 .posterEnemyWrapV237') ||
+           document.querySelector('.bsv2Enemies_175');
+  }
+  function isBossPresent(){
+    const t=(document.body.innerText||'').replace(/\s+/g,' ').toUpperCase();
+    return /\bBOSS\b/.test(t) || /ボス/.test(t);
+  }
+  function intro(){
+    const host=stage(), wrap=enemyWrap();
+    if(!host || !wrap) return;
+    wrap.classList.add('v353-boss');
+    if(bossSeen) return;
+    bossSeen=true;
+    const title=document.createElement('div');
+    title.className='v353BossIntro';
+    title.textContent='BOSS ENCOUNTER';
+    const sweep=document.createElement('div');
+    sweep.className='v353BossSweep';
+    host.append(title,sweep);
+    setTimeout(()=>title.remove(),1650);
+    setTimeout(()=>sweep.remove(),1000);
+  }
+  function scan(){
+    const wrap=enemyWrap();
+    if(!wrap) return;
+    if(isBossPresent()) intro();
+    else { wrap.classList.remove('v353-boss'); bossSeen=false; }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',scan,{once:true});
+  else scan();
+  const mo=new MutationObserver(scan);
+  mo.observe(document.documentElement,{subtree:true,childList:true,characterData:true});
+  setInterval(scan,1800);
 })();
 </script>
 
