@@ -17186,12 +17186,7 @@ body.v352-turn-lock [data-page="home"]{
   animation:v373RainFall 1.8s linear infinite!important;
 }
 
-/* Keep game pieces above atmosphere */
-.cleanBattleV238 .posterActorStageV237 > *:not(.v373Ground):not(.v373Mist):not(.v373Rain),
-.bsv2Field_175 > *:not(.v373Ground):not(.v373Mist):not(.v373Rain){
-  position:relative;
-  z-index:10;
-}
+
 </style>
 
 
@@ -17772,9 +17767,51 @@ body.v352-turn-lock [data-page="home"]{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V377</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v378-layout-recovery">
+/* V378: recover original battle positioning after V377 stacking rule. */
+.cleanBattleV238 .posterActorStageV237 .v373Ground,
+.cleanBattleV238 .posterActorStageV237 .v373Mist,
+.cleanBattleV238 .posterActorStageV237 .v373Rain,
+.cleanBattleV238 .posterActorStageV237 .v377Vignette,
+.cleanBattleV238 .posterActorStageV237 .v377Particles,
+.bsv2Field_175 .v373Ground,
+.bsv2Field_175 .v373Mist,
+.bsv2Field_175 .v373Rain,
+.bsv2Field_175 .v377Vignette,
+.bsv2Field_175 .v377Particles{
+  pointer-events:none!important;
+}
+
+/* Restore known battle elements to their intended absolute layout. */
+.cleanBattleV238 .posterEnemyWrapV237,
+.cleanBattleV238 .posterLivePartyV217,
+.cleanBattleV238 .posterSelectedCardV235,
+.cleanBattleV238 .battleCommandsV119,
+.cleanBattleV238 .actionClusterV164,
+.cleanBattleV238 .posterThumbBarV234{
+  position:absolute!important;
+}
+
+/* Make sure decorative atmosphere stays behind characters/HUD. */
+.cleanBattleV238 .posterActorStageV237 .v373Ground{z-index:0!important}
+.cleanBattleV238 .posterActorStageV237 .v373Mist{z-index:1!important}
+.cleanBattleV238 .posterActorStageV237 .v373Rain{z-index:2!important}
+.cleanBattleV238 .posterActorStageV237 .v377Vignette{z-index:3!important}
+.cleanBattleV238 .posterActorStageV237 .v377Particles{z-index:4!important}
+
+.cleanBattleV238 .posterEnemyWrapV237{z-index:20!important}
+.cleanBattleV238 .v343HQParty{z-index:30!important}
+.cleanBattleV238 .posterLivePartyV217{z-index:40!important}
+.cleanBattleV238 .posterSelectedCardV235{z-index:41!important}
+.cleanBattleV238 .battleCommandsV119,
+.cleanBattleV238 .actionClusterV164,
+.cleanBattleV238 .posterThumbBarV234{z-index:42!important}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V378</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=377"></script>
+<script src="app.js?v=378"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
