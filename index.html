@@ -16889,7 +16889,35 @@ body.v352-turn-lock [data-page="home"]{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V387</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v389-battle-cinema">
+/* V389: cinematic feedback layer. Visual-only, battle logic untouched. */
+.v389Fx{position:absolute;inset:0;z-index:90;pointer-events:none;overflow:hidden}
+.v389HitText{position:absolute;left:72%;top:35%;transform:translate(-50%,-50%);font-family:serif;font-weight:900;font-size:clamp(22px,7vw,42px);letter-spacing:.05em;color:#fff5df;text-shadow:0 2px 2px #000,0 0 10px #d94d62,0 0 24px #d94d62;animation:v389Hit .72s cubic-bezier(.15,.8,.2,1) forwards}
+.v389HitText.skill{color:#bfe9ff;text-shadow:0 2px 2px #000,0 0 12px #3da9ef,0 0 26px #3da9ef}
+.v389HitText.ougi{font-size:clamp(28px,9vw,52px);color:#ffe9a2;text-shadow:0 2px 2px #000,0 0 14px #e5b84f,0 0 32px #e5b84f}
+.v389Slash{position:absolute;left:48%;top:17%;width:46%;height:42%;border-radius:50%;border-right:6px solid #ff6b80;filter:drop-shadow(0 0 10px #ff405e);transform:rotate(-24deg);animation:v389Slash .48s ease-out forwards}
+.v389Slash.skill{border-color:#6fc9ff;filter:drop-shadow(0 0 12px #3aa6e7)}
+.v389Slash.ougi{border-right-width:10px;border-color:#f2d274;filter:drop-shadow(0 0 18px #e7bd58)}
+.v389ActionBanner{position:absolute;left:8%;right:8%;top:18%;padding:10px 14px;background:linear-gradient(90deg,transparent,#071523ee 14%,#102b40ee 72%,transparent);border-top:1px solid #6a91ae;border-bottom:1px solid #6a91ae;text-align:center;animation:v389Banner .72s ease forwards}
+.v389ActionBanner b,.v389ActionBanner small{display:block}.v389ActionBanner b{font-family:serif;font-size:clamp(15px,4vw,22px);letter-spacing:.08em}.v389ActionBanner small{font-size:8px;color:#9ccfeb;letter-spacing:.18em}
+.v389ActionBanner.ougi{background:linear-gradient(90deg,transparent,#251b08ee 14%,#493917ee 72%,transparent);border-color:#d4b458}.v389ActionBanner.ougi b,.v389ActionBanner.ougi small{color:#ffe39a}
+.v389Shock{position:absolute;left:68%;top:39%;width:8px;height:8px;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 5px #ff4f6744,0 0 25px 10px #ff4f6790;animation:v389Shock .55s ease-out forwards}
+.v389BossDanger{position:absolute;left:50%;top:11%;transform:translateX(-50%);z-index:95;padding:6px 15px;border:1px solid #e05266;background:#24060ddd;color:#ff9cab;font-size:9px;font-weight:800;letter-spacing:.22em;animation:v389Danger 1.25s ease forwards;pointer-events:none}
+.cleanBattleV238.v389Impact .posterEnemyWrapV237{animation:v389EnemyShake .34s linear}
+.cleanBattleV238.v389OugiFlash .posterActorStageV237:before{content:"";position:absolute;inset:0;z-index:88;background:radial-gradient(circle at 35% 45%,#fff9,transparent 22%),linear-gradient(115deg,transparent 35%,#f4d77c66 48%,transparent 62%);animation:v389Flash .65s ease forwards;pointer-events:none}
+@keyframes v389Hit{0%{opacity:0;transform:translate(-50%,5px) scale(.45)}22%{opacity:1;transform:translate(-50%,-8px) scale(1.22)}100%{opacity:0;transform:translate(-50%,-54px) scale(.92)}}
+@keyframes v389Slash{0%{opacity:0;transform:rotate(-24deg) scale(.25)}35%{opacity:1}100%{opacity:0;transform:rotate(-24deg) scale(1.25)}}
+@keyframes v389Banner{0%{opacity:0;transform:translateX(-20%) scaleX(.7)}18%,65%{opacity:1;transform:none}100%{opacity:0;transform:translateX(12%)}}
+@keyframes v389Shock{to{opacity:0;transform:scale(9)}}
+@keyframes v389EnemyShake{20%{transform:translateX(-8px);filter:brightness(1.55)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+@keyframes v389Flash{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
+@keyframes v389Danger{0%{opacity:0;transform:translate(-50%,-10px) scale(.8)}18%,72%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-4px)}}
+@media(max-height:720px){.v389ActionBanner{top:13%;padding:7px 10px}.v389BossDanger{top:8%}}
+@media(prefers-reduced-motion:reduce){.v389HitText,.v389Slash,.v389ActionBanner,.v389Shock,.v389BossDanger{animation-duration:.01ms!important}.cleanBattleV238.v389Impact .posterEnemyWrapV237{animation:none!important}}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V389</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=387"></script>
 
@@ -19061,4 +19089,48 @@ body.battleMode .battlelog.v388LogPulse{animation:v388LogPulse .22s ease}
   refresh();
 })();
 </script>
+
+<script id="v389-battle-cinema-script">
+(()=>{
+  if(window.__BUNGO_V389__) return; window.__BUNGO_V389__=true;
+  const root=()=>document.querySelector('.cleanBattleV238');
+  const stage=()=>document.querySelector('.cleanBattleV238 .posterActorStageV237')||document.querySelector('.bsv2Field_175');
+  function action(el){
+    const b=el?.closest?.('button,[role="button"],[data-sd-action],.cmd,.command,.action'); if(!b)return'';
+    const d=(b.getAttribute('data-sd-action')||'').toLowerCase(),t=(b.textContent||'').replace(/\s+/g,'');
+    if(d.includes('ougi')||d.includes('ultimate')||t.includes('奥義'))return'ougi';
+    if(d.includes('skill')||t.includes('スキル'))return'skill';
+    if(d.includes('attack')||t.includes('攻撃'))return'attack';
+    return'';
+  }
+  function activeName(){
+    const u=document.querySelector('.v343HQParty .v343Unit.active,.posterLivePartyV217 button.on,.posterLivePartyV217 button.active');
+    const n=(u?.querySelector('.name')?.textContent||u?.textContent||'').trim(); return n.slice(0,18);
+  }
+  function play(type){
+    const h=stage(),r=root(); if(!h||!r)return;
+    let fx=h.querySelector('.v389Fx'); if(!fx){fx=document.createElement('div');fx.className='v389Fx';h.appendChild(fx)}
+    const banner=document.createElement('div');banner.className='v389ActionBanner '+type;
+    const title=type==='ougi'?'奥義発動':type==='skill'?'異能発動':'連撃';
+    banner.innerHTML='<small>'+(type==='ougi'?'LITERARY ULTIMATE':type==='skill'?'ABILITY':'ATTACK')+'</small><b>'+((activeName()?activeName()+'　':'')+title)+'</b>';
+    fx.appendChild(banner);
+    const slash=document.createElement('div');slash.className='v389Slash '+type;fx.appendChild(slash);
+    const shock=document.createElement('div');shock.className='v389Shock';fx.appendChild(shock);
+    setTimeout(()=>{const t=document.createElement('div');t.className='v389HitText '+type;t.textContent=type==='ougi'?'CRITICAL!!':type==='skill'?'ABILITY HIT!':'HIT!';fx.appendChild(t);setTimeout(()=>t.remove(),800)},type==='ougi'?280:180);
+    r.classList.remove('v389Impact','v389OugiFlash');void r.offsetWidth;r.classList.add('v389Impact');if(type==='ougi')r.classList.add('v389OugiFlash');
+    setTimeout(()=>r.classList.remove('v389Impact','v389OugiFlash'),760);
+    setTimeout(()=>{banner.remove();slash.remove();shock.remove()},900);
+  }
+  let bossWarned=false, bossHits=0;
+  function bossCheck(){
+    const r=root(),h=stage();if(!r||!h)return;
+    const text=(r.textContent||'').toUpperCase(); const boss=/\bBOSS\b|ボス/.test(text);
+    if(!boss){bossWarned=false;bossHits=0;return}
+    if(bossHits>=3&&!bossWarned){bossWarned=true;const x=document.createElement('div');x.className='v389BossDanger';x.textContent='DANGER  •  BOSS PHASE SHIFT';h.appendChild(x);setTimeout(()=>x.remove(),1400)}
+  }
+  document.addEventListener('click',e=>{const a=action(e.target);if(!a)return;if(a==='attack'||a==='skill'||a==='ougi')bossHits++;setTimeout(()=>play(a),a==='ougi'?120:70);setTimeout(bossCheck,180)},true);
+  const mo=new MutationObserver(()=>requestAnimationFrame(bossCheck));mo.observe(document.documentElement,{subtree:true,childList:true,characterData:true});bossCheck();
+})();
+</script>
+
 </body></html>
