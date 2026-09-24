@@ -15621,9 +15621,35 @@ body.battleMode .stageBattleBtns .btn{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V337</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v338-priority-pass">
+/* V338: biggest-impact pass = less cute, more stylish, taller and sharper SDs */
+.cleanBattleV238 .posterActorStageV237>.v331PartyStage.v332Stable{
+  left:-1.6%!important;
+  right:38.8%!important;
+  bottom:17.0%!important;
+  height:34.0%!important;
+}
+.v331PartyStage.v332Stable .v331Unit img{
+  width:188%!important;
+  height:116%!important;
+  filter:drop-shadow(0 14px 15px rgba(0,0,0,.80)) saturate(1.06) brightness(1.03)!important;
+}
+.v331PartyStage.v332Stable .v331Unit:nth-child(1){transform:translate(-4px,10px) scale(.89)!important}
+.v331PartyStage.v332Stable .v331Unit:nth-child(2){transform:translate(-1px,0px) scale(1.02)!important}
+.v331PartyStage.v332Stable .v331Unit:nth-child(3){transform:translate(2px,-11px) scale(1.17)!important}
+.v331PartyStage.v332Stable .v331Unit:nth-child(4){transform:translate(2px,1px) scale(1.02)!important}
+.v331PartyStage.v332Stable .v331Unit:nth-child(5){transform:translate(4px,10px) scale(.89)!important}
+.v331PartyStage.v332Stable .v331Unit:after{height:10%!important;left:11%!important;right:11%!important;filter:blur(3px)!important}
+@media(max-width:430px){
+  .cleanBattleV238 .posterActorStageV237>.v331PartyStage.v332Stable{left:-2.2%!important;right:38.0%!important;bottom:16.8%!important;height:33.5%!important}
+  .v331PartyStage.v332Stable .v331Unit img{width:192%!important;height:118%!important}
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V338</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=337"></script>
+<script src="app.js?v=338"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -16221,6 +16247,114 @@ body.battleMode .stageBattleBtns .btn{
   else apply();
   let pend=false;
   const mo=new MutationObserver(()=>{ if(pend) return; pend=true; requestAnimationFrame(()=>{ pend=false; apply(); }); });
+  mo.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+  setInterval(apply,1800);
+})();
+</script>
+
+
+<script id="v338-script">
+(()=>{
+  const roster=[
+    {key:'dazai', hair1:'#0e151d', hair2:'#31475f', coat1:'#131f2a', coat2:'#496f8b', skin:'#f0d8ca', eye:'#54657a', accent:'#cfb26f', tie:'#6f7f95', bandage:1, book:1, mood:'lazy'},
+    {key:'chuuya', hair1:'#5b311b', hair2:'#d08b58', coat1:'#30131b', coat2:'#944052', skin:'#f2d3bf', eye:'#a55f49', accent:'#d7a065', scarf:'#6d1720', hat:1, mood:'sharp'},
+    {key:'akutagawa', hair1:'#0f1319', hair2:'#69727e', coat1:'#130f16', coat2:'#3d2b47', skin:'#edd8cf', eye:'#77738c', accent:'#b690f2', collar:1, blade:1, mood:'cold'},
+    {key:'kenji', hair1:'#95825d', hair2:'#eddeba', coat1:'#2d3831', coat2:'#738877', skin:'#efd8be', eye:'#698562', accent:'#eed36e', strap:'#6a4b2c', star:1, mood:'soft'},
+    {key:'ranpo', hair1:'#111820', hair2:'#475867', coat1:'#171d24', coat2:'#4a5864', skin:'#edd6c8', eye:'#678796', accent:'#8dbbd4', glasses:1, book:1, mood:'clever'}
+  ];
+
+  function face(c){
+    const mouth = c.mood==='sharp' ? '<path d="M169 204q15 7 31 -1" stroke="#a95f67" stroke-width="4.5" stroke-linecap="round" fill="none"/>' : \
+                  c.mood==='cold' ? '<path d="M167 204q15 3 31 0" stroke="#9e5d67" stroke-width="4.2" stroke-linecap="round" fill="none"/>' : \
+                  c.mood==='clever' ? '<path d="M167 203q16 11 32 -1" stroke="#aa6570" stroke-width="4.3" stroke-linecap="round" fill="none"/>' : \
+                  c.mood==='soft' ? '<path d="M168 203q14 12 30 1" stroke="#ad6770" stroke-width="4.2" stroke-linecap="round" fill="none"/>' : \
+                  '<path d="M167 203q15 8 31 0" stroke="#a7656e" stroke-width="4.2" stroke-linecap="round" fill="none"/>';
+    const brows = c.mood==='sharp' ? '<path d="M122 136q18 -14 37 -7" fill="none" stroke="#27333f" stroke-width="5.5" stroke-linecap="round"/><path d="M204 129q17 -6 34 6" fill="none" stroke="#27333f" stroke-width="5.5" stroke-linecap="round"/>' : \
+                  c.mood==='cold' ? '<path d="M122 133q18 -7 36 1" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/><path d="M204 133q18 -7 36 1" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/>' : \
+                  '<path d="M122 132q18 -11 36 -3" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/><path d="M203 132q18 -11 36 -3" fill="none" stroke="#27333f" stroke-width="5" stroke-linecap="round"/>';
+    const lashes = c.mood==='sharp' ? '<path d="M125 156q16 19 35 1" fill="none" stroke="#1d2731" stroke-width="4.3" stroke-linecap="round"/><path d="M203 156q16 19 35 1" fill="none" stroke="#1d2731" stroke-width="4.3" stroke-linecap="round"/>' : \
+                   '<path d="M126 154q15 15 33 2" fill="none" stroke="#1d2731" stroke-width="4" stroke-linecap="round"/><path d="M203 154q15 15 33 2" fill="none" stroke="#1d2731" stroke-width="4" stroke-linecap="round"/>';
+    return brows + lashes + mouth;
+  }
+
+  function art(c){
+    const hat = c.hat ? `<g><ellipse cx="180" cy="74" rx="84" ry="18" fill="#39271d"/><path d="M122 30q58-23 116 0v39H122z" fill="#6d4b36" stroke="#24170f" stroke-width="5"/><rect x="122" y="54" width="116" height="10" rx="5" fill="#cb9558"/></g>` : '';
+    const glasses = c.glasses ? `<g fill="none" stroke="#657988" stroke-width="4.7"><rect x="118" y="141" width="40" height="23" rx="8"/><rect x="202" y="141" width="40" height="23" rx="8"/><path d="M158 149h44"/></g>` : '';
+    const book = c.book ? `<g transform="translate(245 286) rotate(-12)"><rect width="60" height="43" rx="5" fill="#4b3524" stroke="#d2ae63" stroke-width="3"/><path d="M30 4v35M10 12h15M35 12h15M10 21h12M38 21h10" stroke="#e0d1a8" stroke-width="2"/></g>` : '';
+    const blade = c.blade ? `<g transform="translate(266 236) rotate(25)"><rect width="14" height="118" rx="7" fill="#b790f2"/><rect x="3" y="8" width="3" height="96" rx="1.5" fill="#fff" opacity=".74"/><rect x="-9" y="98" width="32" height="12" rx="6" fill="#4c3754"/></g>` : '';
+    const star = c.star ? `<g transform="translate(286 202)"><path d="M0-20 7-7 22-6 10 5 14 20 0 11-14 20-10 5-22-6-7-7Z" fill="#eed16f"/><circle r="34" fill="none" stroke="#eed16f" stroke-opacity=".24" stroke-width="3"/></g>` : '';
+    const bandage = c.bandage ? `<path d="M107 140q18-11 36-5" stroke="#f1e8db" stroke-width="10" stroke-linecap="round"/><path d="M108 148q15-5 31-2" stroke="#cebfae" stroke-width="3" stroke-linecap="round"/>` : '';
+    const collar = c.collar ? `<path d="M127 220h106l-27 39-26-18-26 18z" fill="#f0ebe1" opacity=".98"/><path d="M127 220h106" stroke="#cac2b8" stroke-width="3"/>` : '';
+    const tie = c.tie ? `<path d="M171 209h19l-5 18 5 18h-19l5-18z" fill="${c.tie}" opacity=".95"/>` : '';
+    const scarf = c.scarf ? `<path d="M150 211q26-17 52 0q-9 17 -4 39q-21 8 -44 1q6-23 -4 -40z" fill="${c.scarf}" opacity=".96"/>` : '';
+    const strap = c.strap ? `<path d="M126 212q54 33 89 87" stroke="${c.strap}" stroke-width="6" opacity=".7"/>` : '';
+
+    return `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 490">
+  <defs>
+    <linearGradient id="coat" x1="0" x2="1"><stop stop-color="${c.coat1}"/><stop offset=".52" stop-color="${c.coat2}"/><stop offset="1" stop-color="${c.coat1}"/></linearGradient>
+    <linearGradient id="hair" x1="0" x2="1"><stop stop-color="${c.hair2}"/><stop offset="1" stop-color="${c.hair1}"/></linearGradient>
+    <linearGradient id="skin" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#fff6ef"/><stop offset="1" stop-color="${c.skin}"/></linearGradient>
+    <linearGradient id="leg" x1="0" x2="1"><stop stop-color="#0f151c"/><stop offset=".5" stop-color="#2b3945"/><stop offset="1" stop-color="#0f151c"/></linearGradient>
+    <linearGradient id="shoe" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#131a22"/><stop offset="1" stop-color="#090e13"/></linearGradient>
+    <radialGradient id="faceGlow" cx="34%" cy="24%" r="65%"><stop offset="0" stop-color="#ffffff" stop-opacity=".36"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse cx="180" cy="422" rx="92" ry="20" fill="#000" opacity=".28"/>
+  <ellipse cx="180" cy="415" rx="74" ry="11" fill="#081018" opacity=".72"/>
+
+  <rect x="124" y="318" width="30" height="88" rx="14" fill="url(#leg)"/>
+  <rect x="207" y="318" width="30" height="88" rx="14" fill="url(#leg)"/>
+  <ellipse cx="138" cy="407" rx="28" ry="10.5" fill="url(#shoe)"/>
+  <ellipse cx="222" cy="407" rx="28" ry="10.5" fill="url(#shoe)"/>
+
+  <path d="M107 220q73-39 146 0l21 160H86z" fill="url(#coat)" stroke="#ffffff14" stroke-width="3"/>
+  <path d="M118 239q66-30 128 0" fill="none" stroke="#ffffff14" stroke-width="6" stroke-linecap="round"/>
+  <path d="M121 284q64 22 118 0" fill="none" stroke="#00000020" stroke-width="7" stroke-linecap="round"/>
+  ${strap}${collar}
+  <path d="M165 213h30v38h-30z" fill="url(#skin)"/>
+  ${scarf}${tie}
+  <path d="M160 236h40v78h-40z" fill="#ffffff10"/>
+
+  <rect x="61" y="234" width="24" height="121" rx="12" fill="url(#coat)" transform="rotate(8 73 294)"/>
+  <rect x="275" y="234" width="24" height="120" rx="12" fill="url(#coat)" transform="rotate(-10 287 294)"/>
+  <circle cx="73" cy="355" r="13.5" fill="url(#skin)"/>
+  <circle cx="286" cy="355" r="13.5" fill="url(#skin)"/>
+
+  <path d="M180 74c44 0 76 26 76 73c0 44-31 72-76 72c-45 0-76-28-76-72c0-47 31-73 76-73z" fill="url(#skin)" stroke="#ffffff12" stroke-width="2"/>
+  <path d="M180 74c44 0 76 26 76 73c0 44-31 72-76 72c-45 0-76-28-76-72c0-47 31-73 76-73z" fill="url(#faceGlow)"/>
+  ${face(c)}
+  <ellipse cx="132" cy="158" rx="9.5" ry="13" fill="#1f2934"/>
+  <ellipse cx="228" cy="158" rx="9.5" ry="13" fill="#1f2934"/>
+  <ellipse cx="128" cy="153" rx="3" ry="3" fill="#fff"/>
+  <ellipse cx="224" cy="153" rx="3" ry="3" fill="#fff"/>
+  <ellipse cx="130" cy="182" rx="10" ry="5" fill="#ec9aa6" opacity=".22"/>
+  <ellipse cx="230" cy="182" rx="10" ry="5" fill="#ec9aa6" opacity=".22"/>
+  ${bandage}${glasses}
+
+  <path d="M102 118q10-67 78-74 70 2 78 74v44q-7-28-28-35q-13 36-43 50q-12-33-37-49q-13 27-38 36q-16 6-10 26z" fill="url(#hair)"/>
+  <path d="M112 95q20-23 40-31q11 23 33 31q25-9 38-31q20 9 38 33" fill="none" stroke="#ffffff25" stroke-width="7" stroke-linecap="round"/>
+  <path d="M113 126q14 21 18 46M247 126q-14 21-18 46" stroke="#00000025" stroke-width="6" stroke-linecap="round"/>
+  <path d="M145 73q-18 18-37 35" stroke="#00000018" stroke-width="5.5" stroke-linecap="round"/>
+  ${hat}
+
+  ${book}${blade}${star}
+</svg>`;
+  }
+
+  function uri(s){return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(s.replace(/\n\s+/g,''));}
+  function apply(){
+    const imgs=document.querySelectorAll('.v331PartyStage.v332Stable .v331Unit img');
+    if(imgs.length<5) return;
+    imgs.forEach((img,i)=>{
+      img.src=uri(art(roster[i]));
+      img.dataset.v338Ready='1';
+      img.alt=roster[i].key;
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', apply, {once:true});
+  else apply();
+  let queued=false;
+  const mo=new MutationObserver(()=>{ if(queued) return; queued=true; requestAnimationFrame(()=>{ queued=false; apply(); }); });
   mo.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
   setInterval(apply,1800);
 })();
