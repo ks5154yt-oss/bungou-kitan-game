@@ -17268,6 +17268,48 @@ body:not(.battleMode) img{content-visibility:auto}
 body:not(.battleMode) .char img,body:not(.battleMode) .homeVisual,body:not(.battleMode) .hero{contain-intrinsic-size:320px 420px}
 </style>
 
+
+<script id="v403-asset-resolver">
+(()=>{
+  const repo='bungou-kitan-game';
+  function candidates(path){
+    const clean=String(path||'').replace(/^\.?\//,'');
+    const name=clean.replace(/^assets\//,'');
+    const out=[];
+    try{ out.push(new URL('assets/'+name, document.baseURI).href); }catch(_){ }
+    try{ out.push(location.origin+'/'+repo+'/assets/'+name); }catch(_){ }
+    try{ out.push(location.origin+'/assets/'+name); }catch(_){ }
+    return [...new Set(out)];
+  }
+  window.__bkAsset=(path)=>candidates(path)[0]||path;
+  window.__bkAssetCandidates=candidates;
+  function arm(img){
+    if(!img || img.dataset.bkAssetArmed==='1') return;
+    const raw=img.getAttribute('src')||'';
+    if(!raw.includes('embedded_')) return;
+    img.dataset.bkAssetArmed='1';
+    const list=candidates(raw);
+    let i=Math.max(0,list.indexOf(img.src));
+    img.addEventListener('error',()=>{
+      i+=1;
+      if(i<list.length){ img.src=list[i]+'?v=403'; }
+    });
+    if(list.length && !img.src.includes('embedded_')) img.src=list[0]+'?v=403';
+  }
+  const scan=()=>document.querySelectorAll('img').forEach(arm);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',scan,{once:true}); else scan();
+  new MutationObserver(ms=>{
+    for(const m of ms){
+      for(const n of m.addedNodes){
+        if(n.nodeType!==1) continue;
+        if(n.matches?.('img')) arm(n);
+        n.querySelectorAll?.('img').forEach(arm);
+      }
+    }
+  }).observe(document.documentElement,{subtree:true,childList:true});
+})();
+</script>
+
 </head><body class="noScrollGame">
 <script id="v401-performance-shim">
 (()=>{
@@ -17292,9 +17334,9 @@ body:not(.battleMode) .char img,body:not(.battleMode) .homeVisual,body:not(.batt
   window.__v401BattleActive=isBattle;
 })();
 </script>
-<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V402</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V403</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=387"></script>
+<script src="app.js?v=403"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -18080,11 +18122,11 @@ body:not(.battleMode) .char img,body:not(.battleMode) .homeVisual,body:not(.batt
 <script id="v343-hq-party-script">
 (function(){
   var partyData = {
-    dazai: "assets/embedded_6d9ab10733b4.png",
-    chuuya: "assets/embedded_517df4cc52d6.png",
-    akutagawa: "assets/embedded_323afc3131bb.png",
-    kenji: "assets/embedded_87d871429c2b.png",
-    ranpo: "assets/embedded_115808055131.png"
+    dazai: window.__bkAsset("assets/embedded_6d9ab10733b4.png"),
+    chuuya: window.__bkAsset("assets/embedded_517df4cc52d6.png"),
+    akutagawa: window.__bkAsset("assets/embedded_323afc3131bb.png"),
+    kenji: window.__bkAsset("assets/embedded_87d871429c2b.png"),
+    ranpo: window.__bkAsset("assets/embedded_115808055131.png")
   };
   var order = ['dazai','chuuya','akutagawa','kenji','ranpo'];
 
@@ -18149,11 +18191,11 @@ body:not(.battleMode) .char img,body:not(.battleMode) .homeVisual,body:not(.batt
 <script id="v345-real-sprites-script">
 (function(){
   var spriteData = {
-    dazai: "assets/embedded_dc90a50cb2dd.png",
-    chuuya: "assets/embedded_70b7c7bb1174.png",
-    akutagawa: "assets/embedded_e43dd731cd94.png",
-    kenji: "assets/embedded_99c27ba9a4e4.png",
-    ranpo: "assets/embedded_4c5b20317b92.png"
+    dazai: window.__bkAsset("assets/embedded_dc90a50cb2dd.png"),
+    chuuya: window.__bkAsset("assets/embedded_70b7c7bb1174.png"),
+    akutagawa: window.__bkAsset("assets/embedded_e43dd731cd94.png"),
+    kenji: window.__bkAsset("assets/embedded_99c27ba9a4e4.png"),
+    ranpo: window.__bkAsset("assets/embedded_4c5b20317b92.png")
   };
 
   function applyRealSprites(){
@@ -18963,9 +19005,9 @@ body:not(.battleMode) .char img,body:not(.battleMode) .homeVisual,body:not(.batt
 <script id="v383-real-enemies-script">
 (()=>{
   const DATA={
-    shadow:"assets/embedded_48b86bc4de6a.png",
-    void:"assets/embedded_ee9a342c17e4.png",
-    hound:"assets/embedded_218c517d3896.png"
+    shadow:window.__bkAsset("assets/embedded_48b86bc4de6a.png"),
+    void:window.__bkAsset("assets/embedded_ee9a342c17e4.png"),
+    hound:window.__bkAsset("assets/embedded_218c517d3896.png")
   };
 
   function wrap(){
@@ -19216,7 +19258,7 @@ body:not(.battleMode) .char img,body:not(.battleMode) .homeVisual,body:not(.batt
 
 <script id="v386-boss-art-script">
 (()=>{
-  const DATA="assets/embedded_20973d57aabe.jpg";
+  const DATA=window.__bkAsset("assets/embedded_20973d57aabe.jpg");
 
   function stage(){
     return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
