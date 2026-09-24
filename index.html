@@ -16309,9 +16309,126 @@ body.v352-turn-lock [data-page="home"]{
 @keyframes v353Sweep{0%{opacity:0;transform:scaleX(.05)}22%{opacity:1}100%{opacity:0;transform:scaleX(1)}}
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V353</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v354-battle-tempo">
+/* V354: battle tempo, combo feedback, active spotlight */
+
+@keyframes v354TurnPulse{
+  0%{opacity:0;transform:translateY(6px) scale(.96)}
+  28%{opacity:1;transform:translateY(0) scale(1.03)}
+  75%{opacity:1}
+  100%{opacity:0;transform:translateY(-6px) scale(1)}
+}
+@keyframes v354ComboPop{
+  0%{opacity:0;transform:scale(.55) rotate(-6deg)}
+  35%{opacity:1;transform:scale(1.12) rotate(2deg)}
+  100%{opacity:0;transform:scale(1) rotate(0deg)}
+}
+@keyframes v354SpeedLine{
+  0%{opacity:0;transform:translateX(-18%) skewX(-18deg)}
+  24%{opacity:.7}
+  100%{opacity:0;transform:translateX(35%) skewX(-18deg)}
+}
+@keyframes v354ActiveGlow{
+  0%,100%{opacity:.35;transform:scale(.95)}
+  50%{opacity:.72;transform:scale(1.05)}
+}
+
+.v354TurnBanner{
+  position:absolute!important;
+  left:50%!important;
+  bottom:40%!important;
+  transform:translateX(-50%)!important;
+  z-index:150!important;
+  color:#f3e6c4!important;
+  font:800 14px/1 serif!important;
+  letter-spacing:.16em!important;
+  padding:7px 18px!important;
+  border:1px solid rgba(210,178,98,.38)!important;
+  border-radius:999px!important;
+  background:rgba(4,14,23,.82)!important;
+  box-shadow:0 0 18px rgba(218,184,95,.16)!important;
+  pointer-events:none!important;
+  animation:v354TurnPulse .82s ease-out forwards!important;
+}
+.v354Combo{
+  position:absolute!important;
+  right:10%!important;
+  top:54%!important;
+  z-index:160!important;
+  pointer-events:none!important;
+  text-align:right!important;
+  color:#fff6df!important;
+  font:900 15px/1 serif!important;
+  letter-spacing:.04em!important;
+  text-shadow:0 0 8px rgba(255,255,255,.45),0 0 14px rgba(226,188,92,.38)!important;
+  animation:v354ComboPop .72s ease-out forwards!important;
+}
+.v354Combo b{
+  display:block!important;
+  font-size:32px!important;
+  line-height:.9!important;
+  color:#eac86f!important;
+}
+.v354SpeedLines{
+  position:absolute!important;
+  inset:20% 0 28% 0!important;
+  z-index:70!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+}
+.v354SpeedLines i{
+  position:absolute!important;
+  left:-18%!important;
+  width:58%!important;
+  height:1px!important;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.48),transparent)!important;
+  transform:skewX(-18deg)!important;
+  animation:v354SpeedLine .46s ease-out forwards!important;
+}
+.v354SpeedLines i:nth-child(1){top:16%;animation-delay:0s!important}
+.v354SpeedLines i:nth-child(2){top:31%;animation-delay:.03s!important}
+.v354SpeedLines i:nth-child(3){top:48%;animation-delay:.06s!important}
+.v354SpeedLines i:nth-child(4){top:65%;animation-delay:.09s!important}
+.v354SpeedLines i:nth-child(5){top:80%;animation-delay:.12s!important}
+
+.v343HQParty .v343Unit.active::before{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  left:10%!important;
+  right:10%!important;
+  bottom:-8%!important;
+  height:18%!important;
+  z-index:-2!important;
+  border-radius:50%!important;
+  background:radial-gradient(ellipse,rgba(230,191,97,.42),rgba(230,191,97,.12) 46%,transparent 74%)!important;
+  filter:blur(5px)!important;
+  animation:v354ActiveGlow 1.6s ease-in-out infinite!important;
+}
+
+.v354PhaseBanner{
+  position:absolute!important;
+  left:50%!important;
+  top:31%!important;
+  transform:translateX(-50%)!important;
+  z-index:215!important;
+  pointer-events:none!important;
+  color:#ffe7ed!important;
+  font:900 18px/1 serif!important;
+  letter-spacing:.18em!important;
+  padding:9px 24px!important;
+  background:linear-gradient(90deg,transparent,rgba(70,8,30,.92) 20%,rgba(70,8,30,.96) 80%,transparent)!important;
+  border-top:1px solid rgba(255,80,120,.45)!important;
+  border-bottom:1px solid rgba(255,80,120,.45)!important;
+  text-shadow:0 0 14px rgba(255,80,120,.55)!important;
+  animation:v350WaveIn 1.05s ease-out forwards!important;
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V354</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=353"></script>
+<script src="app.js?v=354"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -17701,6 +17818,116 @@ body.v352-turn-lock [data-page="home"]{
   const mo=new MutationObserver(scan);
   mo.observe(document.documentElement,{subtree:true,childList:true,characterData:true});
   setInterval(scan,1800);
+})();
+</script>
+
+
+<script id="v354-battle-tempo-script">
+(()=>{
+  let combo=0;
+  let lastActionAt=0;
+  let lastActiveIndex=-1;
+  let phaseShown=false;
+
+  function stage(){
+    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
+           document.querySelector('.bsv2Field_175');
+  }
+  function units(){
+    return [...document.querySelectorAll('.v343HQParty .v343Unit')];
+  }
+  function activeIndex(){
+    const us=units();
+    const idx=us.findIndex(u=>u.classList.contains('active'));
+    return idx<0?0:idx;
+  }
+  function commandType(target){
+    const el=target && target.closest ? target.closest('button,[role="button"],[data-sd-action],.cmd,.command,.action') : null;
+    if(!el) return '';
+    const ds=(el.getAttribute('data-sd-action')||'').toLowerCase();
+    const txt=(el.textContent||'').replace(/\s+/g,'');
+    if(ds.includes('ougi')||ds.includes('ultimate')||txt.includes('奥義')) return '奥義';
+    if(ds.includes('skill')||txt.includes('スキル')) return 'スキル';
+    if(ds.includes('support')||txt.includes('支援')) return '支援';
+    if(ds.includes('attack')||txt.includes('攻撃')) return '攻撃';
+    return '';
+  }
+  function speedLines(){
+    const host=stage(); if(!host) return;
+    const box=document.createElement('div');
+    box.className='v354SpeedLines';
+    for(let i=0;i<5;i++) box.appendChild(document.createElement('i'));
+    host.appendChild(box);
+    setTimeout(()=>box.remove(),620);
+  }
+  function comboPop(){
+    const host=stage(); if(!host) return;
+    const box=document.createElement('div');
+    box.className='v354Combo';
+    box.innerHTML='<b>'+combo+'</b>COMBO';
+    host.appendChild(box);
+    setTimeout(()=>box.remove(),760);
+  }
+  function turnBanner(index){
+    const host=stage(); if(!host) return;
+    const box=document.createElement('div');
+    box.className='v354TurnBanner';
+    box.textContent='ACT '+(index+1)+' / 5';
+    host.appendChild(box);
+    setTimeout(()=>box.remove(),900);
+  }
+  function maybeBossPhase(){
+    if(phaseShown) return;
+    const hpNodes=[...document.querySelectorAll('*')].filter(el=>{
+      const t=(el.textContent||'').trim();
+      return /^HP\s*\d+%$/i.test(t) && el.children.length===0;
+    });
+    let pct=null;
+    for(const n of hpNodes){
+      const m=(n.textContent||'').match(/(\d+)%/);
+      if(m){ pct=parseInt(m[1],10); break; }
+    }
+    if(pct!==null && pct<=50){
+      const wrap=document.querySelector('.v353-boss');
+      const host=stage();
+      if(wrap && host){
+        phaseShown=true;
+        const box=document.createElement('div');
+        box.className='v354PhaseBanner';
+        box.textContent='BOSS PHASE II';
+        host.appendChild(box);
+        setTimeout(()=>box.remove(),1150);
+      }
+    }
+  }
+  function onAction(type){
+    const now=Date.now();
+    combo = now-lastActionAt < 4200 ? combo+1 : 1;
+    lastActionAt=now;
+    if(type!=='支援') speedLines();
+    comboPop();
+  }
+
+  document.addEventListener('click',(e)=>{
+    const t=commandType(e.target);
+    if(t) onAction(t);
+  },true);
+
+  function scan(){
+    const idx=activeIndex();
+    if(idx!==lastActiveIndex){
+      lastActiveIndex=idx;
+      turnBanner(idx);
+    }
+    if(Date.now()-lastActionAt > 5200) combo=0;
+    maybeBossPhase();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',scan,{once:true});
+  else scan();
+
+  const mo=new MutationObserver(scan);
+  mo.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+  setInterval(scan,900);
 })();
 </script>
 
