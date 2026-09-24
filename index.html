@@ -17165,7 +17165,15 @@ body.v397AutoMode .v365CutIn,body.v397AutoMode .cutinV153,body.v397AutoMode .oug
 @media(max-width:700px){.v397AutoHud{left:8px;bottom:84px;padding:6px 8px}.v397AutoHud button{height:26px;min-width:50px;font-size:9px}.v365CutIn{left:9%!important;right:9%!important;top:9%!important;height:52px!important}.v365CutIn img{max-width:31%!important;height:108%!important}.v365CutInText{left:31%!important;top:12%!important}.v365CutInText b{font-size:12px!important}.cutinV153{left:7%!important;right:7%!important;top:8%!important;height:54px!important}.cutinPortraitV153{width:30%!important}.cutinV153 section{left:31%!important}.cutinV153 b{font-size:11px!important}.ougiSealV159{width:52px!important;height:52px!important;top:20%!important}}
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V397</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v398-auto-state-fix">
+/* V398: AUTO state machine fix */
+.v397AutoHud{bottom:82px!important}
+.v397AutoHud b:after{content:" 戦闘優先";font-size:7px;color:#91a2ad;font-weight:400;margin-left:4px}
+body.v397AutoMode .farmExecuteV100{box-shadow:none!important}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V398</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=387"></script>
 
@@ -19581,38 +19589,66 @@ body.battleMode .battlelog.v388LogPulse{animation:v388LogPulse .22s ease}
     host.querySelector('button').onclick=(e)=>{e.preventDefault();e.stopPropagation();toggle();};
   }
   function likelyAutoToggle(el){ if(!el) return false; const t=txt(el); return /AUTO|オート/i.test(t) || el.classList.contains('auto') || el.classList.contains('bsv2AutoBadge184'); }
-  document.addEventListener('click',e=>{ const btn=e.target.closest('button,[role="button"]'); if(!btn) return; if(likelyAutoToggle(btn)){ e.preventDefault(); e.stopPropagation(); toggle(); } },true);
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('button,[role="button"]');
+    if(!btn || btn.closest('#v397AutoHud')) return;
+    if(likelyAutoToggle(btn)){
+      /* Native AUTO must receive its own click. Mirror the visual state only after it runs. */
+      setTimeout(()=>{
+        const t=txt(btn);
+        const nativeOn=btn.classList.contains('on')||btn.classList.contains('auto')||/ON/i.test(t);
+        state=nativeOn; localStorage.setItem(KEY,state?'1':'0');
+        document.body.classList.toggle('v397AutoMode',state); renderHud(); syncBadges();
+      },80);
+    }
+  },true);
   function press(el){ if(!visible(el)) return false; const key=(el.dataset && (el.dataset.sdAction||el.dataset.battle)) || txt(el).slice(0,20); const now=Date.now(); if(now-lastClick<260 && key===lastKey) return false; lastClick=now; lastKey=key; try{ el.click(); return true; }catch(_){ try{ el.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})); return true;}catch(e){ return false; } } }
   function chooseButton(){
     const buttons=clickableButtons();
-    // dialogs / continue / close / retry first
-    const priorityText=[/再戦|もう一度|次へ|つぎへ|進む|閉じる|とじる|OK|開始|挑戦|出撃|リトライ|続行|つづける/i,/AUTO|オート/i];
-    for(const re of [priorityText[0]]){ const b=buttons.find(x=>re.test(txt(x)) && !/AUTO|オート/i.test(txt(x))); if(b) return b; }
-    // battle skills ready
-    let b=document.querySelector('.bsv2Selected176 button.ready,.selectedSkillsV152 button.ready,.actionClusterV164 [data-sd-action="ougi"].readyV198'); if(visible(b)) return b;
-    // direct action buttons priority: ougi > skill > attack > support
-    const actionQ=[
-      '.actionClusterV164 [data-sd-action="ougi"].readyV198',
-      '.actionClusterV164 [data-sd-action="ougi"]',
-      '.actionClusterV164 .ougi',
+    const textOf=(x)=>txt(x);
+
+    /* 1) Result / modal continuation first. */
+    let b=buttons.find(x=>!x.disabled && !/AUTO|オート/i.test(textOf(x)) && /再戦|もう一度|リトライ|次へ|つぎへ|続行|つづける|OK|閉じる|とじる/i.test(textOf(x)));
+    if(b) return b;
+
+    /* 2) On a stage-select page, NEVER press Quick Farm automatically.
+          Uncleared chapters show the farm UI but reject it, which caused the old AUTO loop. */
+    const stagePage=document.querySelector('.stagePageV100,.stagePageV97,.farmHeroV100');
+    if(stagePage && visible(stagePage)){
+      const stageBattle=[
+        ...document.querySelectorAll('.stageSubActions button[data-battle],button[data-battle],.stageModeV97 button:not(:disabled)')
+      ].find(x=>visible(x) && !x.disabled && !/HARD|未解放|周回|FARM/i.test(textOf(x)));
+      if(stageBattle) return stageBattle;
+      const normal=buttons.find(x=>!x.disabled && /NORMAL|通常戦闘/i.test(textOf(x)) && !/未解放/i.test(textOf(x)));
+      if(normal) return normal;
+      return null;
+    }
+
+    /* 3) Battle actions. Ougi only when ready, otherwise skill then attack. */
+    const readyOugi=document.querySelector('.actionClusterV164 [data-sd-action="ougi"].readyV198,.actionClusterV164 .ougi.ready,.bsv2Selected176 button.ready');
+    if(visible(readyOugi) && !readyOugi.disabled) return readyOugi;
+    for(const q of [
       '.actionClusterV164 [data-sd-action="skill"]',
       '.actionClusterV164 .skill',
-      '.bsv2Selected176 button',
-      '.selectedSkillsV152 button',
+      '.bsv2Selected176 button.ready',
+      '.selectedSkillsV152 button.ready',
       '.actionClusterV164 [data-sd-action="attack"]',
-      '.actionClusterV164 .attack',
-      '.stageSubActions button[data-battle]'
-    ];
-    for(const q of actionQ){ b=document.querySelector(q); if(visible(b) && !/AUTO|オート/i.test(txt(b))) return b; }
-    // result screen buttons excluding auto
-    b=[...document.querySelectorAll('.resultLoopV181 button,.autoLoopFinishedV201 button,.autoLoopResultV200 button')].find(x=>visible(x)&&!/AUTO|オート/i.test(txt(x))); if(b) return b;
-    // generic likely primary buttons
-    b=buttons.find(x=>!/AUTO|オート/i.test(txt(x)) && !x.disabled && /(攻撃|たたかう|戦闘|決定|OK|次へ|再戦|挑戦|出撃|閉じる)/i.test(txt(x))); if(b) return b;
-    return null;
+      '.actionClusterV164 .attack'
+    ]){
+      b=document.querySelector(q);
+      if(visible(b) && !b.disabled && !/AUTO|オート/i.test(textOf(b))) return b;
+    }
+
+    /* 4) Battle result controls, but never Quick Farm or AUTO toggles. */
+    b=[...document.querySelectorAll('.resultLoopV181 button,.autoLoopFinishedV201 button,.autoLoopResultV200 button')]
+      .find(x=>visible(x)&&!x.disabled&&!/AUTO|オート|周回|FARM/i.test(textOf(x)));
+    if(b) return b;
+
+    return buttons.find(x=>!x.disabled && !/AUTO|オート|周回|FARM|HARD|未解放/i.test(textOf(x)) && /攻撃|たたかう|戦闘|決定|次へ|再戦|挑戦|出撃/i.test(textOf(x))) || null;
   }
   function loop(){ if(!state) return; syncBadges(); const btn=chooseButton(); if(btn) press(btn); }
   renderHud(); syncBadges(); document.body.classList.toggle('v397AutoMode',state);
-  setInterval(loop,700);
+  setInterval(loop,950);
   setInterval(()=>{ if(document.readyState==='complete') {renderHud(); syncBadges();}},2000);
 })();
 </script>
