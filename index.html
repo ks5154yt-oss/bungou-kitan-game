@@ -16461,9 +16461,89 @@ body.v352-turn-lock [data-page="home"]{
 }
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V367</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v368-victory-only">
+/* V368: stability-first. Add only victory presentation. */
+@keyframes v368VictoryText{
+  0%{opacity:0;transform:translateX(-50%) scale(.72);letter-spacing:.6em}
+  30%{opacity:1;transform:translateX(-50%) scale(1.05);letter-spacing:.18em}
+  76%{opacity:1}
+  100%{opacity:0;transform:translateX(-50%) scale(1.12);letter-spacing:.12em}
+}
+@keyframes v368VictoryLine{
+  0%{opacity:0;transform:scaleX(.12)}
+  26%{opacity:1;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(1.12)}
+}
+@keyframes v368UnitHop{
+  0%,100%{transform:translateY(var(--v346-y,0px)) scale(var(--v346-scale,1))}
+  35%{transform:translateY(calc(var(--v346-y,0px) - 12px)) scale(calc(var(--v346-scale,1) * 1.05))}
+  70%{transform:translateY(calc(var(--v346-y,0px) - 3px)) scale(calc(var(--v346-scale,1) * 1.02))}
+}
+.v368VictoryText{
+  position:absolute!important;
+  left:50%!important;top:34%!important;
+  transform:translateX(-50%)!important;
+  z-index:150!important;
+  pointer-events:none!important;
+  color:#f4df9f!important;
+  font:900 29px/1 serif!important;
+  letter-spacing:.18em!important;
+  text-shadow:0 0 12px rgba(255,223,141,.55),0 4px 18px rgba(0,0,0,.75)!important;
+  animation:v368VictoryText 1.45s ease-out forwards!important;
+}
+.v368VictoryLine{
+  position:absolute!important;
+  left:18%!important;right:18%!important;top:41%!important;
+  height:1px!important;
+  z-index:149!important;
+  pointer-events:none!important;
+  background:linear-gradient(90deg,transparent,#d9b661,transparent)!important;
+  box-shadow:0 0 12px rgba(217,182,97,.36)!important;
+  animation:v368VictoryLine 1.35s ease-out forwards!important;
+}
+.v343HQParty .v343Unit.v368-victory{
+  animation:v368UnitHop .7s cubic-bezier(.2,.8,.2,1) 1!important;
+}
+</style>
+
+
+<style id="v369-enemy-defeat-only">
+/* V369: stability-first. Add only enemy defeat presentation. */
+@keyframes v369EnemyDefeat{
+  0%{opacity:1;transform:scale(1);filter:brightness(1)}
+  28%{opacity:1;transform:scale(1.05);filter:brightness(1.9)}
+  62%{opacity:.68;transform:scale(.92);filter:brightness(.75) blur(1px)}
+  100%{opacity:0;transform:scale(.68) translateY(18px);filter:brightness(.3) blur(4px)}
+}
+@keyframes v369Burst{
+  0%{opacity:0;transform:scale(.22)}
+  28%{opacity:.95}
+  100%{opacity:0;transform:scale(1.6)}
+}
+.v369Defeating{
+  animation:v369EnemyDefeat .72s ease-in forwards!important;
+  pointer-events:none!important;
+}
+.v369DefeatBurst{
+  position:absolute!important;
+  width:130px!important;height:130px!important;
+  border-radius:50%!important;
+  z-index:145!important;
+  pointer-events:none!important;
+  background:radial-gradient(circle,
+    rgba(255,255,255,.92) 0 6%,
+    rgba(255,112,138,.68) 18%,
+    rgba(148,82,255,.28) 44%,
+    transparent 72%)!important;
+  filter:drop-shadow(0 0 18px rgba(255,90,120,.48))!important;
+  animation:v369Burst .68s ease-out forwards!important;
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V369</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=367"></script>
+<script src="app.js?v=369"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
@@ -18067,6 +18147,133 @@ body.v352-turn-lock [data-page="home"]{
     childList:true,
     characterData:true
   });
+})();
+</script>
+
+
+<script id="v368-victory-only-script">
+(()=>{
+  let shown=false;
+
+  function stage(){
+    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
+           document.querySelector('.bsv2Field_175');
+  }
+
+  function showVictory(){
+    if(shown) return;
+    const host=stage();
+    if(!host) return;
+    shown=true;
+
+    const text=document.createElement('div');
+    text.className='v368VictoryText';
+    text.textContent='VICTORY';
+
+    const line=document.createElement('div');
+    line.className='v368VictoryLine';
+
+    host.append(text,line);
+
+    const units=[...document.querySelectorAll('.v343HQParty .v343Unit')];
+    units.forEach((u,i)=>{
+      setTimeout(()=>{
+        u.classList.add('v368-victory');
+        setTimeout(()=>u.classList.remove('v368-victory'),760);
+      },i*80);
+    });
+
+    setTimeout(()=>text.remove(),1520);
+    setTimeout(()=>line.remove(),1450);
+  }
+
+  function scan(){
+    const body=(document.body.innerText||'');
+    if(/勝利|VICTORY/i.test(body)) showVictory();
+    if(/敗北|DEFEAT/i.test(body)) shown=false;
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',scan,{once:true});
+  }else{
+    scan();
+  }
+
+  const mo=new MutationObserver(scan);
+  mo.observe(document.documentElement,{
+    subtree:true,
+    childList:true,
+    characterData:true
+  });
+})();
+</script>
+
+
+<script id="v369-enemy-defeat-only-script">
+(()=>{
+  let prev=[];
+
+  function stage(){
+    return document.querySelector('.cleanBattleV238 .posterActorStageV237') ||
+           document.querySelector('.bsv2Field_175');
+  }
+
+  function enemies(){
+    const a=[...document.querySelectorAll('.cleanBattleV238 .posterEnemyWrapV237 .enemyArtV153')];
+    if(a.length) return a;
+    return [...document.querySelectorAll('.bsv2Enemies_175 > *')].filter(el=>el.offsetParent!==null);
+  }
+
+  function burstAt(node){
+    const host=stage();
+    if(!host || !node) return;
+
+    const hr=host.getBoundingClientRect();
+    const nr=node.getBoundingClientRect();
+    const cx=((nr.left + nr.width/2 - hr.left)/hr.width)*100;
+    const cy=((nr.top + nr.height/2 - hr.top)/hr.height)*100;
+
+    const fx=document.createElement('div');
+    fx.className='v369DefeatBurst';
+    fx.style.left=`calc(${cx}% - 65px)`;
+    fx.style.top=`calc(${cy}% - 65px)`;
+    host.appendChild(fx);
+    setTimeout(()=>fx.remove(),760);
+  }
+
+  function play(node){
+    if(!node || node.classList.contains('v369Defeating')) return;
+    node.classList.add('v369Defeating');
+    burstAt(node);
+    setTimeout(()=>node.classList.remove('v369Defeating'),820);
+  }
+
+  function scan(){
+    const now=enemies();
+
+    if(prev.length && now.length < prev.length){
+      const gone=prev.find(x=>!now.includes(x));
+      if(gone) play(gone);
+    }
+
+    prev=now.slice();
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>{
+      prev=enemies().slice();
+    },{once:true});
+  }else{
+    prev=enemies().slice();
+  }
+
+  const mo=new MutationObserver(scan);
+  mo.observe(document.documentElement,{
+    subtree:true,
+    childList:true
+  });
+
+  window.bungoV369={defeat:(i=0)=>play(enemies()[i])};
 })();
 </script>
 
