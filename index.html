@@ -17173,7 +17173,46 @@ body.v397AutoMode .v365CutIn,body.v397AutoMode .cutinV153,body.v397AutoMode .oug
 body.v397AutoMode .farmExecuteV100{box-shadow:none!important}
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V398</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v399-auto-touch-fix">
+/* V399: AUTO button easier to tap */
+#v397AutoHud.v397AutoHud{
+  position:fixed!important;
+  left:12px!important;
+  top:calc(env(safe-area-inset-top) + 72px)!important;
+  bottom:auto!important;
+  z-index:1450!important;
+  min-width:176px!important;
+  max-width:220px!important;
+  padding:10px 10px!important;
+  gap:10px!important;
+  border-radius:16px!important;
+  border-width:2px!important;
+  background:linear-gradient(180deg,rgba(7,19,29,.96),rgba(8,16,22,.94))!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.34)!important;
+}
+#v397AutoHud.v397AutoHud>div{min-width:0!important;flex:1 1 auto!important}
+#v397AutoHud.v397AutoHud small{font-size:10px!important;letter-spacing:.22em!important}
+#v397AutoHud.v397AutoHud b{font-size:26px!important;line-height:1!important;display:block!important;margin-top:2px!important}
+#v397AutoHud.v397AutoHud b:after{content:none!important}
+#v397AutoHud.v397AutoHud button{
+  height:46px!important;min-width:92px!important;
+  padding:0 14px!important;border-radius:12px!important;
+  font-size:16px!important;font-weight:700!important;
+  border:2px solid #7e8e97!important;
+  box-shadow:0 4px 10px rgba(0,0,0,.18)!important;
+}
+#v397AutoHud.v397AutoHud.off button{background:#172127!important;color:#eef3f5!important}
+#v397AutoHud.v397AutoHud:not(.off) button{background:#16321d!important;border-color:#86b55d!important;color:#eaf6df!important}
+#v397AutoHud.v397AutoHud::after{content:"タップで切替";position:absolute;left:12px;right:12px;bottom:6px;font-size:9px;letter-spacing:.08em;color:#8fa0aa;opacity:.92;pointer-events:none}
+@media(max-width:700px){
+  #v397AutoHud.v397AutoHud{left:8px!important;top:calc(env(safe-area-inset-top) + 64px)!important;min-width:164px!important;max-width:198px!important;padding:9px 9px 18px!important}
+  #v397AutoHud.v397AutoHud b{font-size:23px!important}
+  #v397AutoHud.v397AutoHud button{height:42px!important;min-width:84px!important;font-size:15px!important}
+}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V399</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=387"></script>
 
@@ -19650,6 +19689,22 @@ body.battleMode .battlelog.v388LogPulse{animation:v388LogPulse .22s ease}
   renderHud(); syncBadges(); document.body.classList.toggle('v397AutoMode',state);
   setInterval(loop,950);
   setInterval(()=>{ if(document.readyState==='complete') {renderHud(); syncBadges();}},2000);
+})();
+</script>
+
+
+<script id="v399-auto-touch-script">
+(()=>{
+  document.addEventListener('click',e=>{
+    const host=e.target.closest('#v397AutoHud');
+    if(!host) return;
+    const btn=host.querySelector('button');
+    if(!btn) return;
+    if(e.target===btn || e.target.closest('button')) return;
+    e.preventDefault();
+    e.stopPropagation();
+    btn.click();
+  },true);
 })();
 </script>
 
