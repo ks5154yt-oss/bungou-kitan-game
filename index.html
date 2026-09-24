@@ -17148,7 +17148,24 @@ body.ougiLiteV391 .v392OugiFx{transform:scale(.86);transform-origin:67% 42%}
 @media(max-width:700px){.v396BossSigil{right:3%;top:16%;width:72px;height:72px}.v396BossSigil b{font-size:9px}.v396BossMove{top:20%;padding:7px 9px}.v396BossMove b{font-size:14px}}
 </style>
 
-</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V396</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+
+<style id="v397-auto-cutin-fix">
+/* V397: AUTO rescue + smaller cut-ins */
+.v397AutoHud{position:fixed;left:10px;bottom:88px;z-index:1300;display:flex;gap:6px;align-items:center;background:#07131de8;border:1px solid #6e8e55;border-radius:12px;padding:7px 9px;box-shadow:0 8px 20px rgba(0,0,0,.28)}
+.v397AutoHud b{font-size:11px;color:#e8f1dc}.v397AutoHud small{display:block;font-size:8px;color:#9cd272;letter-spacing:.15em}.v397AutoHud button{height:28px;min-width:56px;border-radius:8px;border:1px solid #6f7e86;background:#101a20;color:#d8e0e4;font-size:10px}.v397AutoHud.off{border-color:#42556a}.v397AutoHud.off small{color:#92a0a9}
+/* make all cut-ins smaller */
+.v365CutIn{left:10%!important;right:10%!important;top:10%!important;height:58px!important;border-radius:10px!important;background:linear-gradient(100deg,rgba(4,12,20,.76) 0 42%,rgba(18,36,49,.68) 72%,rgba(4,12,20,.60) 100%)!important;box-shadow:0 6px 16px rgba(0,0,0,.26)!important}
+.v365CutIn img{left:1%!important;bottom:-4%!important;height:114%!important;max-width:28%!important;opacity:.88!important;filter:drop-shadow(0 6px 8px rgba(0,0,0,.32))!important}
+.v365CutInText{left:29%!important;right:6%!important;top:13%!important;text-align:left!important}.v365CutInText small{font-size:7px!important}.v365CutInText b{font-size:13px!important;line-height:1.04!important;margin-top:2px!important}.v365CutInText em{font-size:8px!important;margin-top:1px!important}
+.cutinV153{inset:auto 8% auto 8%!important;top:9%!important;height:60px!important;border-radius:10px!important;background:linear-gradient(90deg,rgba(2,6,10,.10),rgba(2,6,10,.62) 10%,rgba(6,18,30,.74) 70%,rgba(2,6,10,.10))!important;box-shadow:0 6px 14px rgba(0,0,0,.22)!important}
+.cutinPortraitV153{left:0!important;top:-6%!important;width:28%!important;height:114%!important;clip-path:none!important}.cutinPortraitV153 img{opacity:.88!important;object-position:center 16%!important}.cutinSlashV153{left:26%!important;right:8%!important;top:50%!important;height:1px!important}.cutinV153 section{left:29%!important;right:6%!important;top:12%!important;padding:4px 0!important;border-width:1px!important}.cutinV153 small{font-size:6px!important}.cutinV153 b{font-size:12px!important;line-height:1.06!important}
+.ougiSealV159{top:22%!important;left:60%!important;width:58px!important;height:58px!important}.ougiSealV159 b{font-size:6px!important;max-width:52px!important}
+/* during AUTO, hide most cinematic overlays for clarity */
+body.v397AutoMode .v365CutIn,body.v397AutoMode .cutinV153,body.v397AutoMode .ougiSealV159,body.v397AutoMode .v389ActionBanner,body.v397AutoMode .v389Slash,body.v397AutoMode .v389HitText.ougi{opacity:.08!important;transition:opacity .08s!important}
+@media(max-width:700px){.v397AutoHud{left:8px;bottom:84px;padding:6px 8px}.v397AutoHud button{height:26px;min-width:50px;font-size:9px}.v365CutIn{left:9%!important;right:9%!important;top:9%!important;height:52px!important}.v365CutIn img{max-width:31%!important;height:108%!important}.v365CutInText{left:31%!important;top:12%!important}.v365CutInText b{font-size:12px!important}.cutinV153{left:7%!important;right:7%!important;top:8%!important;height:54px!important}.cutinPortraitV153{width:30%!important}.cutinV153 section{left:31%!important}.cutinV153 b{font-size:11px!important}.ougiSealV159{width:52px!important;height:52px!important;top:20%!important}}
+</style>
+
+</head><body class="noScrollGame"><button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V397</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script src="app.js?v=387"></script>
 
@@ -19541,6 +19558,62 @@ body.battleMode .battlelog.v388LogPulse{animation:v388LogPulse .22s ease}
     const mv=document.createElement('div');mv.className='v396BossMove '+t;mv.innerHTML='<small>BOSS PHASE II</small><b>'+name+'</b>';host.appendChild(mv);setTimeout(()=>mv.remove(),1050);
   }
   setInterval(pulse,550);
+})();
+</script>
+
+
+<script id="v397-auto-rescue-script">
+(()=>{
+  const KEY='bk12_v397_auto';
+  let state=localStorage.getItem(KEY)==='1';
+  let lastClick=0,lastKey='';
+  function visible(el){if(!el) return false; const cs=getComputedStyle(el); if(cs.display==='none'||cs.visibility==='hidden'||+cs.opacity===0) return false; const r=el.getBoundingClientRect(); return r.width>0 && r.height>0 && r.bottom>0 && r.right>0 && r.top<innerHeight && r.left<innerWidth;}
+  function txt(el){return ((el.innerText||el.textContent||'').replace(/\s+/g,' ').trim());}
+  function clickableButtons(){return [...document.querySelectorAll('button,[role="button"]')].filter(visible);}
+  function setState(on){state=!!on; localStorage.setItem(KEY,state?'1':'0'); document.body.classList.toggle('v397AutoMode',state); renderHud(); syncBadges();}
+  function toggle(){setState(!state)}
+  function syncBadges(){document.querySelectorAll('.bsv2AutoBadge184,.resultLoopV181 button.auto,[data-auto],button').forEach(b=>{const t=txt(b); if(/AUTO|オート/i.test(t)) b.classList.toggle('on',state);});}
+  function renderHud(){
+    let host=document.getElementById('v397AutoHud');
+    if(!host){ host=document.createElement('div'); host.id='v397AutoHud'; document.body.appendChild(host);}
+    host.className='v397AutoHud'+(state?'':' off');
+    host.innerHTML=`<div><small>AUTO</small><b>${state?'ON':'OFF'}</b></div><button type="button">${state?'停止':'開始'}</button>`;
+    host.querySelector('button').onclick=(e)=>{e.preventDefault();e.stopPropagation();toggle();};
+  }
+  function likelyAutoToggle(el){ if(!el) return false; const t=txt(el); return /AUTO|オート/i.test(t) || el.classList.contains('auto') || el.classList.contains('bsv2AutoBadge184'); }
+  document.addEventListener('click',e=>{ const btn=e.target.closest('button,[role="button"]'); if(!btn) return; if(likelyAutoToggle(btn)){ e.preventDefault(); e.stopPropagation(); toggle(); } },true);
+  function press(el){ if(!visible(el)) return false; const key=(el.dataset && (el.dataset.sdAction||el.dataset.battle)) || txt(el).slice(0,20); const now=Date.now(); if(now-lastClick<260 && key===lastKey) return false; lastClick=now; lastKey=key; try{ el.click(); return true; }catch(_){ try{ el.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})); return true;}catch(e){ return false; } } }
+  function chooseButton(){
+    const buttons=clickableButtons();
+    // dialogs / continue / close / retry first
+    const priorityText=[/再戦|もう一度|次へ|つぎへ|進む|閉じる|とじる|OK|開始|挑戦|出撃|リトライ|続行|つづける/i,/AUTO|オート/i];
+    for(const re of [priorityText[0]]){ const b=buttons.find(x=>re.test(txt(x)) && !/AUTO|オート/i.test(txt(x))); if(b) return b; }
+    // battle skills ready
+    let b=document.querySelector('.bsv2Selected176 button.ready,.selectedSkillsV152 button.ready,.actionClusterV164 [data-sd-action="ougi"].readyV198'); if(visible(b)) return b;
+    // direct action buttons priority: ougi > skill > attack > support
+    const actionQ=[
+      '.actionClusterV164 [data-sd-action="ougi"].readyV198',
+      '.actionClusterV164 [data-sd-action="ougi"]',
+      '.actionClusterV164 .ougi',
+      '.actionClusterV164 [data-sd-action="skill"]',
+      '.actionClusterV164 .skill',
+      '.bsv2Selected176 button',
+      '.selectedSkillsV152 button',
+      '.actionClusterV164 [data-sd-action="attack"]',
+      '.actionClusterV164 .attack',
+      '.stageSubActions button[data-battle]'
+    ];
+    for(const q of actionQ){ b=document.querySelector(q); if(visible(b) && !/AUTO|オート/i.test(txt(b))) return b; }
+    // result screen buttons excluding auto
+    b=[...document.querySelectorAll('.resultLoopV181 button,.autoLoopFinishedV201 button,.autoLoopResultV200 button')].find(x=>visible(x)&&!/AUTO|オート/i.test(txt(x))); if(b) return b;
+    // generic likely primary buttons
+    b=buttons.find(x=>!/AUTO|オート/i.test(txt(x)) && !x.disabled && /(攻撃|たたかう|戦闘|決定|OK|次へ|再戦|挑戦|出撃|閉じる)/i.test(txt(x))); if(b) return b;
+    return null;
+  }
+  function loop(){ if(!state) return; syncBadges(); const btn=chooseButton(); if(btn) press(btn); }
+  renderHud(); syncBadges(); document.body.classList.toggle('v397AutoMode',state);
+  setInterval(loop,700);
+  setInterval(()=>{ if(document.readyState==='complete') {renderHud(); syncBadges();}},2000);
 })();
 </script>
 
