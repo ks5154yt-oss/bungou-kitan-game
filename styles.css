@@ -14401,3 +14401,15 @@ body.battleMode #v397AutoHud,
 body.battleMode #v391OugiSetting{
   visibility:visible;
 }
+
+
+/* V414: battle starts immediately; preparation overlay is no longer part of normal flow. */
+#battleLoadingV411{display:none!important}
+body:not(.battleMode) #v397AutoHud,
+body:not(.battleMode) #v391OugiSetting,
+body:not(.battleMode) .v397AutoHud,
+body:not(.battleMode) .v391OugiSetting{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}

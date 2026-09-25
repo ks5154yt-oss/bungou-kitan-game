@@ -1,5 +1,6 @@
 window.__bkBooted=false;window.__bkBootGuard=false;
 try{document.getElementById("v412Boot")?.remove()}catch(_){}
+setTimeout(()=>document.getElementById("battleLoadingV411")?.remove(),2500);
 
 window.addEventListener("error",function(e){finalErrorShield(e.error||e.message)});
 window.addEventListener("unhandledrejection",function(e){finalErrorShield(e.reason)});
@@ -128,7 +129,7 @@ function linkHints(a){let n=a.map(i=>C[i][1]);return LINKS.filter(r=>r[1].filter
 function bondLv(i){return Math.floor(Number(S.bond[i]||0)/100)+1}
 function bondGain(i,n){S.bond[i]=Number(S.bond[i]||0)+n;save()}
 function nav(){return `<div class=quickDock><button data-go=sortie><b>⚔</b><small>出撃</small></button><button data-go=party><b>👥</b><small>編成</small></button><button data-go=growth><b>⬆</b><small>Lv上げ</small></button><button data-go=summon><b>🖋</b><small>召喚</small></button><button data-progress-hub=1><b>📊</b><small>進行</small></button></div><div class=nav><button data-go=home><b>🏠</b>ホーム</button><button data-go=party><b>👥</b>編成</button><button data-go=sortie><b>⚔️</b>出撃</button><button data-go=list><b>📚</b>文豪</button><button data-go=arena><b>🏆</b>模擬戦</button></div>`}
-function shell(x){window.__bkBooted=true;window.__bkBootGuard=false;setBootChromeReady(true);let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");document.body.classList.remove("battleMode");A.innerHTML=`<div class=top><b>文豪綺譚 <span class=gold>V413</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div><div class=screenFade>${x}</div>${nav()}`}
+function shell(x){window.__bkBooted=true;window.__bkBootGuard=false;setBootChromeReady(true);let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");document.body.classList.remove("battleMode");A.innerHTML=`<div class=top><b>文豪綺譚 <span class=gold>V414</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div><div class=screenFade>${x}</div>${nav()}`}
 function accountLevel(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return Math.max(1,Math.min(50,Math.floor(score/100)+1))}
 function accountXp(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return score%100}
 function todayKey(){return new Date().toISOString().slice(0,10)}
@@ -3030,25 +3031,47 @@ function prepareBattleV180(ch=0,mode="normal"){
  };
  normalizeBattleStateV171();save();persistentSaveWrite();return S.battleV120
 }
-async function startBattleV180(ch=0,mode="normal"){
+function startBattleV180(ch=0,mode="normal"){
  if(!actionLock(700))return;
- battleLoadingV411(true);
  try{
-  const ok=await (window.__bkLoadBattleExtras?.()||Promise.resolve(true));
-  if(!ok)throw new Error("戦闘データの読み込みに失敗しました");
-  try{preloadBattleSpritesV162?.();preloadPosterAssetsV216?.()}catch(_){}
-  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
-  closeOverlays();prepareBattleV180(ch,mode);startBattleSessionV196();__posterPhaseV214=0;__posterWaveV214=0;S.qol=S.qol||{};S.qol.posterKoStateV213=[false,false,false,false,false];battleCheckpointV196(true);
+  // V414: core battle opens immediately. Optional legacy enhancements load later.
+  battleLoadingV411(false);
+  closeOverlays();
+  prepareBattleV180(ch,mode);
+  startBattleSessionV196();
+  __posterPhaseV214=0;__posterWaveV214=0;
+  S.qol=S.qol||{};S.qol.posterKoStateV213=[false,false,false,false,false];
+  battleCheckpointV196(true);
+  try{preloadBattleSpritesV162?.()}catch(_){}
   const out=mountBattleV182();
-  requestAnimationFrame(()=>{try{preloadBattleSpritesV162?.();window.dispatchEvent(new Event("resize"))}catch(_){}});
+
+  // Do not block the user on battle-extras.js. Load it in the background.
+  setTimeout(()=>{
+    try{
+      const p=window.__bkLoadBattleExtras?.();
+      if(p&&typeof p.then==="function"){
+        Promise.race([
+          p,
+          new Promise(resolve=>setTimeout(()=>resolve(false),5000))
+        ]).then(ok=>{
+          if(!ok||!document.body.classList.contains("battleMode"))return;
+          try{preloadPosterAssetsV216?.();preloadBattleSpritesV162?.()}catch(_){}
+          try{
+            if(typeof smoothRefreshBattleV194==="function")smoothRefreshBattleV194();
+            window.dispatchEvent(new Event("resize"));
+          }catch(_){}
+        }).catch(()=>{});
+      }
+    }catch(_){}
+  },350);
+
   return out
  }catch(err){
-  console.error("V411 battle transition",err);
+  console.error("V414 battle transition",err);
   document.body.classList.remove("battleMode");
+  battleLoadingV411(false);
   toast(err?.message||"戦闘画面を開けませんでした");
   return stagePage()
- }finally{
-  setTimeout(()=>battleLoadingV411(false),120)
  }
 }
 function battleTransitionAuditV180(){
