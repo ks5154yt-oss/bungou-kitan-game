@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#071827">
-<title>文豪綺譚 V70</title>
+<title>文豪綺譚 V70.1</title>
 <link rel="manifest" href="manifest.webmanifest">
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:#06131f;color:#f4ecdd;font-family:-apple-system,"Yu Gothic",sans-serif}
@@ -471,7 +471,9 @@ body.battleMode .battlelog{background:#020913dd;border-left:2px solid #a98a53;bo
 
 #bootRecovery{display:none;position:fixed;inset:0;z-index:999;background:#071827;color:#eee;padding:calc(env(safe-area-inset-top) + 24px) 18px 24px}
 #bootRecovery.show{display:block}#bootRecovery h1{font-family:serif;color:#efc56d}#bootRecovery button{min-height:46px;width:100%;margin-top:10px;background:#173653;color:#fff;border:1px solid #a98a53;border-radius:9px}
+#manualRescue,.bootMark{transition:opacity .22s ease,transform .22s ease}
 .bootMark{position:fixed;left:12px;top:calc(env(safe-area-inset-top) + 8px);z-index:998;font-size:9px;color:#725f3e;pointer-events:none}
+body.appReady #manualRescue,body.appReady .bootMark{opacity:0;pointer-events:none;transform:translateY(-6px)}
 
 #bootRecovery .recoverNote{font-size:11px;color:#b8c1ca;line-height:1.55;margin:8px 0}
 .statusChip{display:inline-block;border:1px solid #42556a;border-radius:7px;padding:3px 6px;font-size:8px;color:#b8c1ca}
@@ -17293,7 +17295,7 @@ body:not(.battleMode) .char img,body:not(.battleMode) .homeVisual,body:not(.batt
   window.__v401BattleActive=isBattle;
 })();
 </script>
-<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V407</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V408</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script id="v407-early-asset-resolver">
 (()=>{
@@ -17316,7 +17318,7 @@ body:not(.battleMode) .char img,body:not(.battleMode) .homeVisual,body:not(.batt
   };
 })();
 </script>
-<script src="app.js?v=407"></script>
+<script src="app.js?v=408"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
