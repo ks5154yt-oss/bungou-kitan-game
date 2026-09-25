@@ -2,16 +2,7 @@ window.__bkBooted=false;window.__bkBootGuard=false;
 window.addEventListener("error",function(e){finalErrorShield(e.error||e.message)});
 window.addEventListener("unhandledrejection",function(e){finalErrorShield(e.reason)});
 
-function setBootChromeReady(ready){
- let b=document.body;if(b)b.classList.toggle("appReady",!!ready);
- let rescue=document.getElementById("manualRescue");
- if(rescue)rescue.style.display=ready?"none":"";
- let mark=document.querySelector(".bootMark");
- if(mark)mark.style.display=ready?"none":"";
-}
-
 function emergencyHome(){
- setBootChromeReady(true);
  let a=document.getElementById("app");if(!a)return;
  a.innerHTML=`<div class=p style="padding-top:70px"><div class=card><h1 style="font-family:serif;color:#efc56d">文豪綺譚</h1><p>簡易モードで起動しました。</p><button class=btn onclick="location.reload()">通常モードを再読込</button><button class=btn onclick="try{localStorage.removeItem('bk12');location.reload()}catch(e){}">新規データで起動</button></div></div>`;
 }
@@ -120,7 +111,7 @@ function linkHints(a){let n=a.map(i=>C[i][1]);return LINKS.filter(r=>r[1].filter
 function bondLv(i){return Math.floor(Number(S.bond[i]||0)/100)+1}
 function bondGain(i,n){S.bond[i]=Number(S.bond[i]||0)+n;save()}
 function nav(){return `<div class=quickDock><button data-go=sortie><b>⚔</b><small>出撃</small></button><button data-go=party><b>👥</b><small>編成</small></button><button data-go=growth><b>⬆</b><small>Lv上げ</small></button><button data-go=summon><b>🖋</b><small>召喚</small></button><button data-progress-hub=1><b>📊</b><small>進行</small></button></div><div class=nav><button data-go=home><b>🏠</b>ホーム</button><button data-go=party><b>👥</b>編成</button><button data-go=sortie><b>⚔️</b>出撃</button><button data-go=list><b>📚</b>文豪</button><button data-go=arena><b>🏆</b>模擬戦</button></div>`}
-function shell(x){window.__bkBooted=true;window.__bkBootGuard=false;setBootChromeReady(true);let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");document.body.classList.remove("battleMode");A.innerHTML=`<div class=top><b>文豪綺譚 <span class=gold>V13</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div><div class=screenFade>${x}</div>${nav()}`}
+function shell(x){window.__bkBooted=true;window.__bkBootGuard=false;let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");document.body.classList.remove("battleMode");A.innerHTML=`<div class=top><b>文豪綺譚 <span class=gold>V12</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div><div class=screenFade>${x}</div>${nav()}`}
 function accountLevel(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return Math.max(1,Math.min(50,Math.floor(score/100)+1))}
 function accountXp(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return score%100}
 function todayKey(){return new Date().toISOString().slice(0,10)}
@@ -7529,7 +7520,7 @@ let sdDemo=e.target.closest("[data-sd-demo]");if(sdDemo)return sdBattleDemo()
 let fxDemo=e.target.closest("[data-battle-fx-demo]");if(fxDemo){let t=S.sets?.[S.set]||[0];let i=+t[0]||0;playBattleFx("attack",i,1280);setTimeout(()=>playBattleFx("skill",i,2400),800);setTimeout(()=>playBattleFx("ougi",i,5200),1900);return}
 let bt=e.target.closest("[data-battle]");if(bt){if(!stageTapGuard(bt))return;let ch=+bt.dataset.battle,mode=bt.dataset.mode||"normal";if(ch>0&&!(S.progress.clears[ch-1]>0))return toast("前の章をクリアすると解放されます");if(mode==="hard"&&!hardUnlocked(ch))return toast("NORMALを3回クリアでHARD解放");return startBattleV180(ch,mode)}let b=e.target.closest("[data-fight]");if(b){let jam=b.dataset.fight==="jam",w=Math.random()>(jam?.62:.45),d=w?(jam?65:24):(jam?-12:-20);S.rating=Math.max(0,S.rating+d);if(w){S.arena.wins++;S.progress.streak++;S.progress.bestStreak=Math.max(S.progress.bestStreak,S.progress.streak)}else{S.arena.losses++;S.progress.streak=0}save();alert((w?"WIN":"LOSE")+" / Rating "+(d>0?"+":"")+d);return arena()}});
 document.addEventListener("input",e=>{if(e.target.id==="q")cards()});
-preloadPosterAssetsV216();observeLongTasksV193();battleVisibilityGuardV190();try{home()}catch(e){console.error("home render failed",e);try{coreHome()}catch(e2){console.error("core home failed",e2);emergencyHome()}}window.__bkBooted=true;setBootChromeReady(true);
+preloadPosterAssetsV216();observeLongTasksV193();battleVisibilityGuardV190();try{home()}catch(e){console.error("home render failed",e);try{coreHome()}catch(e2){console.error("core home failed",e2);emergencyHome()}}window.__bkBooted=true;
 if("serviceWorker" in navigator)navigator.serviceWorker.register("./service-worker.js",{updateViaCache:"none"}).catch(()=>{});
 setTimeout(function(){
  try{
