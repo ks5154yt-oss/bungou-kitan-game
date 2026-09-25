@@ -134,7 +134,7 @@ function shell(x){
  let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");
  document.body.classList.remove("battleMode");
  let premium=/premiumHomeV236|minHomeV117|homeV116/.test(String(x||""));
- A.innerHTML=`${premium?"":`<div class=top><b>文豪綺譚 <span class=gold>V416</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div>`}<div class=screenFade>${x}</div>${premium?"":nav()}`
+ A.innerHTML=`${premium?"":`<div class=top><b>文豪綺譚 <span class=gold>V417</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div>`}<div class=screenFade>${x}</div>${premium?"":nav()}`
 }
 function accountLevel(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return Math.max(1,Math.min(50,Math.floor(score/100)+1))}
 function accountXp(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return score%100}
@@ -451,7 +451,7 @@ function maybeWelcome(){
 }
 function pageMeta(name){
  return{
- home:["ホーム","書架の現在地","⌂"],sortie:["出撃","物語と周回","⚔"],party:["編成","文壇と戦術","👥"],list:["文豪","蒐集と育成","📚"],
+ home:["ホーム","書架の現在地","⌂"],sortie:["出撃","物語と周回","⚔"],party:["編成","文壇と戦術","👥"],list:["文豪","蒐集と育成","📚"],growth:["育成","文豪育成","✦"],
  summon:["召喚","文豪との邂逅","🖋"],story:["物語","解放された記録","📖"],gear:["装備","装具と鍛錬","📦"],arena:["模擬戦","文壇競演","🏆"],library:["物語","解放された記録","📖"]
  }[name]||[name,"文豪綺譚","◆"]
 }
@@ -2526,7 +2526,7 @@ function targetProgressV152(){return{layout:86,sdArt:52,enemyArt:48,cutin:62,ui:
 
 function enemyArtV153(wave,index=0){
  let roster=enemyRosterV129(wave),e=roster[index]||roster[0],boss=wave===3;
- return `<div class="enemyArtV153 ${e.cls} ${boss?"boss":""}" data-sd-enemy="${index}"><div class=enemyAuraV153></div><div class=enemyPagesV153>${Array.from({length:boss?8:4},(_,k)=>`<i style="--k:${k}"></i>`).join("")}</div><div class=enemyBodyV153><div class=enemyMaskV153><i></i><b></b></div><div class=enemyCoreV153></div><div class=enemyClawV153></div></div><small>${e.name}</small></div>`
+ return `<div class="enemyArtV153 ${e.cls} ${boss?"boss":""}" data-sd-enemy="${index}"><div class=enemyAuraV153></div><div class=enemyPagesV153>${Array.from({length:boss?8:4},(_,k)=>`<i style="--k:${k}"></i>`).join("")}</div><div class=enemyBodyV153><div class=enemyMaskV153><i></i><b></b></div><div class=enemyCoreV153></div><div class=enemyClawV153></div></div><div class=enemySilhouetteV417 aria-hidden="true"><i></i><i></i><b></b><em></em></div><small>${e.name}</small></div>`
 }
 function enemyStageV153(){
  let b=ensureAdvancedBattleV125(),r=syncEnemyRosterV129();
@@ -2608,7 +2608,7 @@ function spriteAssetV160(i,pose="idle"){
 function spriteFallbackV160(img){
  let wrap=img.closest(".spriteUnitV160");if(!wrap)return;
  let slug=String(wrap.dataset.author||"dazai");
- img.onerror=null;img.src=`assets/characters/${slug}.jpg?v=416`
+ img.onerror=null;img.src=`assets/characters/${slug}.jpg?v=417`
 }
 function spritePoseV160(i,slot,pose="idle",ms=650){
  let u=document.querySelector(`.spriteUnitV160[data-sd-unit="ally:${slot}"]`);if(!u)return;
