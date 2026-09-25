@@ -3014,6 +3014,7 @@ function prepareBattleV180(ch=0,mode="normal"){
  normalizeBattleStateV171();save();persistentSaveWrite();return S.battleV120
 }
 function startBattleV180(ch=0,mode="normal"){
+ try{window.__bkLoadBattleExtras?.();preloadPosterAssetsV216?.()}catch(_){}
  try{
   if(!actionLock(450))return;
   closeOverlays();prepareBattleV180(ch,mode);startBattleSessionV196();__posterPhaseV214=0;__posterWaveV214=0;S.qol=S.qol||{};S.qol.posterKoStateV213=[false,false,false,false,false];battleCheckpointV196(true);
@@ -7520,8 +7521,8 @@ let sdDemo=e.target.closest("[data-sd-demo]");if(sdDemo)return sdBattleDemo()
 let fxDemo=e.target.closest("[data-battle-fx-demo]");if(fxDemo){let t=S.sets?.[S.set]||[0];let i=+t[0]||0;playBattleFx("attack",i,1280);setTimeout(()=>playBattleFx("skill",i,2400),800);setTimeout(()=>playBattleFx("ougi",i,5200),1900);return}
 let bt=e.target.closest("[data-battle]");if(bt){if(!stageTapGuard(bt))return;let ch=+bt.dataset.battle,mode=bt.dataset.mode||"normal";if(ch>0&&!(S.progress.clears[ch-1]>0))return toast("前の章をクリアすると解放されます");if(mode==="hard"&&!hardUnlocked(ch))return toast("NORMALを3回クリアでHARD解放");return startBattleV180(ch,mode)}let b=e.target.closest("[data-fight]");if(b){let jam=b.dataset.fight==="jam",w=Math.random()>(jam?.62:.45),d=w?(jam?65:24):(jam?-12:-20);S.rating=Math.max(0,S.rating+d);if(w){S.arena.wins++;S.progress.streak++;S.progress.bestStreak=Math.max(S.progress.bestStreak,S.progress.streak)}else{S.arena.losses++;S.progress.streak=0}save();alert((w?"WIN":"LOSE")+" / Rating "+(d>0?"+":"")+d);return arena()}});
 document.addEventListener("input",e=>{if(e.target.id==="q")cards()});
-preloadPosterAssetsV216();observeLongTasksV193();battleVisibilityGuardV190();try{home()}catch(e){console.error("home render failed",e);try{coreHome()}catch(e2){console.error("core home failed",e2);emergencyHome()}}window.__bkBooted=true;
-if("serviceWorker" in navigator)navigator.serviceWorker.register("./service-worker.js",{updateViaCache:"none"}).catch(()=>{});
+observeLongTasksV193();battleVisibilityGuardV190();try{home()}catch(e){console.error("home render failed",e);try{coreHome()}catch(e2){console.error("core home failed",e2);emergencyHome()}}window.__bkBooted=true;
+if("serviceWorker" in navigator)setTimeout(()=>navigator.serviceWorker.register("./service-worker.js",{updateViaCache:"none"}).catch(()=>{}),3500);
 setTimeout(function(){
  try{
   var a=document.getElementById("app");
