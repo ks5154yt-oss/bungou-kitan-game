@@ -134,7 +134,7 @@ function shell(x){
  let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");
  document.body.classList.remove("battleMode");
  let premium=/premiumHomeV236|minHomeV117|homeV116/.test(String(x||""));
- A.innerHTML=`${premium?"":`<div class=top><b>文豪綺譚 <span class=gold>V415</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div>`}<div class=screenFade>${x}</div>${premium?"":nav()}`
+ A.innerHTML=`${premium?"":`<div class=top><b>文豪綺譚 <span class=gold>V416</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div>`}<div class=screenFade>${x}</div>${premium?"":nav()}`
 }
 function accountLevel(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return Math.max(1,Math.min(50,Math.floor(score/100)+1))}
 function accountXp(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return score%100}
@@ -2608,7 +2608,7 @@ function spriteAssetV160(i,pose="idle"){
 function spriteFallbackV160(img){
  let wrap=img.closest(".spriteUnitV160");if(!wrap)return;
  let slug=String(wrap.dataset.author||"dazai");
- img.onerror=null;img.src=`assets/characters/${slug}.jpg?v=415`
+ img.onerror=null;img.src=`assets/characters/${slug}.jpg?v=416`
 }
 function spritePoseV160(i,slot,pose="idle",ms=650){
  let u=document.querySelector(`.spriteUnitV160[data-sd-unit="ally:${slot}"]`);if(!u)return;
