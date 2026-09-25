@@ -17293,9 +17293,30 @@ body:not(.battleMode) .char img,body:not(.battleMode) .homeVisual,body:not(.batt
   window.__v401BattleActive=isBattle;
 })();
 </script>
-<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V406</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V407</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
-<script src="app.js?v=406"></script>
+<script id="v407-early-asset-resolver">
+(()=>{
+  const PAGE='https://ks5154yt-oss.github.io/bungou-kitan-game/assets/';
+  const RAW='https://raw.githubusercontent.com/ks5154yt-oss/bungou-kitan-game/main/assets/';
+  const fileName=(src)=>{
+    const m=String(src||'').match(/(embedded_[^/?#]+\.(?:png|jpe?g|webp))/i);
+    return m ? m[1] : '';
+  };
+  window.__bkAsset=function(path){
+    const s=String(path||'').trim();
+    const name=fileName(s);
+    if(name) return PAGE+name;
+    if(s.startsWith(RAW)){
+      const rawName=fileName(s);
+      return rawName ? PAGE+rawName : s;
+    }
+    if(/^(?:https?:|data:|blob:)/i.test(s)) return s;
+    try{return new URL(s,document.baseURI).href}catch(_){return s}
+  };
+})();
+</script>
+<script src="app.js?v=407"></script>
 
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
