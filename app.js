@@ -1,4 +1,6 @@
 window.__bkBooted=false;window.__bkBootGuard=false;
+try{document.getElementById("v412Boot")?.remove()}catch(_){}
+
 window.addEventListener("error",function(e){finalErrorShield(e.error||e.message)});
 window.addEventListener("unhandledrejection",function(e){finalErrorShield(e.reason)});
 
@@ -126,7 +128,7 @@ function linkHints(a){let n=a.map(i=>C[i][1]);return LINKS.filter(r=>r[1].filter
 function bondLv(i){return Math.floor(Number(S.bond[i]||0)/100)+1}
 function bondGain(i,n){S.bond[i]=Number(S.bond[i]||0)+n;save()}
 function nav(){return `<div class=quickDock><button data-go=sortie><b>⚔</b><small>出撃</small></button><button data-go=party><b>👥</b><small>編成</small></button><button data-go=growth><b>⬆</b><small>Lv上げ</small></button><button data-go=summon><b>🖋</b><small>召喚</small></button><button data-progress-hub=1><b>📊</b><small>進行</small></button></div><div class=nav><button data-go=home><b>🏠</b>ホーム</button><button data-go=party><b>👥</b>編成</button><button data-go=sortie><b>⚔️</b>出撃</button><button data-go=list><b>📚</b>文豪</button><button data-go=arena><b>🏆</b>模擬戦</button></div>`}
-function shell(x){window.__bkBooted=true;window.__bkBootGuard=false;setBootChromeReady(true);let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");document.body.classList.remove("battleMode");A.innerHTML=`<div class=top><b>文豪綺譚 <span class=gold>V411</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div><div class=screenFade>${x}</div>${nav()}`}
+function shell(x){window.__bkBooted=true;window.__bkBootGuard=false;setBootChromeReady(true);let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");document.body.classList.remove("battleMode");A.innerHTML=`<div class=top><b>文豪綺譚 <span class=gold>V412</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div><div class=screenFade>${x}</div>${nav()}`}
 function accountLevel(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return Math.max(1,Math.min(50,Math.floor(score/100)+1))}
 function accountXp(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return score%100}
 function todayKey(){return new Date().toISOString().slice(0,10)}

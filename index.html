@@ -3,9 +3,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#071827">
-<title>文豪綺譚 V411 FAST BATTLE</title>
+<title>文豪綺譚 V412 INSTANT BOOT</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=411">
+<link rel="preload" href="styles.css?v=412" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="styles.css?v=412"></noscript>
+<style id="v412-critical">
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:#050b11;color:#f1f4f6;font-family:-apple-system,"Yu Gothic",sans-serif}
+body{overflow:hidden}
+#app{width:100%;height:100dvh;max-width:760px;margin:0 auto;background:#050b11}
+#v412Boot{position:fixed;inset:0;z-index:4;background:linear-gradient(180deg,#0b2135 0,#050b11 72%);color:#fff}
+#v412Boot .brand{position:absolute;left:22px;top:max(26px,env(safe-area-inset-top));font-family:serif;letter-spacing:.12em}
+#v412Boot .brand small{display:block;font-size:8px;letter-spacing:.28em;color:#c6a85e;margin-bottom:5px}
+#v412Boot .brand b{font-size:24px;font-weight:400}
+#v412Boot .line{position:absolute;left:22px;right:22px;bottom:92px;height:1px;background:#725f3e}
+#v412Boot .status{position:absolute;left:22px;bottom:54px;font-size:10px;color:#9cabb8}
+#v412Boot .dot{display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:50%;background:#d3b463;box-shadow:0 0 10px #d3b463;animation:v412pulse .9s ease-in-out infinite alternate}
+@keyframes v412pulse{to{opacity:.35}}
+.top{display:flex;justify-content:space-between;align-items:center;min-height:78px;padding:calc(12px + env(safe-area-inset-top)) 20px 10px;background:#071827;border-bottom:1px solid #725f3e}
+.top b{font-family:serif}.top small{font-size:10px}
+.screenFade{height:calc(100dvh - 78px)}
+.nav{position:fixed;left:0;right:0;bottom:0;height:68px;background:#071827;border-top:1px solid #725f3e;display:flex;z-index:900}
+.nav button{flex:1;background:transparent;border:0;color:#fff}
+</style>
 
 </head><body class="noScrollGame">
 <script id="v401-performance-shim">
@@ -31,8 +51,8 @@
   window.__v401BattleActive=isBattle;
 })();
 </script>
-<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V411</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
-<div id="app"></div>
+<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V412</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+<div id="app"><div id="v412Boot"><div class="brand"><small>BUNGO KITAN</small><b>文豪綺譚</b></div><div class="line"></div><div class="status"><i class="dot"></i>書架を開いています…</div></div></div>
 <script id="v407-early-asset-resolver">
 (()=>{
   const PAGE='https://ks5154yt-oss.github.io/bungou-kitan-game/assets/';
@@ -67,7 +87,7 @@
     setState('loading');
     promise=new Promise((resolve)=>{
       const s=document.createElement('script');
-      s.src='battle-extras.js?v=411';
+      s.src='battle-extras.js?v=412';
       s.async=true;
       s.onload=()=>{
         window.__bkBattleExtrasLoaded=true;
@@ -92,7 +112,7 @@
   };
 })();
 </script>
-<script src="app.js?v=411"></script>
+<script src="app.js?v=412"></script>
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
