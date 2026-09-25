@@ -3,10 +3,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#071827">
-<title>文豪綺譚 V417 ENEMY + GROWTH</title>
+<title>文豪綺譚 V419 STABLE BOOT</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="preload" href="styles.css?v=417" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="styles.css?v=417"></noscript>
+<link rel="preload" href="styles.css?v=419" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="styles.css?v=419"></noscript>
 <style id="v412-critical">
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;background:#050b11;color:#f1f4f6;font-family:-apple-system,"Yu Gothic",sans-serif}
@@ -28,30 +28,7 @@ body{overflow:hidden}
 </style>
 
 </head><body class="noScrollGame">
-<script id="v401-performance-shim">
-(()=>{
-  const nativeSetInterval=window.setInterval.bind(window);
-  const nativeRAF=window.requestAnimationFrame.bind(window);
-  const isBattle=()=>!!document.querySelector('.battleV119,.bsv2_175,.cleanBattleV238,.battleMode');
-  window.setInterval=(fn,delay,...args)=>{
-    const d=Number(delay)||0;
-    if(typeof fn!=='function') return nativeSetInterval(fn,delay,...args);
-    let ticks=0;
-    return nativeSetInterval(()=>{
-      if(document.hidden) return;
-      ticks++;
-      const battle=isBattle();
-      if(!battle && d<=700 && ticks%5!==0) return;
-      if(!battle && d>700 && d<=1300 && ticks%4!==0) return;
-      if(!battle && d>1300 && d<=2600 && ticks%2!==0) return;
-      try{fn(...args)}catch(e){console.warn('V401 interval',e)}
-    },Math.max(d,250));
-  };
-  window.requestAnimationFrame=(cb)=>nativeRAF((t)=>{if(document.hidden)return;cb(t)});
-  window.__v401BattleActive=isBattle;
-})();
-</script>
-<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V417</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V419</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"><div id="v412Boot"><div class="brand"><small>BUNGO KITAN</small><b>文豪綺譚</b></div><div class="line"></div><div class="status"><i class="dot"></i>書架を開いています…</div></div></div>
 <script id="v407-early-asset-resolver">
 (()=>{
@@ -87,7 +64,7 @@ body{overflow:hidden}
     setState('loading');
     promise=new Promise((resolve)=>{
       const s=document.createElement('script');
-      s.src='battle-extras.js?v=417';
+      s.src='battle-extras.js?v=419';
       s.async=true;
       s.onload=()=>{
         window.__bkBattleExtrasLoaded=true;
@@ -112,98 +89,28 @@ body{overflow:hidden}
   };
 })();
 </script>
-<script src="app.js?v=417"></script>
+
+<script id="v419-stable-boot">
+(()=>{
+  const KEY='bk_v419_sw_cleanup';
+  try{
+    if(!sessionStorage.getItem(KEY)){
+      sessionStorage.setItem(KEY,'1');
+      if('serviceWorker' in navigator){
+        navigator.serviceWorker.getRegistrations?.().then(rs=>rs.forEach(r=>r.unregister())).catch(()=>{});
+      }
+      if('caches' in window){
+        caches.keys().then(keys=>Promise.all(keys.filter(k=>/bungou|kitan|bk/i.test(k)).map(k=>caches.delete(k)))).catch(()=>{});
+      }
+    }
+  }catch(_){}
+  window.__bkStableBootV419=true;
+})();
+</script>
+<script src="app.js?v=419"></script>
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
-</script>
-
-<script id="v401-lazy-images">
-(()=>{
- const tune=(root=document)=>{
-   root.querySelectorAll?.('img:not([data-v401])').forEach(img=>{
-     img.dataset.v401='1';
-     if(!img.closest('.battleV119,.bsv2_175,.cleanBattleV238') && !img.classList.contains('homeVisual')){
-       img.loading='lazy'; img.decoding='async';
-     } else { img.decoding='async'; }
-   });
- };
- tune();
- let queued=false;
- const mo=new MutationObserver(()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;tune()})});
- mo.observe(document.getElementById('app')||document.body,{subtree:true,childList:true});
- document.addEventListener('visibilitychange',()=>{if(!document.hidden)tune()});
-})();
-</script>
-
-<script id="v406-pages-asset-fix">
-(()=>{
-  const PAGE='https://ks5154yt-oss.github.io/bungou-kitan-game/assets/';
-  const RAW='https://raw.githubusercontent.com/ks5154yt-oss/bungou-kitan-game/main/assets/';
-
-  function fileName(src){
-    const m=String(src||'').match(/(embedded_[^/?#]+\.(?:png|jpe?g|webp))/i);
-    return m ? m[1] : '';
-  }
-
-  window.__bkAsset=(path)=>{
-    const s=String(path||'').trim();
-    const name=fileName(s);
-    if(name) return PAGE+name;
-    if(/^(?:https?:|data:|blob:)/i.test(s)) return s;
-    try{return new URL(s,document.baseURI).href}catch(_){return s}
-  };
-
-  function arm(img){
-    if(!img) return;
-    const raw=img.getAttribute('src')||'';
-    const name=fileName(raw);
-    if(!name) return;
-
-    const current=img.src||raw;
-    if(!current.startsWith(PAGE) && !current.startsWith(RAW)){
-      img.src=PAGE+name+'?v=406';
-    } else if(current.startsWith(RAW)){
-      img.src=PAGE+name+'?v=406';
-    }
-
-    if(img.dataset.v406Armed==='1') return;
-    img.dataset.v406Armed='1';
-    img.loading = img.closest('.homeV116,.dedicatedHomeV112,.homeWrap') ? 'eager' : (img.loading || 'lazy');
-    img.decoding = 'async';
-
-    img.addEventListener('error',()=>{
-      const now=img.src||'';
-      if(now.startsWith(PAGE)){
-        img.src=RAW+name+'?v=406';
-      }
-    });
-  }
-
-  function scan(){
-    document.querySelectorAll('img').forEach(arm);
-  }
-
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',scan,{once:true});
-  } else scan();
-
-  new MutationObserver(ms=>{
-    for(const m of ms){
-      if(m.type==='attributes' && m.target.tagName==='IMG') arm(m.target);
-      for(const n of m.addedNodes||[]){
-        if(n.nodeType!==1) continue;
-        if(n.tagName==='IMG') arm(n);
-        n.querySelectorAll?.('img').forEach(arm);
-      }
-    }
-  }).observe(document.documentElement,{
-    subtree:true,
-    childList:true,
-    attributes:true,
-    attributeFilter:['src']
-  });
-})();
 </script>
 
 </body></html>

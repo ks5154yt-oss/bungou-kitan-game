@@ -128,13 +128,13 @@ function links(a){let n=a.map(i=>C[i][1]);return LINKS.filter(r=>r[1].every(x=>n
 function linkHints(a){let n=a.map(i=>C[i][1]);return LINKS.filter(r=>r[1].filter(x=>n.includes(x)).length===1).map(r=>r[0]+" → "+r[1].find(x=>!n.includes(x)))}
 function bondLv(i){return Math.floor(Number(S.bond[i]||0)/100)+1}
 function bondGain(i,n){S.bond[i]=Number(S.bond[i]||0)+n;save()}
-function nav(){return `<div class=quickDock><button data-go=sortie><b>⚔</b><small>出撃</small></button><button data-go=party><b>👥</b><small>編成</small></button><button data-go=growth><b>⬆</b><small>Lv上げ</small></button><button data-go=summon><b>🖋</b><small>召喚</small></button><button data-progress-hub=1><b>📊</b><small>進行</small></button></div><div class=nav><button data-go=home><b>🏠</b>ホーム</button><button data-go=party><b>👥</b>編成</button><button data-go=sortie><b>⚔️</b>出撃</button><button data-go=list><b>📚</b>文豪</button><button data-go=arena><b>🏆</b>模擬戦</button></div>`}
+function nav(){return primaryNavV116(window.__bkRoute||"")}
 function shell(x){
  window.__bkBooted=true;window.__bkBootGuard=false;setBootChromeReady(true);
  let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");
  document.body.classList.remove("battleMode");
  let premium=/premiumHomeV236|minHomeV117|homeV116/.test(String(x||""));
- A.innerHTML=`${premium?"":`<div class=top><b>文豪綺譚 <span class=gold>V417</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div>`}<div class=screenFade>${x}</div>${premium?"":nav()}`
+ A.innerHTML=`${premium?"":`<div class=top><b>文豪綺譚 <span class=gold>V419</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div>`}<div class=screenFade>${x}</div>${premium?"":nav()}`
 }
 function accountLevel(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return Math.max(1,Math.min(50,Math.floor(score/100)+1))}
 function accountXp(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return score%100}
@@ -658,7 +658,7 @@ function transactionalAction(label,fn){
  catch(e){if(snap){try{let old=JSON.parse(snap);Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,old);save()}catch(_){}}
  finalErrorShield(e);toast(label+"を取り消しました");return null}
 }
-function home(){ensureCoreState();return dedicatedHome()}
+function home(){window.__bkRoute="home";ensureCoreState();return dedicatedHome()}
 function chooseHome(){shell(`<div class=p><h1>ホーム文豪</h1><div class=grid>${C.map((c,i)=>`<button class="card char" data-homepick="${i}"><img loading=lazy decoding=async src="${characterImage(c[0])}"><b>${c[1]}</b></button>`).join("")}</div></div>`)}
 let filter="all";
 function collectionProgress(){
@@ -1023,7 +1023,7 @@ function summon(){ensurePick3();shell(`${uiPageHead("summon")}<div class=p><div 
 function summonResult(i){let c=C[i];shell(`<div class=p><button class=btn data-go=summon>← 召喚へ</button><div class="summonHero summonFlash"><img loading=lazy decoding=async src="${characterImage(c[0])}"><div class=summonName><div class=gold>${c[5]} / ${c[3]} / ${c[4]}</div><h1>${c[1]}</h1><h2>《${c[2]}》</h2></div></div><div class=card><div class=collectionSummary><span>突破</span><b>${Math.min(10,S.dupes[i]||0)}/10</b></div><div class=collectionSummary><span>Lv上限</span><b>${cap(i)}</b></div><button class=btn data-char="${i}">キャラ詳細を見る</button></div></div>`);setTimeout(()=>uiToastAction("文豪を編成に加えてみよう","party","編成へ"),500)}
 function safeScreen(fn,name){try{return fn()}catch(e){console.error("screen",name,e);toast("画面を再構築しました");try{ensureUnitSets()}catch(_){}return home()}}
 function syncNavActive(name){document.querySelectorAll(".nav [data-go]").forEach(x=>x.classList.toggle("active",x.dataset.go===name))}
-function go(x){if(document.body.classList.contains("battleMode"))leaveBattleCleanupV191();try{hideAutoReplayLoadingV199();if(x!=="stagePage")stopTrueAutoLoopV200(false);closeOverlays();document.body.classList.remove("battleMode");if(typeof syncNavActive==="function")syncNavActive(x);const routes={home,sortie,stagePage,party,list,summon,story,arena,growth};const aliases={characters:"list",character:"list",formation:"party",quest:"sortie",library:"story",gear:"list",achievements:"home",records:"home",goals:"home"};x=aliases[x]||x;let fn=routes[x];if(typeof fn!=="function"){toast("この画面は準備中です");return home()}window.scrollTo(0,0);return renderScreen(x,fn)}catch(e){finalErrorShield(e);try{return home()}catch(_){return coreHome()}}}
+function go(x){if(document.body.classList.contains("battleMode"))leaveBattleCleanupV191();try{hideAutoReplayLoadingV199();if(x!=="stagePage")stopTrueAutoLoopV200(false);closeOverlays();document.body.classList.remove("battleMode");window.__bkRoute=x;if(typeof syncNavActive==="function")syncNavActive(x);const routes={home,sortie,stagePage,party,list,summon,story,arena,growth};const aliases={characters:"list",character:"list",formation:"party",quest:"sortie",library:"story",gear:"list",achievements:"home",records:"home",goals:"home"};x=aliases[x]||x;let fn=routes[x];if(typeof fn!=="function"){toast("この画面は準備中です");return home()}window.scrollTo(0,0);return renderScreen(x,fn)}catch(e){finalErrorShield(e);try{return home()}catch(_){return coreHome()}}}
 function markNavActive(name){document.querySelectorAll(".nav [data-go]").forEach(b=>b.classList.toggle("active",b.dataset.go===name))}
 document.addEventListener("error",e=>{let im=e.target;if(im&&im.tagName==="IMG"&&!im.dataset.fallback){im.dataset.fallback="1";let s=im.getAttribute("src")||"";im.src=s.includes("/stages/")?"assets/stages/chapter1.jpg":"assets/anime/home_cinematic.jpg"}},true);
 document.addEventListener("pointerdown",e=>{let b=e.target.closest("button,.btn");if(!b)return;b.classList.remove("tapPulse");void b.offsetWidth;b.classList.add("tapPulse")},{passive:true});
@@ -7568,14 +7568,14 @@ let fxDemo=e.target.closest("[data-battle-fx-demo]");if(fxDemo){let t=S.sets?.[S
 let bt=e.target.closest("[data-battle]");if(bt){if(!stageTapGuard(bt))return;let ch=+bt.dataset.battle,mode=bt.dataset.mode||"normal";if(ch>0&&!(S.progress.clears[ch-1]>0))return toast("前の章をクリアすると解放されます");if(mode==="hard"&&!hardUnlocked(ch))return toast("NORMALを3回クリアでHARD解放");return startBattleV180(ch,mode)}let b=e.target.closest("[data-fight]");if(b){let jam=b.dataset.fight==="jam",w=Math.random()>(jam?.62:.45),d=w?(jam?65:24):(jam?-12:-20);S.rating=Math.max(0,S.rating+d);if(w){S.arena.wins++;S.progress.streak++;S.progress.bestStreak=Math.max(S.progress.bestStreak,S.progress.streak)}else{S.arena.losses++;S.progress.streak=0}save();alert((w?"WIN":"LOSE")+" / Rating "+(d>0?"+":"")+d);return arena()}});
 document.addEventListener("input",e=>{if(e.target.id==="q")cards()});
 observeLongTasksV193();battleVisibilityGuardV190();try{home()}catch(e){console.error("home render failed",e);try{coreHome()}catch(e2){console.error("core home failed",e2);emergencyHome()}}window.__bkBooted=true;
-if("serviceWorker" in navigator)setTimeout(()=>navigator.serviceWorker.register("./service-worker.js",{updateViaCache:"none"}).catch(()=>{}),3500);
+/* V419: service worker disabled for deterministic GitHub Pages startup. */
 setTimeout(function(){
  try{
   var a=document.getElementById("app");
   var visible=a&&a.textContent&&a.textContent.trim().length>0;
   if(!visible) emergencyHome();
  }catch(e){try{emergencyHome()}catch(_){}}
-},800);const STORY_EPISODES=[
+},3500);const STORY_EPISODES=[
  {title:"序章　言葉のはじまり",sub:"消えた一行",text:"書架から、ひとつの文章が消えた。名もなき司書と文豪たちは、頁喰いを追って最初の扉を開く。"},
  {title:"第二幕　失われた書庫",sub:"黒い栞",text:"封じられた書庫に残る黒い栞。読む者の記憶を削るそれは、物語そのものを書き換えようとしていた。"},
  {title:"第三幕　海の向こう",sub:"深海の校正",text:"海を越えた言葉が別の意味へ変質する。文豪たちは失われた原文を求め、深海の書庫へ向かう。"},
