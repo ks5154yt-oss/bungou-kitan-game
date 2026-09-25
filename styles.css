@@ -14385,3 +14385,19 @@ body:has(.minHomeV117) #app>.top{display:none!important}
 .battleLoadingV411 span{margin-top:7px;font-size:13px}
 .battleLoadingV411 small{margin-top:4px;color:#82939f;font-size:8px}
 @keyframes battleLoadSpinV411{to{transform:rotate(360deg)}}
+
+
+/* V413 BATTLE GATE
+   Battle-only legacy UI must never leak onto sortie/stage/home screens. */
+body:not(.battleMode) #v397AutoHud,
+body:not(.battleMode) #v391OugiSetting,
+body:not(.battleMode) .v397AutoHud,
+body:not(.battleMode) .v391OugiSetting{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+body.battleMode #v397AutoHud,
+body.battleMode #v391OugiSetting{
+  visibility:visible;
+}

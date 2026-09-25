@@ -2118,6 +2118,7 @@
    let mode='lite';
    try{mode=localStorage.getItem(KEY)||'lite'}catch(e){}
    apply(mode);
+   if(!document.body.classList.contains('battleMode')){document.getElementById('v391OugiSetting')?.remove();return;}
    if(document.getElementById('v391OugiSetting')) return;
    const wrap=document.createElement('label');
    wrap.id='v391OugiSetting';
@@ -2130,6 +2131,8 @@
    document.body.appendChild(wrap);
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+ const v413mo=new MutationObserver(()=>init());
+ v413mo.observe(document.body,{attributes:true,attributeFilter:['class']});
 })();
 
 // v392-character-ougi-fx-script
@@ -2285,6 +2288,7 @@
   function syncBadges(){document.querySelectorAll('.bsv2AutoBadge184,.resultLoopV181 button.auto,[data-auto],button').forEach(b=>{const t=txt(b); if(/AUTO|オート/i.test(t)) b.classList.toggle('on',state);});}
   function renderHud(){
     let host=document.getElementById('v397AutoHud');
+    if(!document.body.classList.contains('battleMode')){ if(host)host.remove(); return; }
     if(!host){ host=document.createElement('div'); host.id='v397AutoHud'; document.body.appendChild(host);}
     host.className='v397AutoHud'+(state?'':' off');
     host.innerHTML=`<div><small>AUTO</small><b>${state?'ON':'OFF'}</b></div><button type="button">${state?'停止':'開始'}</button>`;
@@ -2348,7 +2352,7 @@
 
     return buttons.find(x=>!x.disabled && !/AUTO|オート|周回|FARM|HARD|未解放/i.test(textOf(x)) && /攻撃|たたかう|戦闘|決定|次へ|再戦|挑戦|出撃/i.test(textOf(x))) || null;
   }
-  function loop(){ if(!state) return; syncBadges(); const btn=chooseButton(); if(btn) press(btn); }
+  function loop(){ if(!state||!document.body.classList.contains('battleMode')) return; syncBadges(); const btn=chooseButton(); if(btn) press(btn); }
   renderHud(); syncBadges(); document.body.classList.toggle('v397AutoMode',state);
   setInterval(loop,950);
   setInterval(()=>{ if(document.readyState==='complete') {renderHud(); syncBadges();}},2000);
@@ -2397,7 +2401,7 @@
     },{capture:true});
   }
   function action(){
-    if(!on)return;
+    if(!on||!document.body.classList.contains('battleMode'))return;
     const now=Date.now(); if(now-lastAction<520)return;
     const qs=[
       '.actionClusterV164 [data-sd-action="ougi"].readyV198',
