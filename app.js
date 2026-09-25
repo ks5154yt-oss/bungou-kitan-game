@@ -2,7 +2,22 @@ window.__bkBooted=false;window.__bkBootGuard=false;
 window.addEventListener("error",function(e){finalErrorShield(e.error||e.message)});
 window.addEventListener("unhandledrejection",function(e){finalErrorShield(e.reason)});
 
+function setBootChromeReady(ready){
+ let body=document.body;if(body)body.classList.toggle("appReady",!!ready);
+ let rescue=document.getElementById("manualRescue");if(rescue)rescue.style.display=ready?"none":"";
+ let mark=document.querySelector(".bootMark");if(mark)mark.style.display=ready?"none":"";
+}
+function battleLoadingV411(show,text="戦闘を準備しています…"){
+ let id="battleLoadingV411",old=document.getElementById(id);
+ if(!show){old?.remove();return}
+ if(old){let s=old.querySelector("span");if(s)s.textContent=text;return}
+ let d=document.createElement("div");d.id=id;d.className="battleLoadingV411";
+ d.innerHTML=`<div><i></i><b>BATTLE PREP</b><span>${text}</span><small>初回のみ戦闘データを読み込みます</small></div>`;
+ document.body.appendChild(d)
+}
+
 function emergencyHome(){
+ setBootChromeReady(true);
  let a=document.getElementById("app");if(!a)return;
  a.innerHTML=`<div class=p style="padding-top:70px"><div class=card><h1 style="font-family:serif;color:#efc56d">文豪綺譚</h1><p>簡易モードで起動しました。</p><button class=btn onclick="location.reload()">通常モードを再読込</button><button class=btn onclick="try{localStorage.removeItem('bk12');location.reload()}catch(e){}">新規データで起動</button></div></div>`;
 }
@@ -111,7 +126,7 @@ function linkHints(a){let n=a.map(i=>C[i][1]);return LINKS.filter(r=>r[1].filter
 function bondLv(i){return Math.floor(Number(S.bond[i]||0)/100)+1}
 function bondGain(i,n){S.bond[i]=Number(S.bond[i]||0)+n;save()}
 function nav(){return `<div class=quickDock><button data-go=sortie><b>⚔</b><small>出撃</small></button><button data-go=party><b>👥</b><small>編成</small></button><button data-go=growth><b>⬆</b><small>Lv上げ</small></button><button data-go=summon><b>🖋</b><small>召喚</small></button><button data-progress-hub=1><b>📊</b><small>進行</small></button></div><div class=nav><button data-go=home><b>🏠</b>ホーム</button><button data-go=party><b>👥</b>編成</button><button data-go=sortie><b>⚔️</b>出撃</button><button data-go=list><b>📚</b>文豪</button><button data-go=arena><b>🏆</b>模擬戦</button></div>`}
-function shell(x){window.__bkBooted=true;window.__bkBootGuard=false;let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");document.body.classList.remove("battleMode");A.innerHTML=`<div class=top><b>文豪綺譚 <span class=gold>V12</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div><div class=screenFade>${x}</div>${nav()}`}
+function shell(x){window.__bkBooted=true;window.__bkBootGuard=false;setBootChromeReady(true);let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");document.body.classList.remove("battleMode");A.innerHTML=`<div class=top><b>文豪綺譚 <span class=gold>V411</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div><div class=screenFade>${x}</div>${nav()}`}
 function accountLevel(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return Math.max(1,Math.min(50,Math.floor(score/100)+1))}
 function accountXp(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return score%100}
 function todayKey(){return new Date().toISOString().slice(0,10)}
@@ -961,11 +976,11 @@ function farmCountBar(ch){
 function selectedStage(){let n=Number(S.qol?.selectedStage);return Number.isInteger(n)&&n>=0&&n<4?n:0}
 function openStagePage(i){rememberStage(i);return stagePage()}
 function stagePage(){
- ensureCoreState();ensureQoLPrefs();let i=selectedStage(),n=rememberedFarmCount(),st=stageMeta(i),clear=S.progress?.clears?.[i]||0,stars=S.stageBest?.[i]||0,r=farmResultSummary();
+ ensureCoreState();ensureQoLPrefs();setTimeout(()=>window.__bkWarmBattleExtras?.(),80);let i=selectedStage(),n=rememberedFarmCount(),st=stageMeta(i),clear=S.progress?.clears?.[i]||0,stars=S.stageBest?.[i]||0,r=farmResultSummary();
  shell(`${typeof uiPageHead==="function"?uiPageHead("sortie"):""}<div class="p stagePageV100"><div class=stageCompactHead><button data-go=sortie>‹ 一覧</button><div><small>第${i+1}章</small><b>${st.name}</b></div><span>★${stars}/3</span></div><div class=farmHeroV100><div class=farmHeroTitle><div><small>QUICK FARM</small><h1>周回する</h1></div><strong>${n}周</strong></div><div class=farmCountsV100>${[1,5,10,20,30,50].map(x=>`<button class="${n===x?"on":""}" data-stage-farm-count="${x}">${x}<small>周</small></button>`).join("")}</div><button class=farmExecuteV100 data-stage-farm-go="${i}">⚡ ${n}周を開始</button><div class=farmRemember>前回の周回数を自動記憶</div>${r&&r.ch===i?`<div class=farmLast><b>前回 ${r.count}周</b><span>資料 +${r.mat}　文銭 +${r.gold}　インク +${r.ink}</span></div>`:""}</div><div class=stageSubActions><button data-battle="${i}" data-mode=normal><b>NORMAL</b><small>通常戦闘</small></button><button data-battle="${i}" data-mode=hard ${clear<1?"disabled":""}><b>HARD</b><small>${clear<1?"未解放":"高難度"}</small></button></div><div class=stageInfoV100><span>推奨<b>${st.power.toLocaleString()}</b></span><span>原稿片<b>${st.drop}</b></span><span>クリア<b>${clear}</b></span></div><div class=stageNavV97><button data-stage-open="${Math.max(0,i-1)}" ${i===0?"disabled":""}>‹ 前章</button><button data-stage-open="${Math.min(3,i+1)}" ${i===3?"disabled":""}>次章 ›</button></div></div>`)
 }
 function sortie(){
- ensureCoreState();ensureQoLPrefs();let last=lastStage(),s=stageMeta(last),n=rememberedFarmCount();
+ ensureCoreState();ensureQoLPrefs();setTimeout(()=>window.__bkWarmBattleExtras?.(),180);let last=lastStage(),s=stageMeta(last),n=rememberedFarmCount();
  shell(`${typeof uiPageHead==="function"?uiPageHead("sortie"):""}${stageQuickV131()}${recentStagesUIV133()}<div class="p sortieV102"><div class=resumeStage><div><small>前回のステージ</small><h1>第${last+1}章　${s.name}</h1><span>周回設定 ${n}周</span></div><button data-stage-open="${last}">続きから ›</button></div><div class=stageSelectTitle><b>ステージ選択</b><small>スクロール不要</small></div>${stageSelectGrid()}<div class=sortieShortcuts><button data-stage-open="0">最初の章</button><button data-stage-open="${Math.max(0,Math.min(3,(S.progress?.clears||[]).filter(Boolean).length))}">最新章</button></div></div>`)
 }
 function recordBattleResult(ch,win,turn,difficulty){
@@ -3013,17 +3028,25 @@ function prepareBattleV180(ch=0,mode="normal"){
  };
  normalizeBattleStateV171();save();persistentSaveWrite();return S.battleV120
 }
-function startBattleV180(ch=0,mode="normal"){
- try{window.__bkLoadBattleExtras?.();preloadPosterAssetsV216?.()}catch(_){}
+async function startBattleV180(ch=0,mode="normal"){
+ if(!actionLock(700))return;
+ battleLoadingV411(true);
  try{
-  if(!actionLock(450))return;
+  const ok=await (window.__bkLoadBattleExtras?.()||Promise.resolve(true));
+  if(!ok)throw new Error("戦闘データの読み込みに失敗しました");
+  try{preloadBattleSpritesV162?.();preloadPosterAssetsV216?.()}catch(_){}
+  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
   closeOverlays();prepareBattleV180(ch,mode);startBattleSessionV196();__posterPhaseV214=0;__posterWaveV214=0;S.qol=S.qol||{};S.qol.posterKoStateV213=[false,false,false,false,false];battleCheckpointV196(true);
-  return mountBattleV182()
+  const out=mountBattleV182();
+  requestAnimationFrame(()=>{try{preloadBattleSpritesV162?.();window.dispatchEvent(new Event("resize"))}catch(_){}});
+  return out
  }catch(err){
-  console.error("V182 stage transition",err);
+  console.error("V411 battle transition",err);
   document.body.classList.remove("battleMode");
   toast(err?.message||"戦闘画面を開けませんでした");
   return stagePage()
+ }finally{
+  setTimeout(()=>battleLoadingV411(false),120)
  }
 }
 function battleTransitionAuditV180(){

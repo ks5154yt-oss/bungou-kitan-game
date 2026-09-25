@@ -14352,3 +14352,36 @@ body.battleMode .battlelog.v388LogPulse{animation:v388LogPulse .22s ease}
 .btn,.nav button,.card,b,strong,small,.mini{overflow-wrap:anywhere}
 .v388Build{display:inline-flex;align-items:center;gap:4px;font-size:9px;color:#9fb0bf;opacity:.82}
 .v388Build::before{content:"◆";color:#efc56d;font-size:8px}
+
+
+/* V411 FAST BATTLE + CLEAN BOOT */
+body.appReady #manualRescue,
+body.appReady .bootMark{display:none!important;opacity:0!important;pointer-events:none!important}
+body:has(.premiumHomeV236)>.top,
+body:has(.premiumHomeV236) #app>.top,
+body:has(.minHomeV117)>.top,
+body:has(.minHomeV117) #app>.top{display:none!important}
+
+.battleLoadingV411{
+ position:fixed;inset:0;z-index:20050;
+ display:grid;place-items:center;
+ background:rgba(2,8,14,.82);
+ backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+ color:#eef4f8;text-align:center;padding:24px
+}
+.battleLoadingV411>div{
+ min-width:min(300px,82vw);padding:22px 20px;
+ border:1px solid #806d42;border-radius:12px;
+ background:linear-gradient(180deg,#0c1c29,#06111a);
+ box-shadow:0 22px 60px #000c
+}
+.battleLoadingV411 i{
+ display:block;width:34px;height:34px;margin:0 auto 12px;
+ border-radius:50%;border:2px solid #314451;border-top-color:#d5b76e;
+ animation:battleLoadSpinV411 .75s linear infinite
+}
+.battleLoadingV411 b,.battleLoadingV411 span,.battleLoadingV411 small{display:block}
+.battleLoadingV411 b{font-family:serif;letter-spacing:.18em;color:#d9c07d;font-size:11px}
+.battleLoadingV411 span{margin-top:7px;font-size:13px}
+.battleLoadingV411 small{margin-top:4px;color:#82939f;font-size:8px}
+@keyframes battleLoadSpinV411{to{transform:rotate(360deg)}}

@@ -1,4 +1,4 @@
-// 文豪綺譚 V410: battle-only legacy enhancements.
+// 文豪綺譚 V411: battle-only legacy enhancements.
 // Loaded lazily on first battle entry to keep home startup fast.
 // v328-script
 (()=>{

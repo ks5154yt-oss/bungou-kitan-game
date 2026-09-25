@@ -3,9 +3,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#071827">
-<title>文豪綺譚 V410 FAST</title>
+<title>文豪綺譚 V411 FAST BATTLE</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=410">
+<link rel="stylesheet" href="styles.css?v=411">
 
 </head><body class="noScrollGame">
 <script id="v401-performance-shim">
@@ -31,7 +31,7 @@
   window.__v401BattleActive=isBattle;
 })();
 </script>
-<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V410</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V411</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
 <div id="app"></div>
 <script id="v407-early-asset-resolver">
 (()=>{
@@ -54,25 +54,45 @@
   };
 })();
 </script>
-<script id="v410-battle-lazy-loader">
+<script id="v411-battle-loader">
 (()=>{
   let promise=null;
+  const setState=(state)=>{
+    document.documentElement.dataset.battleLoad=state;
+    window.dispatchEvent(new CustomEvent('bk:battleload',{detail:{state}}));
+  };
   window.__bkLoadBattleExtras=function(){
     if(window.__bkBattleExtrasLoaded) return Promise.resolve(true);
     if(promise) return promise;
+    setState('loading');
     promise=new Promise((resolve)=>{
       const s=document.createElement('script');
-      s.src='battle-extras.js?v=410';
+      s.src='battle-extras.js?v=411';
       s.async=true;
-      s.onload=()=>{window.__bkBattleExtrasLoaded=true;resolve(true)};
-      s.onerror=()=>resolve(false);
+      s.onload=()=>{
+        window.__bkBattleExtrasLoaded=true;
+        setState('ready');
+        requestAnimationFrame(()=>requestAnimationFrame(()=>resolve(true)));
+      };
+      s.onerror=()=>{
+        promise=null;
+        setState('error');
+        resolve(false);
+      };
       document.head.appendChild(s);
     });
     return promise;
   };
+  window.__bkWarmBattleExtras=function(){
+    if('requestIdleCallback' in window){
+      requestIdleCallback(()=>window.__bkLoadBattleExtras(),{timeout:900});
+    }else{
+      setTimeout(()=>window.__bkLoadBattleExtras(),120);
+    }
+  };
 })();
 </script>
-<script src="app.js?v=410"></script>
+<script src="app.js?v=411"></script>
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
