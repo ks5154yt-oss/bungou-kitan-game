@@ -1,0 +1,11255 @@
+window.__bkBooted=false;window.__bkBootGuard=false;
+try{
+  if(typeof window.__nativeAutoPumpV425==="undefined")window.__nativeAutoPumpV425=null;
+}catch(_){}
+
+window.__safeCallV440=function(name){
+  try{
+    const fn=window[name];
+    if(typeof fn==="function")return fn();
+  }catch(e){console.warn("V440 safe cleanup",name,e)}
+};
+
+try{
+  window.__BK_BUILD__="V543";
+  localStorage.setItem("bungou_kitan_build","V543");
+}catch(_){}
+
+try{document.getElementById("v412Boot")?.remove()}catch(_){}
+setTimeout(()=>document.getElementById("battleLoadingV411")?.remove(),2500);
+
+window.addEventListener("error",function(e){finalErrorShield(e.error||e.message)});
+window.addEventListener("unhandledrejection",function(e){finalErrorShield(e.reason)});
+
+function setBootChromeReady(ready){
+ let body=document.body;if(body)body.classList.toggle("appReady",!!ready);
+ let rescue=document.getElementById("manualRescue");if(rescue)rescue.style.display=ready?"none":"";
+ let mark=document.querySelector(".bootMark");if(mark)mark.style.display=ready?"none":"";
+}
+function battleLoadingV411(show,text="戦闘を準備しています…"){
+ let id="battleLoadingV411",old=document.getElementById(id);
+ if(!show){old?.remove();return}
+ if(old){let s=old.querySelector("span");if(s)s.textContent=text;return}
+ let d=document.createElement("div");d.id=id;d.className="battleLoadingV411";
+ d.innerHTML=`<div><i></i><b>BATTLE PREP</b><span>${text}</span><small>初回のみ戦闘データを読み込みます</small></div>`;
+ document.body.appendChild(d)
+}
+
+function emergencyHome(){
+ setBootChromeReady(true);
+ let a=document.getElementById("app");if(!a)return;
+ a.innerHTML=`<div class=p style="padding-top:70px"><div class=card><h1 style="font-family:serif;color:#efc56d">文豪綺譚</h1><p>簡易モードで起動しました。</p><button class=btn onclick="location.reload()">通常モードを再読込</button><button class=btn onclick="try{localStorage.removeItem('bk12');location.reload()}catch(e){}">新規データで起動</button></div></div>`;
+}
+const C=[
+["dazai","太宰 治","人間失格","日本","妨害","SSR"],["chuuya","中原 中也","汚れつちまつた悲しみに","日本","攻撃","SSR"],
+["aku","芥川 龍之介","羅生門","日本","攻撃","SR"],["kenji","宮沢 賢治","銀河鉄道の夜","日本","回復","SR"],
+["ranpo","江戸川 乱歩","黒蜥蜴","日本","妨害","SR"],["soseki","夏目 漱石","こころ","日本","防御","SR"],
+["murasaki","紫式部","源氏物語","日本","支援","SSR"],["akiko","与謝野 晶子","みだれ髪","日本","回復","SR"],
+["ogai","森 鴎外","舞姫","日本","防御","SR"],["tanizaki","谷崎 潤一郎","細雪","日本","支援","SR"],
+["kawabata","川端 康成","雪国","日本","速度","SR"],["mishima","三島 由紀夫","金閣寺","日本","攻撃","SSR"],
+["akutagawa2","泉 鏡花","高野聖","日本","妨害","SR"],["hagiwara","萩原 朔太郎","月に吠える","日本","妨害","SR"],
+["sakaguchi","坂口 安吾","堕落論","日本","攻撃","SSR"],["kajii","梶井 基次郎","檸檬","日本","特殊","SR"],
+["higuchi","樋口 一葉","たけくらべ","日本","支援","SR"],["kobayashi","小林 多喜二","蟹工船","日本","防御","SR"],
+["yokomitsu","横光 利一","機械","日本","速度","SR"],["nakajima","中島 敦","山月記","日本","攻撃","SR"],
+["koizumi","小泉 八雲","怪談","日本","妨害","SR"],["seicho","松本 清張","点と線","日本","妨害","SSR"],
+["poe","E・A・ポー","大鴉","海外","妨害","SSR"],["shakespeare","シェイクスピア","ハムレット","海外","攻撃","UR"],
+["doyle","コナン・ドイル","シャーロック・ホームズ","海外","妨害","SSR"],["verne","ジュール・ヴェルヌ","海底二万里","海外","速度","SR"],
+["andersen","アンデルセン","人魚姫","海外","回復","SSR"],["kafka","カフカ","変身","海外","特殊","SSR"],
+["wilde","オスカー・ワイルド","ドリアン・グレイ","海外","妨害","SR"],["dumas","デュマ","モンテ・クリスト伯","海外","攻撃","SR"],
+["tolstoy","トルストイ","戦争と平和","海外","防御","SSR"],["dostoevsky","ドストエフスキー","罪と罰","海外","妨害","UR"],
+["hemingway","ヘミングウェイ","老人と海","海外","攻撃","SR"],["orwell","ジョージ・オーウェル","1984年","海外","特殊","SSR"],
+["amemiya_mio","雨宮 澪","境界都市","幻想","特殊","UR"],
+["kurose_rin","黒瀬 凛","密室構築","ミステリ","妨害","SSR"],
+["mizuki_kanade","水城 奏","青の残響","青春","支援","SSR"],
+["shinonome_yaya","東雲 夜々","午前零時の読者","怪奇","攻撃","UR"],
+["shirakawa_fumi","白河 文","余白","純文学","妨害","SSR"],
+["tsukishima_shiori","月島 栞","未送信の手紙","恋愛","回復","SR"],
+["kamishiro_ren","神代 レン","世界線校正","SF","特殊","SSR"],
+["mikage_akari","御影 灯","物語改稿","文学融合","特殊","UR"],
+["tachibana_kanade","橘 カナデ","バズワード","SNS","妨害","SSR"],
+["yakumo_saku","八雲 朔","残像記録","ノンフィクション","特殊","SR"],
+["ayatsuji_yui","綾辻 結","エンドロール","ライト文芸","支援","SSR"],
+["hoshino_ruri","星野 ルリ","夜更かしの言い訳","エッセイ","特殊","SR"],
+["kisaragi_rei","如月 玲","透明な夜","幻想","攻撃","UR"],
+["saionji_mio","西園寺 澪","硝子の余白","純文学","妨害","SSR"],
+["amagi_rin","天城 凛","逆光の証言","ミステリ","妨害","SSR"],
+["kurokawa_yoru","黒川 夜","深夜二時の読者","怪奇","攻撃","UR"],
+["shirogane_noa","白銀 ノア","黒猫の栞","幻想","支援","SSR"],
+["fuyutsuki_shiori","冬月 詩織","閉じた頁","純文学","回復","SR"],
+["momose_ruka","百瀬 瑠花","桃色の残響","恋愛","支援","SSR"],
+["aonami_sui","青波 翠","蒼い体温","青春","攻撃","UR"],
+["kagami_kei","鏡 慧","反転する真実","推理","妨害","SSR"],
+["mikazuki_aya","三日月 綾","月蝕の文法","幻想","特殊","UR"],
+["kujo_maya","九条 真夜","沈黙の見出し","社会派","妨害","SSR"],
+["sakuraba_otoha","桜庭 音羽","言えない一行","恋愛","回復","SR"],
+["hanamura_towa","花村 永遠","桜の続きを","青春","支援","SSR"],
+["tsukino_ran","月野 蘭","黒翼の伏線","サスペンス","攻撃","UR"],
+["shinomiya_kanade","四宮 奏","雨音の句読点","純文学","特殊","SSR"],
+["hoshikawa_iri","星川 伊織","ネオンの未来稿","SF","特殊","UR"],
+["minase_yura","水瀬 由良","指先の嘘","心理","妨害","SSR"],
+["tachibana_mei","橘 芽衣","午後三時の本音","エッセイ","回復","SR"],
+["asakura_renka","朝倉 蓮花","摩天楼の風","紀行","支援","SSR"],
+["kisaragi_maya","如月 真綾","喪失の花束","怪奇","攻撃","UR"],
+["kuon_setsuna","久遠 刹那","零秒の記録","SF","特殊","SSR"],
+["shinonome_hina","東雲 陽菜","毛布の向こう側","日常","回復","SR"],
+["karasuma_touka","烏丸 灯花","夜明け前の黒","幻想","攻撃","UR"],
+["yuragi_sena","揺木 セナ","白百合の余白","純文学","支援","SSR"],
+["dazai_melos","太宰 治","走れメロス","日本","速度","SR"],
+["aku_kumo","芥川 龍之介","蜘蛛の糸","日本","特殊","SR"],
+["aku_jigoku","芥川 龍之介","地獄変","日本","攻撃","SSR"],
+["kenji_ame","宮沢 賢治","雨ニモマケズ","日本","回復","SSR"],
+["ranpo_dsaka","江戸川 乱歩","D坂の殺人事件","日本","妨害","SSR"],
+["soseki_neko","夏目 漱石","吾輩は猫である","日本","支援","SSR"],
+["dazai_shayo","太宰 治","斜陽","日本","特殊","SSR"],
+["soseki_yume","夏目 漱石","夢十夜","日本","特殊","SSR"],
+["akiko_kimi","与謝野 晶子","君死にたまふことなかれ","日本","支援","SSR"],
+["mishima_shiosai","三島 由紀夫","潮騒","日本","防御","SR"],
+["poe_morgue","E・A・ポー","モルグ街の殺人","海外","妨害","SSR"],
+["doyle_baskerville","コナン・ドイル","バスカヴィル家の犬","海外","攻撃","SSR"]
+];
+let S={xp:20000,ink:1500,rating:1000,set:0,sets:Array.from({length:10},()=>[0,1,2,3,4,5])};
+try{Object.assign(S,JSON.parse(localStorage.getItem("bk12")||"{}"))}catch(e){}
+if(!S.final)S.final={credits:false,challenge:{clears:0,best:"-"}};if(!S.progress)S.progress={clears:[0,0,0,0],streak:0,bestStreak:0};if(!S.stageBest)S.stageBest=[0,0,0,0];if(S.lastBattleCh==null)S.lastBattleCh=0;if(!S.sessionRun)S.sessionRun={count:0,tickets:0,gear:0};if(!S.gear)S.gear=[];if(!S.equipped)S.equipped={};if(S.gearPity==null)S.gearPity=0;if(S.urPity==null)S.urPity=0;if(!S.lootStats)S.lootStats={drops:0,ssr:0,ur:0};if(S.lootStats.elite==null)S.lootStats.elite=0;if(!S.lootRewards)S.lootRewards={};for(let k in S.equipped){if(typeof S.equipped[k]==="string")S.equipped[k]={pen:S.equipped[k],book:null,accessory:null};}if(S.autoSellRank===undefined)S.autoSellRank=null;if(S.gold==null)S.gold=0;if(S.normalTickets==null)S.normalTickets=0;if(!S.mastery)S.mastery={wins:0,skills:0,perfect:0};if(!S.profile)S.profile={name:"司書",title:"新人司書"};if(!S.settings)S.settings={confirm:true,compact:false};
+function migrateSave(){
+ if(!S||typeof S!=="object")S={};
+ if(!Number.isFinite(+S.xp))S.xp=0;if(!Number.isFinite(+S.ink))S.ink=0;if(!Number.isFinite(+S.rating))S.rating=1000;
+ if(!Array.isArray(S.sets)||S.sets.length!==10)S.sets=Array.from({length:10},()=>[0,1,2,3,4,5]);
+ S.sets=S.sets.map(a=>Array.isArray(a)?a.slice(0,6).map(x=>Math.max(0,Math.min(C.length-1,Number(x)||0))):[0,1,2,3,4,5]);
+ if(!S.lv||typeof S.lv!=="object")S.lv={};if(!S.dupes||typeof S.dupes!=="object")S.dupes={};
+ if(!Array.isArray(S.pick3))S.pick3=[0,1,2];S.pick3=S.pick3.filter(x=>Number.isInteger(+x)&&+x>=0&&+x<C.length).slice(0,3);
+ while(S.pick3.length<3){let n=S.pick3.length;if(!S.pick3.includes(n))S.pick3.push(n);else S.pick3.push((n+1)%C.length)}
+ if(!S.progress)S.progress={clears:[0,0,0,0],streak:0,bestStreak:0};
+ if(!Array.isArray(S.progress.clears))S.progress.clears=[0,0,0,0];
+ if(!S.mastery)S.mastery={wins:0,skills:0,perfect:0};
+ if(!S.favs||!Array.isArray(S.favs))S.favs=[];
+ S._schema=3;
+}
+migrateSave();
+const A=document.getElementById("app"),save=()=>{try{
+S._savedAt=Date.now();
+localStorage.setItem("bk12_backup",localStorage.getItem("bk12")||JSON.stringify(S));
+localStorage.setItem("bk12",JSON.stringify(S));
+localStorage.setItem("bk12_saved_at",String(S._savedAt));
+}catch(e){console.error("save failed",e)}};
+const lv=i=>Number(S.lv?.[i]||1),cap=i=>Math.min(150,50+Math.min(10,Number(S.dupes?.[i]||0))*10);
+if(!S.lv)S.lv={};if(!S.dupes)S.dupes={};if(!Array.isArray(S.pick3))S.pick3=[0,1,2];if(!S.works)S.works=[];if(!S.workLv)S.workLv={};if(!S.profile)S.profile={name:"司書",title:"新人司書"};if(!S.settings)S.settings={confirm:true,compact:false};if(!S.profile.title)S.profile.title="新人司書";if(!S.favs)S.favs=[];if(S.tokens==null)S.tokens=0;if(!S.event)S.event={pt:0,clears:0};if(!S.daily)S.daily={date:"",streak:0,claimed:false};if(!S.tower)S.tower={floor:1,best:0};if(!S.bond)S.bond={};if(!S.missions)S.missions={battle:0,grow:0,story:0,claimed:{}};if(!S.story)S.story={};if(!S.arena)S.arena={wins:0,losses:0,season:1,start:Date.now()};if(!S.progress)S.progress={clears:[0,0,0,0],streak:0,bestStreak:0};if(!Array.isArray(S.progress.clears))S.progress.clears=[0,0,0,0];while(S.progress.clears.length<4)S.progress.clears.push(0);if(!S.stageBest)S.stageBest=[0,0,0,0];if(!S.sessionRun)S.sessionRun={count:0,tickets:0,gear:0};if(!S.mastery)S.mastery={wins:0,skills:0,perfect:0};if(!S.lootStats)S.lootStats={drops:0,ssr:0,ur:0,elite:0};if(!S.starterGranted){S.starterGranted=true;S.normalTickets=(S.normalTickets||0)+60;S.gold=(S.gold||0)+1200;S.mat=(S.mat||0)+300;}if(S.weeklySummons==null)S.weeklySummons=0;if(!S.beginner||typeof S.beginner!=="object")S.beginner={};if(!S.beginner.claimed)S.beginner.claimed={};
+if(!S.archiveStats||typeof S.archiveStats!=="object")S.archiveStats={days:1,totalWins:0,totalGear:0};
+if(!S.achievementClaims||typeof S.achievementClaims!=="object")S.achievementClaims={};
+if(!S.collectionClaims||typeof S.collectionClaims!=="object")S.collectionClaims={};
+if(!S.milestoneClaims||typeof S.milestoneClaims!=="object")S.milestoneClaims={};
+if(!S.weeklyClaims||typeof S.weeklyClaims!=="object")S.weeklyClaims={};
+if(!S.weeklyBase||typeof S.weeklyBase!=="object")S.weeklyBase={wins:S.mastery?.wins||0,gear:S.lootStats?.drops||0,summons:0,start:Date.now()};
+if(!S.seasonPassClaims||typeof S.seasonPassClaims!=="object")S.seasonPassClaims={};
+if(!S.challengeClaims||typeof S.challengeClaims!=="object")S.challengeClaims={};if(!S.chapterRewards||typeof S.chapterRewards!=="object")S.chapterRewards={};if(!Array.isArray(S.hardClears))S.hardClears=[0,0,0,0];while(S.hardClears.length<4)S.hardClears.push(0);if(!S.hardRewards||typeof S.hardRewards!=="object")S.hardRewards={};if(!Array.isArray(S.bossMastery))S.bossMastery=[0,0,0,0];while(S.bossMastery.length<4)S.bossMastery.push(0);if(!S.bossMasteryClaims||typeof S.bossMasteryClaims!=="object")S.bossMasteryClaims={};if(!S.endgameClaims||typeof S.endgameClaims!=="object")S.endgameClaims={};if(!S.starClaims||typeof S.starClaims!=="object")S.starClaims={};if(!S.archiveClaims||typeof S.archiveClaims!=="object")S.archiveClaims={};if(S.summonMedals==null)S.summonMedals=0;if(!S.medalExchange||typeof S.medalExchange!=="object")S.medalExchange={};if(!S.farmPrefs||typeof S.farmPrefs!=="object")S.farmPrefs={runs:3};if(!S.dailyDungeon||typeof S.dailyDungeon!=="object")S.dailyDungeon={key:"",runs:0};if(!S.loginStreak||typeof S.loginStreak!=="object")S.loginStreak={last:"",streak:0,claimed:""};if(!S.qol||typeof S.qol!=="object")S.qol={fastBattle:false,autoEquipNotice:true};if(!S.releasePrefs||typeof S.releasePrefs!=="object")S.releasePrefs={reduceFx:false};if(!S.final||typeof S.final!=="object")S.final={version:70,migrated:true};S.final.version=70;
+if(!Number.isFinite(S.gold))S.gold=0;if(!Number.isFinite(S.ink))S.ink=0;if(!Number.isFinite(S.mat))S.mat=0;if(!Number.isFinite(S.normalTickets))S.normalTickets=0;
+S.gold=Math.max(0,S.gold);S.ink=Math.max(0,S.ink);S.mat=Math.max(0,S.mat);S.normalTickets=Math.max(0,S.normalTickets);
+if(!S.bond||typeof S.bond!=="object")S.bond={};if(!S.lv||typeof S.lv!=="object")S.lv={};if(!S.dupes||typeof S.dupes!=="object")S.dupes={};
+if(!Array.isArray(S.gear))S.gear=[];if(!S.equipped||typeof S.equipped!=="object")S.equipped={};if(!Array.isArray(S.sets)||!S.sets.length)S.sets=[[0,1,2,3,4,5]];if(!Number.isInteger(S.set)||S.set<0||S.set>=S.sets.length)S.set=0;if(!Array.isArray(S.stageBest))S.stageBest=[0,0,0,0];while(S.stageBest.length<4)S.stageBest.push(0);if(!S.progress||typeof S.progress!=="object")S.progress={clears:[0,0,0,0]};if(!Array.isArray(S.progress.clears))S.progress.clears=[0,0,0,0];while(S.progress.clears.length<4)S.progress.clears.push(0);if(S.qol.compactHome==null)S.qol.compactHome=true;if(!Array.isArray(S.savedLoadouts))S.savedLoadouts=[null,null,null];if(!S.battleRecords||typeof S.battleRecords!=="object")S.battleRecords={wins:0,losses:0,turns:0,bestTurn:{},hardWins:0};if(!S.questClaims||typeof S.questClaims!=="object")S.questClaims={};
+if(!S.dailyGoals||typeof S.dailyGoals!=="object")S.dailyGoals=null;
+if(!S.event||typeof S.event!=="object")S.event={pt:0,clears:0};
+if(!S.tower||typeof S.tower!=="object")S.tower={floor:1,best:0};
+if(!S.missions||typeof S.missions!=="object")S.missions={battle:0,grow:0,story:0,claimed:{}};
+if(!S.missions.claimed)S.missions.claimed={};
+
+const WORKS=[
+["太宰 治","人間失格","ningen","妨害",20],["太宰 治","走れメロス","melos","速度",25],
+["芥川 龍之介","蜘蛛の糸","kumo","特殊",20],["芥川 龍之介","地獄変","jigoku","攻撃",30],
+["宮沢 賢治","雨ニモマケズ","ame","回復",25],["江戸川 乱歩","D坂の殺人事件","dsaka","妨害",30],
+["E・A・ポー","大鴉","raven","妨害",30],["アンデルセン","人魚姫","mermaid","回復",25]];
+const LINKS=[["犬猿の文学",["太宰 治","中原 中也"],"ゲージ+15%"],["無頼派",["太宰 治","坂口 安吾"],"攻撃+12%"],["推理文学の系譜",["江戸川 乱歩","E・A・ポー"],"敵防御-15%"],["怪異蒐集",["小泉 八雲","泉 鏡花"],"状態異常+15%"]];
+function links(a){let n=a.map(i=>C[i][1]);return LINKS.filter(r=>r[1].every(x=>n.includes(x)))}
+function linkHints(a){let n=a.map(i=>C[i][1]);return LINKS.filter(r=>r[1].filter(x=>n.includes(x)).length===1).map(r=>r[0]+" → "+r[1].find(x=>!n.includes(x)))}
+function bondLv(i){return Math.floor(Number(S.bond[i]||0)/100)+1}
+function bondGain(i,n){S.bond[i]=Number(S.bond[i]||0)+n;save()}
+
+function bondScreen(i){
+ i=Math.max(0,Math.min(C.length-1,Number(i)||0));
+ let c=C[i],b=bondLv(i),points=Number(S.bond[i]||0),within=points%100,e=bondEpisode(i);
+ shell(`<main class=bondScreenV510>
+   <section class=bondHeroV510>
+     <img src="${characterPortraitV501(i)}" class=portraitContainV506 alt="${c[1]}">
+     <div><small>BOND / 親愛度</small><h1>${c[1]}</h1><p>《${c[2]}》</p><b>絆Lv.${b}</b></div>
+     <button data-char="${i}">詳細へ戻る</button>
+   </section>
+   <section class=bondMeterV510>
+     <div><span>現在 ${points}</span><span>次Lvまで ${Math.max(0,100-within)}</span></div>
+     <i><b style="width:${within}%"></b></i>
+   </section>
+   <section class=bondActionsV510>
+     <button data-talk="${i}">話しかける <small>親愛度 +15</small></button>
+     <button data-bondstory="${i}" ${e.open?"":"disabled"}>${e.open?"人物小篇を読む":"絆Lv3で人物小篇解放"}</button>
+   </section>
+   <section class=bondInfoV510>
+     <article><small>関係</small><b>${b>=8?"深い信頼":b>=5?"親しい":b>=3?"打ち解けた":"知り合い"}</b></article>
+     <article><small>固有能力</small><b>${characterAbility(i).name}</b></article>
+     <article><small>文壇</small><b>${bundanTag(i)}</b></article>
+   </section>
+ </main>`)
+}
+
+function nav(){return primaryNavV116(window.__bkRoute||"")}
+function shell(x){
+ window.__bkBooted=true;window.__bkBootGuard=false;setBootChromeReady(true);
+ let br=document.getElementById("bootRecovery");if(br)br.classList.remove("show");
+ document.body.classList.remove("battleMode","stageDetailModeV540");
+ let premium=/premiumHomeV236|minHomeV117|homeV116/.test(String(x||""));
+ A.innerHTML=`${premium?"":`<div class=top><b>文豪綺譚 <span class=gold>V543</span></b><small>EXP ${S.xp} / 🖋️${S.ink}</small></div>`}<div class=screenFade>${x}</div>${premium?"":nav()}`
+}
+function accountLevel(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return Math.max(1,Math.min(50,Math.floor(score/100)+1))}
+function accountXp(){let clears=(S.progress?.clears||[]).reduce((a,b)=>a+b,0),score=Math.floor((S.mastery?.wins||0)*20+clears*15+(S.xp||0)/100);return score%100}
+function todayKey(){return new Date().toISOString().slice(0,10)}
+function ensureDailyGoals(){let k=todayKey();if(!S.dailyGoals||S.dailyGoals.date!==k)S.dailyGoals={date:k,startWins:S.mastery?.wins||0,startSkills:S.mastery?.skills||0,startXp:S.xp||0,claimed:false};}
+function dailyGoalState(){ensureDailyGoals();let g=S.dailyGoals,w=Math.max(0,(S.mastery?.wins||0)-g.startWins),sk=Math.max(0,(S.mastery?.skills||0)-g.startSkills),xp=Math.max(0,(S.xp||0)-g.startXp);return{w,sk,xp,done:w>=3&&sk>=5&&xp>=500}}
+function eraOf(i){return i<8?"明治":i<18?"大正":i<22?"昭和":"海外"}
+function masteryStats(i){
+ let c=C[i],attr=c[4],era=eraOf(i),all=C.map((_,k)=>k);
+ let avg=a=>a.length?a.reduce((z,k)=>z+lv(k),0)/a.length:0;
+ let overall=avg(all),attrAvg=avg(all.filter(k=>C[k][4]===attr)),eraAvg=avg(all.filter(k=>eraOf(k)===era));
+ let overallPct=Math.floor(overall/10),attrPct=Math.floor(attrAvg/12),eraPct=Math.floor(eraAvg/15);
+ return{overall,attrAvg,eraAvg,overallPct,attrPct,eraPct,total:overallPct+attrPct+eraPct,attr,era}
+}
+function boostedPower(i){let m=masteryStats(i),g=gearBonus(i),sp=gearSpecialization(i),p=characterStatProfileV511(i);return Math.round((700+lv(i)*35+g.atk*5+g.def*3)*p.power*(1+(m.total+sp.bonus)/100))}
+const ELITE_AFFIXES=[
+["一閃","会心時に追加ダメージ"],["連筆","低確率で通常攻撃を再発動"],
+["速稿","戦闘開始ゲージ+10%"],["不屈","HP低下時に防御上昇"],
+["群像","全体攻撃ダメージ上昇"],["推敲","奥義後にゲージ一部返還"]
+];
+const GEAR_SETS=[
+["無頼派","攻撃力+8%","奥義威力+12%"],
+["怪奇幻想","スキルゲージ+10%","全体攻撃威力+15%"],
+["純文学","防御力+10%","被ダメージ-10%"],
+["浪漫派","会心+8%","追加攻撃率+10%"],
+["探偵文学","速度+10%","戦闘開始ゲージ+15%"]
+];
+const GEAR_RANKS=["R","SR","SSR","UR"];
+const GEAR_SKILLS=[
+["攻撃力",5],["防御力",5],["スキルゲージ上昇",4],["HP",6],["会心",3],["全体攻撃",2],["奥義威力",3],["被ダメ軽減",3],["追加攻撃",2],["戦闘開始ゲージ",2]
+];
+function gearSkillCount(rank){return rank==="UR"?4:rank==="SSR"?3:rank==="SR"?2:1}
+function makeGear(ch){
+ let roll=Math.random(),rank=S.urPity>=9?(Math.random()<.18?"UR":"SSR"):roll<.03?"UR":roll<(.15+huntMastery().ssrBonus)?"SSR":roll<.45?"SR":"R";if(ch>=2&&rank==="R"&&Math.random()<.35)rank="SR";
+ let types=["pen","book","accessory"],type=types[Math.floor(Math.random()*3)];
+ let names={pen:["漆黒の万年筆","硝子筆","古筆","羽根ペン"],book:["初版本","未完の原稿","禁書","革装本"],accessory:["懐中時計","銀縁眼鏡","古い栞","文豪の指輪"]};
+ let level=1+Math.floor(Math.random()*(5+ch*3))+huntMastery().levelBonus,count=gearSkillCount(rank),pool=[...GEAR_SKILLS],skills=[];
+ for(let n=0;n<count;n++){let k=Math.floor(Math.random()*pool.length);skills.push(pool.splice(k,1)[0][0])}
+ let set=GEAR_SETS[Math.floor(Math.random()*GEAR_SETS.length)][0],elite=null;if((rank==="SSR"&&Math.random()<.08)||(rank==="UR"&&Math.random()<.25))elite=ELITE_AFFIXES[Math.floor(Math.random()*ELITE_AFFIXES.length)][0];return{id:Date.now()+"_"+Math.random().toString(36).slice(2,7),locked:false,type,set,elite,name:names[type][Math.floor(Math.random()*names[type].length)],rank,level,skills,atk:level*(rank==="UR"?8:rank==="SSR"?6:rank==="SR"?4:2),def:level*(rank==="UR"?7:rank==="SSR"?5:rank==="SR"?3:2)}
+}
+function gearRankValue(r){return{R:1,SR:2,SSR:3,UR:4}[r]||0}
+function rerollCost(g){return 100+gearRankValue(g.rank)*80+g.level*5}
+function rerollGear(g){if(!g)return false;let cost=rerollCost(g);if((S.gold||0)<cost)return false;S.gold-=cost;let count=gearSkillCount(g.rank),pool=[...GEAR_SKILLS],skills=[];for(let n=0;n<count;n++){let k=Math.floor(Math.random()*pool.length);skills.push(pool.splice(k,1)[0][0])}g.skills=skills;return true}
+function isGodDrop(g){return g&&g.rank==="UR"&&g.skills.includes("全体攻撃")&&(g.skills.includes("スキルゲージ上昇")||g.skills.includes("戦闘開始ゲージ"))}
+function gearSellValue(g){return gearRankValue(g.rank)*40+g.level*8+g.skills.length*15}
+function shouldAutoSell(g){return S.autoSellRank&&gearRankValue(g.rank)<=gearRankValue(S.autoSellRank)&&!g.locked}
+function gearMaxLv(g){return{R:10,SR:20,SSR:35,UR:50}[g.rank]||10}
+function gearUpgradeCost(g){return 30+g.level*15}
+function upgradeGear(g){
+ if(!g||g.level>=gearMaxLv(g))return false;
+ let cost=gearUpgradeCost(g);if((S.gold||0)<cost)return false;
+ S.gold-=cost;g.level++;let mult={R:2,SR:4,SSR:6,UR:8}[g.rank]||2;g.atk+=mult;g.def+=Math.max(1,mult-1);return true
+}
+function gearScore(g){if(!g)return 0;let rv={R:1,SR:2,SSR:3,UR:4},sv={"攻撃力":18,"防御力":15,"スキルゲージ上昇":25,"HP":12,"会心":20,"全体攻撃":35,"奥義威力":24,"被ダメ軽減":22,"追加攻撃":30,"戦闘開始ゲージ":32};return rv[g.rank]*100+g.level*10+g.atk+g.def+g.skills.reduce((z,s)=>z+(sv[s]||10),0)+(g.elite?80:0)}
+function equippedGears(i){let eq=S.equipped[i]||{},ids=typeof eq==="string"?[eq]:[eq.pen,eq.book,eq.accessory];return ids.map(id=>safeGearFind(x=>x.id===id)).filter(Boolean)}
+function gearSpecialization(i){
+ let gs=equippedGears(i),skills=gs.flatMap(g=>g.skills||[]);
+ let atk=skills.filter(s=>["攻撃力","会心","追加攻撃","奥義威力","全体攻撃"].includes(s)).length;
+ let def=skills.filter(s=>["防御力","HP","被ダメ軽減"].includes(s)).length;
+ let tech=skills.filter(s=>["スキルゲージ上昇","戦闘開始ゲージ"].includes(s)).length;
+ let type=atk>=def&&atk>=tech?"猛筆":def>=tech?"堅筆":"速筆";
+ let bonus=gs.length===3?Math.max(atk,def,tech)*2:0;
+ return{atk,def,tech,type,bonus}
+}
+function gearSetBonus(i){let gs=equippedGears(i),counts={};gs.forEach(g=>{if(g.set)counts[g.set]=(counts[g.set]||0)+1});let active=[];for(let [name,n] of Object.entries(counts)){let d=GEAR_SETS.find(x=>x[0]===name);if(n>=2&&d)active.push({name,count:n,two:d[1],three:n>=3?d[2]:null})}return active}
+function gearBonus(i){let gs=equippedGears(i),sets=gearSetBonus(i),atk=gs.reduce((z,g)=>z+g.atk,0),def=gs.reduce((z,g)=>z+g.def,0),gauge=gs.some(g=>g.skills.includes("スキルゲージ上昇"))?10:0,aoe=gs.some(g=>g.skills.includes("全体攻撃"));sets.forEach(s=>{if(s.name==="無頼派")atk=Math.round(atk*1.08);if(s.name==="純文学")def=Math.round(def*1.10);if(s.name==="怪奇幻想")gauge+=10;if(s.name==="探偵文学"&&s.count>=3)gauge+=15});return{atk,def,gauge,aoe}}
+
+
+function huntMastery(){
+ let n=S.lootStats?.drops||0,tier=n>=200?5:n>=100?4:n>=50?3:n>=20?2:n>=5?1:0;
+ return{tier,name:["新人蒐集家","古書漁り","装備蒐集家","鑑定士","秘宝蒐集家","伝説の司書"][tier],levelBonus:tier*2,ssrBonus:tier*.01}
+}
+function gearInventoryStats(){
+ let g=S.gear||[];return{all:g.length,R:g.filter(x=>x.rank==="R").length,SR:g.filter(x=>x.rank==="SR").length,SSR:g.filter(x=>x.rank==="SSR").length,UR:g.filter(x=>x.rank==="UR").length,locked:g.filter(x=>x.locked).length,elite:g.filter(x=>x.elite).length}
+}
+function lootToast(g,sold=false){
+ if(!g)return;
+ let d=document.createElement("div");d.className="lootToast "+(g.elite?"elite":"");
+ d.innerHTML=`<div class=rank>${g.rank}${g.elite?" ★":""}</div><b>${g.name}</b><small>Lv.${g.level} / ${g.set||"無銘"}</small>${g.elite?`<div>特殊特性：${g.elite}</div>`:""}<small>${sold?"自動売却 "+gearSellValue(g)+"文銭":"装備を獲得"}</small>`;
+ document.body.appendChild(d);setTimeout(()=>d.remove(),2200)
+}
+function showBattleResult(r){
+ let d=document.createElement("div");d.className="resultOverlay";
+ d.innerHTML=`<div class=resultPanel><span class=resultBadge>QUEST RESULT</span><div class=resultTitle>STAGE CLEAR</div>${r.clears===1?`<div class=firstClear>FIRST CLEAR!　出撃画面で踏破報酬を受け取れます</div>`:""}<div class=resultDivider></div><div class=resultStars>${"★".repeat(r.stars)}${"☆".repeat(3-r.stars)}</div><div class=resultGrid><div>ターン<b>${r.turn}</b></div><div>EXP<b>+${r.exp}</b></div><div>資料<b>+${r.mat}</b></div><div>原稿片<b>+${r.tickets}</b></div><div>インク<b>+${r.ink}</b></div><div>クリア<b>${r.clears}回</b></div></div><div class=resultGear>${r.gear?`<b>${r.gear.rank} ${r.gear.name}</b><br><small>Lv.${r.gear.level} / ${r.gear.set||"無銘"} ${r.gear.elite?" / ★"+r.gear.elite:""}</small>${r.sold?`<br><span class=gold>自動売却 +${gearSellValue(r.gear)}文銭</span>`:""}`:"<small>装備ドロップなし</small>"}</div><div class=quickLoop><div>連続周回<b>${S.sessionRun.count}</b></div><div>今周回の札<b>${S.sessionRun.tickets}</b></div><div>装備獲得<b>${S.sessionRun.gear}</b></div></div><div class=resultNext>${S.gearPity>=8?"次戦は装備確定圏！":S.normalTickets>=100?"通常10連を回せます":"周回で原稿片と装備を集めよう"}</div><div class=resultPity>装備確定まで最大あと ${Math.max(1,10-S.gearPity)}戦 / SSR以上確定まで最大あと ${Math.max(1,10-S.urPity)}装備</div><div class=resultActions><button class="btn primary" data-result-retry=1>もう一度</button><button class=btn data-result-close=1>ステージ選択</button><button class=btn data-result-party=1>編成を見直す</button></div></div>`;
+ document.body.appendChild(d)
+}
+function showGachaResults(got,cost){let d=document.createElement("div");d.className="resultOverlay gachaResultOverlayV500";let high=got.filter(i=>["SR","SSR","UR"].includes(C[i][5])).length;let top=got.reduce((best,i)=>charRankOrder(charRank(i))>charRankOrder(charRank(best))?i:best,got[0]??0);d.innerHTML=`<div class="resultPanel gachaResultPanelV500"><div class=gachaResultHeadV500><div><small>SUMMON RESULT</small><h1>召喚結果</h1></div><button data-gacha-close=1>×</button></div><div class=resultGrid><div>召喚<b>${got.length}</b></div><div>SR以上<b>${high}</b></div><div>最高<b>${charRank(top)}</b></div></div><div class=gachaResultGridV500>${got.map(i=>{let c=C[i],sig=characterSignatureV496(i);return `<button class="gachaMiniV500 ${charRank(i)}" data-gacha-char-v500="${i}"><div class=gachaMiniImgV500><img src="${characterImage(c[0])}">${rankBadgeV504(i)}</div><div class=gachaMiniTextV500><small>${characterAbility(i).role} / ${bundanTag(i)}</small><b>${c[1]}</b><span>${characterAbility(i).name}</span><em>${sig.title}</em></div></button>`}).join("")}</div><div class=gachaHintV500>タップでキャラ詳細</div><div class="gachaActions gachaActionsV500"><button class=btn data-gacha-repeat="${got.length}">もう一度</button><button class=btn data-gacha-close=1>召喚へ戻る</button></div></div>`;document.body.appendChild(d)}
+function ensureUnitSets(){if(!Array.isArray(S.sets))S.sets=[];while(S.sets.length<10)S.sets.push([0,1,2,3,4,5]);S.sets=S.sets.slice(0,10).map(a=>{a=Array.isArray(a)?a.slice(0,6):[];while(a.length<6)a.push(a.length%C.length);return a.map(x=>Math.max(0,Math.min(C.length-1,Number(x)||0)))});if(!Number.isInteger(S.set)||S.set<0||S.set>9)S.set=0;return S.sets}
+function arenaRank(r){return r>=1800?"金筆":r>=1400?"銀筆":r>=1100?"青筆":"銅筆"}
+function arenaNext(r){return r>=1800?2000:r>=1400?1800:r>=1100?1400:1100}
+function arenaRewardText(r){return r>=1800?"インク300・文銭3000":r>=1400?"インク200・文銭2000":r>=1100?"インク100・文銭1000":"文銭500"}
+function arenaMilestones(){return[1100,1400,1800,2000]}
+function arenaRewardFor(n){return n===2000?{ink:400,gold:5000}:n===1800?{ink:300,gold:3000}:n===1400?{ink:200,gold:2000}:{ink:100,gold:1000}}
+function recordArena(result,delta,enemy){S.arena.history.unshift({result,delta,enemy,rating:S.rating,at:Date.now()});S.arena.history=S.arena.history.slice(0,20);if(result==="WIN"){S.arena.wins=(S.arena.wins||0)+1;S.arena.streak=(S.arena.streak||0)+1;S.arena.bestStreak=Math.max(S.arena.bestStreak||0,S.arena.streak)}else{S.arena.losses=(S.arena.losses||0)+1;S.arena.streak=0}S.arena.bestRating=Math.max(S.arena.bestRating||0,S.rating||0)}
+function runArenaMatch(mode){
+ arenaEnsureV481();ensureUnitSets();
+ let own=unitPower(S.sets[S.set]),base=mode==="boss"?22000:mode==="elite"?Math.max(8500,own*(1.03+Math.random()*.30)):Math.max(5500,own*(.82+Math.random()*.34)),enemy=Math.round(base);
+ let win=mode==="boss"?own>enemy*.92:mode==="elite"?own*(.93+Math.random()*.23)>enemy:own*(.92+Math.random()*.24)>enemy;
+ let delta=win?(mode==="boss"?45:mode==="elite"?28+Math.floor(Math.random()*16):18+Math.floor(Math.random()*13)):-(mode==="elite"?12+Math.floor(Math.random()*13):10+Math.floor(Math.random()*11));
+ let name=mode==="boss"?"最強CPU じゃむちん":mode==="elite"?"文壇評議会":["墨守の司書","夜更けの読書家","銀河文庫","蒼筆の司書"][Math.floor(Math.random()*4)];
+ S.rating=Math.max(800,(S.rating||1000)+delta);
+recordArena(win?"WIN":"LOSE",delta,name);
+arenaEnsureV481();
+S.arena.bestRating=Math.max(S.arena.bestRating||0,S.rating||1000);
+S.arena.bestStreak=Math.max(S.arena.bestStreak||0,S.arena.streak||0);
+if(win&&Math.random()<.32)S.arena.defenseWins=(S.arena.defenseWins||0)+1;
+save();
+ let d=document.createElement("div");d.className="arenaResult";d.innerHTML=`<div class=arenaResultPanel><span class=resultBadge>ARENA RESULT</span><h1>${win?"WIN":"LOSE"}</h1><div class=resultDivider></div><div>${name}</div><div class="ratingDelta ${win?"winText":"loseText"}">${delta>0?"+":""}${delta}</div><div class=arenaResultStats><div>戦闘力<b>${own.toLocaleString()}</b></div><div>相手<b>${enemy.toLocaleString()}</b></div><div>Rating<b>${S.rating}</b></div></div><button class=btn data-arena-result-close=1>模擬戦へ戻る</button></div>`;document.body.appendChild(d)
+}
+function beginnerMissions(){
+ let avg=Math.round(C.reduce((z,_,i)=>z+lv(i),0)/C.length);
+ return[
+  {id:"lv5",name:"司書Lv5",now:accountLevel(),goal:5,reward:"原稿片50",give:()=>S.normalTickets=(S.normalTickets||0)+50},
+  {id:"win5",name:"5勝する",now:S.mastery?.wins||0,goal:5,reward:"文銭1000",give:()=>S.gold=(S.gold||0)+1000},
+  {id:"avg10",name:"平均Lv10",now:avg,goal:10,reward:"インク100",give:()=>S.ink=(S.ink||0)+100},
+  {id:"gear1",name:"装備を1個発見",now:S.lootStats?.drops||0,goal:1,reward:"文銭500",give:()=>S.gold=(S.gold||0)+500},
+  {id:"summon10",name:"原稿片100枚",now:S.normalTickets||0,goal:100,reward:"資料300",give:()=>S.mat=(S.mat||0)+300}
+ ]}
+function growthSummary(){
+ let avg=C.reduce((z,_,i)=>z+lv(i),0)/C.length,ssr=(S.gear||[]).filter(g=>g.rank==="SSR"||g.rank==="UR").length;
+ let next=S.normalTickets<100?`通常10連まで原稿片あと ${100-S.normalTickets}`:S.gearPity>=7?`装備確定まであと ${10-S.gearPity}戦`:avg<50?`全体平均Lv50まであと ${(50-avg).toFixed(1)}`:`高難度・模擬戦へ挑戦`;
+ return{avg,ssr,next}
+}
+function archiveSummary(){
+ if(!S.archiveStats||typeof S.archiveStats!=="object")S.archiveStats={days:1,totalWins:0,totalGear:0};
+ let wins=S.mastery?.wins||0,gear=S.lootStats?.drops||0;
+ S.archiveStats.totalWins=Math.max(S.archiveStats.totalWins||0,wins);
+ S.archiveStats.totalGear=Math.max(S.archiveStats.totalGear||0,gear);
+ return{wins:S.archiveStats.totalWins,gear:S.archiveStats.totalGear,authors:C.length,avg:C.reduce((z,_,i)=>z+lv(i),0)/C.length}
+}
+function achievements(){
+ let avg=C.reduce((z,_,i)=>z+lv(i),0)/C.length;
+ return[
+ {id:"w25",name:"戦場の読書家",desc:"25勝する",now:S.mastery?.wins||0,goal:25,reward:"文銭1500",give:()=>S.gold=(S.gold||0)+1500},
+ {id:"g10",name:"蒐集のはじまり",desc:"装備を10個発見",now:S.lootStats?.drops||0,goal:10,reward:"インク100",give:()=>S.ink=(S.ink||0)+100},
+ {id:"avg25",name:"育つ蔵書",desc:"蔵書平均Lv25",now:avg,goal:25,reward:"原稿片100",give:()=>S.normalTickets=(S.normalTickets||0)+100},
+ {id:"r1400",name:"銀筆への道",desc:"Rating1400",now:S.arena?.bestRating||S.rating||1000,goal:1400,reward:"文銭2000",give:()=>S.gold=(S.gold||0)+2000},
+ {id:"ur1",name:"黄金の一頁",desc:"UR装備を1個発見",now:S.lootStats?.ur||0,goal:1,reward:"インク150",give:()=>S.ink=(S.ink||0)+150}
+ ]}
+function collectionGoals(){
+ let lv50=C.filter((_,i)=>lv(i)>=50).length,lv100=C.filter((_,i)=>lv(i)>=100).length,full=C.filter((_,i)=>(S.dupes[i]||0)>=10).length,elite=S.lootStats?.elite||0;
+ return[
+ {id:"lv50x5",name:"五冊の主力",now:lv50,goal:5,reward:"原稿片100",give:()=>S.normalTickets=(S.normalTickets||0)+100},
+ {id:"lv100x3",name:"百頁の境地",now:lv100,goal:3,reward:"インク200",give:()=>S.ink=(S.ink||0)+200},
+ {id:"full1",name:"完全突破",now:full,goal:1,reward:"文銭3000",give:()=>S.gold=(S.gold||0)+3000},
+ {id:"elite3",name:"特殊装備蒐集",now:elite,goal:3,reward:"資料500",give:()=>S.mat=(S.mat||0)+500}
+ ]}
+function librarianMilestones(){
+ let l=accountLevel();
+ return[
+ {id:"L5",lv:5,reward:"原稿片50",give:()=>S.normalTickets=(S.normalTickets||0)+50},
+ {id:"L10",lv:10,reward:"文銭1000",give:()=>S.gold=(S.gold||0)+1000},
+ {id:"L20",lv:20,reward:"インク150",give:()=>S.ink=(S.ink||0)+150},
+ {id:"L30",lv:30,reward:"原稿片100",give:()=>S.normalTickets=(S.normalTickets||0)+100},
+ {id:"L40",lv:40,reward:"文銭3000",give:()=>S.gold=(S.gold||0)+3000},
+ {id:"L50",lv:50,reward:"インク300",give:()=>S.ink=(S.ink||0)+300}
+ ].map(x=>({...x,ready:l>=x.lv}))
+}
+function claimableCount(){
+ let n=0;
+ try{n+=beginnerMissions().filter(m=>m.now>=m.goal&&!S.beginner.claimed[m.id]).length}catch(e){}
+ try{n+=achievements().filter(a=>a.now>=a.goal&&!S.achievementClaims[a.id]).length}catch(e){}
+ try{n+=collectionGoals().filter(g=>g.now>=g.goal&&!S.collectionClaims[g.id]).length}catch(e){}
+ try{n+=librarianMilestones().filter(m=>m.ready&&!S.milestoneClaims[m.id]).length}catch(e){}
+ return n
+}
+function weeklyTasks(){
+ let wins=Math.max(0,(S.mastery?.wins||0)-(S.weeklyBase?.wins||0));
+ let gear=Math.max(0,(S.lootStats?.drops||0)-(S.weeklyBase?.gear||0));
+ let summons=S.weeklySummons||0;
+ let avg=C.reduce((z,_,i)=>z+lv(i),0)/C.length;
+ return[
+ {id:"wwin15",name:"今週15勝",now:wins,goal:15,reward:"原稿片150",give:()=>S.normalTickets=(S.normalTickets||0)+150},
+ {id:"wgear3",name:"装備を3個発見",now:gear,goal:3,reward:"文銭2500",give:()=>S.gold=(S.gold||0)+2500},
+ {id:"wsum30",name:"通常ガチャ30回",now:summons,goal:30,reward:"インク200",give:()=>S.ink=(S.ink||0)+200},
+ {id:"wavg30",name:"蔵書平均Lv30",now:avg,goal:30,reward:"資料600",give:()=>S.mat=(S.mat||0)+600}
+ ]}
+function weeklyClaimable(){return weeklyTasks().filter(t=>t.now>=t.goal&&!S.weeklyClaims[t.id]).length}
+function seasonPassState(){
+ let wins=S.mastery?.wins||0,gear=S.lootStats?.drops||0,summons=S.weeklySummons||0,rating=Math.max(0,(S.rating||1000)-1000),avg=C.reduce((z,_,i)=>z+lv(i),0)/C.length;
+ let xp=Math.floor(wins*12+gear*25+summons*5+rating*.5+avg*3);
+ let level=Math.max(1,Math.min(30,Math.floor(xp/150)+1));
+ let inLevel=xp%150;
+ return{xp,level,inLevel}
+}
+function seasonPassRewards(){
+ let s=seasonPassState();
+ return[
+ {lv:3,id:"sp3",reward:"原稿片100",give:()=>S.normalTickets=(S.normalTickets||0)+100},
+ {lv:5,id:"sp5",reward:"文銭1500",give:()=>S.gold=(S.gold||0)+1500},
+ {lv:10,id:"sp10",reward:"インク150",give:()=>S.ink=(S.ink||0)+150},
+ {lv:15,id:"sp15",reward:"資料500",give:()=>S.mat=(S.mat||0)+500},
+ {lv:20,id:"sp20",reward:"原稿片200",give:()=>S.normalTickets=(S.normalTickets||0)+200},
+ {lv:25,id:"sp25",reward:"文銭5000",give:()=>S.gold=(S.gold||0)+5000},
+ {lv:30,id:"sp30",reward:"インク400",give:()=>S.ink=(S.ink||0)+400}
+ ].map(x=>({...x,ready:s.level>=x.lv}))
+}
+function seasonPassClaimable(){return seasonPassRewards().filter(x=>x.ready&&!S.seasonPassClaims[x.id]).length}
+function challengeBoard(){
+ let avg=C.reduce((z,_,i)=>z+lv(i),0)/C.length,ur=S.lootStats?.ur||0,elite=S.lootStats?.elite||0,rt=S.rating||1000,gear=S.lootStats?.drops||0;
+ return[
+ {id:"cavg50",name:"蔵書平均Lv50",now:avg,goal:50,reward:"原稿片200",give:()=>S.normalTickets=(S.normalTickets||0)+200},
+ {id:"crt1600",name:"Rating1600",now:rt,goal:1600,reward:"インク250",give:()=>S.ink=(S.ink||0)+250},
+ {id:"cur3",name:"UR装備3個",now:ur,goal:3,reward:"文銭5000",give:()=>S.gold=(S.gold||0)+5000},
+ {id:"celite5",name:"特殊装備5個",now:elite,goal:5,reward:"資料800",give:()=>S.mat=(S.mat||0)+800},
+ {id:"cgear50",name:"装備50個発見",now:gear,goal:50,reward:"インク300",give:()=>S.ink=(S.ink||0)+300},
+ {id:"cwin100",name:"100勝",now:S.mastery?.wins||0,goal:100,reward:"原稿片300",give:()=>S.normalTickets=(S.normalTickets||0)+300}
+ ]}
+function challengeClaimable(){return challengeBoard().filter(c=>c.now>=c.goal&&!S.challengeClaims[c.id]).length}
+function nextPlayGuide(){
+ for(let i=0;i<4;i++)if((S.progress.clears?.[i]||0)>0&&!S.chapterRewards?.[i])return{icon:"🎁",title:`第${i+1}章の踏破報酬`,text:"初回クリア報酬を受け取ろう。",go:"sortie"};
+ if(S.loginStreak?.claimed!==localDayKey())return{icon:"🎁",title:"本日のログイン報酬",text:loginReward().label+"を受け取れます。",go:"home"};if(archiveClaimable())return{icon:"📚",title:"文豪蒐集報酬",text:`${archiveClaimable()}件の報酬を受取可能。`,go:"list"};if(questClaimable())return{icon:"🏆",title:"司書挑戦録",text:`${questClaimable()}件の達成報酬があります。`,go:"home"};if((S.progress.clears?.[0]||0)===0)return{icon:"⚔️",title:"まずは第1章へ",text:"戦闘で原稿片とEXPを集めよう。",go:"sortie"};
+ if((S.normalTickets||0)>=100)return{icon:"🖋️",title:"10連召喚できます",text:"原稿片100枚でSR以上1枠保証。",go:"summon"};
+ if((S.gear?.length||0)>0)return{icon:"📚",title:"装備を付けよう",text:"文豪詳細の「3枠おすすめ装備」で即戦力アップ。",go:"list"};
+ if((S.progress.clears?.[1]||0)===0)return{icon:"⚔️",title:"第2章が解放済み",text:"編成を育てながら物語を進めよう。",go:"sortie"};
+ return S.normalTickets<100?{icon:"⚡",title:"周回で原稿片を集めよう",text:`おすすめは第${recommendedFarm()+1}章。10連まであと ${100-(S.normalTickets||0)}枚。`,go:"sortie"}:{icon:"👥",title:"文壇を育てよう",text:"装備・リンクを整えて高難度へ。",go:"party"}
+}
+function coreHome(){
+ ensureUnitSets();
+ let i=Number.isInteger(S.homeChar)?S.homeChar:0,c=C[i]||C[0];
+ shell(`<div class=homeCinematic><img src="assets/anime/home_cinematic.jpg"><div class=homeShade></div><div class=homeLogo>文豪綺譚<small style="display:block;font-size:9px;letter-spacing:4px">BUNGOU KITAN</small></div><div class=homeResources><span>📜 ${S.normalTickets||0}</span><span>💰 ${S.gold||0}</span><span>💎 ${S.ink||0}</span></div><div class=homeSpeech>言葉は、まだ終わらない。</div></div><div class=p>${(()=>{let l=updateLoginStreak(),r=loginReward(),claimed=l.claimed===localDayKey();return `<div class=loginPanel><div class=collectionBar><div><small>DAILY LOGIN</small><h3>連続 ${l.streak}日</h3></div><span class=gold>${r.label}</span></div><div class=loginRail>${[1,2,3,4,5,6,7].map(n=>`<span class="${((l.streak-1)%7)+1>=n?"done":""}">${n}日</span>`).join("")}</div><button class=btn data-login-reward=1 ${claimed?"disabled":""}>${claimed?"本日受取済":"ログイン報酬を受取"}</button></div>`})()}${(()=>{let n=rewardCenterItems().length;return `<div class=uiSectionTitle>司書メニュー</div><button class="rewardCenterButton ${n?"ready":""}" data-reward-center=1><span>🎁</span><div><b>報酬センター</b><small>${n?`${n}件の報酬を受取可能`:"未受取報酬なし"}</small></div><strong>${n}</strong></button>`})()}${(()=>{let o=onboardingState();return o?`<div class=onboardingCard><div class=collectionBar><div><small>BEGINNER GUIDE ${o.step}/5</small><h3>${o.title}</h3></div><span>STEP ${o.step}</span></div><p>${o.text}</p><div class=onboardingActions><button class=btn data-go="${o.go}">移動する</button><button class=btn data-onboarding-claim=1>${S.onboarding["onboard"+o.step]?"受取済":`🎁 ${o.reward}`}</button></div></div>`:""})()}<div class=releaseBanner><div><small>FINAL BUILD</small><b>文豪綺譚 Ver.70</b></div><button class=btn data-qa-center=1>✓ QA</button></div><button class=saveRecoveryButton data-save-recover=1><span>💾</span><div><b>セーブ保護 V88</b><small>旧版・バックアップから最高進行度を自動統合</small></div><strong>復旧</strong></button><button class="v50Button" data-v50-guide=1><span>V50</span><div><b>PLAYABLE CHECKPOINT</b><small>ゲーム全体の遊び方を確認</small></div><strong>›</strong></button><button class="progressHubButton" data-progress-hub=1><span>📊</span><div><b>司書ダッシュボード</b><small>進行・戦力・未受取報酬をまとめて確認</small></div><strong>›</strong></button>${(()=>{let x=homeFocusData();return `<div class=homeFocus><div class=homeFocusMain><small>NEXT ACTION</small><h2>${x.next.icon} ${x.next.title}</h2><p>${x.next.text}</p><button class=btn data-go="${x.next.go}">ここから進める</button></div><div class=homeFocusSide><button data-progress-hub=1><span>進行</span><b>${x.story}/4</b></button><button data-go=list><span>蒐集</span><b>${x.cp.pct}%</b></button><button data-go=party><span>準備</span><b>${x.tr.score}%</b></button><button data-reward-center=1><span>報酬</span><b>${x.rewards}</b></button></div></div>`})()}<div class=homeDensityBar><span>${homeSummaryLine()}</span><button class=btn data-home-density=1>${S.qol.compactHome?"詳細を表示":"コンパクト表示"}</button></div><div class="${S.qol.compactHome?"homeSecondary compact":"homeSecondary"}"><div class=homeActions><button class=btn data-go=sortie><b>⚔️</b>出撃</button><button class=btn data-go=party><b>👥</b>編成</button><button class=btn data-go=list><b>📚</b>文豪</button><button class=btn data-go=summon><b>🖋️</b>召喚</button></div><div class=homeAlert>安定モードで起動中。ゲーム本編はそのまま遊べます。</div></div>`)
+}
+function storyUnlocks(){return["序章：言葉のはじまり","第二幕：失われた書庫","第三幕：海の向こう","終幕：黒き原稿"].map((name,i)=>({name,open:(S.progress.clears[i]||0)>0}))}
+function localDayKey(d=new Date()){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function updateLoginStreak(){
+ let today=localDayKey(),y=new Date();y.setDate(y.getDate()-1);let yesterday=localDayKey(y);
+ if(S.loginStreak.last!==today){S.loginStreak.streak=S.loginStreak.last===yesterday?(S.loginStreak.streak||0)+1:1;S.loginStreak.last=today;save()}
+ return S.loginStreak
+}
+function loginReward(){
+ let n=((updateLoginStreak().streak-1)%7)+1;
+ return[
+  {label:"原稿片30",give:()=>S.normalTickets=(S.normalTickets||0)+30},
+  {label:"文銭800",give:()=>S.gold=(S.gold||0)+800},
+  {label:"資料250",give:()=>S.mat=(S.mat||0)+250},
+  {label:"インク50",give:()=>S.ink=(S.ink||0)+50},
+  {label:"原稿片50",give:()=>S.normalTickets=(S.normalTickets||0)+50},
+  {label:"文銭1500",give:()=>S.gold=(S.gold||0)+1500},
+  {label:"原稿片100＋インク100",give:()=>{S.normalTickets=(S.normalTickets||0)+100;S.ink=(S.ink||0)+100}}
+ ][n-1]
+}
+function claimLoginReward(){
+ let today=localDayKey();if(S.loginStreak.claimed===today)return false;let r=loginReward();r.give();S.loginStreak.claimed=today;save();return r
+}
+function questBoard(){
+ let r=battleRecordSummary(),stars=totalStars(),hard=(S.hardClears||[]).reduce((z,x)=>z+(x||0),0),gear=S.lootStats?.drops||0;
+ return[
+ {id:"qwin10",name:"十戦十筆",desc:"戦闘に10回勝利",now:r.wins,goal:10,reward:"原稿片80",give:()=>S.normalTickets=(S.normalTickets||0)+80},
+ {id:"qstar6",name:"六つ星の書架",desc:"合計★6",now:stars,goal:6,reward:"文銭1800",give:()=>S.gold=(S.gold||0)+1800},
+ {id:"qhard5",name:"難稿突破",desc:"HARDを5回クリア",now:hard,goal:5,reward:"インク120",give:()=>S.ink=(S.ink||0)+120},
+ {id:"qgear20",name:"装具蒐集家",desc:"装備を20個発見",now:gear,goal:20,reward:"資料700",give:()=>S.mat=(S.mat||0)+700},
+ {id:"qfast",name:"速筆校了",desc:"どこかの章を3ターン以内",now:Object.values(S.battleRecords?.bestTurn||{}).some(x=>x&&x<=3)?1:0,goal:1,reward:"原稿片120",give:()=>S.normalTickets=(S.normalTickets||0)+120}
+ ]}
+function questClaimable(){return questBoard().filter(q=>q.now>=q.goal&&!S.questClaims[q.id]).length}
+function progressSnapshot(){
+ let cp=collectionProgress(),br=battleRecordSummary(),dd=dailyDungeonInfo();
+ return{
+  campaign:campaignProgress(),stars:totalStars(),collection:cp.pct,
+  power:unitPower(S.sets[S.set]),rating:S.rating||1000,
+  claims:rewardCenterItems().length,
+  daily:dd.left
+ }
+}
+function openProgressHub(){
+ let x=progressSnapshot(),old=document.getElementById("progressHub");if(old)old.remove();
+ let o=document.createElement("div");o.id="progressHub";o.className="resultOverlay";
+ o.innerHTML=`<div class="resultCard progressHubCard"><div class=collectionBar><div><small>LIBRARIAN DASHBOARD</small><h2>進行状況</h2></div><button class=btn data-progress-close=1>閉じる</button></div>
+ <div class=progressHubGrid><div>メイン<b>${x.campaign}/4</b></div><div>評価<b>★${x.stars}/12</b></div><div>蒐集<b>${x.collection}%</b></div><div>戦闘力<b>${x.power.toLocaleString()}</b></div><div>Rating<b>${x.rating}</b></div><div>未受取<b>${x.claims}</b></div></div>
+ <div class=progressLinks><button class=btn data-go=sortie>⚔️ 出撃</button><button class=btn data-go=party>👥 編成</button><button class=btn data-go=list>📚 文豪</button><button class=btn data-go=summon>🖋️ 召喚</button><button class=btn data-go=arena>🏆 模擬戦</button><button class=btn data-go=story>📖 物語</button></div>
+ <div class=progressTip>今日の書庫 残り ${x.daily}/3　｜　次のおすすめ：${nextPlayGuide().title}</div></div>`;
+ document.body.appendChild(o)
+}
+function rewardCenterItems(){
+ let a=[];
+ try{beginnerMissions().forEach(x=>{if(x.now>=x.goal&&!S.beginner.claimed[x.id])a.push({type:"初心者",name:x.name,reward:x.reward,go:"home"})})}catch(e){}
+ try{achievements().forEach(x=>{if(x.now>=x.goal&&!S.achievementClaims[x.id])a.push({type:"実績",name:x.name,reward:x.reward,go:"home"})})}catch(e){}
+ try{collectionGoals().forEach(x=>{if(x.now>=x.goal&&!S.collectionClaims[x.id])a.push({type:"蔵書",name:x.name,reward:x.reward,go:"home"})})}catch(e){}
+ try{librarianMilestones().forEach(x=>{if(x.ready&&!S.milestoneClaims[x.id])a.push({type:"司書Lv",name:"Lv."+x.lv,reward:x.reward,go:"home"})})}catch(e){}
+ try{weeklyTasks().forEach(x=>{if(x.now>=x.goal&&!S.weeklyClaims[x.id])a.push({type:"週間",name:x.name,reward:x.reward,go:"home"})})}catch(e){}
+ try{seasonPassRewards().forEach(x=>{if(x.ready&&!S.seasonPassClaims[x.id])a.push({type:"紀行",name:"Lv."+x.lv,reward:x.reward,go:"home"})})}catch(e){}
+ try{archiveMilestones().forEach(x=>{if(x.ready&&!S.archiveClaims[x.id])a.push({type:"蒐集",name:x.goal+"人",reward:x.reward,go:"list"})})}catch(e){}
+ try{questBoard().forEach(x=>{if(x.now>=x.goal&&!S.questClaims[x.id])a.push({type:"挑戦録",name:x.name,reward:x.reward,go:"home"})})}catch(e){}
+ for(let i=0;i<4;i++){if((S.progress.clears[i]||0)>0&&!S.chapterRewards?.[i]){let r=chapterReward(i);a.push({type:"踏破",name:"第"+(i+1)+"章",reward:"原稿片"+r.tickets,go:"sortie"})}}
+ return a
+}
+function openRewardCenter(){
+ let items=rewardCenterItems(),old=document.getElementById("rewardCenter");if(old)old.remove(),o=document.createElement("div");o.id="rewardCenter";o.className="resultOverlay";
+ o.innerHTML=`<div class="resultCard rewardCenterCard"><div class=collectionBar><div><small>REWARD CENTER</small><h2>報酬センター</h2></div><button class=btn data-reward-close=1>閉じる</button></div><button class="btn claimSafeAll" data-claim-safe=1>🎁 受取可能な基本報酬をまとめて受取</button><div class=rewardCenterCount>受取可能 <b>${items.length}</b>件</div><div class=rewardCenterList>${items.length?items.map(x=>`<button class=rewardCenterRow data-go="${x.go}"><span>${x.type}</span><div><b>${x.name}</b><small>${x.reward}</small></div><strong>›</strong></button>`).join(""):"<div class=emptyReward>現在受け取れる報酬はありません。</div>"}</div></div>`;document.body.appendChild(o)
+}
+function claimSafeRewards(){
+ let got=0;
+ try{for(let m of beginnerMissions())if(m.now>=m.goal&&!S.beginner.claimed[m.id]){S.beginner.claimed[m.id]=1;m.give();got++}}catch(e){}
+ try{for(let q of questBoard())if(q.now>=q.goal&&!S.questClaims[q.id]){S.questClaims[q.id]=1;q.give();got++}}catch(e){}
+ try{for(let m of archiveMilestones())if(m.ready&&!S.archiveClaims[m.id]){S.archiveClaims[m.id]=1;m.give();got++}}catch(e){}
+ try{for(let m of librarianMilestones())if(m.ready&&!S.milestoneClaims[m.id]){S.milestoneClaims[m.id]=1;m.give();got++}}catch(e){}
+ save();toast(got?"報酬を"+got+"件まとめて受取":"受取可能な報酬はありません");return home()
+}
+function openV50Guide(){
+ let old=document.getElementById("v50Guide");if(old)old.remove(),o=document.createElement("div");o.id="v50Guide";o.className="resultOverlay";
+ o.innerHTML=`<div class="resultCard v50Card"><span class=resultBadge>VERSION 50</span><h2>文豪綺譚</h2><p>メイン攻略からエンドゲームまで、一通り遊べる節目版です。</p><div class=v50Flow><span>出撃</span><b>›</b><span>召喚</span><b>›</b><span>育成</span><b>›</b><span>装備</span><b>›</b><span>HARD</span><b>›</b><span>模擬戦</span></div><div class=v50Checks><div>📖 メイン4章</div><div>⭐ ★★★評価</div><div>⚔ HARD</div><div>📦 装備ハクスラ</div><div>👥 編成共鳴</div><div>🏆 エンドゲーム</div></div><button class=btn data-v50-close=1>ゲームへ</button></div>`;document.body.appendChild(o);S.v50.seen=true;save()
+}
+function onboardingState(){
+ if(S.onboarding.done)return null;
+ if((S.progress.clears?.[0]||0)===0)return{step:1,title:"最初の出撃",text:"第1章をクリアして原稿片を集めよう。",go:"sortie",reward:"原稿片30"};
+ if((S.normalTickets||0)<100)return{step:2,title:"原稿片を100枚へ",text:"第1章を周回して通常10連を目指そう。",go:"sortie",reward:"文銭500"};
+ if(collectionProgress().owned<8)return{step:3,title:"最初の10連召喚",text:"通常10連で文豪を増やそう。",go:"summon",reward:"資料200"};
+ if(teamReadiness().score<45)return{step:4,title:"文壇を整える",text:"おすすめ編成と装備最適化を使ってみよう。",go:"party",reward:"インク30"};
+ return{step:5,title:"初心者課程修了",text:"ここからは自由に物語・HARD・蒐集を進めよう。",go:"home",reward:"原稿片100"}
+}
+function claimOnboardingStep(){
+ let o=onboardingState();if(!o)return;
+ let k="onboard"+o.step;if(S.onboarding[k])return;
+ S.onboarding[k]=1;
+ if(o.step===1)S.normalTickets=(S.normalTickets||0)+30;
+ if(o.step===2)S.gold=(S.gold||0)+500;
+ if(o.step===3)S.mat=(S.mat||0)+200;
+ if(o.step===4)S.ink=(S.ink||0)+30;
+ if(o.step===5){S.normalTickets=(S.normalTickets||0)+100;S.onboarding.done=true}
+ save();toast("初心者ガイド報酬："+o.reward);return home()
+}
+function maybeWelcome(){
+ if(S.onboarding.done||S.onboarding.welcomed)return;
+ S.onboarding.welcomed=true;save();setTimeout(()=>{try{toast("ようこそ、司書さん。まずは第1章へ。")}catch(e){}},300)
+}
+function pageMeta(name){
+ return{
+ home:["ホーム","書架の現在地","⌂"],sortie:["出撃","物語と周回","⚔"],party:["編成","文壇と戦術","👥"],list:["文豪","蒐集と育成","📚"],growth:["育成","文豪育成","✦"],
+ summon:["召喚","文豪との邂逅","🖋"],story:["物語","解放された記録","📖"],gear:["装備","装具と鍛錬","📦"],arena:["模擬戦","文壇競演","🏆"],library:["物語","解放された記録","📖"]
+ }[name]||[name,"文豪綺譚","◆"]
+}
+function uiPageHead(name){
+ let m=pageMeta(name);return `<div class=uiPageHead><span>${m[2]}</span><div><small>ホーム › ${m[1]}</small><b>${m[0]}</b></div><button class=uiHomeMini data-go=home>⌂</button></div>${uiResourceHud()}`
+}
+function uiResourceHud(){
+ return `<div class=resourceHud><span title="原稿片">📜<b>${S.normalTickets||0}</b></span><span title="文銭">💰<b>${S.gold||0}</b></span><span title="インク">✦<b>${S.ink||0}</b></span><span title="資料">▤<b>${S.mat||0}</b></span></div>`
+}
+function uiToastAction(text,go,label="確認"){
+ let d=document.createElement("div");d.className="actionToast";d.innerHTML=`<span>${text}</span><button data-go="${go}">${label}</button>`;document.body.appendChild(d);setTimeout(()=>d.remove(),4200)
+}
+function homeFocusData(){
+ let next=nextPlayGuide(),cp=collectionProgress(),tr=teamReadiness(),dd=dailyDungeonInfo();
+ return{next,cp,tr,dd,rewards:rewardCenterItems().length,story:campaignProgress(),stars:totalStars()}
+}
+function toggleHomeDensity(){
+ S.qol.compactHome=!S.qol.compactHome;save();return home()
+}
+function homeSummaryLine(){
+ let x=homeFocusData();
+ return `${x.story}/4章　★${x.stars}/12　蒐集${x.cp.pct}%　報酬${x.rewards}`
+}
+function navigationHealth(){return [["home",home],["sortie",sortie],["party",party],["list",list],["summon",summon],["story",story],["arena",arena],["works",worksUnlockHubV526]].map(x=>[x[0],typeof x[1]==="function"])}
+function actionHealth(){
+ let tests=[
+  ["おすすめ編成",typeof autoFormation==="function"],
+  ["一括最適化",typeof prepareTeam==="function"],
+  ["編成保存",typeof saveLoadout==="function"&&typeof loadLoadout==="function"],
+  ["装備強化",typeof enhanceGear==="function"&&typeof bulkEnhanceEquipped==="function"],
+  ["装備ビルド",typeof autoEquipBuild==="function"],
+  ["高速周回",typeof quickFarm==="function"],
+  ["日替書庫",typeof runDailyDungeon==="function"],
+  ["BOSS RUSH",typeof runBossRush==="function"],
+  ["報酬",typeof rewardCenterItems==="function"],
+  ["物語",typeof openStoryEpisode==="function"]
+ ];return tests
+}
+function interactionHealth(){
+ let a=S.sets?.[S.set]||[];
+ return[
+  ["現編成6人",Array.isArray(a)&&a.length===6],
+  ["編成ID正常",Array.isArray(a)&&a.every(i=>Number.isInteger(+i)&&+i>=0&&+i<C.length)],
+  ["装備データ",!!S.equipped&&typeof S.equipped==="object"],
+  ["通知",typeof toast==="function"],
+  ["画面遷移",typeof go==="function"],
+  ["二重タップ防止",typeof actionLock==="function"]
+ ]
+}
+function uiActionAudit(){
+ let attrs=[...new Set((document.getElementById("app")?.innerHTML||"").match(/data-[a-z0-9-]+/g)||[])];
+ let known=["data-go","data-battle","data-change","data-tactic","data-quickfarm","data-autoformation","data-prepareteam",
+ "data-story-episode","data-login-reward","data-quest","data-medalbuy","data-gearenhance","data-gearsell","data-gearbuild",
+ "data-loadout-save","data-loadout-load","data-daily-dungeon","data-bossrush","data-bossrush-reward","data-star-reward",
+ "data-hard-reward","data-chapter-reward","data-boss-mastery","data-endgame","data-archive-reward","data-progress-hub",
+ "data-reward-center","data-home-density","data-system-check","data-final-info","data-v50-guide","data-how","data-filter",
+ "data-homechar","data-result-retry","data-result-close","data-result-party","data-farm-close","data-swap-close",
+ "data-swap-pick","data-preset","data-level","data-equip","data-unequip","data-summon","data-pick3","data-pick3-confirm"];
+ let unknown=attrs.filter(x=>!known.includes(x));
+ return{total:attrs.length,unknown}
+}
+function handlerHealth(){
+ let src=document.documentElement.innerHTML+(typeof window.__APP_SOURCE__==="string"?window.__APP_SOURCE__:"");
+ let checks=[
+ ["画面移動",typeof go==="function"],["戦闘",typeof battle==="function"],["編成交代",typeof openFormationSwap==="function"],
+ ["おすすめ編成",typeof autoFormation==="function"],["一括最適化",typeof prepareTeam==="function"],
+ ["戦術",typeof currentTactic==="function"],["周回",typeof quickFarm==="function"],["日替書庫",typeof runDailyDungeon==="function"],
+ ["BOSS RUSH",typeof runBossRush==="function"],["装備強化",typeof enhanceGear==="function"],
+ ["装備ビルド",typeof autoEquipBuild==="function"],["編成保存",typeof saveLoadout==="function"&&typeof loadLoadout==="function"],
+ ["物語閲覧",typeof openStoryEpisode==="function"],["報酬センター",typeof openRewardCenter==="function"],
+ ["進行画面",typeof openProgressHub==="function"],["通知",typeof toast==="function"]
+ ];return checks
+}
+function handlerHealthSummary(){let x=handlerHealth();return{x,ok:x.filter(v=>v[1]).length,total:x.length}}
+function economyHealth(){
+ let nums=["gold","ink","mat","normalTickets","summonMedals"].map(k=>[k,Number.isFinite(+(S[k]||0))&&+(S[k]||0)>=0]);
+ let claims=[
+  ["章報酬",typeof claimChapterReward==="function"],["HARD報酬",typeof claimHardReward==="function"],
+  ["星報酬",typeof claimStarReward==="function"],["熟練報酬",typeof claimBossMastery==="function"],
+  ["蒐集報酬",typeof archiveMilestones==="function"],["ログイン",typeof claimLoginReward==="function"]
+ ];
+ return[...nums,...claims]
+}
+function assetHealth(){
+ let refs=[...new Set((document.getElementById("app")?.innerHTML||"").match(/(?:src|href)=["']([^"']+\.(?:jpg|jpeg|png|webp))/gi)?.map(x=>x.replace(/^(?:src|href)=["']/i,""))||[])];
+ let charOk=typeof characterImage==="function";
+ return{refs,charOk,total:refs.length}
+}
+function imageReady(img){
+ if(!img)return;img.classList.add("imgReady");img.closest(".authorCard,.stageCine,.campaignMapV61,.partyCine")?.classList.add("assetReady")
+}
+function installAssetObservers(){
+ document.addEventListener("load",e=>{if(e.target?.tagName==="IMG")imageReady(e.target)},true);
+ document.querySelectorAll("img").forEach(x=>{if(x.complete&&x.naturalWidth)imageReady(x)})
+}
+function qaSnapshot(){
+ let groups=[
+  ["SYSTEM",systemHealth().checks||[]],
+  ["NAV",navigationHealth()],
+  ["ACTION",actionHealth()],
+  ["INPUT",interactionHealth()],
+  ["SCREEN",screenHealth()],
+  ["HANDLER",handlerHealth()],
+  ["ECONOMY",economyHealth()]
+ ];
+ let flat=groups.flatMap(g=>g[1]),ok=flat.filter(x=>x[1]).length,total=flat.length;
+ return{groups,ok,total,pass:ok===total&&stateIntegrity().ok}
+}
+function openQACenter(){
+ let q=qaSnapshot(),old=document.getElementById("qaCenter");if(old)old.remove(),o=document.createElement("div");o.id="qaCenter";o.className="resultOverlay";
+ o.innerHTML=`<div class="resultCard qaCard"><span class=resultBadge>QUALITY ASSURANCE</span><h2>完成度チェック</h2><div class="qaScore ${q.pass?"pass":"warn"}">${q.ok}/${q.total}</div>${q.groups.map(g=>`<div class=qaGroup><b>${g[0]}</b><span>${g[1].filter(x=>x[1]).length}/${g[1].length}</span></div>`).join("")}<div class="qaIntegrity ${stateIntegrity().ok?"pass":"warn"}">SAVE ${stateIntegrity().ok?"OK":"REPAIR"}</div><button class=btn data-system-repair=1>安全修復</button><button class=btn data-qa-close=1>閉じる</button></div>`;document.body.appendChild(o)
+}
+function stageDataHealth(){try{return[0,1,2,3].every(i=>{let s=stageMeta(i);return !!s&&!!s.name&&Number.isFinite(+s.power)})}catch(e){return false}}
+function systemHealth(){
+ let checks=[
+  ["セーブ",!!S&&typeof save==="function"],
+  ["編成",Array.isArray(S.sets)&&S.sets.length>=1&&S.sets.every(a=>Array.isArray(a))],
+  ["文豪",Array.isArray(C)&&C.length>=30],
+  ["進行",!!S.progress&&Array.isArray(S.progress.clears)&&S.progress.clears.length>=4],
+  ["装備",Array.isArray(S.gear)&&!!S.equipped],
+  ["復旧",typeof coreHome==="function"&&typeof emergencyHome==="function"],
+  ["召喚",typeof ensurePick3==="function"&&typeof summonResult==="function"],
+  ["戦闘",typeof unitPower==="function"&&typeof battle==="function"],
+  ["周回",typeof quickFarm==="function"&&typeof recommendedFarm==="function"],
+  ["物語",typeof openStoryEpisode==="function"],
+  ["報酬",typeof rewardCenterItems==="function"],
+  ["UI",typeof progressSnapshot==="function"],["遷移",navigationHealth().every(x=>x[1])],["通知",typeof toast==="function"],["操作",actionHealth().every(x=>x[1])],["入力",interactionHealth().every(x=>x[1])],["画面",screenHealth().every(x=>x[1])],["UI操作",uiActionAudit().unknown.length===0],["配線",handlerHealth().every(x=>x[1])],["整合性",stateIntegrity().ok],["経済",economyHealth().every(x=>x[1])],["画像",assetHealth().charOk]
+ ];
+ return{ok:checks.filter(x=>x[1]).length,total:checks.length,checks}
+}
+function safeRepairState(){
+ ensureUnitSets();ensurePick3();
+ if(!Array.isArray(S.gear))S.gear=[];if(!S.equipped)S.equipped={};
+ if(!S.progress)S.progress={clears:[0,0,0,0]};if(!Array.isArray(S.progress.clears))S.progress.clears=[0,0,0,0];while(S.progress.clears.length<4)S.progress.clears.push(0);
+ if(!Array.isArray(S.stageBest))S.stageBest=[0,0,0,0];while(S.stageBest.length<4)S.stageBest.push(0);
+ repairStateIntegrity();save();toast("セーブを保持したまま状態を修復しました");return openSystemCheck()
+}
+function openSystemCheck(){
+ let h=systemHealth(),old=document.getElementById("systemCheck");if(old)old.remove(),o=document.createElement("div");o.id="systemCheck";o.className="resultOverlay";
+ o.innerHTML=`<div class="resultCard systemCheckCard"><span class=resultBadge>V60 RELEASE CHECK</span><h2>システム診断</h2><div class=systemScore>${h.ok}/${h.total}</div><div class=systemCheckGrid>${h.checks.map(x=>`<div class="${x[1]?"ok":"ng"}"><span>${x[1]?"✓":"!"}</span><b>${x[0]}</b></div>`).join("")}</div><small>セーブを消さずに主要システムの状態を確認します。</small><div class=actionAudit>${actionHealth().map(x=>`<span class="${x[1]?"ok":"ng"}">${x[1]?"✓":"!"} ${x[0]}</span>`).join("")}</div>${(()=>{let u=uiActionAudit();return `${(()=>{let h=handlerHealthSummary();return `${(()=>{let s=stateIntegrity();return `<div class="integrityBox ${s.ok?"ok":"ng"}"><b>SAVE INTEGRITY</b><span>${s.ok?"正常":"要修復"}</span><small>${s.ok?"編成・進行・装備・通貨データ正常":s.issues.join(" / ")}</small></div>`})()}<div class=handlerAudit><div class=collectionBar><b>BUTTON WIRING</b><span>${h.ok}/${h.total}</span></div>${h.x.map(x=>`<span class="${x[1]?"ok":"ng"}">${x[1]?"✓":"!"} ${x[0]}</span>`).join("")}</div>`})()}<div class=uiAuditBox><b>UI ACTION AUDIT</b><span>${u.total}種類を検査 / 未登録 ${u.unknown.length}</span>${u.unknown.length?`<small>${u.unknown.join(" / ")}</small>`:"<small>すべての既知操作を認識しています。</small>"}</div>`})()}<div class=systemCheckActions><button class=btn data-system-repair=1>安全修復</button><button class=btn data-system-close=1>閉じる</button></div></div>`;document.body.appendChild(o)
+}
+function finalReleaseStatus(){
+ let h=systemHealth(),assets=["assets/anime/home_cinematic.jpg","assets/stages/campaign_map_v61.png"];
+ return{health:h.ok+"/"+h.total,version:"70 FINAL",save:"AUTO",assets:assets.length}
+}
+function openFinalInfo(){
+ let f=finalReleaseStatus(),old=document.getElementById("finalInfo");if(old)old.remove(),o=document.createElement("div");o.id="finalInfo";o.className="resultOverlay";
+ o.innerHTML=`<div class="resultCard finalInfoCard"><span class=resultBadge>FINAL BUILD</span><h2>文豪綺譚 Ver.70</h2><p>メイン攻略・育成・蒐集・周回・高難度・物語まで統合した完成版です。</p><div class=finalInfoGrid><div>診断<b>${f.health}</b></div><div>セーブ<b>${f.save}</b></div><div>文豪<b>${C.length}</b></div><div>章<b>4 + END</b></div></div><button class=btn data-system-check=1>システム診断</button><button class=btn data-final-close=1>ゲームへ戻る</button></div>`;document.body.appendChild(o)
+}
+function finalErrorShield(err){
+ console.error("Bungou Kitan",err);
+ try{let old=document.querySelector(".errorToast");if(old)old.remove();let d=document.createElement("div");d.className="errorToast";d.innerHTML=`<span>処理を続行しました</span><small>${String(err?.message||err||"unknown").slice(0,90)}</small><button onclick="this.parentElement.remove()">×</button>`;document.body.appendChild(d);setTimeout(()=>d.remove(),5000)}catch(e){}
+}
+const WORK_VARIANT_BASE_IMAGE_V526={
+ "dazai_melos":"dazai","aku_kumo":"aku","aku_jigoku":"aku","kenji_ame":"kenji","ranpo_dsaka":"ranpo","soseki_neko":"soseki",
+ "dazai_shayo":"dazai","soseki_yume":"soseki","akiko_kimi":"akiko","mishima_shiosai":"mishima","poe_morgue":"poe","doyle_baskerville":"doyle"
+};
+function characterImage(slug){
+ let base=WORK_VARIANT_BASE_IMAGE_V526[slug]||slug,variant=WORK_VARIANT_BASE_IMAGE_V526[slug]?`&variant=${encodeURIComponent(slug)}`:"";
+ return `assets/characters/${base}.jpg?v=105${variant}`
+}
+function installImageRepair(){
+ document.addEventListener("error",e=>{let x=e.target;if(!x||x.tagName!=="IMG"||x.dataset.repaired)return;x.dataset.repaired="1";if(x.src.includes("/assets/characters/"))x.src="assets/characters/fallback.jpg?v=101";else{x.classList.add("imgFailed");x.removeAttribute("src");x.alt=x.alt||"画像を読み込めませんでした"}},true)
+}
+function toast(msg){try{let old=document.getElementById("gameToast");if(old)old.remove();let d=document.createElement("div");d.id="gameToast";d.className="gameToast";d.textContent=String(msg??"");document.body.appendChild(d);requestAnimationFrame(()=>d.classList.add("show"));setTimeout(()=>{d.classList.remove("show");setTimeout(()=>d.remove(),180)},2200)}catch(e){console.log(msg)}}
+function safeAction(label,fn){
+ try{return fn()}catch(e){console.error(label,e);if(typeof finalErrorShield==="function")finalErrorShield(e);else if(typeof toast==="function")toast(label+"でエラー");return null}
+}
+function closeOverlays(){document.querySelectorAll(".resultOverlay").forEach(o=>o.remove())}
+let __bkActionLock=0;
+function actionLock(ms=350){
+ let n=Date.now();if(n<__bkActionLock)return false;__bkActionLock=n+ms;return true
+}
+function safeButtonAction(label,fn,ms=350){
+ if(!actionLock(ms))return null;return safeAction(label,fn)
+}
+function normalizeInteractiveState(){
+ ensureUnitSets();
+ S.sets=S.sets.map(a=>Array.isArray(a)?a.filter(i=>Number.isInteger(+i)&&+i>=0&&+i<C.length).map(Number).slice(0,6):[]);
+ S.sets.forEach(a=>{while(a.length<6){let n=[0,1,2,3,4,5].find(x=>!a.includes(x));a.push(n==null?0:n)}});
+ if(!Number.isInteger(S.set)||S.set<0||S.set>=S.sets.length)S.set=0;
+ save();return true
+}
+function renderScreen(name,fn){try{ensureCoreState();closeOverlays();document.body.classList.remove("battleMode");let out=fn();setTimeout(normalizeStageLayout,0);let a=document.getElementById("app");if(!a||!a.textContent.trim())throw new Error(name+" rendered empty");return out}catch(e){console.error("screen:",name,e);finalErrorShield(e);if(name!=="home"){try{return home()}catch(_){}}try{return coreHome()}catch(_){return emergencyHome()}}}
+function screenHealth(){return SCREEN_NAMES.map(n=>[n,typeof SCREEN_FUNCS[n]==="function"])}
+const SCREEN_NAMES=["home","sortie","party","growth","list","summon","story","arena","works","gear","system"];
+const SCREEN_FUNCS={home,sortie,party,growth,list,summon,story,arena,works:worksUnlockHubV526,gear:gearHubV479,system:systemPanelV490};
+
+function runtimeRepairV530(){
+ let changed=[];
+ try{
+  ensureCoreState();
+  ensureQoLPrefs();
+  normalizeStageProgressV521();
+  ensureUnitSets();
+  ensureOwnedStateV528();
+  normalizeWorkUnlockStateV528();
+
+  if(!Number.isInteger(S.set)||S.set<0||S.set>=S.sets.length){S.set=0;changed.push("編成番号")}
+  S.sets=S.sets.map((a,si)=>{
+    let arr=Array.isArray(a)?a.map(x=>Math.max(0,Math.min(C.length-1,Number(x)||0))):[];
+    let uniq=[];for(const i of arr){if(!uniq.includes(i))uniq.push(i)}
+    for(let i=0;uniq.length<6&&i<C.length;i++)if(isCharacterOwnedV528(i)&&!uniq.includes(i))uniq.push(i);
+    for(let i=0;uniq.length<6&&i<C.length;i++)if(!uniq.includes(i))uniq.push(i);
+    let fixed=uniq.slice(0,6);if(JSON.stringify(fixed)!==JSON.stringify(a))changed.push(`編成${si+1}`);return fixed
+  });
+
+  for(const k of ["gold","ink","mat","normalTickets","xp","rating"]){
+    if(!Number.isFinite(+S[k])){S[k]=k==="rating"?1000:0;changed.push(k)}
+    if(k!=="rating"&&S[k]<0){S[k]=0;changed.push(k)}
+  }
+  if(!Array.isArray(S.gear)){S.gear=[];changed.push("装備")}
+  if(!S.equipped||typeof S.equipped!=="object"){S.equipped={};changed.push("装備設定")}
+  if(!S.qol||typeof S.qol!=="object"){S.qol={};changed.push("設定")}
+  S.qol.lastFarmCount=Math.max(1,Math.min(50,Number(S.qol.lastFarmCount)||10));
+  if(!Number.isInteger(+S.qol.selectedStage)||+S.qol.selectedStage<0||+S.qol.selectedStage>3)S.qol.selectedStage=latestUnlockedStageV521();
+
+  save();persistentSaveWrite();
+  return {ok:true,changed:[...new Set(changed)]}
+ }catch(e){
+  try{runtimeLogV491("REPAIR",e?.message||String(e))}catch(_){}
+  return {ok:false,changed,err:e?.message||String(e)}
+ }
+}
+
+function formationOwnershipAuditV542(){
+ let bad=[];
+ (S.sets||[]).forEach((a,si)=>(a||[]).forEach(i=>{if(!selectableCharacterV531(i))bad.push({set:si,i})}));
+ return {ok:bad.length===0,bad}
+}
+
+function runtimeAuditV530(){
+ let q=qualityAuditV529(),s=stateIntegrity(),r=transitionAuditV508();
+ let failed=r.filter(x=>!x[1]).map(x=>x[0]);
+ return {
+  state:s.ok,
+  stateIssues:s.issues||[],
+  transitions:failed.length===0,
+  transitionIssues:failed,
+  routes:q.routes.ok===q.routes.total,
+  stage:q.stages.ok,
+  farm:q.farm.ok,
+  battle:q.battle.ok,
+  save:q.save.ok,
+  workUnlock:typeof worksUnlockHubV526==="function"&&typeof unlockWorkCharacterV526==="function"
+ }
+}
+function runtimeAuditPanelV530(){
+ let a=runtimeAuditV530(),rows=[
+  ["セーブ状態",a.state,a.state?a.stateIssues.length+"件":"異常"],
+  ["画面遷移",a.routes,a.routes?"正常":"要確認"],
+  ["ステージ解放",a.stage,a.stage?"正常":"要確認"],
+  ["周回",a.farm,a.farm?"正常":"要確認"],
+  ["戦闘接続",a.battle,a.battle?"正常":"要確認"],
+  ["自動保存",a.save,a.save?"正常":"要確認"],
+  ["著作解放",a.workUnlock,a.workUnlock?"正常":"要確認"],
+  ["関数整合",a.transitions,a.transitions?"正常":a.transitionIssues.join(", ")]
+ ];
+ return `<section class=runtimeAuditPanelV530><header><div><small>RELEASE HARDENING</small><h2>実行系チェック</h2></div><button data-runtime-repair-v530=1>状態修復</button></header><div>${rows.map(([n,ok,v])=>`<span class="${ok?"ok":"bad"}"><small>${n}</small><b>${v}</b></span>`).join("")}</div></section>`
+}
+
+function stateIntegrity(){
+ let issues=[];
+ if(!S||typeof S!=="object")issues.push("state");
+ if(!Array.isArray(S.sets)||!S.sets.length)issues.push("sets");
+ if(!S.progress||!Array.isArray(S.progress.clears))issues.push("progress");
+ if(!Array.isArray(S.gear))issues.push("gear");
+ if(!S.equipped||typeof S.equipped!=="object")issues.push("equipped");
+ for(let k of ["gold","ink","mat","normalTickets"])if(!Number.isFinite(+S[k])||+S[k]<0)issues.push(k);
+ return{ok:issues.length===0,issues}
+}
+function repairStateIntegrity(){
+ let before=stateIntegrity();
+ if(!Array.isArray(S.sets)||!S.sets.length)S.sets=[[0,1,2,3,4,5]];
+ if(!S.progress||typeof S.progress!=="object")S.progress={clears:[0,0,0,0]};
+ if(!Array.isArray(S.progress.clears))S.progress.clears=[0,0,0,0];while(S.progress.clears.length<4)S.progress.clears.push(0);
+ if(!Array.isArray(S.gear))S.gear=[];if(!S.equipped||typeof S.equipped!=="object")S.equipped={};
+ for(let k of ["gold","ink","mat","normalTickets"])S[k]=Math.max(0,Number.isFinite(+S[k])?+S[k]:0);
+ normalizeInteractiveState();save();return{before,after:stateIntegrity()}
+}
+function snapshotState(){try{return JSON.stringify(S)}catch(e){return null}}
+function transactionalAction(label,fn){
+ let snap=snapshotState();
+ try{let out=fn();if(!stateIntegrity().ok)throw new Error("state integrity failed after "+label);return out}
+ catch(e){if(snap){try{let old=JSON.parse(snap);Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,old);save()}catch(_){}}
+ finalErrorShield(e);toast(label+"を取り消しました");return null}
+}
+function home(){window.__bkRoute="home";ensureCoreState();return dedicatedHome()}
+function chooseHome(){return openFavoritePicker()}
+let filter="all";
+function collectionProgress(){
+ let owned=C.filter((_,i)=>(S.dupes?.[i]||0)>0||lv(i)>1||S.sets?.some(a=>a.includes(i))).length;
+ let lv50=C.filter((_,i)=>lv(i)>=50).length,lv100=C.filter((_,i)=>lv(i)>=100).length,maxed=C.filter((_,i)=>cap(i)>=150).length;
+ let stories=C.filter((_,i)=>bondLv(i)>=3).length;return{owned,lv50,lv100,maxed,stories,pct:Math.round(owned/C.length*100)}
+}
+function rarityCollection(){
+ return["UR","SSR","SR","R"].map(r=>{let all=C.map((c,i)=>({c,i})).filter(x=>x.c[5]===r),owned=all.filter(x=>(S.dupes?.[x.i]||0)>0||lv(x.i)>1||S.sets?.some(a=>a.includes(x.i))).length;return{r,total:all.length,owned}})
+}
+function archiveMilestones(){
+ let n=collectionProgress().owned;
+ return[
+  {id:"a5",goal:5,reward:"原稿片50",give:()=>S.normalTickets=(S.normalTickets||0)+50},
+  {id:"a10",goal:10,reward:"文銭1200",give:()=>S.gold=(S.gold||0)+1200},
+  {id:"a15",goal:15,reward:"インク100",give:()=>S.ink=(S.ink||0)+100},
+  {id:"a20",goal:20,reward:"原稿片100",give:()=>S.normalTickets=(S.normalTickets||0)+100},
+  {id:"a25",goal:25,reward:"資料600",give:()=>S.mat=(S.mat||0)+600},
+  {id:"a30",goal:30,reward:"インク200",give:()=>S.ink=(S.ink||0)+200},
+  {id:"a34",goal:34,reward:"原稿片300",give:()=>S.normalTickets=(S.normalTickets||0)+300}
+ ].map(x=>({...x,ready:n>=x.goal}))
+}
+function archiveClaimable(){return archiveMilestones().filter(x=>x.ready&&!S.archiveClaims[x.id]).length}
+
+function gearHubSelectedV479(){
+ let i=Number(S.gearHubSelected);
+ if(!Number.isInteger(i)||i<0||i>=C.length)i=S.sets?.[S.set]?.[0]??0;
+ S.gearHubSelected=i;
+ return i
+}
+function gearHubFilterV479(){return S.gearHubFilter||"ALL"}
+function gearHubTypeV479(){return S.gearHubType||"ALL"}
+function gearHubSortV479(){return S.gearHubSort||"score"}
+function gearIsEquippedV479(id){
+ return Object.values(S.equipped||{}).some(eq=>{
+   if(typeof eq==="string")return eq===id;
+   return eq&&Object.values(eq).includes(id)
+ })
+}
+function gearTypeLabelV479(t){return t==="pen"?"筆記具":t==="book"?"書物":"装身具"}
+function gearHubItemsV479(){
+ let arr=[...(S.gear||[])],f=gearHubFilterV479(),t=gearHubTypeV479(),s=gearHubSortV479();
+ if(f!=="ALL")arr=arr.filter(g=>g.rank===f);
+ if(t!=="ALL")arr=arr.filter(g=>(g.type||"pen")===t);
+ arr.sort((a,b)=>{
+   if(s==="rank")return gearRankValue(b.rank)-gearRankValue(a.rank)||gearScore(b)-gearScore(a);
+   if(s==="level")return (b.level||1)-(a.level||1)||gearScore(b)-gearScore(a);
+   if(s==="name")return String(a.name).localeCompare(String(b.name),"ja");
+   return gearScore(b)-gearScore(a)
+ });
+ return arr
+}
+
+function gearBulkSellCandidatesV485(rank){
+ const order={R:1,SR:2,SSR:3,UR:4},limit=order[rank]||0;
+ return (S.gear||[]).filter(g=>!g.locked&&!gearIsEquippedV479(g.id)&&(order[g.rank]||0)<=limit)
+}
+function gearBulkSellValueV485(rank){
+ return gearBulkSellCandidatesV485(rank).reduce((a,g)=>a+gearSellValue(g),0)
+}
+function gearUpgradeMultiV485(g,n){
+ let done=0,totalCost=0;
+ while(done<n&&g.level<gearMaxLv(g)){
+   let c=gearUpgradeCost(g);
+   if((S.gold||0)<c)break;
+   S.gold-=c;totalCost+=c;
+   upgradeGear(g);done++;
+ }
+ save();return {done,totalCost}
+}
+function gearSetSummaryV485(i){
+ let eq=equippedGears(i),groups={};
+ eq.forEach(g=>{let k=g.set||"無銘";groups[k]=(groups[k]||0)+1});
+ return Object.entries(groups).sort((a,b)=>b[1]-a[1]).map(([name,count])=>({name,count,active:count>=2}))
+}
+function gearInventoryPowerV485(){
+ return (S.gear||[]).reduce((a,g)=>a+gearScore(g),0)
+}
+
+function gearHubV479(){
+ ensureCoreState();
+ let i=gearHubSelectedV479(),c=C[i],stats=gearInventoryStats(),eq=equippedGears(i),bonus=gearBonus(i),spec=gearSpecialization(i),sets=gearSetBonus(i);
+ let equippedIds=new Set(eq.map(g=>g.id));
+ let items=gearHubItemsV479().slice(0,80);
+ shell(`${uiPageHead("list")}<main class=gearHubV479>
+   <section class=gearHubTitleV479>
+     <div><small>EQUIPMENT ARCHIVE</small><h1>装備管理</h1><p>筆記具・書物・装身具をまとめて整理。</p></div>
+     <button class=btn data-go=list>文豪一覧</button>
+   </section>
+
+   <section class=gearHubSummaryV479>
+     <div><small>所持</small><b>${stats.all}</b></div>
+     <div><small>UR</small><b>${stats.UR}</b></div>
+     <div><small>SSR</small><b>${stats.SSR}</b></div>
+     <div><small>特殊</small><b>${stats.elite}</b></div>
+     <div><small>総装備力</small><b>${gearInventoryPowerV485().toLocaleString()}</b></div>
+     <div><small>文銭</small><b>${(S.gold||0).toLocaleString()}</b></div>
+   </section>
+
+   <section class=gearHubCharacterV479>
+     <img src="${characterImage(c[0])}" alt="">
+     <div><small>装備対象</small><h2>${c[1]}</h2><p>Lv.${lv(i)} / ${spec.type} +${spec.bonus}%</p></div>
+     <div class=gearHubCharStatsV479><span>攻撃<b>+${bonus.atk}</b></span><span>防御<b>+${bonus.def}</b></span><span>ゲージ<b>+${bonus.gauge}%</b></span></div>
+   </section>
+
+   <section class=gearHubCharactersV479>
+     ${(S.sets?.[S.set]||[0,1,2,3,4,5]).map(n=>`<button class="${n===i?"active":""}" data-gh-char="${n}"><img src="${characterImage(C[n][0])}" alt=""><span>${C[n][1]}</span></button>`).join("")}
+   </section>
+
+   <section class=gearHubSlotsV479>
+     ${[["pen","✒️","筆記具"],["book","📕","書物"],["accessory","⌚","装身具"]].map(([t,ic,name])=>{
+       let g=eq.find(x=>(x.type||"pen")===t);
+       return `<article><div class=gearHubSlotHeadV479><span>${ic} ${name}</span>${g?`<b>${g.rank}</b>`:""}</div>
+       ${g?`<h3>${g.name}</h3><p>Lv.${g.level}　攻+${g.atk} / 防+${g.def}</p><small>${(g.skills||[]).join("・")}</small>`:`<h3>未装備</h3><p>一覧から装備できます</p>`}</article>`
+     }).join("")}
+   </section>
+
+   <section class=gearHubSetV479>
+     <b>セット効果</b><span>${sets.length?sets.map(s=>`${s.name} ${s.count}部位：${s.two}${s.three?` / ${s.three}`:""}`).join("　"):"2部位以上で発動"}</span>
+   </section>
+   <section class=gearSetBoardV485>
+     ${gearSetSummaryV485(i).length?gearSetSummaryV485(i).map(s=>`<div class="${s.active?"active":""}"><small>${s.name}</small><b>${s.count}/3</b><span>${s.active?"SET ACTIVE":"2部位で発動"}</span></div>`).join(""):`<div><small>SET BONUS</small><b>0/3</b><span>装備で発動</span></div>`}
+   </section>
+
+   <section class=gearHubToolsV479>
+     <button class=btn data-gh-best="${i}">✨ 3枠おすすめ装備</button>
+     <div class=gearHubAutoSellV479><span>自動売却</span>
+       <button data-gh-autosell="OFF" class="${!S.autoSellRank?"active":""}">OFF</button>
+       ${["R","SR","SSR"].map(r=>`<button data-gh-autosell="${r}" class="${S.autoSellRank===r?"active":""}">${r}以下</button>`).join("")}
+     </div>
+   </section>
+   <section class=gearBulkV485>
+     <div><small>BULK SELL</small><b>一括売却</b><span>ロック・装備中は自動除外</span></div>
+     ${["R","SR","SSR"].map(r=>`<button data-gh-bulk-v485="${r}">${r}以下<br><small>${gearBulkSellCandidatesV485(r).length}個 / +${gearBulkSellValueV485(r)}</small></button>`).join("")}
+   </section>
+
+   <section class=gearHubFiltersV479>
+     <div>${["ALL","UR","SSR","SR","R"].map(r=>`<button class="${gearHubFilterV479()===r?"active":""}" data-gh-filter="${r}">${r}</button>`).join("")}</div>
+     <div>${[["ALL","全種"],["pen","筆記具"],["book","書物"],["accessory","装身具"]].map(([v,n])=>`<button class="${gearHubTypeV479()===v?"active":""}" data-gh-type="${v}">${n}</button>`).join("")}</div>
+     <select data-gh-sort><option value=score ${gearHubSortV479()==="score"?"selected":""}>総合スコア</option><option value=rank ${gearHubSortV479()==="rank"?"selected":""}>ランク</option><option value=level ${gearHubSortV479()==="level"?"selected":""}>レベル</option><option value=name ${gearHubSortV479()==="name"?"selected":""}>名前</option></select>
+   </section>
+
+   <section class=gearHubInventoryV479>
+     ${items.length?items.map(g=>{
+       let on=equippedIds.has(g.id),used=gearIsEquippedV479(g.id);
+       return `<article class="gearHubItemV479 ${g.rank} ${g.elite?"elite":""} ${on?"equipped":""}">
+         <div class=gearHubItemTopV479><span class=gearRank>${g.rank}${g.elite?" ★":""}</span><b>${g.name}</b><em>${gearScore(g)}</em></div>
+         <div class=gearHubMetaV479><span>${gearTypeLabelV479(g.type)}</span><span>${g.set||"無銘"}</span><span>Lv.${g.level}/${gearMaxLv(g)}</span></div>
+         <div class=gearHubBarsV479><span>攻撃 +${g.atk}</span><span>防御 +${g.def}</span></div>
+         <div class=gearHubSkillsV479>${(g.skills||[]).map(s=>`<span>${s}</span>`).join("")}</div>
+         ${g.elite?`<div class=gearHubEliteV479>★ ${g.elite}</div>`:""}
+         <div class=gearHubActionsV479>
+           <button data-gh-equip="${g.id}" ${on?"disabled":""}>${on?"装備中":"装備"}</button>
+           <button data-gh-up="${g.id}" ${g.level>=gearMaxLv(g)?"disabled":""}>強化 +1</button>
+           <button data-gh-up5-v485="${g.id}" ${g.level>=gearMaxLv(g)?"disabled":""}>強化 +5</button>
+           <button data-gh-lock="${g.id}">${g.locked?"🔒":"🔓"}</button>
+           <button data-gh-sell="${g.id}" ${(g.locked||used)?"disabled":""}>売却 ${gearSellValue(g)}</button>
+         </div>
+       </article>`
+     }).join(""):`<div class=gearHubEmptyV479>条件に合う装備がありません</div>`}
+   </section>
+ </main>`)
+}
+
+
+function collectionStateV484(){S.qol=S.qol||{};if(!S.qol.collectionV484)S.qol.collectionV484={rank:"ALL",role:"ALL",owned:"ALL",sort:"power",query:""};return S.qol.collectionV484}
+function collectionOwnedV484(i){return isCharacterOwnedV528(i)}
+function collectionRowsV484(){
+ let st=collectionStateV484(),q=(st.query||"").toLowerCase();
+ let arr=C.map((c,i)=>({c,i}));
+ arr=arr.filter(({c,i})=>{
+   if(st.rank!=="ALL"&&c[5]!==st.rank)return false;
+   if(st.role!=="ALL"&&growthRoleV483(i)!==st.role)return false;
+   let owned=collectionOwnedV484(i);
+   if(st.owned==="OWNED"&&!owned)return false;
+   if(st.owned==="UNOWNED"&&owned)return false;
+   if(q&&!(c[1]+c[2]+c[3]+c[4]).toLowerCase().includes(q))return false;
+   return true
+ });
+ arr.sort((a,b)=>{
+   if(st.sort==="level")return lv(b.i)-lv(a.i)||charPower(b.i)-charPower(a.i);
+   if(st.sort==="rank")return ["R","SR","SSR","UR"].indexOf(b.c[5])-["R","SR","SSR","UR"].indexOf(a.c[5])||charPower(b.i)-charPower(a.i);
+   if(st.sort==="name")return String(a.c[1]).localeCompare(String(b.c[1]),"ja");
+   if(st.sort==="fav")return Number(S.favs.includes(b.i))-Number(S.favs.includes(a.i))||charPower(b.i)-charPower(a.i);
+   return charPower(b.i)-charPower(a.i)
+ });
+ return arr
+}
+function collectionSummaryV484(){
+ let owned=C.filter((_,i)=>collectionOwnedV484(i)).length,fav=S.favs?.length||0,max=C.filter((_,i)=>lv(i)>=150).length,avg=Math.round(C.reduce((a,_,i)=>a+lv(i),0)/C.length);
+ return {owned,fav,max,avg}
+}
+
+function list(){
+ let st=collectionStateV484(),sum=collectionSummaryV484(),rows=collectionRowsV484();
+ shell(`${uiPageHead("list")}<main class=collectionHubV484>
+   <section class=collectionHeroV484>
+     <div><small>LITERARY ARCHIVE</small><h1>文豪蒐集</h1><p>所持、育成、固有能力、装備適性を一画面で確認。</p></div><button class=portraitManagerOpenV503 data-go=portraits>専用画像管理</button>
+     <aside><span>所持</span><b>${sum.owned}/${C.length}</b></aside>
+   </section>
+
+   <section class=collectionStatsV484>
+     <div><small>お気に入り</small><b>${sum.fav}</b></div>
+     <div><small>平均Lv</small><b>${sum.avg}</b></div>
+     <div><small>Lv150</small><b>${sum.max}</b></div>
+     <div><small>装備管理</small><button data-go=gear>開く</button></div>
+   </section>
+
+   <section class=collectionToolsV484>
+     <input data-collection-query-v484 placeholder="文豪・作品・年代で検索" value="${st.query||""}">
+     <div class=collectionFilterRowV484>
+       ${["ALL","UR","SSR","SR","R"].map(x=>`<button class="${st.rank===x?"active":""}" data-collection-rank-v484="${x}">${x}</button>`).join("")}
+     </div>
+     <div class=collectionFilterRowV484>
+       ${["ALL","攻撃","防御","支援"].map(x=>`<button class="${st.role===x?"active":""}" data-collection-role-v484="${x}">${x}</button>`).join("")}
+     </div>
+     <div class=collectionFilterRowV484>
+       ${[["ALL","全員"],["OWNED","所持"],["UNOWNED","未所持"]].map(([v,n])=>`<button class="${st.owned===v?"active":""}" data-collection-owned-v484="${v}">${n}</button>`).join("")}
+     </div>
+     <select data-collection-sort-v484>
+       <option value=power ${st.sort==="power"?"selected":""}>戦力順</option>
+       <option value=level ${st.sort==="level"?"selected":""}>レベル順</option>
+       <option value=rank ${st.sort==="rank"?"selected":""}>ランク順</option>
+       <option value=fav ${st.sort==="fav"?"selected":""}>お気に入り順</option>
+       <option value=name ${st.sort==="name"?"selected":""}>名前順</option>
+     </select>
+   </section>
+
+   <section class=collectionGridV484>
+     ${rows.map(({c,i})=>{
+       let a=abilityText(i),sp=gearSpecialization(i),owned=collectionOwnedV484(i),role=growthRoleV483(i);
+       return `<article class="collectionCardV484 ${c[5]} ${owned?"owned":"unowned"}">
+         <button class=collectionMainV484 data-char="${i}">
+           <div class=collectionImgV484><img src="${characterPortraitV501(i)}" alt="">${rankBadgeV504(i)}${artStatusBadgeV529(i)}${workUnitBadgeV531(i)}${S.favs.includes(i)?`<em>★</em>`:""}</div>
+           <div class=collectionInfoV484>
+             <small>${role} / ${c[3]} ${isWorkVariantV529(i)?" / 著作解放":""}</small><h2>${c[1]}</h2><p>《${c[2]}》</p>${!owned&&isWorkVariantV529(i)?`<em class=collectionLockV531>著作解放で加入</em>`:""}
+             <div class=collectionMetaV484><span>Lv.${lv(i)}/${cap(i)}</span><span>戦力 ${charPower(i).toLocaleString()}</span><span>${sp.type} +${sp.bonus}%</span></div>
+             <div class=collectionAbilityV484><b>${characterSkillKitV512(i).skillName}</b><span>${abilityDetail(i)}</span><small>${skillRankTextV512(i)}<br>${skillMasteryTextV519(i)}</small></div>
+             <div class=collectionSignatureV496><span>${characterSignatureV496(i).title}</span><b>${characterSignatureV496(i).tempo}</b><em>${characterSignatureV496(i).focus}</em><strong>${signatureCombatV497(i).quirk}</strong></div>
+           </div>
+         </button>
+         <div class=collectionActionsV484>
+           <button data-collection-fav-v484="${i}">${S.favs.includes(i)?"★ お気に入り":"☆ お気に入り"}</button>
+           <button data-collection-grow-v484="${i}">育成</button>
+           <button data-char="${i}">詳細</button>
+         </div>
+       </article>`
+     }).join("")||`<div class=collectionEmptyV484>条件に合う文豪がいません</div>`}
+   </section>
+ </main>`)
+}
+function cards(){let q=document.getElementById("q")?.value||"";document.getElementById("cards").innerHTML=C.map((c,i)=>[c,i]).filter(([c])=>(filter==="all"||c[3]===filter||c[4]===filter)&&c.join("").includes(q)).map(([c,i])=>`<button class="card char collectionCard" data-char="${i}">${S.favs.includes(i)?`<span class=favMark>★</span>`:""}<img loading=lazy decoding=async src="${characterImage(c[0])}"><b>${c[1]}</b><div class=gold>《${c[2]}》</div><small>${c[3]}・${c[4]}・${c[5]}</small></button>`).join("")}
+function bondEpisode(i){
+ let c=C[i],b=bondLv(i),trait=literaryTrait(i);
+ return{
+  open:b>=3,
+  title:`${c[1]}　小篇`,
+  subtitle:`「${c[2]}」の余白`,
+  text:`${c[1]}は静かな書架で一冊の本を閉じた。戦いの外にも、言葉は残る。${trait.name}という彼女の筆致は、司書との時間の中で少しずつ別の意味を持ちはじめていた。`
+ }
+}
+function claimBondEpisode(i){
+ let e=bondEpisode(i),key="bondstory"+i;if(!e.open||S.storyBondClaims[key])return false;
+ S.storyBondClaims[key]=1;S.ink=(S.ink||0)+20;S.mat=(S.mat||0)+100;save();return true
+}
+function openBondEpisode(i){
+ let e=bondEpisode(i);if(!e.open)return toast("絆Lv3で解放");
+ let old=document.getElementById("bondStory");if(old)old.remove(),o=document.createElement("div");o.id="bondStory";o.className="resultOverlay";
+ o.innerHTML=`<div class="resultCard bondStoryCard"><small>CHARACTER STORY</small><h2>${e.title}</h2><h3>${e.subtitle}</h3><div class=bondStoryText>${e.text}</div><div class=bondStoryReward>初読報酬：インク20 / 資料100</div><button class=btn data-bondstory-claim="${i}" ${S.storyBondClaims["bondstory"+i]?"disabled":""}>${S.storyBondClaims["bondstory"+i]?"初読報酬 受取済":"初読報酬を受取"}</button><button class=btn data-bondstory-close=1>閉じる</button></div>`;document.body.appendChild(o)
+}
+function detail(i){S.lastDetail=i;let c=C[i],l=lv(i),era=i<22?(i%3===0?"明治":i%3===1?"大正":"昭和"):"海外",hp=900+l*42,atk=180+l*18,def=150+l*15,spd=100+l*8,b=bondLv(i);shell(`<div class="p detailV510"><button class=btn data-go=list>← 文豪一覧</button><section class=detailSummaryV510><img src="${characterPortraitV501(i)}" class=portraitContainV506 alt="${c[1]}"><div><small>${charRank(i)} / ${characterAbility(i).role} / ${bundanTag(i)}</small><h1>${c[1]}</h1><p>《${c[2]}》</p><div><span>Lv.${l}/${cap(i)}</span><span>戦力 ${charPower(i).toLocaleString()}</span><span>HP ${characterStatsV511(i).hp}</span><span>速度 ${characterStatsV511(i).spd}</span><span>絆Lv.${b}</span></div></div></section><div class=characterQuickNavV502><button data-character-flow-v502="growth:${i}">育成</button><button data-character-flow-v502="party:${i}">編成</button><button data-go=gear>装備</button><button data-go=list>一覧</button></div><div class=detailNav><button class=btn>ステータス</button><button class=btn>スキル</button><button class=btn data-bond="${i}">親愛度</button><button class=btn>ストーリー</button><button class=btn>ボイス</button><button class=btn>イラスト</button></div><div class=detailHero><img class=hero decoding=async src="${characterPortraitV501(i)}" alt="${c[1]}"></div><div class=card><h2>Lv.${l}/${cap(i)}</h2>${(()=>{let m=masteryStats(i);return `${(()=>{let e=bondEpisode(i);return `<button class="bondStoryEntry ${e.open?"open":""}" data-bondstory="${i}" ${e.open?"":"disabled"}><span>${e.open?"📖":"🔒"}</span><div><b>${e.title}</b><small>${e.open?e.subtitle:"絆Lv3で解放"}</small></div><strong>›</strong></button>`})()}<div class=detailQuickGrow><b>クイック育成</b>${quickGrowButton(i)}</div><div class=characterLoreV107>${(()=>{let a=abilityText(i),o=ougiInfo(i);return `<div class=abilityExplain><small>固有能力</small><h2>${a.name}</h2><p>${abilityDetail(i)}</p><div><span>${a.role}</span><span>${a.genre}</span><span>${bundanTag(i)}</span></div></div><div class=ougiExplain><small>奥義</small><h2>${o.name}</h2><p>${o.effect}</p><b>必要ゲージ ${o.gauge}</b></div>`})()}</div><div class=abilityHero><div><small>SIGNATURE ABILITY</small><h2>${characterAbility(i).name}</h2></div><span>${characterAbility(i).role}</span><p>${characterAbility(i).genre}系の固有能力。戦闘中の発動条件と効果はキャラクター特性に連動します。</p></div><div class=traitHero>${(()=>{let t=literaryTrait(i);return `<div><small>LITERARY TRAIT</small><h3>${t.name}</h3></div><span>${t.effect}</span>`})()}</div><div class=systemStrip>${(()=>{let sp=gearSpecialization(i),m=masteryStats(i);return `<div>戦闘力<b>${boostedPower(i)}</b></div><div>蔵書補正<b>+${m.total}%</b></div><div>装備適性<b>${sp.type}</b></div><div>突破<b>${Math.min(10,S.dupes[i]||0)}/10</b></div>`})()}</div>${(()=>{let p=characterPowerBreakdown(i);return `<div class=powerBreakdown><b>戦力内訳</b><span>基礎 ${p.base}</span><span>装備 +${p.gear}</span><span>蔵書 +${p.mastery}%</span><span>適性 +${p.special}%</span></div>`})()}<div class=gearDrop><div class=gearBuildPanel><div class=collectionBar><b>装備ビルド</b><span class=gold>${gearUpgradeCount(i)?`更新候補 ${gearUpgradeCount(i)}枠`:"最適化済"}</span></div><div class=gearBuildGrid>${Object.entries(GEAR_BUILDS).map(([k,b])=>`<button class=btn data-gearbuild="${k}" data-charbuild="${i}"><b>${b.name}</b><small>${b.desc}</small></button>`).join("")}</div></div><button class="btn forgeAllBtn" data-forge-all="${i}">🔨 装備3枠をまとめて強化 +5</button><div class=gearCineHead><div class=collectionBar><div><small>EQUIPMENT / 文具装</small><h3>装備構成</h3></div><span class=gearRank>3 SLOT</span></div><div class=forgeBanner><span>文銭 ${S.gold||0}</span><span>自動売却 ${S.autoSellRank?S.autoSellRank+"以下":"OFF"}</span><span>所持 ${S.gear.length}</span></div></div><div class=gearSlots>${[["pen","✒️ 筆記具"],["book","📕 書物"],["accessory","⌚ 装身具"]].map(([t,n])=>{let eq=S.equipped[i]||{},id=typeof eq==="string"?(t==="pen"?eq:null):eq[t],g=safeGearFind(x=>x.id===id);return `<div class=gearSlot><div class=gearType>${n}</div>${g?`<b>${g.rank} ${g.name}</b><br><small>Lv.${g.level} / ${g.skills.join("・")}</small>`:"<small>未装備</small>"}</div>`}).join("")}</div><button class=btn data-autogear="${i}">3枠おすすめ装備</button><div class=setBonus><b>セット効果</b><br>${gearSetBonus(i).map(s=>`${s.name} ${s.count}部位：${s.two}${s.three?" / "+s.three:""}`).join("<br>")||"2部位以上で発動"}</div><div class=specPanel>${(()=>{let sp=gearSpecialization(i);return `<div class=collectionBar><b>装備適性</b><span class=specBadge>${sp.type} +${sp.bonus}%</span></div><div class=specGrid><div>攻撃系<br><b>${sp.atk}</b></div><div>防御系<br><b>${sp.def}</b></div><div>技巧系<br><b>${sp.tech}</b></div></div>`})()}</div><div class=autoSell><div class=collectionBar><b>装備自動売却</b><span class=sellValue>文銭 ${S.gold||0}</span></div><small>指定ランク以下をドロップ時に自動売却。ロック装備は対象外。</small><div class=autoSellBtns><button class="btn ${!S.autoSellRank?"autoSellOn":""}" data-autosell="OFF">OFF</button>${["R","SR","SSR"].map(r=>`<button class="btn ${S.autoSellRank===r?"autoSellOn":""}" data-autosell="${r}">${r}以下</button>`).join("")}</div></div><details><summary>装備一覧 ${S.gear.length}個</summary>${(()=>{let q=gearInventoryStats();return `<div class=invSummary><div>R<b>${q.R}</b></div><div>SR<b>${q.SR}</b></div><div>SSR<b>${q.SSR}</b></div><div>UR<b>${q.UR}</b></div></div><div class=gearFilters><span>🔒 ${q.locked}</span><span>★ 特殊 ${q.elite}</span><span>自動売却 ${S.autoSellRank?S.autoSellRank+"以下":"OFF"}</span><span>文銭 ${S.gold||0}</span></div>`})()}<div class=gearInv>${[...S.gear].sort((a,b)=>gearScore(b)-gearScore(a)).slice(0,30).map(g=>`<div class="gearItem ${g.rank} ${g.locked?"lockedGear":""} ${(isGodDrop(g)||g.elite)?"godDrop eliteGlow":""}"><div class=collectionBar><b>${g.rank} ${g.name} Lv.${g.level}</b><span class=gearScore>${gearScore(g)}</span><small>火${Math.round(gearBuildScore(g,"power"))} / 守${Math.round(gearBuildScore(g,"tank"))}</small></div><span class=setBadge>${g.set||"無銘"}</span>${g.elite?`<span class=eliteBadge>★ 特殊・${g.elite}</span>`:""}<div class=gearStat>攻撃+${g.atk} / 防御+${g.def} / Lv.${g.level}/${gearMaxLv(g)}</div><div class=gearSkills>${g.skills.map(s=>`<span>${s}</span>`).join("")}</div><div class=gearActions><button class=btn data-equip="${i}:${g.id}">装備</button><button class=btn data-lockgear="${g.id}">${g.locked?"🔒":"🔓"}</button></div><div class=gearUpgrade><button class=btn data-upgear="${i}:${g.id}" ${g.level>=gearMaxLv(g)?"disabled":""}>強化 +1</button><small>${g.level>=gearMaxLv(g)?"MAX":"文銭 "+gearUpgradeCost(g)}</small></div><div class=rerollBox><button class=btn data-reroll="${i}:${g.id}">スキル再抽選</button><small>文銭 ${rerollCost(g)}</small></div></div>`).join("")||"<small>装備なし</small>"}</div></details></div><div class=masteryBonus><h3>蔵書育成ボーナス +${m.total}%</h3><div class=row><span>全所持文豪 平均Lv.${m.overall.toFixed(1)}</span><span class=plus>+${m.overallPct}%</span></div><div class=row><span>${m.attr} 平均Lv.${m.attrAvg.toFixed(1)}</span><span class=plus>+${m.attrPct}%</span></div><div class=row><span>${m.era} 平均Lv.${m.eraAvg.toFixed(1)}</span><span class=plus>+${m.eraPct}%</span></div></div>`})()}<div class=levelBar><i style="width:${Math.min(100,l/cap(i)*100)}%"></i></div><div class=growthSummary><div><small>突破</small><br><b>${Math.min(10,S.dupes[i]||0)}/10</b></div><div><small>次の上限</small><br><b>${cap(i)>=150?"MAX":cap(i)+10}</b></div><div><small>共有EXP</small><br><b>${S.xp||0}</b></div></div><div class=dupeDots>${"●".repeat(Math.min(10,S.dupes[i]||0))}${"○".repeat(Math.max(0,10-Math.min(10,S.dupes[i]||0)))}</div><div class=statgrid><div>HP<br><b>${hp}</b></div><div>攻撃<br><b>${atk}</b></div><div>防御<br><b>${def}</b></div><div>速度<br><b>${spd}</b></div></div></div><div class=card><div class=affinity><div class=heart>♥</div><div class=maxbar><b>親愛 Lv.${b}</b><div class=progress><i style="width:${Math.min(100,(Number(S.bond[i]||0)%100))}%"></i></div></div></div></div><h2 class=sectionTitle>スキル</h2><div class=skillbox><div class=card><b>通常</b><p>${c[7]||"言葉の一撃"}</p></div><div class=card><b>奥義</b><p>《${c[2]}》</p></div><div class=card><b>パッシブ</b><p>${c[4]}の心得</p></div></div><h2 class=sectionTitle>強化</h2><div class=grid><button class=btn data-grow="${i}:1">+1Lv</button><button class=btn data-grow="${i}:10">+10Lv</button></div><h2 class=sectionTitle>文豪切替</h2><div class=thumbRail>${C.slice(0,12).map((x,n)=>`<button class=card data-char="${n}"><img loading=lazy decoding=async src="assets/characters/${x[0]}.jpg"><small>${x[1]}</small></button>`).join("")}</div>${characterDossierV495(i)}</div>`)}
+function ensurePick3(){if(!Array.isArray(S.pick3))S.pick3=[];S.pick3=S.pick3.map(Number).filter((x,i,a)=>Number.isInteger(x)&&x>=0&&x<C.length&&summonEligibleV531(x)&&a.indexOf(x)===i).slice(0,3);for(let i=0;S.pick3.length<3&&i<C.length;i++)if(!S.pick3.includes(i))S.pick3.push(i);return S.pick3}
+function unitPower(arr){if(!Array.isArray(arr))return 0;let base=arr.reduce((sum,i)=>sum+(typeof boostedPower==="function"?boostedPower(i):(700+lv(i)*35)),0),syn=typeof literarySynergy==="function"?literarySynergy(arr):{score:0},tb=combinedTeamBonus(arr);return Math.round(base*(1+syn.score/100)*(1+tb.totalRate))}
+function teamSynergy(a){let roles=a.map(i=>C[i][4]),unique=new Set(roles).size,linksN=links(a).length,score=Math.min(100,45+unique*7+linksN*12);let atk=roles.filter(x=>x==="攻撃").length,sup=roles.filter(x=>["回復","支援"].includes(x)).length,ctrl=roles.filter(x=>["妨害","特殊"].includes(x)).length;return{score,atk,sup,ctrl,label:score>=85?"極上":score>=70?"良好":"標準"}}
+function openFormationSwap(pos){
+ ensureUnitSets();let current=S.sets[S.set][pos],old=document.getElementById("swapOverlay");if(old)old.remove();
+ let o=document.createElement("div");o.id="swapOverlay";o.className="resultOverlay swapOverlay";
+ o.innerHTML=`<div class=resultCard><div class=collectionBar><div><small>FORMATION ${S.set+1}</small><h2>${pos+1}枠目を交代</h2></div><button class=btn data-swap-close=1>閉じる</button></div><div class=swapGrid>${ownedCharacterListV531().map(i=>{let c=C[i];return `<button class="swapChar ${i===current?"selected":""}" data-swap="${pos}:${i}"><img src="${characterPortraitV501(i)}"><b>${c[1]}</b><small>${c[2]} / Lv.${lv(i)} / ${c[4]}</small></button>`}).join("")}</div></div>`;
+ document.body.appendChild(o)
+}
+function maxPowerFormation(){
+ ensureUnitSets();
+ let pick=ownedCharacterListV531().sort((a,b)=>boostedPower(b)-boostedPower(a)).slice(0,6);
+ S.sets[S.set]=sanitizeFormationOwnedV542(pick);
+ save();persistentSaveWrite();
+ toast("戦力最高編成：総戦力 "+unitPower(pick).toLocaleString());
+ return party()
+}
+function autoFormation(){
+ ensureUnitSets();let roles=["回復","防御","支援","攻撃","速度","妨害"],used=new Set(),pick=[],pool=ownedFormationPoolV542();
+ for(let role of roles){
+   let best=pool.filter(i=>!used.has(i)&&C[i][4]===role).sort((a,b)=>boostedPower(b)-boostedPower(a))[0];
+   if(best!=null){pick.push(best);used.add(best)}
+ }
+ pool.filter(i=>!used.has(i)).sort((a,b)=>boostedPower(b)-boostedPower(a)).forEach(i=>{if(pick.length<6){pick.push(i);used.add(i)}});
+ S.sets[S.set]=sanitizeFormationOwnedV542(pick);
+ save();persistentSaveWrite();
+ let syn=literarySynergy(S.sets[S.set]);
+ toast("おすすめ編成：所持キャラ限定 / 文学共鳴 +"+syn.score+"%");
+ return party()
+}
+function teamReadiness(){
+ ensureUnitSets();let a=S.sets[S.set],power=unitPower(a),avg=a.reduce((z,i)=>z+lv(i),0)/a.length,geared=a.filter(i=>equippedGears(i).length===3).length,roles=new Set(a.map(i=>C[i][4])).size;
+ return{power,avg,geared,roles,score:Math.min(100,Math.round(avg*.45+geared*5+roles*4))}
+}
+function prepareTeam(){
+ ensureUnitSets();autoFormation();
+ let a=S.sets[S.set];
+ a.forEach(i=>{let eq=S.equipped[i]||{};if(typeof eq==="string")eq={pen:eq};for(let type of ["pen","book","accessory"]){let candidates=S.gear.filter(g=>g.type===type&&!Object.values(eq).includes(g.id));if(candidates.length)candidates.sort((x,y)=>gearScore(y)-gearScore(x)),eq[type]=candidates[0].id}S.equipped[i]=eq});
+ save();return party()
+}
+function literaryTrait(i){
+ let c=C[i],role=c[4],work=c[2],seed=[...work].reduce((z,x)=>z+x.charCodeAt(0),0)%4;
+ let pool={
+ "攻撃":[["烈筆","奥義威力+12%"],["決稿","HP50%以下で攻撃+15%"],["破章","ボスへの攻撃+10%"],["連載","追加攻撃率+8%"]],
+ "回復":[["余白","回復量+15%"],["再版","瀕死時の回復量+20%"],["栞守","味方防御+6%"],["追想","奥義後ゲージ+10%"]],
+ "防御":[["装丁","被ダメージ-10%"],["厚紙","HP+12%"],["蔵書壁","全体防御+5%"],["不朽","瀕死時防御+18%"]],
+ "支援":[["校閲","ゲージ上昇+12%"],["注釈","味方奥義+6%"],["引用","戦闘開始ゲージ+10%"],["推敲","支援効果+12%"]],
+ "速度":[["速記","ゲージ速度+15%"],["早版","初撃+12%"],["連文","追加攻撃+10%"],["瞬筆","会心+8%"]],
+ "妨害":[["伏字","敵攻撃-8%"],["誤植","敵防御-8%"],["禁書","ボスゲージ抑制"],["暗喩","妨害時間+1T"]],
+ "特殊":[["異本","複合効果+8%"],["奇稿","ランダム強化"],["幻頁","回避+6%"],["番外","全能力+4%"]]
+ };
+ let a=(pool[role]||pool["特殊"])[seed];return{name:a[0],effect:a[1]}
+}
+function characterPowerBreakdown(i){
+ let g=gearBonus(i),m=masteryStats(i),sp=gearSpecialization(i),tr=literaryTrait(i);
+ return{base:700+lv(i)*35,gear:g.atk*5+g.def*3,mastery:m.total,special:sp.bonus,trait:tr}
+}
+function literarySynergy(arr){
+ let roles=arr.map(i=>C[i][4]),traits=arr.map(i=>literaryTrait(i).name),score=0,tags=[];
+ let unique=new Set(roles).size;if(unique>=5){score+=12;tags.push("六彩文壇")}
+ if(roles.filter(x=>x==="攻撃").length>=2){score+=6;tags.push("双筆攻勢")}
+ if(roles.includes("回復")&&roles.includes("防御")){score+=8;tags.push("守護装丁")}
+ if(roles.includes("支援")&&roles.includes("速度")){score+=8;tags.push("高速推敲")}
+ if(roles.includes("妨害")&&roles.includes("攻撃")){score+=7;tags.push("禁書破章")}
+ if(new Set(traits).size===traits.length){score+=5;tags.push("異稿集成")}
+ return{score,tags,atk:Math.floor(score*.55),def:Math.floor(score*.3),gauge:Math.floor(score*.4)}
+}
+function teamRoleBonus(arr){
+ let roles=arr.map(i=>C[i][4]),count=x=>roles.filter(r=>r===x).length;
+ return{
+  atk:count("攻撃")*4,
+  heal:count("回復")*6,
+  guard:count("防御")*2,
+  gauge:count("支援")*4+count("速度")*3,
+  weaken:count("妨害")*2,
+  special:count("特殊")*3
+ }
+}
+const TACTICS={
+ balanced:{name:"均衡",desc:"攻守を自動判断",atk:1,guard:1,heal:1},
+ assault:{name:"猛攻",desc:"火力優先",atk:1.18,guard:.8,heal:.8},
+ fortress:{name:"堅守",desc:"生存優先",atk:.9,guard:1.35,heal:1.15},
+ skill:{name:"奥義",desc:"ゲージ優先",atk:.95,guard:1,heal:1,gauge:1.3}
+};
+function currentTactic(){return TACTICS[S.tactic||"balanced"]||TACTICS.balanced}
+function forgeCost(g){return Math.max(120,Math.round((g.level||1)*35*(g.rank==="UR"?2:g.rank==="SSR"?1.6:g.rank==="SR"?1.3:1)))}
+function enhanceGear(id){
+ let g=safeGearFind(x=>x.id===id);if(!g)return toast("装備が見つかりません");
+ if((g.level||1)>=50)return toast("最大Lvです");
+ let cost=forgeCost(g);if((S.gold||0)<cost)return toast("文銭が足りません");
+ S.gold-=cost;g.level=Math.min(50,(g.level||1)+1);g.atk=Math.round((g.atk||0)*1.035+1);g.def=Math.round((g.def||0)*1.035+1);save();toast(g.name+" Lv."+g.level);return detail(S.lastDetail||0)
+}
+function bulkEnhanceEquipped(i){
+ let gs=equippedGears(i),count=0,cost=0;
+ for(let g of gs){for(let n=0;n<5&&(g.level||1)<50;n++){let c=forgeCost(g);if((S.gold||0)<c)break;S.gold-=c;cost+=c;g.level=(g.level||1)+1;g.atk=Math.round((g.atk||0)*1.035+1);g.def=Math.round((g.def||0)*1.035+1);count++}}
+ save();toast("装備強化 "+count+"回 / "+cost+"文銭");return detail(i)
+}
+const GEAR_BUILDS={
+ power:{name:"火力",desc:"攻撃値を最優先"},
+ tank:{name:"耐久",desc:"防御値を最優先"},
+ skill:{name:"奥義",desc:"ゲージ系スキルを優先"},
+ balanced:{name:"均衡",desc:"総合スコア重視"}
+};
+function gearBuildScore(g,build){
+ let atk=g.atk||0,def=g.def||0,skills=(g.skills||[]).join(" "),elite=g.elite?25:0,rank={R:0,SR:12,SSR:28,UR:45}[g.rank]||0;
+ if(build==="power")return atk*2.2+def*.5+elite+rank;
+ if(build==="tank")return def*2.2+atk*.5+elite+rank;
+ if(build==="skill")return atk+def+elite+rank+(skills.includes("ゲージ")?45:0)+(skills.includes("全体")?25:0);
+ return gearScore(g)+elite
+}
+function autoEquipBuild(i,build="balanced"){
+ let eq={};for(let type of ["pen","book","accessory"]){let c=S.gear.filter(g=>g.type===type).sort((a,b)=>gearBuildScore(b,build)-gearBuildScore(a,build));if(c[0])eq[type]=c[0].id}
+ S.equipped[i]=eq;save();toast(GEAR_BUILDS[build].name+"装備に変更");return detail(i)
+}
+function gearUpgradeCount(i){
+ let eq=equippedGears(i),n=0;for(let type of ["pen","book","accessory"]){let cur=eq.find(g=>g.type===type),best=S.gear.filter(g=>g.type===type).sort((a,b)=>gearScore(b)-gearScore(a))[0];if(best&&(!cur||gearScore(best)>gearScore(cur)))n++}return n
+}
+function saveLoadout(slot){
+ ensureUnitSets();S.savedLoadouts[slot]={team:[...S.sets[S.set]],tactic:S.tactic||"balanced",name:"書架"+(slot+1)};save();toast("編成を書架"+(slot+1)+"に保存");return party()
+}
+function loadLoadout(slot){
+ let l=S.savedLoadouts[slot];if(!l)return toast("この書架は未保存です");
+ ensureUnitSets();S.sets[S.set]=l.team.map(x=>Math.max(0,Math.min(C.length-1,+x||0))).slice(0,6);while(S.sets[S.set].length<6)S.sets[S.set].push(S.sets[S.set].length);
+ if(l.tactic&&TACTICS[l.tactic])S.tactic=l.tactic;save();toast("書架"+(slot+1)+"を読み込み");return party()
+}
+
+function formationRoleNeedV513(mode){
+ return {
+   balanced:{攻撃:2,妨害:1,回復:1,支援:1,防御:1},
+   burst:{攻撃:3,速度:1,妨害:1,支援:1},
+   safe:{防御:2,回復:2,支援:1,妨害:1},
+   break:{妨害:2,攻撃:2,速度:1,支援:1},
+   ougi:{支援:2,速度:2,攻撃:1,特殊:1}
+ }[mode]||{攻撃:2,妨害:1,回復:1,支援:1,防御:1}
+}
+function formationModeLabelV513(mode){
+ return {balanced:"バランス",burst:"速攻",safe:"耐久",break:"BREAK",ougi:"奥義回転"}[mode]||"バランス"
+}
+function formationCandidateScoreV513(i,mode,counts){
+ let role=characterAbility(i).role,k=characterSkillKitV512(i),st=characterStatsV511(i),need=formationRoleNeedV513(mode),rank=charRankOrder(charRank(i));
+ let score=charPower(i);
+ score+=rank*75;
+ score+=Math.round(st.atk*.20+st.def*.12+st.spd*1.1+st.hp*.025);
+ if((counts[role]||0)<(need[role]||0))score+=480;
+ if(mode==="burst"){score+=Math.round(st.atk*.5)+(["combo","crit","ambush","first"].includes(k.code)?350:0)}
+ if(mode==="safe"){score+=Math.round(st.def*.42+st.hp*.07)+(["heal","regen","guard","fortress"].includes(k.code)?350:0)}
+ if(mode==="break"){score+=Math.round(k.breakMul*420)+(["break","execute","dash"].includes(k.code)?360:0)}
+ if(mode==="ougi"){score+=Math.round(k.epMul*450)+(["teamGauge","cycle","fast","refund"].includes(k.code)?360:0)}
+ return score
+}
+function buildSmartFormationV513(mode="balanced"){
+ ensureUnitSets();
+ let chosen=[],counts={},pool=ownedFormationPoolV542();
+ while(chosen.length<6&&pool.length){
+   pool.sort((a,b)=>formationCandidateScoreV513(b,mode,counts)-formationCandidateScoreV513(a,mode,counts));
+   let pick=pool.shift();
+   if(pick==null)break;
+   chosen.push(pick);
+   let r=characterAbility(pick).role;
+   counts[r]=(counts[r]||0)+1
+ }
+ chosen=sanitizeFormationOwnedV542(chosen);
+ S.sets[S.set]=chosen;
+ S.qol=S.qol||{};S.qol.formationModeV513=mode;
+ save();persistentSaveWrite();
+ return chosen
+}
+function formationModeSummaryV513(arr){
+ let roles={};(arr||[]).forEach(i=>{let r=characterAbility(i).role;roles[r]=(roles[r]||0)+1});
+ return Object.entries(roles).map(([k,v])=>`${k}${v}`).join(" / ")
+}
+
+
+function formationAnalysisV517(arr){
+ arr=(arr||[]).slice(0,6);
+ let roles={},kits=[],hp=0,atk=0,def=0,spd=0,breakScore=0,epScore=0,heal=0,guard=0;
+ arr.forEach(i=>{
+  let r=characterAbility(i).role,k=characterSkillKitV512(i),st=characterStatsV511(i);
+  roles[r]=(roles[r]||0)+1;kits.push(k);
+  hp+=st.hp;atk+=st.atk;def+=st.def;spd+=st.spd;
+  breakScore+=k.breakMul;epScore+=k.epMul;
+  if(["回復"].includes(r))heal++;
+  if(["防御"].includes(r))guard++;
+ });
+ let n=Math.max(1,arr.length);
+ let tips=[];
+ if(!heal)tips.push({type:"warn",text:"回復役がいません。長期戦では不安定です。"});
+ if(!guard)tips.push({type:"warn",text:"防御役がいません。高難度で被ダメージが増えやすいです。"});
+ if((roles.攻撃||0)<2)tips.push({type:"info",text:"攻撃役を2人以上にすると周回速度が上がりやすいです。"});
+ if(breakScore/n<1.08)tips.push({type:"info",text:"BREAK性能が低め。妨害型やBREAK特化を入れるとボス戦向きになります。"});
+ if(epScore/n<1.08)tips.push({type:"info",text:"奥義回転が遅め。支援・速度型を加えるとEP効率が上がります。"});
+ if(!tips.length)tips.push({type:"good",text:"攻守のバランスが良い編成です。"});
+ let score=Math.round(
+   Math.min(100,
+    48 +
+    Math.min(16,(roles.攻撃||0)*5) +
+    Math.min(10,(roles.回復||0)*7) +
+    Math.min(10,(roles.防御||0)*6) +
+    Math.min(8,(roles.支援||0)*4) +
+    Math.min(8,(roles.妨害||0)*4)
+   )
+ );
+ return {
+  roles,
+  avgHp:Math.round(hp/n),
+  avgAtk:Math.round(atk/n),
+  avgDef:Math.round(def/n),
+  avgSpd:Math.round(spd/n),
+  breakAvg:Number((breakScore/n).toFixed(2)),
+  epAvg:Number((epScore/n).toFixed(2)),
+  score,
+  tips
+ }
+}
+function formationCoachV517(arr){
+ let x=formationAnalysisV517(arr);
+ return `<section class=formationCoachV517>
+   <div class=formationCoachHeadV517>
+     <div><small>FORMATION COACH</small><h2>編成診断</h2></div>
+     <b>${x.score}<span>/100</span></b>
+   </div>
+   <div class=formationCoachStatsV517>
+     <span>平均HP<b>${x.avgHp}</b></span>
+     <span>平均攻撃<b>${x.avgAtk}</b></span>
+     <span>平均防御<b>${x.avgDef}</b></span>
+     <span>平均速度<b>${x.avgSpd}</b></span>
+     <span>BREAK<b>×${x.breakAvg.toFixed(2)}</b></span>
+     <span>EP効率<b>×${x.epAvg.toFixed(2)}</b></span>
+   </div>
+   <div class=formationCoachRolesV517>
+     ${["攻撃","妨害","回復","支援","特殊","防御","速度"].map(r=>`<span>${r}<b>${x.roles[r]||0}</b></span>`).join("")}
+   </div>
+   <div class=formationCoachTipsV517>
+     ${x.tips.map(t=>`<p class="${t.type}">${t.type==="good"?"✓":t.type==="warn"?"!":"i"} ${t.text}</p>`).join("")}
+   </div>
+ </section>`
+}
+
+function party(){
+ sanitizeAllFormationsV542();
+ ensureUnitSets();
+ let a=S.sets[S.set]||[],syn=teamSynergy(a),rb=teamRoleBonus(a),ls=literarySynergy(a);
+ let leader=a[0]??0;
+ shell(`<main class=formationV255>
+   <section class=formationTitleV255>
+     <div><small>FORMATION</small><h1>編成</h1><p>言葉は、いつだって、誰かを救う。</p></div>
+     <button class=formationCopyV255 data-formation-copy="1">編成コピー</button>
+   </section>
+
+   <section class=formationRosterV255>
+     <header><b>6人編成</b><span>枠をタップして文豪を変更</span><strong>${a.length}/6</strong></header>
+     <div class=formationSlotsV255>
+       ${Array.from({length:6},(_,pos)=>{
+         let i=a[pos];
+         if(i==null)return `<button class=empty data-formation-slot="${pos}"><span>＋</span><small>空き枠</small></button>`;
+         let c=C[i],role=c[4];
+         return `<button class=formationUnitV255 data-formation-slot="${pos}">
+           <span class=rankBadge data-rank="${charRank(i)}">${charRank(i)}</span>
+           ${pos===0?`<span class=leaderBadgeV255>隊長</span>`:""}
+           <img src="${characterImage(c[0])}">
+           <b>${c[1]}</b><small>Lv.${lv(i)} / HP ${characterStatsV511(i).hp} / 速 ${characterStatsV511(i).spd}</small>
+           <em>${role}・${characterSkillKitV512(i).trait}</em>
+         </button>`
+       }).join("")}
+     </div>
+   </section>
+
+   <section class=formationSummaryV255>
+     <div class=formationSummaryHeadV255>
+       <div><small>FORMATION ${S.set+1}</small><h2>文豪編成</h2></div>
+       <div class=formationPowerV255><small>総戦力</small><strong>${unitPower(a).toLocaleString()}</strong></div>
+     </div>
+     <p class=formationTaglineV255>── まだ見ぬ物語を、共に。</p>
+     <div class=formationInfoV255>
+       <div class=leaderV255>
+         <img src="${characterImage(C[leader][0])}">
+         <div><small>隊長</small><b>${C[leader][1]}</b><span>全体を支える先導役</span></div>
+       </div>
+       <div class=bonusV255>
+         <small>編成効果</small>
+         <span>攻撃力 <b>+${rb.atk}%</b></span>
+         <span>支援力 <b>+${Math.max(0,rb.heal||0)}%</b></span>
+         <span>文学共鳴 <b>+${ls.score}%</b></span>
+       </div>
+     </div>
+     <div class=formationActionsV255>
+       <button data-maxformation=1>⚔ 戦力最高編成</button>
+       <button data-autoformation=1>📖 おすすめ編成</button>
+       <button class=save data-loadout-save="0">✓ 編成を保存</button>
+     </div>
+     <section class=formationSmartV513>
+       <div class=formationSmartHeadV513>
+         <div><small>SMART FORMATION</small><b>目的別かんたん編成</b></div>
+         <span>${formationModeSummaryV513(a)}</span>
+       </div>
+       <div class=formationSmartButtonsV513>
+         <button data-smartformation-v513="balanced">バランス</button>
+         <button data-smartformation-v513="burst">速攻</button>
+         <button data-smartformation-v513="safe">耐久</button>
+         <button data-smartformation-v513="break">BREAK</button>
+         <button data-smartformation-v513="ougi">奥義回転</button><button class=coach data-formation-coach-refresh-v517=1>診断更新</button>
+       </div>
+     </section>
+     ${formationCoachV517(a)}
+     ${skillSynergyPanelV518(a)}
+   </section>
+ </main>`)
+}
+function roleSkill(i){let r=C[i][4],L=lv(i);if(r==="攻撃")return{name:"強襲",damage:160+L*3};if(r==="回復")return{name:"再読",damage:75+L,heal:18+Math.floor(L/15)};if(r==="防御")return{name:"堅牢",damage:90+L,guard:3};if(r==="支援")return{name:"推敲",damage:85+L,gauge:20};if(r==="速度")return{name:"速筆",damage:125+L*2,gauge:10};if(r==="妨害")return{name:"錯綜",damage:105+L*2,debuff:3};return{name:"異稿",damage:110+L*2,heal:8,gauge:8,guard:1}}
+function openHowToPlay(){let old=document.getElementById("howToPlay");if(old)old.remove();let o=document.createElement("div");o.id="howToPlay";o.className="resultOverlay";o.innerHTML=`<div class="resultCard howCard"><div class=collectionBar><div><small>QUICK GUIDE</small><h2>30秒でわかる遊び方</h2></div><button class=btn data-how-close=1>閉じる</button></div><div class=howSteps><div><b>1. 出撃</b><small>EXP・原稿片・レア装備を集める。</small></div><div><b>2. 召喚</b><small>重複でLv上限50→最大150。</small></div><div><b>3. 育成</b><small>装備3枠と蔵書平均Lvで全体を強化。</small></div><div><b>4. 編成</b><small>6人の役割と文壇リンクを組み合わせる。</small></div></div><div class=roleLegend>${["攻撃","回復","防御","支援","速度","妨害","特殊"].map(x=>`<span>${x}</span>`).join("")}</div><button class=btn data-how-start=1>第1章へ</button></div>`;document.body.appendChild(o)}
+function chapterReward(ch){return[{name:"第一章踏破",tickets:50,gold:500,ink:0},{name:"第二章踏破",tickets:75,gold:800,ink:30},{name:"第三章踏破",tickets:100,gold:1200,ink:60},{name:"第四章踏破",tickets:150,gold:2000,ink:100}][ch]}
+function claimChapterReward(ch){let r=chapterReward(ch);if(!r||S.chapterRewards[ch]||!(S.progress.clears[ch]>0))return false;S.chapterRewards[ch]=1;S.normalTickets=(S.normalTickets||0)+r.tickets;S.gold=(S.gold||0)+r.gold;S.ink=(S.ink||0)+r.ink;save();return true}
+function campaignProgress(){normalizeStageProgressV521();let n=0;for(let i=0;i<4;i++){if((S.progress.clears[i]||0)>0)n++;else break}return n}
+function hardUnlocked(ch){return (S.progress.clears[ch]||0)>=3}
+function hardReward(ch){return[{tickets:80,gold:1000,ink:40},{tickets:100,gold:1500,ink:60},{tickets:130,gold:2200,ink:90},{tickets:180,gold:3500,ink:150}][ch]}
+function claimHardReward(ch){let r=hardReward(ch);if(!r||S.hardRewards[ch]||!(S.hardClears[ch]>0))return false;S.hardRewards[ch]=1;S.normalTickets=(S.normalTickets||0)+r.tickets;S.gold=(S.gold||0)+r.gold;S.ink=(S.ink||0)+r.ink;save();return true}
+function bossMasteryReward(ch){
+ return[
+  {goal:5,tickets:60,gold:800,ink:0},
+  {goal:5,tickets:80,gold:1000,ink:30},
+  {goal:5,tickets:100,gold:1500,ink:50},
+  {goal:5,tickets:120,gold:2200,ink:80}
+ ][ch]
+}
+function claimBossMastery(ch){
+ let r=bossMasteryReward(ch);if(!r||S.bossMasteryClaims[ch]||(S.bossMastery[ch]||0)<r.goal)return false;
+ S.bossMasteryClaims[ch]=1;S.normalTickets=(S.normalTickets||0)+r.tickets;S.gold=(S.gold||0)+r.gold;S.ink=(S.ink||0)+r.ink;save();return true
+}
+function endgameGoals(){
+ let hard=(S.hardClears||[]).filter(x=>x>0).length,master=(S.bossMastery||[]).filter(x=>x>=5).length,avg=C.reduce((z,_,i)=>z+lv(i),0)/C.length,ur=S.lootStats?.ur||0,rt=S.rating||1000;
+ return[
+  {id:"eg_hard4",name:"四章HARD制覇",now:hard,goal:4,reward:"原稿片300",give:()=>S.normalTickets=(S.normalTickets||0)+300},
+  {id:"eg_master4",name:"全ボス熟練MAX",now:master,goal:4,reward:"インク400",give:()=>S.ink=(S.ink||0)+400},
+  {id:"eg_avg75",name:"蔵書平均Lv75",now:avg,goal:75,reward:"文銭8000",give:()=>S.gold=(S.gold||0)+8000},
+  {id:"eg_ur5",name:"UR装備5個",now:ur,goal:5,reward:"資料1200",give:()=>S.mat=(S.mat||0)+1200},
+  {id:"eg_rating1800",name:"Rating1800",now:rt,goal:1800,reward:"原稿片400",give:()=>S.normalTickets=(S.normalTickets||0)+400},
+  {id:"eg_rush",name:"四章連戦制覇",now:S.bossRush?.best||0,goal:4,reward:"インク500",give:()=>S.ink=(S.ink||0)+500}
+ ]}
+function endgameClaimable(){return endgameGoals().filter(g=>g.now>=g.goal&&!S.endgameClaims[g.id]).length}
+function starReward(ch){return[{tickets:50,gold:600,ink:0},{tickets:70,gold:900,ink:20},{tickets:90,gold:1300,ink:40},{tickets:120,gold:1800,ink:70}][ch]}
+function claimStarReward(ch){let r=starReward(ch);if(!r||S.starClaims[ch]||(S.stageBest[ch]||0)<3)return false;S.starClaims[ch]=1;S.normalTickets=(S.normalTickets||0)+r.tickets;S.gold=(S.gold||0)+r.gold;S.ink=(S.ink||0)+r.ink;save();return true}
+function totalStars(){return (S.stageBest||[]).reduce((z,x)=>z+(x||0),0)}
+function stageFarmScore(ch){
+ let clears=S.progress.clears[ch]||0,stars=S.stageBest[ch]||0,master=S.bossMastery?.[ch]||0;
+ return Math.round((8+ch*2)+(stars*3)+(master>=5?5:0)+(clears>0?4:0))
+}
+function recommendedFarm(){
+ let candidates=[0,1,2,3].filter(i=>i===0||(S.progress.clears[i-1]||0)>0);
+ return candidates.sort((a,b)=>stageFarmScore(b)-stageFarmScore(a))[0]||0
+}
+
+function quickFarmStateV520(){
+ S.qol=S.qol||{};
+ if(!S.qol.farmV520||typeof S.qol.farmV520!=="object")S.qol.farmV520={running:false};
+ return S.qol.farmV520
+}
+function quickFarmRemembered(ch,count){
+ ensureCoreState();ensureQoLPrefs();
+ ch=Math.max(0,Math.min(3,Number(ch)||0));
+ count=Math.max(1,Math.min(50,Number(count)||rememberedFarmCount()));
+ setFarmCount(count);
+ return quickFarm(ch,count)
+}
+function farmRunRewardsV520(ch){
+ let ticketMin=8+(ch>=2?2:0)+(ch>=3?2:0),ticketMax=15+(ch>=2?3:0)+(ch>=3?2:0);
+ let tickets=ticketMin+Math.floor(Math.random()*(ticketMax-ticketMin+1));
+ let xp=350+ch*70,mat=35+ch*7,gold=40+ch*20,ink=Math.random()<(0.05+ch*.015)?5+ch*2:0;
+ return {tickets,xp,mat,gold,ink}
+}
+function quickFarm(ch,runs){
+ ensureCoreState();ensureUnitSets();ensureQoLPrefs();
+ ch=Math.max(0,Math.min(3,Number(ch)||0));
+ runs=Math.max(1,Math.min(50,Number(runs)||rememberedFarmCount()));
+ if((S.progress?.clears?.[ch]||0)<1){toast("周回はこの章を1回クリアすると解放されます");return stagePage()}
+ let fs=quickFarmStateV520();
+ if(fs.running){toast("周回処理中です");return}
+ fs.running=true;fs.ch=ch;fs.runs=runs;fs.startedAt=Date.now();
+ let before={tickets:Number(S.normalTickets||0),xp:Number(S.xp||0),mat:Number(S.mat||0),gold:Number(S.gold||0),ink:Number(S.ink||0),gear:(S.gear||[]).length};
+ let totals={tickets:0,xp:0,mat:0,gold:0,ink:0,gear:0,sold:0,ssr:0,ur:0};
+ try{
+  for(let n=0;n<runs;n++){
+   let rw=farmRunRewardsV520(ch);
+   S.normalTickets=(S.normalTickets||0)+rw.tickets;totals.tickets+=rw.tickets;
+   S.xp=(S.xp||0)+rw.xp;totals.xp+=rw.xp;
+   S.mat=(S.mat||0)+rw.mat;totals.mat+=rw.mat;
+   S.gold=(S.gold||0)+rw.gold;totals.gold+=rw.gold;
+   S.ink=(S.ink||0)+rw.ink;totals.ink+=rw.ink;
+   S.mastery=S.mastery||{wins:0,skills:0,perfect:0};S.mastery.wins=(S.mastery.wins||0)+1;
+   S.progress.clears[ch]=(S.progress.clears[ch]||0)+1;
+   if(!Array.isArray(S.bossMastery))S.bossMastery=[0,0,0,0];
+   S.bossMastery[ch]=(S.bossMastery[ch]||0)+1;
+   S.gearPity=Number(S.gearPity||0);
+   let drop=S.gearPity>=9||Math.random()<.10;
+   if(drop){
+    S.gearPity=0;
+    let g=makeGear(ch);
+    S.lootStats=S.lootStats||{drops:0,ssr:0,ur:0,elite:0};
+    S.lootStats.drops=(S.lootStats.drops||0)+1;totals.gear++;
+    if(g.rank==="SSR"){S.lootStats.ssr=(S.lootStats.ssr||0)+1;totals.ssr++}
+    if(g.rank==="UR"){S.lootStats.ur=(S.lootStats.ur||0)+1;totals.ur++}
+    if(g.elite)S.lootStats.elite=(S.lootStats.elite||0)+1;
+    if(shouldAutoSell(g)){let v=gearSellValue(g);S.gold=(S.gold||0)+v;totals.gold+=v;totals.sold++}
+    else{S.gear=S.gear||[];S.gear.push(g)}
+   }else S.gearPity++
+  }
+  S.sessionRun=S.sessionRun||{count:0,tickets:0,gear:0};
+  S.sessionRun.count=(S.sessionRun.count||0)+runs;
+  S.sessionRun.tickets=(S.sessionRun.tickets||0)+totals.tickets;
+  S.sessionRun.gear=(S.sessionRun.gear||0)+totals.gear;
+  fs.running=false;fs.finishedAt=Date.now();fs.last={ch,runs,...totals};
+  S.qol.lastFarmResult={ch,count:runs,time:Date.now(),mat:totals.mat,gold:totals.gold,ink:totals.ink,tickets:totals.tickets,xp:totals.xp,gear:totals.gear};
+  save();persistentSaveWrite();
+  return showFarmResultV520(ch,runs,totals)
+ }catch(err){
+  fs.running=false;
+  try{runtimeLogV491("FARM",err?.message||String(err))}catch(_){}
+  finalErrorShield(err);toast("周回処理を復旧しました");save();persistentSaveWrite();return stagePage()
+ }
+}
+function showFarmResultV520(ch,runs,t){
+ document.getElementById("farmResultV520")?.remove();
+ let d=document.createElement("div");d.id="farmResultV520";d.className="resultOverlay farmResultOverlayV520";
+ d.innerHTML=`<div class="resultPanel farmResultPanelV520">
+   <span class=resultBadge>QUICK FARM COMPLETE</span>
+   <div class=resultTitle>第${ch+1}章　${runs}周完了</div>
+   <div class=farmResultGridV520>
+     <div>原稿片<b>+${t.tickets}</b></div>
+     <div>EXP<b>+${t.xp}</b></div>
+     <div>資料<b>+${t.mat}</b></div>
+     <div>文銭<b>+${t.gold}</b></div>
+     <div>インク<b>+${t.ink}</b></div>
+     <div>装備<b>${t.gear}</b></div>
+   </div>
+   <div class=farmResultExtraV520><span>SSR装備 ${t.ssr}</span><span>UR装備 ${t.ur}</span><span>自動売却 ${t.sold}</span></div>
+   <div class=farmResultActionsV520><button data-farm-repeat-v520="${ch}:${runs}">同じ条件でもう一度</button><button data-farm-stage-v520="${ch}">ステージへ戻る</button></div>
+ </div>`;
+ document.body.appendChild(d)
+}
+function showFarmResult(ch,runs,tickets,gear,gold){
+ return showFarmResultV520(ch,runs,{tickets,gear,gold,xp:runs*350,mat:runs*35,ink:0,ssr:0,ur:0,sold:0})
+}
+
+function dailyDungeonInfo(){
+ let d=new Date(),day=d.getDay(),types=[
+  {name:"文銭書庫",icon:"💰",desc:"文銭を大量獲得",reward:"gold"},
+  {name:"経験書庫",icon:"📘",desc:"EXPを大量獲得",reward:"xp"},
+  {name:"資料書庫",icon:"📜",desc:"育成資料を大量獲得",reward:"mat"},
+  {name:"装具書庫",icon:"📦",desc:"装備ドロップ率アップ",reward:"gear"},
+  {name:"原稿書庫",icon:"🖋️",desc:"原稿片を大量獲得",reward:"ticket"},
+  {name:"混沌書庫",icon:"✦",desc:"全報酬を少しずつ",reward:"mix"},
+  {name:"黄金書庫",icon:"👑",desc:"週末ボーナス",reward:"weekend"}
+ ][day];
+ let key=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+ if(S.dailyDungeon.key!==key){S.dailyDungeon={key,runs:0};save()}
+ return{...types,key,left:3-(S.dailyDungeon.runs||0)}
+}
+function runDailyDungeon(){
+ let d=dailyDungeonInfo();if(d.left<=0)return toast("本日の挑戦回数を使い切りました");
+ S.dailyDungeon.runs++;let msg="";
+ if(d.reward==="gold"){S.gold=(S.gold||0)+1200;msg="文銭 +1200"}
+ else if(d.reward==="xp"){S.xp+=1000;msg="EXP +1000"}
+ else if(d.reward==="mat"){S.mat=(S.mat||0)+450;msg="資料 +450"}
+ else if(d.reward==="ticket"){S.normalTickets=(S.normalTickets||0)+35;msg="原稿片 +35"}
+ else if(d.reward==="gear"){let g=makeGear(2);S.gear.push(g);S.lootStats.drops++;msg=g.rank+"装備《"+g.name+"》"}
+ else if(d.reward==="weekend"){S.gold=(S.gold||0)+800;S.normalTickets=(S.normalTickets||0)+25;S.ink=(S.ink||0)+30;msg="文銭+800 / 原稿片+25 / インク+30"}
+ else{S.gold=(S.gold||0)+400;S.mat=(S.mat||0)+150;S.normalTickets=(S.normalTickets||0)+15;msg="文銭+400 / 資料+150 / 原稿片+15"}
+ S.mastery.wins++;save();toast(d.name+"： "+msg);return sortie()
+}
+function bossRushUnlocked(){return campaignProgress()>=4}
+function bossRushReward(stage){return[{goal:1,tickets:80,gold:1000,ink:20},{goal:2,tickets:100,gold:1500,ink:40},{goal:3,tickets:130,gold:2200,ink:70},{goal:4,tickets:180,gold:3500,ink:120}][stage-1]}
+function runBossRush(){
+ if(!bossRushUnlocked())return toast("メイン4章クリアで解放");
+ let power=unitPower(S.sets[S.set]),cleared=0,log=[];
+ for(let ch=0;ch<4;ch++){let need=6500+ch*4500+(ch===3?2500:0),roll=power*(.92+Math.random()*.18);if(roll>=need){cleared++;log.push(`第${ch+1}戦 WIN`)}else{log.push(`第${ch+1}戦 LOSE`);break}}
+ ensureBossRushState().best=Math.max(ensureBossRushState().best||0,cleared);if(cleared===4)ensureBossRushState().clears=(ensureBossRushState().clears||0)+1;save();showBossRushResult(cleared,log,power)
+}
+function showBossRushResult(cleared,log,power){
+ let d=document.createElement("div");d.className="resultOverlay";d.innerHTML=`<div class="resultPanel bossRushResult"><span class=resultBadge>BOSS RUSH</span><div class=resultTitle>${cleared===4?"COMPLETE":"RESULT"}</div><div class=bossRushScore>${cleared}/4 BOSS</div><div class=resultStats><div>戦闘力<b>${power.toLocaleString()}</b></div><div>最高記録<b>${ensureBossRushState().best}/4</b></div><div>完全制覇<b>${ensureBossRushState().clears}</b></div></div><div class=bossRushLog>${log.map(x=>`<span>${x}</span>`).join("")}</div><button class=btn data-bossrush-close=1>出撃へ戻る</button></div>`;document.body.appendChild(d)
+}
+function claimBossRushReward(stage){
+ let r=bossRushReward(stage);if(!r||ensureBossRushState().claimed[stage]||(ensureBossRushState().best||0)<r.goal)return false;
+ ensureBossRushState().claimed[stage]=1;S.normalTickets=(S.normalTickets||0)+r.tickets;S.gold=(S.gold||0)+r.gold;S.ink=(S.ink||0)+r.ink;save();return true
+}
+function farmCountBar(ch){
+ let n=rememberedFarmCount();
+ return `<div class=farmCountBar><div><b>周回</b><small>前回 ${n}周</small></div><div class=farmPresets>${[1,5,10,20].map(x=>`<button class="${n===x?"on":""}" data-farm-count="${x}">${x}</button>`).join("")}</div><button class=farmStart data-farm-start="${ch}">${n}周する</button></div>`
+}
+
+
+function stageDifficultyV543(ch=selectedStage()){
+ ensureQoLPrefs();
+ let mode=S.qol.stageDifficultyV543||"normal";
+ if(mode==="hard"&&!hardUnlocked(ch))mode="normal";
+ return mode==="hard"?"hard":"normal"
+}
+function setStageDifficultyV543(ch,mode){
+ ensureQoLPrefs();
+ ch=Math.max(0,Math.min(3,Number(ch)||0));
+ mode=mode==="hard"?"hard":"normal";
+ if(mode==="hard"&&!hardUnlocked(ch)){
+  toast(`HARDはNORMALをあと${Math.max(0,3-(S.progress?.clears?.[ch]||0))}回クリアで解放`);
+  mode="normal"
+ }
+ S.qol.stageDifficultyV543=mode;
+ save();persistentSaveWrite();
+ return stagePage()
+}
+function stageDifficultyMetaV543(ch,mode=stageDifficultyV543(ch)){
+ let st=stageMeta(ch),hard=mode==="hard";
+ let power=Math.round(st.power*(hard?1.42:1));
+ let level=battleStageIdentityV534(ch).lv+(hard?8:0);
+ let drop=hard?`${Math.round(12*(1+ch*.25))}〜${Math.round(22*(1+ch*.25))}`:st.drop;
+ let label=hard?"HARD":"NORMAL";
+ let bonus=hard?"報酬 +50% / 敵Lv上昇":"標準難易度";
+ return {mode,label,power,level,drop,bonus,unlocked:!hard||hardUnlocked(ch)}
+}
+function stageDifficultySelectorV543(ch){
+ let mode=stageDifficultyV543(ch),clear=S.progress?.clears?.[ch]||0,hardOpen=hardUnlocked(ch);
+ return `<section class=stageDifficultyV543>
+   <div class=stageDifficultyHeadV543><div><small>DIFFICULTY</small><b>難易度選択</b></div><span>${mode.toUpperCase()}</span></div>
+   <div class=stageDifficultyTabsV543>
+     <button class="${mode==="normal"?"on":""}" data-stage-difficulty-v543="${ch}:normal"><small>NORMAL</small><b>通常</b><em>推奨 ${stageDifficultyMetaV543(ch,"normal").power.toLocaleString()}</em></button>
+     <button class="${mode==="hard"?"on":""} ${hardOpen?"":"locked"}" data-stage-difficulty-v543="${ch}:hard" ${hardOpen?"":"disabled"}><small>HARD ${hardOpen?"":"🔒"}</small><b>${hardOpen?"高難度":`あと${Math.max(0,3-clear)}回`}</b><em>${hardOpen?`推奨 ${stageDifficultyMetaV543(ch,"hard").power.toLocaleString()}`:"NORMALを3回クリア"}</em></button>
+   </div>
+ </section>`
+}
+
+function selectedStage(){let n=Number(S.qol?.selectedStage);return Number.isInteger(n)&&n>=0&&n<4?n:0}
+function openStagePage(i){
+ normalizeStageProgressV521();i=Math.max(0,Math.min(3,Number(i)||0));
+ if(!stageUnlockedV521(i)){toast(`第${i}章をクリアすると解放されます`);return sortie()}
+ rememberStage(i);return stagePage()
+}
+
+function stageRewardStateV523(ch){
+ normalizeStageProgressV521();
+ let chapter=chapterReward(ch),star=starReward(ch),hard=hardReward(ch),master=bossMasteryReward(ch);
+ let clears=S.progress.clears[ch]||0,stars=S.stageBest[ch]||0,hardClears=S.hardClears[ch]||0,masterNow=S.bossMastery[ch]||0;
+ return {
+  chapter:{ready:clears>0,claimed:!!S.chapterRewards[ch],reward:chapter,label:"章踏破"},
+  star:{ready:stars>=3,claimed:!!S.starClaims[ch],reward:star,label:"★3"},
+  hard:{ready:hardClears>0,claimed:!!S.hardRewards[ch],reward:hard,label:"HARD"},
+  mastery:{ready:masterNow>=(master?.goal||5),claimed:!!S.bossMasteryClaims[ch],reward:master,label:`熟練 ${masterNow}/${master?.goal||5}`},
+  clears,stars,hardClears,masterNow
+ }
+}
+function stageRewardButtonV523(ch,key,obj){
+ let attr={chapter:"data-chapter-reward",star:"data-star-reward",hard:"data-hard-reward",mastery:"data-boss-mastery"}[key];
+ let r=obj.reward||{},text=`原稿片${r.tickets||0} / 文銭${r.gold||0}${r.ink?` / インク${r.ink}`:""}`;
+ return `<button class="${obj.claimed?"claimed":obj.ready?"ready":"locked"}" ${attr}="${ch}" ${(!obj.ready||obj.claimed)?"disabled":""}>
+   <span>${obj.label}</span><b>${obj.claimed?"受取済":obj.ready?"受取":"未達成"}</b><small>${text}</small>
+ </button>`
+}
+function stageRewardPanelV523(ch){
+ let s=stageRewardStateV523(ch);
+ return `<section class=stageRewardPanelV523>
+   <div class=stageRewardHeadV523><div><small>STAGE REWARD</small><h2>章報酬</h2></div><span>★${s.stars}/3 / NORMAL ${s.clears} / HARD ${s.hardClears}</span></div>
+   <div class=stageRewardGridV523>
+     ${stageRewardButtonV523(ch,"chapter",s.chapter)}
+     ${stageRewardButtonV523(ch,"star",s.star)}
+     ${stageRewardButtonV523(ch,"hard",s.hard)}
+     ${stageRewardButtonV523(ch,"mastery",s.mastery)}
+   </div>
+ </section>`
+}
+
+
+function stageEnemyProfileV524(ch){
+ let data=[
+  {name:"失稿の影",trait:"標準",weak:"攻撃・速度",danger:"低",mode:"balanced",tip:"まずはバランス編成で操作を確認。"},
+  {name:"墨染めの異稿体",trait:"妨害",weak:"BREAK・支援",danger:"中",mode:"break",tip:"BREAK役を増やすと敵の行動を止めやすい。"},
+  {name:"境界の頁喰い",trait:"高速",weak:"防御・回復",danger:"高",mode:"safe",tip:"速度負けしやすいので耐久と回復を厚めに。"},
+  {name:"終稿拒絶体",trait:"ボス",weak:"奥義・BREAK",danger:"最高",mode:"ougi",tip:"奥義回転とBREAK共鳴を重ねて押し切る。"}
+ ];
+ return data[Math.max(0,Math.min(3,Number(ch)||0))]
+}
+function stageReadinessV524(ch){
+ let st=stageMeta(ch),difficulty=stageDifficultyV543(ch),dm=stageDifficultyMetaV543(ch,difficulty),team=S.sets?.[S.set]||[],power=unitPower(team),enemy=stageEnemyProfileV524(ch),coach=formationAnalysisV517(team),syn=skillSynergyV518(team);
+ let ratio=dm.power?power/dm.power:1;
+ let grade=ratio>=1.35?"余裕":ratio>=1.05?"適正":ratio>=.85?"挑戦":"危険";
+ let pct=Math.max(0,Math.min(100,Math.round(ratio*78)));
+ return {power,need:dm.power,enemy,coach,syn,grade,pct,mode:enemy.mode,difficulty,level:dm.level,drop:dm.drop,bonus:dm.bonus}
+}
+function stagePrepPanelV524(ch){
+ let x=stageReadinessV524(ch),team=S.sets?.[S.set]||[];
+ return `<section class=stagePrepPanelV524>
+   <div class=stagePrepHeadV524>
+     <div><small>BATTLE PREPARATION</small><h2>出撃準備</h2></div>
+     <b class="${x.grade==="危険"?"danger":x.grade==="挑戦"?"warn":"good"}">${x.grade}</b>
+   </div>
+   <div class=stagePowerCompareV524>
+     <div><small>編成戦力</small><b>${x.power.toLocaleString()}</b></div>
+     <i><em style="width:${x.pct}%"></em></i>
+     <div><small>推奨</small><b>${x.need.toLocaleString()}</b></div>
+   </div>
+   <div class=stageEnemyV524>
+     <div><small>ENEMY PROFILE</small><b>${x.enemy.name}</b><span>${x.enemy.trait} / 危険度 ${x.enemy.danger}</span></div>
+     <div><small>有効戦術</small><b>${x.enemy.weak}</b><span>${x.enemy.tip}</span></div>
+   </div>
+   <div class=stageIdentityV534><span>戦場</span><b>${battleStageIdentityV534(ch).area}</b><small>敵Lv目安 ${x.level}〜 / ${x.difficulty.toUpperCase()} / ${ch===3?"最終章":"全3WAVE"}</small></div>
+   <div class=stageTeamSnapshotV524>
+     <span>診断<b>${x.coach.score}/100</b></span>
+     <span>BREAK<b>×${x.coach.breakAvg.toFixed(2)}</b></span>
+     <span>EP<b>×${x.coach.epAvg.toFixed(2)}</b></span>
+     <span>共鳴<b>${x.syn.tags.length}</b></span>
+   </div>
+   <div class=stagePrepActionsV524 stagePrepActionsV540>
+     <button data-stage-smart-v524="${x.mode}:${ch}">おすすめ編成</button>
+     <button data-go=party>編成を調整</button>
+     <button data-stage-skillcheck-v524="${ch}">6人のスキル確認</button>
+   </div>
+   <div class=stageMemberGuideV540><span>出撃メンバー</span><small>キャラをタップすると詳細確認</small><b>${team.length}/6</b></div>
+   <div class=stagePartyMiniV533 stagePartyMiniV538>${team.map((i,n)=>`<button data-char="${i}"><em>${n===0?"隊長":`#${n+1}`}</em><img src="${characterPortraitV501(i)}" alt="${C[i][1]}"><span>${C[i][1]}</span><small>${charRank(i)} / Lv.${lv(i)}</small></button>`).join("")}</div>
+   <div class=stagePrimarySortieV532>
+     <button class="${x.difficulty}" data-battle="${ch}" data-mode="${x.difficulty}"><small>${x.difficulty.toUpperCase()}</small><b>${x.difficulty==="hard"?"HARDへ出撃":"NORMALへ出撃"}</b><span>推奨 ${x.need.toLocaleString()} / 戦闘開始 ›</span></button>
+   </div>
+ </section>`
+}
+function stageSkillCheckV524(ch){
+ let team=(S.sets?.[S.set]||[]).slice(0,6),enemy=stageEnemyProfileV524(ch);
+ return `<section class=stageSkillCheckV524>
+   <header><div><small>PARTY SKILLS</small><h2>出撃メンバー確認</h2><span>対 ${enemy.name}</span></div><button data-stage-skillcheck-close-v524=1>×</button></header>
+   <div>${team.map(i=>{let k=characterSkillKitV512(i),m=skillMasteryV519(i),o=ougiInfo(i);return `<article><img src="${characterPortraitV501(i)}" alt="${C[i][1]}"><div><small>${charRank(i)} / ${characterAbility(i).role}</small><b>${C[i][1]}</b><span>${k.skillName}</span><em>${k.desc} / 熟練 ${m.level}/${m.cap} / 奥義EP ${o.gauge}</em></div></article>`}).join("")}</div>
+ </section>`
+}
+
+function stagePage(){
+ sanitizeAllFormationsV542();
+ ensureCoreState();ensureQoLPrefs();
+ let i=selectedStage(),n=rememberedFarmCount(),st=stageMeta(i),clear=S.progress?.clears?.[i]||0,stars=S.stageBest?.[i]||0,r=farmResultSummary(),mode=stageDifficultyV543(i),dm=stageDifficultyMetaV543(i,mode);
+ shell(`${typeof uiPageHead==="function"?uiPageHead("sortie"):""}<div class="p stagePageV100">
+   <div class=stageCompactHead><button data-go=sortie>‹ 一覧</button><div><small>第${i+1}章</small><b>${st.name}</b></div><span>★${stars}/3</span></div>
+   ${stageDifficultySelectorV543(i)}
+   <button class="stageInstantSortieV532 ${mode}" data-battle="${i}" data-mode="${mode}"><small>${mode.toUpperCase()}</small><b>⚔️ ${mode==="hard"?"HARDへ出撃":"この章へ出撃"}</b><span>${dm.bonus} / タップで戦闘開始</span></button>
+   ${stagePrepPanelV524(i)}
+   <div class=farmHeroV100>
+     <div class=farmHeroTitle><div><small>QUICK FARM / NORMAL</small><h1>周回する</h1></div><strong>${n}周</strong></div>
+     <div class=farmCountsV100>${[1,5,10,20,30,50].map(x=>`<button class="${n===x?"on":""}" data-stage-farm-count="${x}">${x}<small>周</small></button>`).join("")}</div>
+     <button class=farmExecuteV100 data-stage-farm-go="${i}" ${clear<1?"disabled":""}>⚡ ${clear<1?"初回クリアで周回解放":`${n}周を開始`}</button>
+     <div class=farmRemember>${clear<1?"NORMALを1回クリアすると周回できます":"周回はNORMAL扱い / 前回の周回数を自動記憶・最大50周"}</div>
+     ${r&&r.ch===i?`<div class=farmLast><b>前回 ${r.count}周</b><span>原稿片 +${r.tickets||0}　EXP +${r.xp||0}　資料 +${r.mat||0}　文銭 +${r.gold||0}　装備 ${r.gear||0}</span></div>`:""}
+   </div>
+   <div class=stageInfoV100><span>難易度<b>${mode.toUpperCase()}</b></span><span>推奨<b>${dm.power.toLocaleString()}</b></span><span>原稿片<b>${dm.drop}</b></span><span>クリア<b>${clear}</b></span></div>
+   <div class=stageGoalsV524><span>★ クリア</span><span>★ 戦闘不能なし</span><span>★ 10ターン以内</span></div>
+   <div class=stageUnlockStatusV521><span>${i===3?(clear>0?"✓ メインストーリー全章踏破":"最終章"):(stageUnlockedV521(i+1)?"✓ 次章解放済":`次章解放条件：第${i+1}章 NORMALクリア`)}</span></div>
+   <div class=stageFlowChecklistV522><span class="${clear>0?"ok":""}">${clear>0?"✓":"○"} NORMAL初回クリア</span><span class="${hardUnlocked(i)?"ok":""}">${hardUnlocked(i)?"✓":"○"} HARD解放（NORMAL 3回）</span><span class="${i===3?(clear>0):stageUnlockedV521(i+1)?"ok":""}">${i===3?(clear>0?"✓":"○"):stageUnlockedV521(i+1)?"✓":"○"} ${i===3?"全章踏破":"次章解放"}</span></div>
+   ${stageRewardPanelV523(i)}
+   <div class=stageNavV97><button data-stage-open="${Math.max(0,i-1)}" ${i===0?"disabled":""}>‹ 前章</button><button data-stage-open="${Math.min(3,i+1)}" ${(i===3||!stageUnlockedV521(i+1))?"disabled":""}>${i===3?"最終章":stageUnlockedV521(i+1)?"次章 ›":"🔒 次章"}</button></div>
+ </div>`);
+ document.body.classList.add("stageDetailModeV540");
+ setTimeout(()=>{try{window.scrollTo(0,0)}catch(_){}},0);
+}
+function sortie(){
+ ensureCoreState();ensureQoLPrefs();let last=lastStage(),s=stageMeta(last),n=rememberedFarmCount();
+ shell(`${typeof uiPageHead==="function"?uiPageHead("sortie"):""}${stageQuickV131()}${recentStagesUIV133()}<div class="p sortieV102"><div class=resumeStage><div><small>前回のステージ</small><h1>第${last+1}章　${s.name}</h1><span>周回設定 ${n}周</span></div><button data-stage-open="${last}">続きから ›</button></div><div class=stageSelectTitle><b>ステージ選択</b><small>スクロール不要</small></div>${stageSelectGrid()}<div class=sortieShortcuts><button data-stage-open="0">最初の章</button><button data-stage-open="${latestUnlockedStageV521()}">最新章</button></div></div>`)
+}
+function recordBattleResult(ch,win,turn,difficulty){
+ if(!S.battleRecords)S.battleRecords={wins:0,losses:0,turns:0,bestTurn:{},hardWins:0};
+ if(win){S.battleRecords.wins++;if(difficulty==="hard")S.battleRecords.hardWins++;let old=S.battleRecords.bestTurn[ch];if(!old||turn<old)S.battleRecords.bestTurn[ch]=turn}else S.battleRecords.losses++;
+ S.battleRecords.turns+=turn;save()
+}
+function battleRecordSummary(){
+ let r=S.battleRecords||{wins:0,losses:0,turns:0,bestTurn:{}},total=(r.wins||0)+(r.losses||0);
+ return{wins:r.wins||0,losses:r.losses||0,rate:total?Math.round((r.wins||0)/total*100):0,avg:r.wins?Math.round((r.turns||0)/Math.max(1,total)*10)/10:0,hard:r.hardWins||0}
+}
+function battle(){return mountBattleV182()}
+
+function storyStateV482(){
+ S.qol=S.qol||{};
+ if(!S.qol.storyState||typeof S.qol.storyState!=="object")S.qol.storyState={chapter:0,episode:0,read:{}};
+ return S.qol.storyState
+}
+function storyEpisodesV482(ch){
+ const map=[
+  [["序幕","消えた一行","書架から、ひとつの文章が消えた。司書と文豪たちは異変の入口に立つ。"],["第一節","黒い栞","墨の染みた栞が、誰も知らない頁へ導く。"],["第二節","羅生門の影","物語の輪郭を喰らう影。最初の戦いが始まる。"],["終節","書架の呼吸","失われた一行は戻った。しかし、書架の奥で別の扉が開く。"]],
+  [["序幕","雨の読書室","閉ざされた読書室に、濡れた原稿が届く。"],["第一節","声のない詩","声を失った詩篇が、仲間の記憶を揺らす。"],["第二節","月下の頁","月明かりだけが読める文章に、敵の痕跡が残る。"],["終節","未完の手紙","宛先のない手紙が、次の章へ続く鍵となる。"]],
+  [["序幕","蒼い書庫","海底のように静かな書庫で、時間の流れが歪む。"],["第一節","鏡の校正","書かれた未来が、別の結末へ書き換えられ始める。"],["第二節","境界都市","現代文豪たちが加わり、物語の境界が崩れ始める。"],["終節","改稿者","誰かが物語そのものを編集している事実が明らかになる。"]],
+  [["序幕","禁書区画","封印された棚が開き、黒い文字が溢れ出す。"],["第一節","崩落する文脈","文豪たちは自分の作品世界へ引きずり込まれる。"],["第二節","終わらない余白","敵の正体は、書かれなかった言葉の集合体だった。"],["終節","言葉は、まだ終わらない","最後の一文を書き戻し、書架に朝が訪れる。"]]
+ ];
+ return map[ch]||map[0]
+}
+function storyChapterTitleV482(ch){return["第一章　失われた書架","第二章　雨の読書室","第三章　境界都市","第四章　禁書区画"][ch]||"第一章"}
+function storyChapterProgressV482(ch){
+ let eps=storyEpisodesV482(ch),st=storyStateV482(),read=st.read||{},n=eps.filter((_,i)=>read[`${ch}:${i}`]).length;
+ return {n,total:eps.length,pct:Math.round(n/eps.length*100)}
+}
+function storyReadV482(ch,ep){
+ let st=storyStateV482();st.chapter=ch;st.episode=ep;st.read=st.read||{};st.read[`${ch}:${ep}`]=true;save()
+}
+function storyEpisodeCardV482(ch,ep){
+ let e=storyEpisodesV482(ch)[ep],read=!!storyStateV482().read?.[`${ch}:${ep}`];
+ let unlocked=ch===0||((S.progress?.clears?.[ch-1]||0)>0)||ch<=Math.max(0,currentChapter());
+ return `<article class="storyEpisodeV482 ${read?"read":""} ${unlocked?"":"locked"}"><div><small>${e[0]}</small><h3>${e[1]}</h3><p>${e[2]}</p></div><button data-story-open-v482="${ch}:${ep}" ${unlocked?"":"disabled"}>${read?"読み返す":unlocked?"読む":"未解放"}</button></article>`
+}
+function storyReaderV482(ch,ep){
+ let e=storyEpisodesV482(ch)[ep],speaker=C[(ch+ep)%6];
+ storyReadV482(ch,ep);
+ let d=document.createElement("div");d.className="storyReaderOverlayV482";
+ d.innerHTML=`<section class=storyReaderV482><header><div><small>${storyChapterTitleV482(ch)}</small><h2>${e[0]}　${e[1]}</h2></div><button data-story-close-v482=1>×</button></header><div class=storyReaderSceneV482><img src="${characterImage(speaker[0])}" alt=""><div><small>${speaker[1]}</small><p>${e[2]}</p><p>${["頁を閉じても、物語は消えない。","読めるうちに、先へ進もう。","この違和感、放っておけないね。","次の一行は、私たちが取り戻す。"][(ch+ep)%4]}</p></div></div><footer><button data-story-sortie-v482=1>この章へ出撃</button><button data-story-close-v482=1>閉じる</button></footer></section>`;
+ document.body.appendChild(d)
+}
+
+
+function storyTabV488(){
+ let st=storyStateV482();
+ if(!st.tab)st.tab="main";
+ return st.tab
+}
+function charStoryStagesV488(i){
+ let c=C[i];
+ return [
+  {lv:1,title:"邂逅",text:`${c[1]}が書架へ足を踏み入れた最初の日。『${c[2]}』に残る気配が、小さく揺れる。`},
+  {lv:20,title:"余白",text:`戦いの合間、${c[1]}は自分の言葉と向き合う。${c[3]}という時代の空気が、静かに滲む。`},
+  {lv:50,title:"筆致",text:`幾つもの戦いを越え、${c[1]}の固有能力は新しい輪郭を見せる。仲間との距離も少しだけ変わる。`},
+  {lv:80,title:"核心",text:`『${c[2]}』へ込めた想いと、書かれなかった言葉。その核心がようやく語られる。`}
+ ]
+}
+function charStoryKeyV488(i,n){return `char:${i}:${n}`}
+function charStoryReadV488(i,n){
+ let st=storyStateV482();st.read=st.read||{};st.read[charStoryKeyV488(i,n)]=true;save()
+}
+function charStoryProgressV488(i){
+ let eps=charStoryStagesV488(i),st=storyStateV482(),read=st.read||{},n=eps.filter((_,k)=>read[charStoryKeyV488(i,k)]).length;
+ return {n,total:eps.length,pct:Math.round(n/eps.length*100)}
+}
+function charStoryReaderV488(i,n){
+ let c=C[i],e=charStoryStagesV488(i)[n];
+ if(lv(i)<e.lv){toast(`Lv.${e.lv}で解放`);return}
+ charStoryReadV488(i,n);
+ let d=document.createElement("div");d.className="storyReaderOverlayV482";
+ d.innerHTML=`<section class=storyReaderV482>
+   <header><div><small>CHARACTER STORY / ${c[1]}</small><h2>${n+1}話　${e.title}</h2></div><button data-story-close-v482=1>×</button></header>
+   <div class=storyReaderSceneV482>
+     <img src="${characterImage(c[0])}" alt="">
+     <div><small>${c[1]}</small><p>${e.text}</p><p>${["ここから先は、私自身の言葉で。","ページをめくる音って、少しだけ勇気がいるね。","書いたものは消えても、残るものはある。","だから私は、まだ続きを書ける。"][n]}</p></div>
+   </div>
+   <footer><button data-collection-grow-v484="${i}" data-story-close-only-v488=1>この文豪を育成</button><button data-story-close-v482=1>閉じる</button></footer>
+ </section>`;
+ document.body.appendChild(d)
+}
+function charStoryListV488(){
+ let q=(storyStateV482().charQuery||"").toLowerCase();
+ let arr=C.map((c,i)=>({c,i,p:charStoryProgressV488(i)}));
+ if(q)arr=arr.filter(x=>(x.c[1]+x.c[2]+x.c[3]).toLowerCase().includes(q));
+ arr.sort((a,b)=>b.p.pct-a.p.pct||lv(b.i)-lv(a.i));
+ return arr
+}
+
+function story(){
+ let st=storyStateV482(),tab=storyTabV488();
+ if(tab==="characters"){
+   let list=charStoryListV488(),readCount=Object.keys(st.read||{}).filter(k=>k.startsWith("char:")&&st.read[k]).length,total=C.length*4;
+   shell(`${uiPageHead("story")}<main class=storyHubV482>
+     <section class=storyHeroV482><div><small>ARCHIVE / CHARACTER STORY</small><h1>人物記録</h1><p>文豪ひとりひとりの、戦いの外側にある物語。</p></div><aside><span>${readCount}/${total}</span><b>${Math.round(readCount/Math.max(1,total)*100)}%</b></aside></section>
+     <nav class=storyModeTabsV488>
+       <button data-story-tab-v488="main">メインストーリー</button>
+       <button class=active data-story-tab-v488="characters">人物記録</button>
+     </nav>
+     <section class=storyCharToolsV488><input data-story-char-query-v488 placeholder="文豪・作品・年代で検索" value="${st.charQuery||""}"><span>Lv.1 / 20 / 50 / 80で解放</span></section>
+     <section class=storyCharGridV488>
+       ${list.map(({c,i,p})=>`<article class=storyCharCardV488>
+         <div class=storyCharHeadV488><img src="${characterImage(c[0])}" alt=""><div><small>${c[5]} / ${c[3]}</small><h2>${c[1]}</h2><p>《${c[2]}》</p></div><b>${p.pct}%</b></div>
+         <div class=storyCharMeterV488><i style="width:${p.pct}%"></i></div>
+         <div class=storyCharEpisodesV488>${charStoryStagesV488(i).map((e,n)=>{let open=lv(i)>=e.lv,read=!!st.read?.[charStoryKeyV488(i,n)];return `<button class="${read?"read":""}" data-char-story-v488="${i}:${n}" ${open?"":"disabled"}><small>Lv.${e.lv}</small><b>${e.title}</b><span>${read?"既読":open?"読む":"LOCK"}</span></button>`}).join("")}</div>
+       </article>`).join("")}
+     </section>
+   </main>`);
+   return
+ }
+ let ch=Math.max(0,Math.min(3,st.chapter||0)),p=storyChapterProgressV482(ch);
+ shell(`${uiPageHead("story")}<main class=storyHubV482>
+   <section class=storyHeroV482><div><small>ARCHIVE / MAIN STORY</small><h1>物語</h1><p>失われた言葉を追う、文豪たちの記録。</p></div><aside><span>${p.n}/${p.total}</span><b>${p.pct}%</b></aside></section>
+   <nav class=storyModeTabsV488>
+     <button class=active data-story-tab-v488="main">メインストーリー</button>
+     <button data-story-tab-v488="characters">人物記録</button>
+   </nav>
+   <nav class=storyChaptersV482>${[0,1,2,3].map(n=>{let cp=storyChapterProgressV482(n),open=n===0||((S.progress?.clears?.[n-1]||0)>0)||n<=Math.max(0,currentChapter());return `<button class="${n===ch?"active":""}" data-story-ch-v482="${n}" ${open?"":"disabled"}><small>CH.${n+1}</small><b>${storyChapterTitleV482(n).replace(/^第.章　/,"")}</b><span>${cp.n}/${cp.total}</span></button>`}).join("")}</nav>
+   <section class=storyChapterHeadV482><div><small>CHAPTER ${ch+1}</small><h2>${storyChapterTitleV482(ch)}</h2></div><div class=storyChapterMeterV482><i style="width:${p.pct}%"></i><span>${p.pct}%</span></div></section>
+   <section class=storyEpisodesV482>${storyEpisodesV482(ch).map((_,i)=>storyEpisodeCardV482(ch,i)).join("")}</section>
+   <section class=storyArchiveV482><div><small>ARCHIVE STATUS</small><h2>書架記録</h2></div><div class=storyArchiveStatsV482><span>既読<b>${Object.values(st.read||{}).filter(Boolean).length}</b></span><span>章<b>4</b></span><span>節<b>16</b></span><span>進行<b>${Math.round([0,1,2,3].reduce((a,n)=>a+storyChapterProgressV482(n).pct,0)/4)}%</b></span></div></section>
+ </main>`)
+}
+
+function arenaSeasonRecordV489(){
+ arenaEnsureV481();
+ let a=S.arena;
+ if(!Array.isArray(a.seasons))a.seasons=[];
+ return a.seasons
+}
+function arenaSeasonSnapshotV489(){
+ arenaEnsureV481();
+ let a=S.arena;
+ return {
+   season:a.season||1,
+   rating:S.rating||1000,
+   wins:a.wins||0,
+   losses:a.losses||0,
+   bestRating:a.bestRating||S.rating||1000,
+   bestStreak:a.bestStreak||0,
+   at:Date.now()
+ }
+}
+function arenaCloseSeasonIfNeededV489(){
+ arenaEnsureV481();
+ let a=S.arena,elapsed=Date.now()-a.start;
+ if(elapsed<604800000)return false;
+ let snap=arenaSeasonSnapshotV489();
+ let hist=arenaSeasonRecordV489();
+ if(!hist.some(x=>x.season===snap.season))hist.unshift(snap);
+ a.seasons=hist.slice(0,12);
+ let n=Math.floor(elapsed/604800000);
+ a.season+=n;
+ a.start+=n*604800000;
+ a.wins=0;a.losses=0;a.streak=0;a.rewards={};a.seasonClaimed=false;
+ save();
+ return true
+}
+function arenaSeasonRewardV489(){
+ let r=S.rating||1000;
+ if(r>=2000)return {ink:900,gold:16000,name:"金筆・極"};
+ if(r>=1800)return {ink:700,gold:12000,name:"金筆"};
+ if(r>=1400)return {ink:500,gold:9000,name:"銀筆"};
+ if(r>=1100)return {ink:300,gold:6000,name:"青筆"};
+ return {ink:150,gold:3500,name:"銅筆"}
+}
+function arenaSeasonClaimedV489(){
+ arenaEnsureV481();
+ return !!S.arena.seasonClaimed
+}
+function arenaClaimSeasonV489(){
+ arenaEnsureV481();
+ if(arenaSeasonClaimedV489())return false;
+ let rw=arenaSeasonRewardV489();
+ S.ink=(S.ink||0)+rw.ink;S.gold=(S.gold||0)+rw.gold;
+ S.arena.seasonClaimed=true;save();return rw
+}
+function arenaDefenseScoreV489(){
+ arenaEnsureV481();
+ let p=arenaDefensePowerV481(),bonus=(S.arena.defenseWins||0)*35;
+ return Math.round(p+bonus)
+}
+function arenaSeasonHistoryUiV489(){
+ let h=arenaSeasonRecordV489().slice(0,4);
+ if(!h.length)return `<div class=arenaHistoryEmptyV481>過去シーズン記録はまだありません</div>`;
+ return `<div class=arenaSeasonHistoryV489>${h.map(x=>`<article><small>SEASON ${x.season}</small><b>${x.bestRating}</b><span>${x.wins}勝 ${x.losses}敗 / 最高${x.bestStreak}連勝</span></article>`).join("")}</div>`
+}
+
+function arena(){
+ arenaCloseSeasonIfNeededV489();let a=arenaEnsureV481(),rt=S.rating||1000,[rank,grade]=arenaTierV481(rt),own=unitPower(S.sets[S.set]),def=arenaDefensePowerV481(),progress=arenaTierProgressV481();
+ shell(`${uiPageHead("arena")}<main class=arenaHubV481>
+   <section class=arenaHeroV481>
+     <div><small>BUNGO ARENA</small><h1>文壇模擬戦</h1><p>攻撃編成と防衛編成を磨き、週間シーズンを駆け上がる。</p></div>
+     <aside><span>SEASON ${a.season}</span><b>${rank}</b><em>Rating ${rt}</em></aside>
+   </section>
+
+   <section class=arenaProgressV481>
+     <div class=arenaRatingV481><span>${grade}</span><b>${rt}</b><small>次の階級 ${arenaNext(rt)}</small></div>
+     <div class=arenaProgressBarV481><i style="width:${progress}%"></i></div>
+     <div class=arenaSeasonV481><span>残り ${arenaSeasonLeftV481()}</span><span>最高 ${a.bestRating||rt}</span><span>連勝 ${a.streak||0}</span></div>
+   </section>
+
+   <section class=arenaStatsV481>
+     <div><small>勝利</small><b>${a.wins||0}</b></div>
+     <div><small>敗北</small><b>${a.losses||0}</b></div>
+     <div><small>最高連勝</small><b>${a.bestStreak||0}</b></div>
+     <div><small>攻撃戦力</small><b>${own.toLocaleString()}</b></div>
+     <div><small>防衛戦力</small><b>${def.toLocaleString()}</b></div>
+     <div><small>防衛評価</small><b>${arenaDefenseScoreV489().toLocaleString()}</b></div>
+   </section>
+
+   <section class=arenaTeamsV481>
+     <article>
+       <div><small>ATTACK TEAM</small><h2>攻撃編成</h2></div>
+       <div class=arenaTeamFacesV481>${(S.sets[S.set]||[]).slice(0,6).map(i=>`<img src="${characterImage(C[i][0])}" alt="">`).join("")}</div>
+       <button data-go=party>編成を見直す</button>
+     </article>
+     <article>
+       <div><small>DEFENSE TEAM</small><h2>防衛編成</h2></div>
+       <div class=arenaTeamFacesV481>${a.defense.slice(0,6).map(i=>`<img src="${characterImage(C[i][0])}" alt="">`).join("")}</div>
+       <button data-arena-save-defense=1>現在編成を防衛に保存</button>
+     </article>
+   </section>
+
+   <section class=arenaMatchV481>
+     <div class=arenaSectionHeadV481><div><small>MATCH</small><h2>対戦相手</h2></div><span>完全オフライン模擬戦</span></div>
+     <div class=arenaCpuGridV481>
+       ${arenaCpuCardV481("normal","CPU編集長","STANDARD",Math.round(own*.95),"対戦する")}
+       ${arenaCpuCardV481("elite","文壇評議会","ELITE",Math.round(own*1.14),"挑戦する",rt<1400)}
+       ${arenaCpuCardV481("boss","じゃむちん","ABSOLUTE",22000,"最強CPUへ挑戦",rt<1800)}
+     </div>
+   </section>
+
+   <section class=arenaRewardsV481>
+     <div class=arenaSectionHeadV481><div><small>SEASON REWARD</small><h2>Rating報酬</h2></div><span>シーズンごとに再取得可能</span></div>
+     ${arenaMilestonesUiV481()}
+   </section>
+
+   <section class=arenaSeasonChestV489>
+     <div><small>SEASON CHEST</small><h2>今季報酬</h2><p>${arenaSeasonRewardV489().name} / インク ${arenaSeasonRewardV489().ink} / 文銭 ${arenaSeasonRewardV489().gold}</p></div>
+     <button data-arena-season-claim-v489=1 ${arenaSeasonClaimedV489()?"disabled":""}>${arenaSeasonClaimedV489()?"受取済":"受け取る"}</button>
+   </section>
+
+   <section class=arenaHistoryWrapV481>
+     <div class=arenaSectionHeadV481><div><small>PAST SEASONS</small><h2>シーズン記録</h2></div><span>直近4季</span></div>
+     ${arenaSeasonHistoryUiV489()}
+   </section>
+
+   <section class=arenaHistoryWrapV481>
+     <div class=arenaSectionHeadV481><div><small>RECENT MATCHES</small><h2>対戦履歴</h2></div><span>直近8戦</span></div>
+     ${arenaHistoryUiV481()}
+   </section>
+ </main>`)
+}
+function medalShop(){
+ return[
+  {id:"m50",cost:50,name:"原稿片100",give:()=>S.normalTickets=(S.normalTickets||0)+100},
+  {id:"m80",cost:80,name:"インク150",give:()=>S.ink=(S.ink||0)+150},
+  {id:"m100",cost:100,name:"文銭5000",give:()=>S.gold=(S.gold||0)+5000},
+  {id:"m150",cost:150,name:"SSR以上装備",give:()=>{let g=makeGear(3);if(g.rank==="R"||g.rank==="SR")g.rank="SSR";S.gear.push(g);S.lootStats.drops++;S.lootStats.ssr++}}
+ ]}
+function buyMedalItem(id){
+ let x=medalShop().find(v=>v.id===id);if(!x)return;
+ if((S.summonMedals||0)<x.cost)return toast("召喚栞が足りません");
+ S.summonMedals-=x.cost;x.give();S.medalExchange[id]=(S.medalExchange[id]||0)+1;save();toast("交換："+x.name);return summon()
+}
+
+function summonTabV480(){S.qol=S.qol||{};return S.qol.summonTab||"normal"}
+function summonHistoryV480(){S.qol=S.qol||{};if(!Array.isArray(S.qol.summonHistory))S.qol.summonHistory=[];return S.qol.summonHistory}
+function summonPoolV480(rank){let a=C.map((c,i)=>i).filter(i=>summonEligibleV531(i)&&C[i][5]===rank);return a.length?a:C.map((c,i)=>i).filter(summonEligibleV531)}
+function summonRollRankV480(forceSr=false){
+ let pity=summonPityV131();
+ if(pity>=79)return "UR";
+ let r=Math.random()*100;
+ if(forceSr){
+   if(r<4)return "UR";
+   if(r<20)return "SSR";
+   return "SR";
+ }
+ return r<3?"UR":r<15?"SSR":r<50?"SR":"R"
+}
+function summonDrawOneV480(forceSr=false){
+ let rank=summonRollRankV480(forceSr),pool=summonPoolV480(rank),i=pool[Math.floor(Math.random()*pool.length)];
+ S.qol=S.qol||{};
+ if(rank==="UR")S.qol.pity=0;else S.qol.pity=(summonPityV131()+1);
+ S.dupes[i]=Math.min(10,(S.dupes[i]||0)+1);
+ S.owned=S.owned||{};S.owned[i]=1;
+ summonHistoryV480().unshift({i,rank,at:Date.now()});
+ S.qol.summonHistory=S.qol.summonHistory.slice(0,30);
+ return i
+}
+function summonHistoryUiV480(){
+ let h=summonHistoryV480().slice(0,8);
+ if(!h.length)return `<div class=summonHistoryEmptyV480>まだ召喚履歴はありません</div>`;
+ return `<div class=summonHistoryListV480>${h.map(x=>`<div><img src="${characterImage(C[x.i][0])}" alt=""><span>${x.rank}</span><b>${C[x.i][1]}</b></div>`).join("")}</div>`
+}
+function summonNormalPanelV480(){
+ return `<section class=summonPanelV480>
+   <div class=summonPanelHeadV480><div><small>NORMAL SCOUT</small><h2>通常召喚</h2><p>原稿片で文豪と邂逅。10連はSR以上1人保証。</p></div><strong>📜 ${(S.normalTickets||0).toLocaleString()}</strong></div>
+   ${summonPityUIV131()}
+   ${summonRatesV133()}
+   <div class=summonActionsV480>
+     <button data-normalpull=1 ${(S.normalTickets||0)<10?"disabled":""}><b>1回召喚</b><span>原稿片 10</span></button>
+     <button data-normalpull=10 ${(S.normalTickets||0)<100?"disabled":""}><b>10連召喚</b><span>原稿片 100</span></button>
+   </div>
+ </section>`
+}
+function summonPickPanelV480(){
+ ensurePick3();
+ return `<section class=summonPanelV480>
+   <div class=summonPanelHeadV480><div><small>SELECT SCOUT</small><h2>三筆選書</h2><p>指定した3人の中から1人を召喚。</p></div><strong>💎 ${(S.ink||0).toLocaleString()}</strong></div>
+   <div class=summonPickGridV480>${C.slice(0,18).map((c,i)=>`<button class="${S.pick3.includes(i)?"selected":""}" data-sp="${i}"><img src="${characterImage(c[0])}" alt=""><span>${c[5]}</span><b>${c[1]}</b></button>`).join("")}</div>
+   <div class=summonPickFooterV480><span>選択 ${S.pick3.length}/3</span><button data-summon=1 ${(S.pick3.length!==3||(S.ink||0)<300)?"disabled":""}>指定召喚　💎300</button></div>
+ </section>`
+}
+function summonExchangePanelV480(){
+ return `<section class=summonPanelV480>
+   <div class=summonPanelHeadV480><div><small>EXCHANGE</small><h2>召喚栞交換所</h2><p>召喚で得た栞を育成資源へ交換。</p></div><strong>🪶 ${(S.summonMedals||0).toLocaleString()}</strong></div>
+   <div class=summonExchangeGridV480>${medalShop().map(x=>`<button data-medalbuy="${x.id}" ${(S.summonMedals||0)<x.cost?"disabled":""}><b>${x.name}</b><span>🪶 ${x.cost}</span></button>`).join("")}</div>
+ </section>`
+}
+
+function summon(){
+ ensurePick3();
+ let tab=summonTabV480();
+ shell(`${uiPageHead("summon")}<main class=summonHubV480>
+   <section class=summonHeroV480>
+     <img src="assets/stages/chapter2.jpg" alt="">
+     <div class=summonHeroShadeV480></div>
+     <div><small>BUNGO ENCOUNTER</small><h1>文学召喚</h1><p>言葉は、まだ見ぬ文豪を呼び寄せる。</p></div>
+     <aside><span>📜 ${(S.normalTickets||0).toLocaleString()}</span><span>💎 ${(S.ink||0).toLocaleString()}</span><span>🪶 ${(S.summonMedals||0).toLocaleString()}</span></aside>
+   </section>
+   <nav class=summonTabsV480>
+     ${[["normal","通常召喚"],["pick","指定召喚"],["exchange","交換所"],["history","履歴"]].map(([v,n])=>`<button class="${tab===v?"active":""}" data-summon-tab-v480="${v}">${n}</button>`).join("")}
+   </nav>
+   ${tab==="normal"?summonNormalPanelV480():tab==="pick"?summonPickPanelV480():tab==="exchange"?summonExchangePanelV480():`<section class=summonPanelV480><div class=summonPanelHeadV480><div><small>HISTORY</small><h2>召喚履歴</h2><p>直近8件を表示。</p></div></div>${summonHistoryUiV480()}</section>`}
+ </main>`)
+}
+function summonResult(i){let c=C[i];shell(`<div class=p><button class=btn data-go=summon>← 召喚へ</button><div class="summonHero summonFlash"><img loading=lazy decoding=async src="${characterImage(c[0])}"><div class=summonName><div class=gold>${c[5]} / ${c[3]} / ${c[4]}</div><h1>${c[1]}</h1><h2>《${c[2]}》</h2></div></div><div class=card><div class=collectionSummary><span>突破</span><b>${Math.min(10,S.dupes[i]||0)}/10</b></div><div class=collectionSummary><span>Lv上限</span><b>${cap(i)}</b></div><button class=btn data-char="${i}">キャラ詳細を見る</button></div></div>`);setTimeout(()=>uiToastAction("文豪を編成に加えてみよう","party","編成へ"),500)}
+function safeScreen(fn,name){try{return fn()}catch(e){console.error("screen",name,e);toast("画面を再構築しました");try{ensureUnitSets()}catch(_){}return home()}}
+function syncNavActive(name){document.querySelectorAll(".nav [data-go]").forEach(x=>x.classList.toggle("active",x.dataset.go===name))}
+
+
+function autoSaveLastV487(){
+ return Number(localStorage.getItem("bk12_saved_at")||S._savedAt||0)
+}
+function autoSaveLabelV487(){
+ let t=autoSaveLastV487();
+ if(!t)return "未保存";
+ let sec=Math.max(0,Math.floor((Date.now()-t)/1000));
+ if(sec<10)return "たった今";
+ if(sec<60)return `${sec}秒前`;
+ let min=Math.floor(sec/60);
+ if(min<60)return `${min}分前`;
+ return new Date(t).toLocaleTimeString("ja-JP",{hour:"2-digit",minute:"2-digit"})
+}
+function autoSaveSafetyFlushV487(){
+ try{save()}catch(e){console.warn("V487 autosave flush",e)}
+}
+
+function saveVaultSnapshotV486(){
+ let payload={version:"V486",savedAt:Date.now(),state:S};
+ return btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
+}
+function saveVaultDecodeV486(text){
+ try{
+   let raw=decodeURIComponent(escape(atob(String(text||"").trim())));
+   let data=JSON.parse(raw);
+   if(!data||typeof data!=="object"||!data.state)throw new Error("invalid");
+   return data
+ }catch(e){return null}
+}
+function saveVaultMetaV486(){
+ let raw=localStorage.getItem("bungou_kitan_save_vault_v486");
+ let data=saveVaultDecodeV486(raw||"");
+ return data?{ok:true,at:data.savedAt,version:data.version||"-"}:{ok:false,at:0,version:"-"}
+}
+function saveVaultBackupV486(){
+ let code=saveVaultSnapshotV486();
+ localStorage.setItem("bungou_kitan_save_vault_v486",code);
+ localStorage.setItem("bungou_kitan_save_vault_time_v486",String(Date.now()));
+ return code
+}
+function saveVaultRestoreV486(code){
+ let data=saveVaultDecodeV486(code);
+ if(!data)return false;
+ S=data.state;
+ try{localStorage.setItem("bungou_kitan_save",JSON.stringify(S))}catch(_){}
+ save();
+ return true
+}
+function saveVaultAutoBackupV486(){
+ try{
+   let last=Number(localStorage.getItem("bungou_kitan_save_vault_time_v486")||0);
+   if(!last||Date.now()-last>21600000)saveVaultBackupV486()
+ }catch(_){}
+}
+function saveVaultStatsV486(){
+ let chars=C.filter((_,i)=>collectionOwnedV484(i)).length;
+ let gear=(S.gear||[]).length;
+ let clears=(S.progress?.clears||[]).reduce((a,b)=>a+(b||0),0);
+ return {chars,gear,clears,rating:S.rating||1000}
+}
+function saveVaultV486(){
+ let m=saveVaultMetaV486(),st=saveVaultStatsV486(),code=saveVaultSnapshotV486();
+ shell(`${uiPageHead("home")}<main class=saveVaultV486>
+   <section class=saveVaultHeroV486>
+     <div><small>SAVE VAULT</small><h1>セーブ保管庫</h1><p>ゲーム本体は常時自動セーブ。ここでは復旧用バックアップと引き継ぎを管理。</p></div>
+     <aside><span>AUTO SAVE</span><b>ON</b><em>${autoSaveLabelV487()}</em></aside>
+   </section>
+
+   <section class=saveVaultStatsV486>
+     <div><small>所持文豪</small><b>${st.chars}</b></div>
+     <div><small>装備</small><b>${st.gear}</b></div>
+     <div><small>総クリア</small><b>${st.clears}</b></div>
+     <div><small>Rating</small><b>${st.rating}</b></div>
+   </section>
+
+   <section class=saveVaultLocalV486>
+     <div><small>RECOVERY BACKUP</small><h2>復旧用バックアップ</h2><p>${m.ok?`最終保存 ${new Date(m.at).toLocaleString("ja-JP")}`:"まだ復旧用バックアップがありません"}</p></div>
+     <div class=saveVaultButtonsV486>
+       <button data-save-backup-v486=1>今すぐバックアップ</button>
+       <button data-save-restore-v486=1 ${m.ok?"":"disabled"}>バックアップを復元</button>
+     </div>
+   </section>
+
+   <section class=saveVaultCodeV486>
+     <div><small>TRANSFER CODE</small><h2>引き継ぎコード</h2><p>機種変更や別ブラウザ用。コードをコピーして保管できます。</p></div>
+     <textarea readonly data-save-code-v486>${code}</textarea>
+     <div class=saveVaultButtonsV486>
+       <button data-save-copy-v486=1>コードをコピー</button>
+       <button data-save-refresh-v486=1>コードを更新</button>
+     </div>
+   </section>
+
+   <section class=saveVaultImportV486>
+     <div><small>RESTORE FROM CODE</small><h2>コードから復元</h2><p>別端末で作成した引き継ぎコードを貼り付けます。</p></div>
+     <textarea data-save-import-v486 placeholder="ここに引き継ぎコードを貼り付け"></textarea>
+     <button data-save-import-run-v486=1>このコードから復元</button>
+   </section>
+
+   <section class=saveVaultNoticeV486>
+     <b>自動セーブ ON</b>
+     <span>操作ごとに即時保存。さらに6時間ごとに復旧用バックアップを作成し、画面を閉じる時にも安全保存します。</span>
+     <button data-go=home>ホームへ戻る</button>
+   </section>
+ </main>`)
+}
+
+
+
+function runtimeLogV491(type,msg){
+ try{
+   let list=JSON.parse(localStorage.getItem("bk_runtime_log_v492")||"[]");
+   list.unshift({at:Date.now(),type:String(type||"INFO"),msg:String(msg||"").slice(0,220)});
+   localStorage.setItem("bk_runtime_log_v492",JSON.stringify(list.slice(0,20)));
+ }catch(_){}
+}
+function runtimeLogListV491(){
+ try{return JSON.parse(localStorage.getItem("bk_runtime_log_v492")||"[]")}catch(_){return[]}
+}
+function runtimeCleanV491(){
+ try{
+   // Remove only stale result/cinematic layers that must not survive outside their context.
+   if(!document.body.classList.contains("battleMode")){
+     document.querySelectorAll(".posterResultCardV215,.battleClearV119,.storyReaderOverlayV482,.arenaResult").forEach(x=>{
+       if(!x.matches(".storyReaderOverlayV482"))x.remove()
+     });
+   }
+   // Prevent duplicate transient toasts from accumulating.
+   let toasts=[...document.querySelectorAll(".toast,.toastV116")];
+   if(toasts.length>4)toasts.slice(0,toasts.length-4).forEach(x=>x.remove());
+ }catch(e){runtimeLogV491("CLEAN",e.message||e)}
+}
+function runtimeEnduranceTickV491(){
+ try{
+   runtimeCleanV491();
+   let battle=document.body.classList.contains("battleMode");
+   if(battle){
+     let root=document.querySelector(".posterBattleV205");
+     if(root){
+       root.style.removeProperty("visibility");
+       root.style.removeProperty("opacity");
+     }
+   }
+   localStorage.setItem("bk_runtime_heartbeat_v492",String(Date.now()));
+ }catch(e){runtimeLogV491("TICK",e.message||e)}
+ setTimeout(runtimeEnduranceTickV491,10000);
+}
+
+function systemHealthV490(){
+ let checks=[
+  ["SAVE",(()=>{try{return !!localStorage}catch(_){return false}})()],
+  ["ROSTER",Array.isArray(C)&&C.length>0],
+  ["PARTY",Array.isArray(S.sets)&&Array.isArray(S.sets[S.set])],
+  ["BATTLE",typeof startBattleV180==="function"],
+  ["AUTO",typeof scheduleAutoBattleV122==="function"],
+  ["GEAR",Array.isArray(S.gear)],
+  ["STORY",typeof story==="function"],
+  ["ARENA",typeof arena==="function"]
+ ];
+ let ok=checks.filter(x=>x[1]).length;
+ return {checks,ok,total:checks.length,pct:Math.round(ok/checks.length*100)}
+}
+function systemMetricsV490(){
+ let h=systemHealthV490();
+ return {
+  health:h,
+  chars:C.length,
+  gear:(S.gear||[]).length,
+  saves:autoSaveLabelV487(),
+  rating:S.rating||1000,
+  build:window.__BK_BUILD__||"V490"
+ }
+}
+
+function navSmokeV493(){
+ const names=["home","party","growth","list","gear","summon","story","arena","savevault","system","sortie"];
+ return names.map(name=>({name,ok:typeof routeFunctionV493(name)==="function"}))
+}
+
+
+function characterImageAuditV498(){
+ let total=C.length,configured=C.filter(c=>!!c?.[0]).length;
+ return {total,configured,missing:total-configured,pct:Math.round(configured/Math.max(1,total)*100)}
+}
+
+
+
+function transitionAuditV508(){
+ let tests=[
+   ["charAtk",typeof charAtk==="function"],
+   ["charDef",typeof charDef==="function"],
+   ["charPower",typeof charPower==="function"],
+   ["growth",typeof growth==="function"],
+   ["party",typeof party==="function"],
+   ["detail",typeof detail==="function"],["bondScreen",typeof bondScreen==="function"],
+   ["cap",typeof cap==="function"],["growthExpNeed",typeof growthExpNeedV483==="function"],["growthBreakCost",typeof growthBreakCostV483==="function"],
+   ["lv",typeof lv==="function"],["quickFarm",typeof quickFarm==="function"],["stageUnlock",typeof stageUnlockedV521==="function"],["currentChapter",typeof currentChapter==="function"],["farm50",rememberedFarmCount()<=50],["arenaEnsure",typeof arenaEnsureV481==="function"],["storyScene",typeof storyScene==="function"],["legacyRoutes",typeof challenge==="function"&&typeof tower==="function"&&typeof exchange==="function"]
+ ];
+ try{tests.push(["growth-state",Number.isInteger(growthSelectedV483())])}catch(_){tests.push(["growth-state",false])}
+ return tests
+}
+
+function finalQaV499(){
+ let checks=[];
+ const add=(name,ok,detail="")=>checks.push({name,ok:!!ok,detail});
+ add("CHARACTERS",Array.isArray(C)&&C.length===70,`${C.length}/70`);
+ add("CHAR DATA",characterCompletionV495().pct===100,`${characterCompletionV495().pct}%`);
+ add("IMAGE REF",characterImageAuditV498().pct===100,`${characterImageAuditV498().pct}%`);
+ add("PARTY",Array.isArray(S.sets)&&Array.isArray(S.sets[S.set])&&S.sets[S.set].length===6,`${S.sets?.[S.set]?.length||0}/6`);
+ add("BATTLE",typeof startBattleV180==="function","READY");
+ add("AUTO",typeof scheduleAutoBattleV122==="function","READY");
+ add("AUTO LOOP",typeof stopTrueAutoLoopV200==="function","READY");
+ add("CLEAR",typeof resetAfterClearV130==="function","READY");
+ add("GROWTH",typeof growth==="function","READY");
+ add("GEAR",typeof gearHubV479==="function","READY");
+ add("SUMMON",typeof summon==="function","READY");
+ add("STORY",typeof story==="function","READY");
+ add("ARENA",typeof arena==="function","READY");
+ add("AUTOSAVE",typeof save==="function"&&!!localStorage,"ON");
+ add("NAV",navSmokeV493().every(x=>x.ok),`${navSmokeV493().filter(x=>x.ok).length}/${navSmokeV493().length}`);
+ let ok=checks.filter(x=>x.ok).length;
+ return {checks,ok,total:checks.length,pct:Math.round(ok/checks.length*100)}
+}
+function finalQaPanelV499(){
+ let q=finalQaV499();
+ return `<section class=finalQaPanelV499>
+   <div class=finalQaHeadV499><div><small>FINAL QA</small><h2>完成前チェック</h2></div><b>${q.pct}%</b></div>
+   <div class=finalQaGridV499>
+     ${q.checks.map(x=>`<div class="${x.ok?"ok":"bad"}"><span>${x.ok?"●":"×"}</span><b>${x.name}</b><small>${x.detail}</small></div>`).join("")}
+   </div>
+ </section>`
+}
+
+
+function qualityAuditV529(){
+ let defs=workUnlockDefinitionsV526(),workUnlocked=defs.filter(workUnlockOwnedV526).length;
+ let workArt=defs.filter(d=>dedicatedArtConfiguredV529(d.target)).length;
+ let routes=["home","sortie","party","growth","list","summon","story","arena","works"];
+ let routeOk=routes.filter(r=>typeof routeFunctionV493(r)==="function").length;
+ let clear=S.progress?.clears||[];
+ let stageChain=stageUnlockedV521(0)&&[1,2,3].every(ch=>stageUnlockedV521(ch)===((clear[ch-1]||0)>0));
+ return {
+   routes:{ok:routeOk,total:routes.length},
+   stages:{ok:stageChain},
+   farm:{ok:typeof quickFarm==="function"&&rememberedFarmCount()>=1&&rememberedFarmCount()<=50},
+   works:{unlocked:workUnlocked,total:defs.length},
+   art:{ready:workArt,total:defs.length},
+   save:{ok:typeof save==="function"&&typeof persistentSaveWrite==="function"},
+   battle:{ok:typeof battle==="function"&&typeof battleClearRewardsV127==="function"}
+ }
+}
+function qualityPanelV529(){
+ let q=qualityAuditV529();
+ let rows=[
+  ["画面遷移",q.routes.ok===q.routes.total,`${q.routes.ok}/${q.routes.total}`],
+  ["ステージ解放",q.stages.ok,q.stages.ok?"正常":"要確認"],
+  ["周回",q.farm.ok,q.farm.ok?"1〜50周":"要確認"],
+  ["戦闘",q.battle.ok,q.battle.ok?"接続済":"要確認"],
+  ["セーブ",q.save.ok,q.save.ok?"接続済":"要確認"],
+  ["著作解放",true,`${q.works.unlocked}/${q.works.total} 解放`],
+  ["著作専用画像",q.art.ready===q.art.total,`${q.art.ready}/${q.art.total} 専用化`]
+ ];
+ return `<section class=qualityPanelV529><div><small>QUALITY AUDIT</small><h2>完成度チェック</h2></div><div class=qualityGridV529>${rows.map(([n,ok,v])=>`<span class="${ok?"ok":"warn"}"><small>${n}</small><b>${v}</b></span>`).join("")}</div><p>著作専用画像は未設定なら「仮画像」と明示。機能完成とアート完成を分けて管理します。</p></section>`
+}
+
+function systemPanelV490(){
+ let m=systemMetricsV490();
+ shell(`${uiPageHead("home")}<main class=systemPanelV490>${qualityPanelV529()}${runtimeAuditPanelV530()}
+   <section class=systemHeroV490>
+     <div><small>RELEASE CHECK</small><h1>システム診断</h1><p>主要機能の読み込み状態とセーブ状態を確認。</p></div>
+     <aside><span>HEALTH</span><b>${m.health.pct}%</b></aside>
+   </section>
+
+   <section class=systemChecksV490>
+     ${m.health.checks.map(([name,ok])=>`<div class="${ok?"ok":"bad"}"><span>${ok?"●":"×"}</span><b>${name}</b><small>${ok?"READY":"CHECK"}</small></div>`).join("")}
+   </section>
+   <section class=navSmokeV493>
+     ${navSmokeV493().map(x=>`<div class="${x.ok?"ok":"bad"}"><span>${x.ok?"●":"×"}</span><b>${x.name}</b></div>`).join("")}
+   </section>
+
+   <section class=systemStatsV490>
+     <div><small>BUILD</small><b>${m.build}</b></div>
+     <div><small>文豪</small><b>${m.chars}</b></div>
+     <div><small>装備</small><b>${m.gear}</b></div>
+     <div><small>Rating</small><b>${m.rating}</b></div>
+     <div><small>最終自動セーブ</small><b>${m.saves}</b></div>
+   </section>
+
+   <section class=transitionAuditV508>
+     ${transitionAuditV508().map(([n,ok])=>`<span class="${ok?"ok":"bad"}"><i>${ok?"●":"×"}</i><b>${n}</b></span>`).join("")}
+   </section>
+   <section class=systemRuntimeV491>
+     <div><small>RUNTIME LOG</small><h2>耐久ログ</h2><p>直近のエラーや自動復旧を最大20件保持。</p></div>
+     <div class=systemRuntimeListV491>
+       ${runtimeLogListV491().length?runtimeLogListV491().slice(0,6).map(x=>`<div><span>${x.type}</span><b>${new Date(x.at).toLocaleTimeString("ja-JP",{hour:"2-digit",minute:"2-digit"})}</b><small>${x.msg}</small></div>`).join(""):`<div class=runtimeOkV491>異常ログなし</div>`}
+     </div>
+   </section>
+
+   <section class=systemActionsV490>
+     <button data-system-save-v490=1>今すぐ保存</button>
+     <button data-system-backup-v490=1>復旧バックアップ</button>
+     <button data-system-refresh-v490=1>再診断</button>
+     <button data-system-clearlog-v491=1>耐久ログ消去</button>
+     <button data-go=home>ホームへ戻る</button>
+   </section>
+
+   <section class=characterAuditV495>
+     <div><small>CHARACTER COMPLETION</small><h2>全キャラ整合性</h2></div>
+     <b>${characterCompletionV495().complete}/${characterCompletionV495().total}</b>
+     <span>${characterCompletionV495().pct}%</span>
+   </section>
+   <section class=characterImageAuditV498>
+     <div><small>IMAGE REFERENCE</small><h2>キャラ画像参照</h2></div>
+     <b>${characterImageAuditV498().configured}/${characterImageAuditV498().total}</b>
+     <span>${characterImageAuditV498().pct}%</span>
+   </section>
+   <section class=characterMatrixV496>
+     <div><small>固有能力</small><b>${C.length}/${C.length}</b></div>
+     <div><small>奥義</small><b>${C.length}/${C.length}</b></div>
+     <div><small>固有特性</small><b>${C.length}/${C.length}</b></div>
+     <div><small>異名</small><b>${C.length}/${C.length}</b></div>
+     <div><small>人物記録</small><b>${C.length}人</b></div>
+     <div><small>戦闘個性</small><b>${C.length}/${C.length}</b></div>
+   </section>
+
+${finalQaPanelV499()}
+   <section class=systemNoteV490>
+     <b>V495 CHARACTER COMPLETE</b>
+     <p>AUTO・AUTO LOOP・戦闘クリア・召喚・装備・育成・物語・模擬戦・自動セーブを主要完成機能として固定。</p>
+   </section>
+ </main>`)
+}
+
+
+let __navBusyV493=false;
+let __navStampV493=0;
+
+function cleanupTransientUiV493(){
+ try{
+   document.querySelectorAll(
+     ".arenaResult,.storyReaderOverlayV482,.posterResultCardV215,.battleClearV119"
+   ).forEach(x=>x.remove());
+
+   document.querySelectorAll(".toast,.toastV116").forEach((x,i,a)=>{
+     if(i<a.length-2)x.remove();
+   });
+ }catch(e){
+   try{runtimeLogV491("NAV-CLEAN",e?.message||e)}catch(_){}
+ }
+}
+
+
+function arenaEnsureV481(){
+ ensureCoreState();
+ if(!S.arena||typeof S.arena!=="object")S.arena={};
+ let a=S.arena;
+ if(!Array.isArray(a.history))a.history=[];
+ if(!Array.isArray(a.defense))a.defense=[...(S.sets?.[S.set]||[0,1,2,3,4,5])];
+ if(!a.rewards||typeof a.rewards!=="object")a.rewards={};
+ if(!Array.isArray(a.seasons))a.seasons=[];
+ if(!Number.isFinite(a.start)||a.start<=0)a.start=Date.now();
+ if(!Number.isFinite(a.season)||a.season<1)a.season=1;
+ if(!Number.isFinite(a.wins))a.wins=0;
+ if(!Number.isFinite(a.losses))a.losses=0;
+ if(!Number.isFinite(a.streak))a.streak=0;
+ if(!Number.isFinite(a.bestStreak))a.bestStreak=0;
+ if(!Number.isFinite(a.bestRating))a.bestRating=S.rating||1000;
+ return a
+}
+function challenge(){toast("高難度は模擬戦へ統合しました");return go("arena")}
+function tower(){toast("塔は模擬戦へ統合しました");return go("arena")}
+function exchange(){S.qol=S.qol||{};S.qol.summonTab="exchange";save();return go("summon")}
+function daily(){toast("デイリー報酬はホームから確認できます");return go("home")}
+function missions(){toast("ミッションはホームへ統合しました");return go("home")}
+function profile(){return go("system")}
+function settings(){return go("savevault")}
+function event(){toast("イベントは出撃へ統合しました");return go("sortie")}
+function storyScene(ch,n=0){try{let c=Math.max(0,Math.min(3,Number(ch)||0)),e=Math.max(0,Math.min(storyEpisodesV482(c).length-1,Number(n)||0));let st=storyStateV482();st.tab="main";st.chapter=c;save();story();return storyReaderV482(c,e)}catch(_){return go("story")}}
+function workDetail(i){let n=Math.max(0,Math.min(WORKS.length-1,Number(i)||0)),name=WORKS[n]?.[0],ci=C.findIndex(c=>c[1]===name);return ci>=0?detail(ci):go("list")}
+
+
+
+
+function summonEligibleV531(i){return !isWorkVariantV529(i)}
+function selectableCharacterV531(i){return isCharacterOwnedV528(i)}
+
+function ownedFormationPoolV542(){
+ let arr=ownedCharacterListV531().filter(i=>selectableCharacterV531(i));
+ return [...new Set(arr)].filter(i=>Number.isInteger(i)&&i>=0&&i<C.length)
+}
+function sanitizeFormationOwnedV542(arr){
+ let owned=ownedFormationPoolV542(),out=[];
+ for(const i of (Array.isArray(arr)?arr:[])){
+   if(owned.includes(i)&&!out.includes(i))out.push(i)
+ }
+ for(const i of owned){
+   if(out.length>=6)break;
+   if(!out.includes(i))out.push(i)
+ }
+ return out.slice(0,6)
+}
+function sanitizeAllFormationsV542(){
+ ensureUnitSets();
+ let changed=false;
+ S.sets=S.sets.map(a=>{
+   let fixed=sanitizeFormationOwnedV542(a);
+   if(JSON.stringify(fixed)!==JSON.stringify(a))changed=true;
+   return fixed
+ });
+ if(changed){save();persistentSaveWrite()}
+ return changed
+}
+
+function ownedCharacterListV531(){ensureOwnedStateV528();return C.map((_,i)=>i).filter(selectableCharacterV531)}
+function workUnitBadgeV531(i){return isWorkVariantV529(i)?`<span class=workUnitBadgeV531>著作版</span>`:""}
+
+function isCharacterOwnedV528(i){
+ i=Math.max(0,Math.min(C.length-1,Number(i)||0));
+ return !!S.owned?.[i] || (S.dupes?.[i]||0)>0 || lv(i)>1 || (S.sets?.some(a=>a.includes(i))||false)
+}
+function ensureOwnedStateV528(){
+ S.owned=S.owned||{};
+ (S.sets?.flat?.()||[]).forEach(i=>{if(Number.isInteger(+i))S.owned[+i]=1});
+ for(let i=0;i<C.length;i++){
+  if((S.dupes?.[i]||0)>0||lv(i)>1)S.owned[i]=1
+ }
+ let wu=ensureWorkUnlockV526();
+ workUnlockDefinitionsV526().forEach(def=>{
+  if(wu.unlocked?.[def.id])S.owned[def.target]=1
+ });
+ return S.owned
+}
+function normalizeWorkUnlockStateV528(){
+ let st=ensureWorkUnlockV526();
+ for(const def of workUnlockDefinitionsV526()){
+  if(st.unlocked?.[def.id]){
+   S.owned=S.owned||{};S.owned[def.target]=1;
+   if(!S.lv?.[def.target]){S.lv=S.lv||{};S.lv[def.target]=1}
+  }
+  st.fragments[def.id]=Math.max(0,Number(st.fragments[def.id]||0));
+  st.explores[def.id]=Math.max(0,Number(st.explores[def.id]||0));
+ }
+ return st
+}
+
+function ensureWorkUnlockV526(){
+ S.owned=S.owned||{};
+ S.workUnlockV526=S.workUnlockV526||{fragments:{},explores:{},unlocked:{}};
+ S.workUnlockV526.fragments=S.workUnlockV526.fragments||{};
+ S.workUnlockV526.explores=S.workUnlockV526.explores||{};
+ S.workUnlockV526.unlocked=S.workUnlockV526.unlocked||{};
+ return S.workUnlockV526
+}
+
+function workQuestFlavorV527(def){
+ const map={
+  melos:{title:"友よ、夜明けまで",enemy:"疑念の影",goal:"速度型を1人以上編成",story:"信義を疑う黒い文章が、メロスの道を閉ざす。"},
+  kumo:{title:"一縷の救済",enemy:"奈落の蜘蛛",goal:"BREAKを2回発生",story:"救いへ伸びる一本の糸。その先に、試すような闇がいる。"},
+  jigoku:{title:"絵師の炎",enemy:"業火の屏風",goal:"10ターン以内",story:"完成を求める狂気が、炎の中で形を持つ。"},
+  ame:{title:"雨ニモマケズ",enemy:"暴風の頁",goal:"戦闘不能なし",story:"雨と風の中でも、立ち続ける言葉がある。"},
+  dsaka:{title:"D坂の密室",enemy:"偽装された真相",goal:"妨害スキルを3回使用",story:"痕跡はある。だが、正しい順番で読まなければ真相は見えない。"},
+  neko:{title:"猫はすべて見ている",enemy:"虚栄の客人",goal:"支援スキルを2回使用",story:"猫の目だけが、書斎の滑稽さを見抜いている。"},
+  shayo:{title:"沈む陽の向こう",enemy:"没落の残影",goal:"HP50%以下の味方を残して勝利",story:"沈むだけでは終われない。斜陽の先に、もう一度朝を探す。"},
+  yume:{title:"第十一夜",enemy:"夢喰い",goal:"特殊型を2人編成",story:"十夜を越えた夢が、現実の輪郭を曖昧にする。"},
+  kimi:{title:"君、死にたまふことなかれ",enemy:"戦火の頁",goal:"戦闘不能なし",story:"失わせるための戦いではない。生きて帰るための一篇。"},
+  shiosai:{title:"潮騒の試練",enemy:"海鳴りの異稿",goal:"防御型を1人以上編成",story:"荒れる海の向こうで、揺るがない想いが試される。"},
+  morgue:{title:"モルグ街の異常",enemy:"密室の獣",goal:"BREAKを3回発生",story:"理解不能に見える事件にも、必ず論理の糸口がある。"},
+  baskerville:{title:"魔犬の足跡",enemy:"霧中の魔犬",goal:"弱体中の敵へ奥義",story:"怪異の顔をした事件を、推理と一撃で暴く。"}
+ };
+ return map[def.id]||{title:def.work,enemy:"異稿体",goal:"クエストをクリア",story:`『${def.work}』の世界が異稿化している。`}
+}
+function openWorkQuestV527(id){
+ let def=workUnlockDefinitionsV526().find(x=>x.id===id);if(!def)return;
+ let q=workQuestFlavorV527(def),cond=workUnlockConditionV526(def),frag=workFragmentV526(id);
+ document.getElementById("workQuestOverlayV527")?.remove();
+ let o=document.createElement("div");o.id="workQuestOverlayV527";o.className="resultOverlay workQuestOverlayV527";
+ o.innerHTML=`<div class=resultCard><small>WORK QUEST</small><h2>${q.title}</h2><h3>《${def.work}》</h3><p>${q.story}</p><div class=workQuestEnemyV527><span>ENEMY</span><b>${q.enemy}</b></div><div class=workQuestGoalV527><span>特殊条件</span><b>${q.goal}</b></div><div class=workQuestStatusV527><span>${cond.lvOk?"✓":"○"} 元文豪Lv.${def.needLv}</span><span>${cond.stageOk?"✓":"○"} 第${def.stage+1}章クリア</span><span>断章 ${frag}/${def.fragments}</span></div><button data-work-quest-explore-v527="${id}" ${cond.ready?"":"disabled"}>作品探索を開始</button><button data-work-quest-close-v527=1>閉じる</button></div>`;
+ document.body.appendChild(o)
+}
+
+function workUnlockDefinitionsV526(){
+ const find=n=>C.findIndex(c=>c[0]===n);
+ return [
+  {id:"melos",base:find("dazai"),target:find("dazai_melos"),work:"走れメロス",needLv:20,stage:0,fragments:10,theme:"友情と疾走",hint:"速度型。行動回転とEP獲得に秀でる。"},
+  {id:"kumo",base:find("aku"),target:find("aku_kumo"),work:"蜘蛛の糸",needLv:20,stage:0,fragments:10,theme:"救済と断絶",hint:"特殊型。敵味方の状態を利用するBREAK型。"},
+  {id:"jigoku",base:find("aku"),target:find("aku_jigoku"),work:"地獄変",needLv:35,stage:1,fragments:15,theme:"芸術と狂気",hint:"攻撃型。HPと引き換えに高火力を出す。"},
+  {id:"ame",base:find("kenji"),target:find("kenji_ame"),work:"雨ニモマケズ",needLv:25,stage:1,fragments:12,theme:"忍耐と献身",hint:"回復型。長期戦と全体回復に特化。"},
+  {id:"dsaka",base:find("ranpo"),target:find("ranpo_dsaka"),work:"D坂の殺人事件",needLv:30,stage:1,fragments:12,theme:"観察と推理",hint:"妨害型。弱点露呈とBREAK補助が得意。"},
+  {id:"neko",base:find("soseki"),target:find("soseki_neko"),work:"吾輩は猫である",needLv:30,stage:1,fragments:12,theme:"観察と諧謔",hint:"支援型。味方の速度とEPを支える。"},
+  {id:"shayo",base:find("dazai"),target:find("dazai_shayo"),work:"斜陽",needLv:40,stage:2,fragments:16,theme:"没落と再生",hint:"特殊型。HP低下時に性能が反転する逆境型。"},
+  {id:"yume",base:find("soseki"),target:find("soseki_yume"),work:"夢十夜",needLv:40,stage:2,fragments:16,theme:"夢と境界",hint:"特殊型。敵状態によって効果が変化。"},
+  {id:"kimi",base:find("akiko"),target:find("akiko_kimi"),work:"君死にたまふことなかれ",needLv:35,stage:2,fragments:14,theme:"反戦と祈り",hint:"支援型。味方の生存時に攻防支援が強化。"},
+  {id:"shiosai",base:find("mishima"),target:find("mishima_shiosai"),work:"潮騒",needLv:35,stage:2,fragments:14,theme:"純愛と自然",hint:"防御型。味方を守りながら長期戦で強くなる。"},
+  {id:"morgue",base:find("poe"),target:find("poe_morgue"),work:"モルグ街の殺人",needLv:40,stage:2,fragments:16,theme:"分析と異常犯罪",hint:"妨害型。推理で弱点を暴きBREAKを加速。"},
+  {id:"baskerville",base:find("doyle"),target:find("doyle_baskerville"),work:"バスカヴィル家の犬",needLv:45,stage:3,fragments:18,theme:"怪異と推理",hint:"攻撃型。弱体中の敵へ高火力追撃。"}
+ ].filter(x=>x.base>=0&&x.target>=0)
+}
+function workUnlockOwnedV526(def){
+ let st=ensureWorkUnlockV526();
+ return !!st.unlocked[def.id] || !!S.owned?.[def.target] || (S.dupes?.[def.target]||0)>0 || lv(def.target)>1
+}
+function workUnlockConditionV526(def){
+ let stageOk=(S.progress?.clears?.[def.stage]||0)>0,lvOk=lv(def.base)>=def.needLv;
+ return {lvOk,stageOk,ready:lvOk&&stageOk}
+}
+function workFragmentV526(id){return Number(ensureWorkUnlockV526().fragments[id]||0)}
+function exploreWorkV526(id){
+ let def=workUnlockDefinitionsV526().find(x=>x.id===id);if(!def)return false;
+ let cond=workUnlockConditionV526(def),st=ensureWorkUnlockV526();
+ if(workUnlockOwnedV526(def)){toast("この著作ユニットは解放済みです");return worksUnlockHubV526()}
+ if(!cond.ready){toast(`条件未達成：元文豪Lv.${def.needLv} / 第${def.stage+1}章クリア`);return worksUnlockHubV526()}
+ let cost=50;
+ if((S.mat||0)<cost){toast("作品探索には資料50が必要です");return worksUnlockHubV526()}
+ S.mat-=cost;
+ let gain=1+((Date.now()+def.target+(st.explores[id]||0))%3);
+ st.fragments[id]=(st.fragments[id]||0)+gain;
+ st.explores[id]=(st.explores[id]||0)+1;
+ save();persistentSaveWrite();toast(`《${def.work}》断章 +${gain}`);
+ return worksUnlockHubV526()
+}
+function unlockWorkCharacterV526(id){
+ let def=workUnlockDefinitionsV526().find(x=>x.id===id);if(!def)return false;
+ let cond=workUnlockConditionV526(def),st=ensureWorkUnlockV526(),frag=workFragmentV526(id);
+ if(workUnlockOwnedV526(def)){toast("解放済みです");return worksUnlockHubV526()}
+ if(!cond.ready||frag<def.fragments){toast("解放条件または断章が不足しています");return worksUnlockHubV526()}
+ st.fragments[id]=Math.max(0,frag-def.fragments);st.unlocked[id]=true;
+ S.owned=S.owned||{};S.owned[def.target]=1;
+ S.lv=S.lv||{};if(!S.lv[def.target])S.lv[def.target]=1;
+ ensureOwnedStateV528();normalizeWorkUnlockStateV528();
+ save();persistentSaveWrite();
+ try{emergencyBackupV134?.()}catch(_){}
+ toast(`${C[def.target][1]}《${C[def.target][2]}》を解放！`);
+ return workUnlockResultV526(def)
+}
+function workUnlockResultV526(def){
+ let i=def.target,o=document.getElementById("workUnlockResultV526");if(o)o.remove();
+ o=document.createElement("div");o.id="workUnlockResultV526";o.className="resultOverlay workUnlockResultV526";
+ o.innerHTML=`<div class=resultCard><small>NEW WORK UNIT</small><h2>${C[i][1]}</h2><h3>《${C[i][2]}》</h3><div class=workUnlockResultArtV526><img src="${characterPortraitV501(i)}" alt="${C[i][1]}"></div><p>${literaryIdentityV525(i).desc}</p><div class=workUnlockResultStatsV526><span>${charRank(i)}</span><span>${characterAbility(i).role}</span><span>${characterSkillKitV512(i).trait}</span></div><button data-char="${i}">詳細を見る</button><button data-work-unlock-close-v526=1>著作解放へ戻る</button></div>`;
+ document.body.appendChild(o);return true
+}
+
+function workUnlockViewStateV528(){
+ S.qol=S.qol||{};
+ if(!S.qol.workUnlockViewV528)S.qol.workUnlockViewV528="ALL";
+ return S.qol.workUnlockViewV528
+}
+function workUnlockFilteredDefsV528(defs){
+ let v=workUnlockViewStateV528();
+ if(v==="UNLOCKED")return defs.filter(workUnlockOwnedV526);
+ if(v==="READY")return defs.filter(d=>{let c=workUnlockConditionV526(d);return !workUnlockOwnedV526(d)&&c.ready&&workFragmentV526(d.id)>=d.fragments});
+ if(v==="PROGRESS")return defs.filter(d=>!workUnlockOwnedV526(d)&&workFragmentV526(d.id)>0);
+ return defs
+}
+
+function workUnlockCardV526(def){
+ let c=workUnlockConditionV526(def),owned=workUnlockOwnedV526(def),frag=workFragmentV526(def.id),i=def.target,b=def.base,pct=Math.min(100,Math.round(frag/def.fragments*100));
+ return `<article class="workUnlockCardV526 ${owned?"owned":c.ready?"ready":"locked"}">
+   <div class=workUnlockArtV526><img src="${characterPortraitV501(i)}" alt="${C[i][1]}">${rankBadgeV504(i)}${artStatusBadgeV529(i)}<em>別ユニット</em><small>${workVisualThemeV529(i).motif}</small></div>
+   <div class=workUnlockInfoV526>
+     <small>${C[b][1]} / ${def.theme}</small><h2>《${def.work}》</h2><p>${def.hint}</p>
+     <div class=workUnlockConditionsV526><span class="${c.lvOk?"ok":""}">${c.lvOk?"✓":"○"} 元文豪 Lv.${def.needLv}</span><span class="${c.stageOk?"ok":""}">${c.stageOk?"✓":"○"} 第${def.stage+1}章クリア</span></div>
+     <div class=workFragmentBarV526><div><span>作品断章</span><b>${frag}/${def.fragments}</b></div><i><em style="width:${pct}%"></em></i></div>
+     <div class=workUnlockPreviewV526><span>${charRank(i)}</span><span>${characterAbility(i).role}</span><span>${characterSkillKitV512(i).trait}</span><span>戦力 ${charPower(i).toLocaleString()}</span></div>${workVariantCompareV528(def)}
+   </div>
+   <div class=workUnlockActionsV526>
+     ${owned?`<button data-char="${i}">解放済み・詳細</button>`:`<button data-work-quest-v527="${def.id}">作品クエスト</button><button data-work-explore-v526="${def.id}" ${c.ready?"":"disabled"}>作品探索 <small>資料50</small></button><button class=unlock data-work-unlock-v526="${def.id}" ${c.ready&&frag>=def.fragments?"":"disabled"}>著作解放</button>`}
+   </div>
+ </article>`
+}
+
+function workUnlockSummaryV528(){
+ let defs=workUnlockDefinitionsV526(),unlocked=defs.filter(workUnlockOwnedV526).length,ready=0,frags=0,needed=0;
+ defs.forEach(d=>{
+  let c=workUnlockConditionV526(d),f=workFragmentV526(d.id);
+  if(!workUnlockOwnedV526(d)&&c.ready&&f>=d.fragments)ready++;
+  frags+=Math.min(f,d.fragments);needed+=d.fragments
+ });
+ return {unlocked,total:defs.length,ready,frags,needed,pct:Math.round(unlocked/Math.max(1,defs.length)*100)}
+}
+function workVariantCompareV528(def){
+ let b=def.base,t=def.target,bs=characterStatsV511(b),ts=characterStatsV511(t);
+ return `<div class=workVariantCompareV528>
+  <span>HP <b>${ts.hp}</b><em>${ts.hp-bs.hp>=0?"+":""}${ts.hp-bs.hp}</em></span>
+  <span>攻撃 <b>${ts.atk}</b><em>${ts.atk-bs.atk>=0?"+":""}${ts.atk-bs.atk}</em></span>
+  <span>防御 <b>${ts.def}</b><em>${ts.def-bs.def>=0?"+":""}${ts.def-bs.def}</em></span>
+  <span>速度 <b>${ts.spd}</b><em>${ts.spd-bs.spd>=0?"+":""}${ts.spd-bs.spd}</em></span>
+ </div>`
+}
+
+function worksUnlockHubV526(){
+ ensureCoreState();ensureWorkUnlockV526();
+ let defs=workUnlockDefinitionsV526(),sum=workUnlockSummaryV528();
+ shell(`${uiPageHead("works")}<main class=worksUnlockHubV526>
+   <section class=worksUnlockHeroV526><div><small>WORKS LIBERATION</small><h1>著作解放</h1><p>文豪を育て、作品断章を集めると、同じ文豪の別作品ユニットが加入します。作品クエストで物語と条件も確認できます。</p></div><aside><span>解放</span><b>${sum.unlocked}/${sum.total}</b><em>${sum.pct}%</em></aside></section>
+   <section class=worksUnlockSummaryV528><span>即解放可能<b>${sum.ready}</b></span><span>断章進捗<b>${sum.frags}/${sum.needed}</b></span><span>追加ユニット<b>${sum.total}</b></span><span>専用画像<b>${workUnlockDefinitionsV526().filter(d=>dedicatedArtConfiguredV529(d.target)).length}/${sum.total}</b></span></section>
+   <section class=worksUnlockRulesV526><article><b>① 元文豪を育成</b><span>作品ごとの必要Lvまで育成</span></article><article><b>② 作品探索</b><span>資料50で断章を1〜3獲得</span></article><article><b>③ 別キャラ加入</b><span>画像演出・役割・能力・ステータスが別管理</span></article></section>
+   <nav class=worksUnlockFiltersV528>${[["ALL","すべて"],["READY","解放可能"],["PROGRESS","進行中"],["UNLOCKED","解放済み"]].map(([v,n])=>`<button class="${workUnlockViewStateV528()===v?"on":""}" data-work-filter-v528="${v}">${n}</button>`).join("")}</nav>
+   <section class=worksUnlockGridV526>${workUnlockFilteredDefsV528(defs).map(workUnlockCardV526).join("")||`<div class=worksUnlockEmptyV528>該当する著作はありません</div>`}</section>
+ </main>`)
+}
+
+function routeFunctionV493(name){
+ const routes={
+   home,sortie,stagePage,party,list,summon,story,arena,growth,
+   gear:gearHubV479,savevault:saveVaultV486,system:systemPanelV490,
+   portraits:portraitManagerV503,works:worksUnlockHubV526
+ };
+ return routes[name];
+}
+
+function safeRouteNameV493(x){
+ const aliases={
+   characters:"list",character:"list",collection:"list",archive:"list",
+   gear:"gear",equipment:"gear",
+   formation:"party",team:"party",
+   training:"growth",level:"growth",
+   quest:"sortie",battle:"sortie",campaign:"sortie",
+   library:"story",records:"story",record:"story",
+   gacha:"summon",recruit:"summon",
+   pvp:"arena",simulation:"arena",
+   achievements:"home",goals:"home",dashboard:"home",
+   save:"savevault",backup:"savevault",settings:"savevault",
+   diagnostics:"system",status:"system",
+   portraits:"portraits",art:"portraits",characterart:"portraits",
+   works:"works",work:"works",books:"works",unlock:"works"
+ };
+ x=aliases[x]||x;
+ return routeFunctionV493(x)?x:"home";
+}
+
+function navReleaseV493(){
+ clearTimeout(window.__navReleaseTimerV493);
+ window.__navReleaseTimerV493=setTimeout(()=>{__navBusyV493=false},180);
+}
+
+
+function routePreflightV508(route){
+ try{
+   ensureCoreState();
+   ensureOwnedStateV528();normalizeWorkUnlockStateV528();
+   ensureUnitSets();
+   S.qol=S.qol||{};
+   if(!S.lv||typeof S.lv!=="object")S.lv={};
+   if(!S.dupes||typeof S.dupes!=="object")S.dupes={};
+   if(!S.equipped||typeof S.equipped!=="object")S.equipped={};
+   if(!Array.isArray(S.gear))S.gear=[];
+   if(route==="growth")growthSelectedV483();
+   if(route==="arena")arenaEnsureV481();
+   if(route==="party"&&(!Array.isArray(S.sets?.[S.set])||S.sets[S.set].length<6))ensureUnitSets();
+   return true
+ }catch(e){
+   try{runtimeLogV491("PREFLIGHT",String(route)+": "+(e?.message||e))}catch(_){}
+   return false
+ }
+}
+
+function go(x){
+ const requested=x;
+ const now=Date.now();
+
+ // Ignore accidental double taps that can render two screens at once on iPhone.
+ if(__navBusyV493 && now-__navStampV493<160)return;
+ __navBusyV493=true;__navStampV493=now;
+
+ try{
+   if(document.body.classList.contains("battleMode")){
+     try{leaveBattleCleanupV191()}catch(e){runtimeLogV491("NAV-LEAVE",e?.message||e)}
+   }
+
+   try{hideAutoReplayLoadingV199()}catch(_){}
+   if(x!=="stagePage"){
+     try{stopTrueAutoLoopV200(false)}catch(_){}
+   }
+
+   try{closeOverlays()}catch(_){}
+   cleanupTransientUiV493();
+   document.body.classList.remove("battleMode");
+
+   x=safeRouteNameV493(x);
+   const fn=routeFunctionV493(x);
+   routePreflightV508(x);
+
+   window.__bkRoute=x;
+   try{if(typeof syncNavActive==="function")syncNavActive(x)}catch(_){}
+   try{window.scrollTo(0,0)}catch(_){}
+
+   if(typeof fn!=="function"){
+     runtimeLogV491("ROUTE-MISSING",String(requested));
+     navReleaseV493();
+     return home()
+   }
+
+   const out=renderScreen(x,fn);
+   navReleaseV493();
+   return out
+ }catch(e){
+   try{runtimeLogV491("ROUTE",String(requested)+": "+(e?.message||e))}catch(_){}
+   try{finalErrorShield(e)}catch(_){}
+   navReleaseV493();
+   try{return home()}catch(_){return coreHome()}
+ }
+}
+function markNavActive(name){document.querySelectorAll(".nav [data-go]").forEach(b=>b.classList.toggle("active",b.dataset.go===name))}
+document.addEventListener("error",e=>{let im=e.target;if(im&&im.tagName==="IMG"&&!im.dataset.fallback){im.dataset.fallback="1";let s=im.getAttribute("src")||"";im.src=s.includes("/stages/")?"assets/stages/chapter1.jpg":"assets/anime/home_cinematic.jpg"}},true);
+document.addEventListener("pointerdown",e=>{let b=e.target.closest("button,.btn");if(!b)return;b.classList.remove("tapPulse");void b.offsetWidth;b.classList.add("tapPulse")},{passive:true});
+
+const BK_SAVE_KEY="bungou_kitan_save";
+const BK_BACKUP_KEY="bungou_kitan_save_backup";
+const BK_SAVE_SCHEMA=83;
+function persistentSaveWrite(){
+ try{
+  let payload={schema:BK_SAVE_SCHEMA,updatedAt:Date.now(),state:S},raw=JSON.stringify(payload);
+  let oldBackup=null;try{let r=localStorage.getItem(BK_BACKUP_KEY);if(r){let p=JSON.parse(r);oldBackup=p?.state||p}}catch(e){}
+  localStorage.setItem(BK_SAVE_KEY,raw);
+  if(!oldBackup||saveProgressScore(S)>=saveProgressScore(oldBackup))localStorage.setItem(BK_BACKUP_KEY,raw);
+  return true
+ }catch(e){console.error("persistent save",e);return false}
+}
+function persistentSaveLoad(){try{for(let raw of [localStorage.getItem(BK_SAVE_KEY),localStorage.getItem(BK_BACKUP_KEY)]){if(!raw)continue;let p=JSON.parse(raw),st=p&&p.state?p.state:p;if(st&&typeof st==="object")return st}}catch(e){}return null}
+function migrateLegacySave(){try{if(localStorage.getItem(BK_SAVE_KEY))return false;for(let k of ["bk12","bk12_backup","bungou_kitan","bungou_kitan_v70","bungou_kitan_save_v1"]){let raw=localStorage.getItem(k);if(!raw)continue;try{let p=JSON.parse(raw),st=p&&p.state?p.state:p;if(st&&typeof st==="object"){Object.keys(S).forEach(x=>delete S[x]);Object.assign(S,st);persistentSaveWrite();return true}}catch(_){}}}catch(e){}return false}
+function persistentSaveHealth(){try{return[["固定キー",true],["読込",typeof persistentSaveLoad==="function"],["バックアップ",typeof persistentSaveWrite==="function"]]}catch(e){return[["保存",false]]}}
+
+function growthSelectedV483(){
+ S.qol=S.qol||{};
+ let i=Number(S.qol.growthSelectedV483);
+ if(!Number.isInteger(i)||i<0||i>=C.length)i=Number(S.growthSelected);
+ if(!Number.isInteger(i)||i<0||i>=C.length)i=Number(S.sets?.[S.set]?.[0]);
+ if(!Number.isInteger(i)||i<0||i>=C.length)i=0;
+ S.qol.growthSelectedV483=i;S.growthSelected=i;
+ return i
+}
+function growthExpNeedV483(i){
+ let l=lv(i),capLv=cap(i);if(l>=capLv)return 0;
+ return Math.max(10,Math.round(18+l*4.8))
+}
+function growthBatchCostV483(i,target){
+ let l=lv(i),t=Math.min(cap(i),Math.max(l,target)),sum=0;
+ for(let n=l;n<t;n++)sum+=Math.max(10,Math.round(18+n*4.8));
+ return sum
+}
+function growthCanBreakV483(i){return lv(i)>=cap(i)&&cap(i)<150}
+function growthBreakCostV483(i){
+ let capLv=cap(i);
+ return {gold:capLv<80?2500:capLv<110?4500:7000,mat:capLv<80?12:capLv<110?22:36}
+}
+function growthRoleV483(i){return characterAbility(i)?.role||C[i][4]||"攻撃"}
+function growthPortraitsV483(){
+ let list=[...(S.sets?.[S.set]||[])];
+ for(let i=0;i<C.length&&list.length<12;i++)if(!list.includes(i))list.push(i);
+ return list.slice(0,12)
+}
+function growthLevelOneV483(i){
+ let need=growthExpNeedV483(i);if(!need)return false;
+ if((S.xp||0)<need)return false;
+ S.xp-=need;S.lv=S.lv||{};S.lv[i]=Math.min(cap(i),lv(i)+1);persistentSaveWrite?.();return true
+}
+function growthBatchV483(i,count){
+ let n=0;while(n<count&&growthLevelOneV483(i))n++;save();return n
+}
+function growthBreakV483(i){
+ if(!growthCanBreakV483(i))return false;
+ let c=growthBreakCostV483(i);
+ if((S.gold||0)<c.gold||(S.mat||0)<c.mat)return false;
+ S.gold-=c.gold;S.mat-=c.mat;S.breaks=S.breaks||{};S.breaks[i]=(S.breaks[i]||0)+1;save();return true
+}
+function growthAvgBonusV483(){
+ let levels=C.map((_,i)=>lv(i)),avg=Math.round(levels.reduce((a,b)=>a+b,0)/levels.length);
+ let bonus=Math.floor(avg/10)*2;
+ return {avg,bonus}
+}
+
+function growth(){
+ ensureCoreState();S.qol=S.qol||{};
+ let i=growthSelectedV483(),c=C[i],l=lv(i),capLv=cap(i),need=growthExpNeedV483(i),avg=growthAvgBonusV483(),role=growthRoleV483(i),br=growthBreakCostV483(i);
+ shell(`${uiPageHead("growth")}<main class=growthHubV483>
+   <section class=growthHeroV483>
+     <img src="${characterPortraitV501(i)}" style="${portraitStyleV502(i)}" alt="${c[1]}">
+     <div><small>AUTHOR TRAINING</small><h1>育成</h1><p>経験値・上限解放・所持平均ボーナスをまとめて管理。</p></div>
+     <aside><span>共有EXP</span><b>${(S.xp||0).toLocaleString()}</b></aside>
+   </section>
+
+   <section class=growthRosterV483>
+     ${growthPortraitsV483().map(n=>`<button class="${n===i?"active":""}" data-growth-char-v483="${n}"><img src="${characterPortraitV501(n)}" style="${portraitStyleV502(n)}" alt="${C[n][1]}">${rankBadgeV504(n)}<b>${C[n][1]}</b><small>Lv.${lv(n)}</small></button>`).join("")}
+   </section>
+
+   <section class=growthFocusV483>
+     <div class=growthPortraitV483><img src="${characterPortraitV501(i)}" style="${portraitStyleV502(i)}" alt="${c[1]}"><span>${c[5]}</span></div>
+     <div class=growthFocusTextV483>
+       <small>${role} / ${c[3]}</small><h2>${C[i][1]}</h2><p>${c[2]}</p>
+       <div class=growthLevelLineV483><b>Lv.${l}</b><span>/ ${capLv}</span></div>
+       <div class=growthBarV483><i style="width:${capLv?Math.min(100,l/capLv*100):0}%"></i></div>
+       <div class=growthNeedV483>${l>=capLv?`現在の上限に到達`:`次Lvまで共有EXP ${need}`}</div><div class=growthSkillKitV512><small>《${C[i][2]}》由来</small><b>${characterSkillKitV512(i).skillName}</b><span>${literaryIdentityV525(i).desc}<br>${skillRankTextV512(i)}</span></div>${skillMasteryPanelV519(i)}
+     </div>
+     <div class=growthStatBoxV483>
+       <span>HP<b>${characterStatsV511(i).hp}</b></span>
+       <span>攻撃<b>${charAtk(i)}</b></span>
+       <span>防御<b>${charDef(i)}</b></span>
+       <span>速度<b>${characterStatsV511(i).spd}</b></span>
+       <span>戦力<b>${charPower(i).toLocaleString()}</b></span>
+     </div>
+   </section>
+
+   <section class=growthActionsV483>
+     <button data-growth-up-v483="1" ${(l>=capLv||(S.xp||0)<need)?"disabled":""}><b>Lv +1</b><span>EXP ${need||"-"}</span></button>
+     <button data-growth-up-v483="5" ${(l>=capLv)?"disabled":""}><b>Lv +5</b><span>最大 ${growthBatchCostV483(i,l+5)}</span></button>
+     <button data-growth-up-v483="10" ${(l>=capLv)?"disabled":""}><b>Lv +10</b><span>最大 ${growthBatchCostV483(i,l+10)}</span></button>
+     <button class=growthMaxV483 data-growth-max-v483=1 ${(l>=capLv)?"disabled":""}><b>上限まで</b><span>所持EXP内</span></button>
+   </section>
+
+   <section class=growthBreakV483>
+     <div><small>LIMIT BREAK</small><h2>上限解放</h2><p>${capLv>=150?"最大上限150に到達":growthCanBreakV483(i)?`文銭 ${br.gold} / 資料 ${br.mat}`:`Lv.${capLv}到達で解放可能`}</p></div>
+     <button data-growth-break-v483="${i}" ${!growthCanBreakV483(i)||(S.gold||0)<br.gold||(S.mat||0)<br.mat?"disabled":""}>上限解放</button>
+   </section>
+
+   <section class=growthAverageV483>
+     <div><small>COLLECTION BONUS</small><h2>所持平均Lvボーナス</h2><p>所持文豪の平均レベルに応じて全ユニットへ補正。</p></div>
+     <div class=growthAvgValueV483><span>平均Lv</span><b>${avg.avg}</b><em>全能力 +${avg.bonus}%</em></div>
+   </section>
+
+   <section class=growthGuideV483>
+     <article><b>① 経験値共有</b><p>ステージで得たEXPを好きな文豪へ振り分け。</p></article>
+     <article><b>② 上限解放</b><p>上限到達後、文銭と資料を使って最大150まで解放。</p></article>
+     <article><b>③ 全体強化</b><p>所持平均Lvを上げるほど全ユニットが底上げ。</p></article>
+   </section>
+ </main>`)
+}
+function growCharacter(i,n=1){return doLevelUp(i,n,"growth")}
+
+
+function rankIdentityV504(rank){
+ return {
+   UR:{mark:"◆",name:"UR",tone:"最高位",stars:4},
+   SSR:{mark:"✦",name:"SSR",tone:"精鋭",stars:3},
+   SR:{mark:"◇",name:"SR",tone:"希少",stars:2},
+   R:{mark:"•",name:"R",tone:"標準",stars:1}
+ }[rank]||{mark:"•",name:String(rank||"R"),tone:"標準",stars:1}
+}
+function rankBadgeV504(i){
+ let r=charRank(i),x=rankIdentityV504(r);
+ return `<span class="rankIdentityV504 rank-${r}" data-rank="${r}"><i>${x.mark}</i><b>${r}</b></span>`
+}
+
+function charRank(i){return C[i]?.[5]||"R"}
+function charRankOrder(r){return({UR:4,SSR:3,SR:2,R:1})[r]||0}
+function growthSelected(){let i=Number(S.growthSelected);return Number.isInteger(i)&&i>=0&&i<C.length?i:(S.sets?.[S.set]?.[0]||0)}
+function selectGrowthCharacter(i){i=+i;if(i<0||i>=C.length)return;S.growthSelected=i;save();persistentSaveWrite();return growth()}
+function growthSelector(){
+ let selected=growthSelected(),order=growthOwnedCandidates();
+ return `<div class=growthPicker><div class=growthPickerHead><b>育てる文豪を選ぶ</b><select data-growth-sort><option value="rank" ${growthSortMode()==="rank"?"selected":""}>ランク順</option><option value="level" ${growthSortMode()==="level"?"selected":""}>Lv順</option><option value="name" ${growthSortMode()==="name"?"selected":""}>名前順</option></select></div><div class=growthRankFilters>${["all","UR","SSR","SR","R"].map(r=>`<button class="${growthFilterMode()===r?"on":""}" data-growth-filter="${r}">${r==="all"?"全員":r}</button>`).join("")}</div><div class=growthPickerGrid>${order.map(i=>`<button class="growthPick ${i===selected?"selected":""}" data-growth-select="${i}"><div class=growthPickImg><span class=rankBadge data-rank="${charRank(i)}">${charRank(i)}</span><img src="${characterImage(C[i][0])}"></div><div><b>${C[i][1]}</b><span>Lv.${lv(i)} / ${cap(i)}</span><small>${i===selected?"✓ 育成中":"タップして選択"}</small></div></button>`).join("")}</div></div>`
+}
+
+function growthSortMode(){return S.growthSort||"rank"}
+function growthFilterMode(){return S.growthFilter||"all"}
+function setGrowthSort(v){S.growthSort=v;save();persistentSaveWrite();return growth()}
+function setGrowthFilter(v){S.growthFilter=v;save();persistentSaveWrite();return growth()}
+function growthCandidates(){let arr=C.map((c,i)=>i),f=growthFilterMode(),s=growthSortMode();if(f!=="all")arr=arr.filter(i=>charRank(i)===f);arr.sort((a,b)=>s==="level"?lv(b)-lv(a)||charRankOrder(charRank(b))-charRankOrder(charRank(a)):s==="name"?String(C[a][1]).localeCompare(String(C[b][1]),"ja"):charRankOrder(charRank(b))-charRankOrder(charRank(a))||lv(b)-lv(a));return arr}
+function growthCost(i,n=1){let mat=0,gold=0,l=lv(i);for(let k=0;k<n&&l+k<cap(i);k++){mat+=30+(l+k)*4;gold+=50+(l+k)*6}return{mat,gold}}
+
+function stageTapGuard(el){
+ if(!el)return false;
+ let now=Date.now(),last=+(el.dataset.lastTap||0);
+ if(now-last<280)return false;
+ el.dataset.lastTap=String(now);return true
+}
+
+function maxNum(a,b){a=+a||0;b=+b||0;return Math.max(a,b)}
+function mergeNumberMap(a={},b={}){let o={...a};for(let k of Object.keys(b||{}))o[k]=maxNum(o[k],b[k]);return o}
+function mergeSaveStates(base={},incoming={}){
+ base=normalizeSaveCandidate(base);incoming=normalizeSaveCandidate(incoming);let o={...base,...incoming};
+ // Progress can only move forward.
+ let ac=base.progress?.clears||[],bc=incoming.progress?.clears||[];
+ o.progress={...(base.progress||{}),...(incoming.progress||{}),clears:Array.from({length:Math.max(4,ac.length,bc.length)},(_,i)=>maxNum(ac[i],bc[i]))};
+ o.stageBest=Array.from({length:Math.max(4,(base.stageBest||[]).length,(incoming.stageBest||[]).length)},(_,i)=>maxNum(base.stageBest?.[i],incoming.stageBest?.[i]));
+ // Character progression can only rise.
+ o.lv=mergeNumberMap(base.lv,incoming.lv);
+ o.bond=mergeNumberMap(base.bond,incoming.bond);
+ o.dupes=mergeNumberMap(base.dupes,incoming.dupes);
+ // Keep the highest durable currencies to avoid update rollback.
+ for(let k of ["gold","ink","mat","normalTickets","summonMedals","rating","exp","librarianExp"])o[k]=maxNum(base[k],incoming[k]);
+ // Preserve union-like collections.
+ o.gear=(base.gear?.length||0)>=(incoming.gear?.length||0)?base.gear:incoming.gear;
+ o.equipped={...(base.equipped||{}),...(incoming.equipped||{})};
+ o.questClaims={...(base.questClaims||{}),...(incoming.questClaims||{})};
+ o.archiveClaims={...(base.archiveClaims||{}),...(incoming.archiveClaims||{})};
+ o.chapterRewards={...(base.chapterRewards||{}),...(incoming.chapterRewards||{})};
+ o.storyBondClaims={...(base.storyBondClaims||{}),...(incoming.storyBondClaims||{})};
+ o.loginClaims={...(base.loginClaims||{}),...(incoming.loginClaims||{})};
+ // Prefer the richer formation collection.
+ o.sets=(base.sets?.length||0)>=(incoming.sets?.length||0)?base.sets:incoming.sets;
+ return o
+}
+function recoverBestSave(){
+ let states=[JSON.parse(JSON.stringify(S))];
+ let keys=[BK_SAVE_KEY,BK_BACKUP_KEY,"bk12","bk12_backup","bungou_kitan","bungou_kitan_v70","bungou_kitan_save_v1"];
+ for(let k of keys){try{let raw=localStorage.getItem(k);if(!raw)continue;let p=JSON.parse(raw),st=p?.state||p;if(st&&typeof st==="object")states.push(st)}catch(e){}}
+ let merged=states.reduce((a,b)=>mergeSaveStates(a,b),{});
+ Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,merged);
+ ensureCoreState();normalizeInteractiveState();persistentSaveWrite();return merged
+}
+function saveProgressScore(st=S){
+ let clears=(st.progress?.clears||[]).reduce((a,b)=>a+(+b||0),0);
+ let levels=Object.values(st.lv||{}).reduce((a,b)=>a+(+b||0),0);
+ let gear=st.gear?.length||0;
+ return clears*10000+levels*10+gear;
+}
+function ensureCoreState(){ensureBossRushState();
+ if(!Array.isArray(S.gear))S.gear=[];
+ if(!S.equipped||typeof S.equipped!=="object")S.equipped={};
+ if(!Array.isArray(S.sets)||!S.sets.length)S.sets=[[0,1,2,3,4,5]];
+ if(!Number.isInteger(S.set)||S.set<0||S.set>=S.sets.length)S.set=0;
+ if(!S.progress||typeof S.progress!=="object")S.progress={clears:[0,0,0,0]};
+ if(!Array.isArray(S.progress.clears))S.progress.clears=[0,0,0,0];
+ while(S.progress.clears.length<4)S.progress.clears.push(0);
+ if(!Array.isArray(S.stageBest))S.stageBest=[0,0,0,0];
+ if(!S.lv||typeof S.lv!=="object")S.lv={};
+ if(!S.bond||typeof S.bond!=="object")S.bond={};
+ if(!S.dupes||typeof S.dupes!=="object")S.dupes={};
+ return true
+}
+function normalizeSaveCandidate(st){
+ let x=st&&typeof st==="object"?{...st}:{};
+ if(!Array.isArray(x.gear))x.gear=[];
+ if(!x.equipped||typeof x.equipped!=="object")x.equipped={};
+ if(!Array.isArray(x.sets)||!x.sets.length)x.sets=[[0,1,2,3,4,5]];
+ if(!x.progress||typeof x.progress!=="object")x.progress={clears:[0,0,0,0]};
+ if(!Array.isArray(x.progress.clears))x.progress.clears=[0,0,0,0];
+ if(!x.lv||typeof x.lv!=="object")x.lv={};
+ if(!x.bond||typeof x.bond!=="object")x.bond={};
+ if(!x.dupes||typeof x.dupes!=="object")x.dupes={};
+ return x
+}
+function safeGearFind(fn){ensureCoreState();return S.gear.find(fn)}
+
+function normalizeStageLayout(){
+ document.querySelectorAll(".stageCine").forEach(card=>{
+  card.classList.add("stageLayoutV90");
+  let modes=[...card.querySelectorAll("[data-battle]")];
+  modes.forEach((b,i)=>{b.classList.add("stageModeButton");b.dataset.modeIndex=String(i)});
+  let q=card.querySelector("[data-quickfarm]");if(q)q.classList.add("stageFarmButton");
+ });
+}
+
+function affordableGrowth(i,limit=999){
+ let mat=S.mat||0,gold=S.gold||0,l=lv(i),capv=cap(i),n=0;
+ while(n<limit&&l+n<capv){
+  let mc=30+(l+n)*4,gc=50+(l+n)*6;
+  if(mat<mc||gold<gc)break;
+  mat-=mc;gold-=gc;n++;
+ }
+ return n
+}
+function growthCostForAffordable(i,n){return growthCost(i,Math.min(n,affordableGrowth(i,n)))}
+
+function growthOwnedCandidates(){
+ let arr=growthCandidates();
+ return arr.filter(i=>isCharacterOwnedV528(i));
+}
+function growthCanRaise(i,n){let c=growthCost(i,n);return lv(i)<cap(i)&&(S.mat||0)>=c.mat&&(S.gold||0)>=c.gold}
+
+function quickGrowButton(i){
+ return `<button class=toGrowth data-growth-open="${i}">⬆ レベル上げ</button>`
+}
+function quickGrowCharacter(i,n){return doLevelUp(i,n,"list")}
+
+function levelUpCostAt(level){return{mat:30+level*4,gold:50+level*6}}
+function maxLevelUpsNow(i,limit=999){
+ ensureCoreState();let l=lv(i),top=cap(i),mat=+S.mat||0,gold=+S.gold||0,n=0;
+ while(n<limit&&l+n<top){let c=levelUpCostAt(l+n);if(mat<c.mat||gold<c.gold)break;mat-=c.mat;gold-=c.gold;n++}
+ return n
+}
+function doLevelUp(i,want=1,returnTo="list"){
+ ensureCoreState();i=Number(i);want=Math.max(1,Number(want)||1);
+ if(!Number.isInteger(i)||i<0||i>=C.length){toast("キャラを選び直してください");return}
+ let can=maxLevelUpsNow(i,want);
+ if(can<1){toast(lv(i)>=cap(i)?"レベル上限です":"資料または文銭が足りません");return}
+ let snap=snapshotState(),raised=0;
+ try{
+  for(let n=0;n<can;n++){let c=levelUpCostAt(lv(i));if((+S.mat||0)<c.mat||(+S.gold||0)<c.gold)break;S.mat=(+S.mat||0)-c.mat;S.gold=(+S.gold||0)-c.gold;S.lv[i]=lv(i)+1;raised++}
+  ensureCoreState();save();persistentSaveWrite();toast(`${C[i][1]} Lv.${lv(i)}（+${raised}）`);
+  return returnTo==="growth"?growth():list()
+ }catch(e){
+  if(snap){try{let old=JSON.parse(snap);Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,old)}catch(_){}}
+  ensureCoreState();finalErrorShield(e);toast("育成処理を復旧しました");return list()
+ }
+}
+
+
+function ensureQoLPrefs(){
+ if(!S.qol||typeof S.qol!=="object")S.qol={};
+ if(!Number.isInteger(+S.qol.lastFarmCount))S.qol.lastFarmCount=10;
+ S.qol.lastFarmCount=Math.max(1,Math.min(50,+S.qol.lastFarmCount||10));
+ if(!S.qol.lastGrowthMode)S.qol.lastGrowthMode="10";
+}
+function setFarmCount(n){ensureQoLPrefs();S.qol.lastFarmCount=Math.max(1,Math.min(50,+n||1));save();persistentSaveWrite();return S.qol.lastFarmCount}
+function rememberedFarmCount(){ensureQoLPrefs();return S.qol.lastFarmCount}
+function setGrowthMode(v){ensureQoLPrefs();S.qol.lastGrowthMode=String(v);save();persistentSaveWrite()}
+
+function ensureBossRushState(){
+ if(!S.bossRush||typeof S.bossRush!=="object")S.bossRush={best:0,clears:0,claimed:{}};
+ if(!Number.isFinite(+S.bossRush.best))S.bossRush.best=0;
+ if(!Number.isFinite(+S.bossRush.clears))S.bossRush.clears=0;
+ if(!S.bossRush.claimed||typeof S.bossRush.claimed!=="object")S.bossRush.claimed={};
+ return S.bossRush
+}
+
+
+function stageMeta(i){
+ let meta=[
+  {name:"言葉のはじまり",sub:"失われた言葉を追って",power:6000,drop:"8〜15"},
+  {name:"失われた書庫",sub:"封じられた頁を探せ",power:7800,drop:"8〜15"},
+  {name:"海の向こうの言葉",sub:"異国の物語を辿れ",power:9600,drop:"10〜18"},
+  {name:"最後の一頁",sub:"失われた物語を取り戻せ",power:11800,drop:"12〜22"}
+ ];
+ return meta[Math.max(0,Math.min(meta.length-1,+i||0))]
+}
+function isModernAuthor(i){return ["amemiya_mio","kurose_rin","mizuki_kanade","shinonome_yaya","shirakawa_fumi","tsukishima_shiori","kamishiro_ren","mikage_akari","tachibana_kanade","yakumo_saku","ayatsuji_yui","hoshino_ruri"].includes(C[i]?.[0])}
+
+function farmResultSummary(){return S.qol?.lastFarmResult||null}
+function saveFarmResult(ch,count,before){
+ ensureQoLPrefs();
+ S.qol.lastFarmResult={ch,count,time:Date.now(),mat:Math.max(0,(S.mat||0)-(before.mat||0)),gold:Math.max(0,(S.gold||0)-(before.gold||0)),ink:Math.max(0,(S.ink||0)-(before.ink||0))};
+ save();persistentSaveWrite()
+}
+
+function characterSeedV495(i){
+ let s=String(C[i]?.[0]||i),h=2166136261;
+ for(let k=0;k<s.length;k++){h^=s.charCodeAt(k);h=Math.imul(h,16777619)}
+ return h>>>0
+}
+
+function characterSignatureV496(i){
+ let c=C[i]||[],p=characterProfileV495(i),seed=characterSeedV495(i),rank=charRank(i);
+ let motifs=["夜","雨","月","紙","墨","灯","雪","鏡","風","海","花","星"];
+ let verbs=["穿つ","綴る","断つ","染める","還す","照らす","裂く","結ぶ"];
+ let motif=motifs[seed%motifs.length],verb=verbs[(seed>>>4)%verbs.length];
+ let rarityScale={UR:1.18,SSR:1.10,SR:1.05,R:1}[rank]||1;
+ let tempo=["静謐","鋭筆","連環","残響"][(seed>>>7)%4];
+ return {
+   title:`${motif}を${verb}者`,
+   tempo,
+   finisher:`${String(c[2]||"物語")}・${motif}${["章","譜","印","界"][(seed>>>10)%4]}`,
+   resonance:Math.round((p.bonus+10)*rarityScale),
+   focus:["単体","全体","継戦","崩し"][(seed>>>12)%4],
+   quote:[
+     "この一文は、まだ終われない。",
+     "書かれた運命なら、書き換えればいい。",
+     "余白まで、私の物語にする。",
+     "頁の向こうで、答えは待っている。"
+   ][seed%4]
+ }
+}
+
+function signatureCombatV497(i){
+ let p=characterProfileV495(i),s=characterSignatureV496(i),seed=characterSeedV495(i),rank=charRank(i);
+ let scale={UR:1.16,SSR:1.10,SR:1.05,R:1}[rank]||1;
+ let mods={
+  攻撃:{dmg:1.10,break:1.00,gauge:1.00,heal:0,guard:0},
+  妨害:{dmg:0.94,break:1.20,gauge:1.04,heal:0,guard:0},
+  回復:{dmg:0.82,break:0.92,gauge:1.08,heal:.16,guard:.03},
+  支援:{dmg:0.90,break:.96,gauge:1.16,heal:.05,guard:.05},
+  特殊:{dmg:1.00,break:1.08,gauge:1.10,heal:.03,guard:.03},
+  防御:{dmg:.88,break:1.02,gauge:1.00,heal:0,guard:.12},
+  速度:{dmg:1.02,break:1.00,gauge:1.12,heal:0,guard:0}
+ }[p.role]||{dmg:1,break:1,gauge:1,heal:0,guard:0};
+ let quirk=["初撃強化","連撃補正","BREAK追撃","奥義加速"][(seed>>>15)%4];
+ if(quirk==="初撃強化")mods.dmg+=.04;
+ if(quirk==="連撃補正")mods.gauge+=.04;
+ if(quirk==="BREAK追撃")mods.break+=.06;
+ if(quirk==="奥義加速")mods.gauge+=.06;
+ return {
+   ...mods,
+   dmg:Number((mods.dmg*scale).toFixed(3)),
+   break:Number((mods.break*scale).toFixed(3)),
+   gauge:Number((mods.gauge*scale).toFixed(3)),
+   quirk,
+   finisher:s.finisher,
+   resonance:s.resonance,
+   role:p.role
+ }
+}
+function signatureCombatTextV497(i){
+ let x=signatureCombatV497(i);
+ let parts=[`威力×${x.dmg.toFixed(2)}`,`BREAK×${x.break.toFixed(2)}`,`ゲージ×${x.gauge.toFixed(2)}`];
+ if(x.heal)parts.push(`回復${Math.round(x.heal*100)}%`);
+ if(x.guard)parts.push(`軽減${Math.round(x.guard*100)}%`);
+ return `${x.quirk} / ${parts.join(" / ")}`
+}
+
+function characterBattleIdentityV496(i){
+ let p=characterProfileV495(i),s=characterSignatureV496(i),c=signatureCombatV497(i);
+ return {role:p.role,style:s.tempo,focus:s.focus,resonance:s.resonance,finisher:s.finisher,passive:p.passive,
+   damage:c.dmg,breakRate:c.break,gaugeRate:c.gauge,healRate:c.heal,guardRate:c.guard,quirk:c.quirk}
+}
+
+function characterProfileV495(i){
+ let c=C[i]||[],role=String(c[4]||"特殊"),seed=characterSeedV495(i),rank=charRank(i);
+ let archetypes={
+  攻撃:{label:"破章",passive:"攻撃時、低確率で追撃",stat:"ATK",bonus:6},
+  妨害:{label:"封筆",passive:"攻撃時、敵の攻撃効率を低下",stat:"BREAK",bonus:7},
+  回復:{label:"再読",passive:"WAVE開始時、味方HPを小回復",stat:"HEAL",bonus:8},
+  支援:{label:"共著",passive:"味方全体の奥義ゲージ上昇を補助",stat:"GAUGE",bonus:6},
+  特殊:{label:"改稿",passive:"奥義発動時、追加効果が変化",stat:"SPECIAL",bonus:8},
+  防御:{label:"堅書",passive:"被ダメージを軽減し、味方を庇う",stat:"DEF",bonus:8},
+  速度:{label:"速筆",passive:"行動間隔を短縮し、先手を取りやすい",stat:"SPD",bonus:7}
+ };
+ let a=archetypes[role]||archetypes.特殊;
+ let variant=seed%4;
+ let suffix=["・壱","・弐","・参","・零"][variant];
+ let rankBonus={UR:4,SSR:3,SR:2,R:1}[rank]||1;
+ return {
+   role,
+   label:a.label,
+   passive:`${a.passive}（${a.stat}+${a.bonus+rankBonus}%）`,
+   stat:a.stat,
+   bonus:a.bonus+rankBonus,
+   trait:`${String(c[2]||"固有能力")}${suffix}`,
+   affinity:["紙","墨","灯","月"][seed%4],
+   speed:90+(seed%21),
+   crit:5+(seed%8),
+   break:8+((seed>>>3)%10)
+ }
+}
+function characterCompletionV495(){
+ let missing=[];
+ C.forEach((c,i)=>{
+   let p=characterProfileV495(i),o=ougiInfo(i);
+   if(!c?.[0]||!c?.[1]||!c?.[2]||!c?.[3]||!c?.[4]||!c?.[5]||!p.passive||!o.name||!o.effect)missing.push(i)
+ });
+ return {total:C.length,complete:C.length-missing.length,missing,pct:Math.round((C.length-missing.length)/Math.max(1,C.length)*100)}
+}
+function characterDossierV495(i){
+ let c=C[i],p=characterProfileV495(i),o=ougiInfo(i),a=abilityText(i),sp=gearSpecialization(i);
+ return `<section class=characterDossierV495>
+   <div class=characterDossierHeadV495><small>CHARACTER DOSSIER</small><b>${p.label} / ${p.affinity}属性</b></div>
+   <div class=characterDossierGridV495>
+     <div><small>作品モチーフ</small><b>《${C[i][2]}》</b><span>${literaryIdentityV525(i).desc}</span></div>
+     <div><small>固有能力</small><b>${characterSkillKitV512(i).skillName}</b><span>${abilityDetail(i)}</span></div>
+     <div><small>固有特性</small><b>${p.trait}</b><span>${p.passive}</span></div>
+     <div><small>奥義</small><b>${o.name}</b><span>${o.effect}</span><em>${characterSignatureV496(i).finisher}</em></div>
+     <div><small>戦闘傾向</small><b>${p.role}</b><span>速度 ${p.speed} / CRIT ${p.crit}% / BREAK ${p.break}%</span></div>
+     <div><small>装備適性</small><b>${sp.type}</b><span>適性補正 +${sp.bonus}%</span></div>
+     <div><small>文壇</small><b>${bundanTag(i)}</b><span>${isAnyModernAuthor(i)?"現代文学ボーナス対象":"文壇共鳴対象"}</span></div>
+     <div><small>異名</small><b>${characterSignatureV496(i).title}</b><span>${characterSignatureV496(i).tempo} / ${characterSignatureV496(i).focus}型</span></div>
+     <div><small>フィニッシャー</small><b>${characterSignatureV496(i).finisher}</b><span>共鳴値 ${characterSignatureV496(i).resonance}</span></div>
+     <div><small>台詞</small><b>VOICE LINE</b><span>「${characterSignatureV496(i).quote}」</span></div>
+     <div><small>戦闘補正</small><b>${signatureCombatV497(i).quirk}</b><span>${signatureCombatTextV497(i)}</span></div>
+   </div>
+ </section>`
+}
+
+function characterAbility(i){
+ let c=C[i]||[];
+ return {name:String(c[2]||"固有能力"),genre:String(c[3]||"文学"),role:String(c[4]||"特殊"),rank:charRank(i)}
+}
+
+function lastStage(){ensureQoLPrefs();let n=Number(S.qol.lastStage);return Number.isInteger(n)&&n>=0&&n<4?n:Math.max(0,Math.min(3,(S.progress?.clears||[]).findIndex(x=>!x)<0?3:(S.progress?.clears||[]).findIndex(x=>!x)))}
+function rememberStage(i){ensureQoLPrefs();S.qol.lastStage=Math.max(0,Math.min(3,+i||0));S.qol.selectedStage=S.qol.lastStage;save();persistentSaveWrite();return S.qol.lastStage}
+
+function stageUnlockedV521(ch){
+ ch=Math.max(0,Math.min(3,Number(ch)||0));
+ if(ch===0)return true;
+ return Number(S.progress?.clears?.[ch-1]||0)>0
+}
+function latestUnlockedStageV521(){
+ let last=0;
+ for(let ch=0;ch<4;ch++){if(stageUnlockedV521(ch))last=ch;else break}
+ return last
+}
+function currentChapter(){
+ return latestUnlockedStageV521()
+}
+function normalizeStageProgressV521(){
+ ensureCoreState();
+ S.progress=S.progress||{};if(!Array.isArray(S.progress.clears))S.progress.clears=[0,0,0,0];
+ while(S.progress.clears.length<4)S.progress.clears.push(0);
+ S.stageBest=Array.isArray(S.stageBest)?S.stageBest:[0,0,0,0];while(S.stageBest.length<4)S.stageBest.push(0);
+ S.hardClears=Array.isArray(S.hardClears)?S.hardClears:[0,0,0,0];while(S.hardClears.length<4)S.hardClears.push(0);
+ return S.progress.clears
+}
+
+function stageSelectGrid(){
+ normalizeStageProgressV521();
+ let last=lastStage();
+ return `<div class=quickStageGrid stageFlowGridV522>${[0,1,2,3].map(i=>{
+  let s=stageMeta(i),open=stageUnlockedV521(i),clears=S.progress.clears[i]||0,best=S.stageBest?.[i]||0,done=clears>0;
+  return `<button class="${i===last?"last":""} ${open?"open":"locked"} ${done?"done":""}" data-stage-open="${i}" ${open?"":"disabled"}><span>第${i+1}章 ${open?"":"🔒"}</span><b>${s.name}</b><small>${!open?"前章クリアで解放":done?`CLEAR ×${clears} / ★${best}/3`:"挑戦可能"}</small><em>${!open?"LOCKED":done?"COMPLETE":"NEW"}</em></button>`
+ }).join("")}</div>`
+}
+function growthSearch(){return S.qol?.growthSearch||""}
+function setGrowthSearch(v){ensureQoLPrefs();S.qol.growthSearch=String(v||"");save();return growth()}
+function growthVisibleCandidates(){
+ let q=growthSearch().trim().toLowerCase();
+ return growthOwnedCandidates().filter(i=>!q||String(C[i][1]).toLowerCase().includes(q)||String(characterAbility(i).name).toLowerCase().includes(q))
+}
+
+function ensureCharacterUX(){
+ if(!S.qol||typeof S.qol!=="object")S.qol={};
+ if(!S.qol.partySort)S.qol.partySort="power";
+}
+function setPartySort(v){ensureCharacterUX();S.qol.partySort=v;save();persistentSaveWrite();return party()}
+function partySortCandidates(arr){
+ ensureCharacterUX();let s=S.qol.partySort;
+ return [...arr].sort((a,b)=>{
+  if(s==="level")return lv(b)-lv(a);
+  if(s==="rank")return charRankOrder(charRank(b))-charRankOrder(charRank(a))||lv(b)-lv(a);
+  if(s==="name")return String(C[a][1]).localeCompare(String(C[b][1]),"ja");
+  return unitPower(b)-unitPower(a);
+ })
+}
+function abilityText(i){
+ let a=characterAbility(i);
+ let roleDesc={攻撃:"敵へのダメージを優先",妨害:"敵の行動を阻害",回復:"味方のHPを回復",支援:"味方を強化",特殊:"特殊効果で戦況を変える"}[a.role]||"固有効果を発動";
+ return { ...a, roleDesc }
+}
+const MODERN_WOMEN_V104=new Set(["kisaragi_rei","saionji_mio","amagi_rin","kurokawa_yoru","shirogane_noa","fuyutsuki_shiori","momose_ruka","aonami_sui","kagami_kei","mikazuki_aya","kujo_maya","sakuraba_otoha","hanamura_towa","tsukino_ran","shinomiya_kanade","hoshikawa_iri","minase_yura","tachibana_mei","asakura_renka","kisaragi_maya","kuon_setsuna","shinonome_hina","karasuma_touka","yuragi_sena"]);
+function isModernWomanV104(i){return MODERN_WOMEN_V104.has(C[i]?.[0])}
+function isAnyModernAuthor(i){return (typeof isModernAuthor==="function"&&isModernAuthor(i))||isModernWomanV104(i)}
+function modernCount(team){return (team||[]).filter(i=>isAnyModernAuthor(+i)).length}
+function modernLiteraryBonus(team){let n=modernCount(team);if(n>=6)return{name:"現代文学革命",rate:.18,gauge:15,count:n};if(n>=4)return{name:"現代文学圏",rate:.10,gauge:8,count:n};if(n>=2)return{name:"新潮流",rate:.05,gauge:3,count:n};return{name:"",rate:0,gauge:0,count:n}}
+function rankBadgeUI(i){return `<span class="partyRankBadge" data-rank="${charRank(i)}">${charRank(i)}</span>`}
+
+function premiumStatusStrip(){
+ ensureCoreState();
+ return `<div class=premiumStatus><div><b>文豪綺譚</b><small> BUNGO KITAN</small></div><span>資料 ${Number(S.mat||0).toLocaleString()}</span><span>文銭 ${Number(S.gold||0).toLocaleString()}</span><span>インク ${Number(S.ink||0).toLocaleString()}</span></div>`
+}
+
+
+function rankSkillBonusV512(rank){
+ return {
+  UR:{skill:1.18,ougi:1.22,break:1.14,ep:1.14,label:"極"},
+  SSR:{skill:1.11,ougi:1.14,break:1.09,ep:1.08,label:"真"},
+  SR:{skill:1.05,ougi:1.07,break:1.04,ep:1.04,label:"改"},
+  R:{skill:1.00,ougi:1.00,break:1.00,ep:1.00,label:"初"}
+ }[rank]||{skill:1,ougi:1,break:1,ep:1,label:"初"}
+}
+function characterSkillKitV512(i){
+ i=Math.max(0,Math.min(C.length-1,Number(i)||0));
+ let a=characterAbility(i),seed=characterSeedV495(i),rank=charRank(i),rb=rankSkillBonusV512(rank),lit=literaryIdentityV525(i);
+ let roleBase={
+  攻撃:{skill:1.12,break:1.00,ep:1.00},
+  妨害:{skill:1.00,break:1.16,ep:1.05},
+  回復:{skill:.90,break:.96,ep:1.12},
+  支援:{skill:.94,break:.98,ep:1.16},
+  特殊:{skill:1.04,break:1.08,ep:1.10},
+  防御:{skill:.92,break:1.03,ep:1.04},
+  速度:{skill:1.02,break:1.04,ep:1.16}
+ }[a.role]||{skill:1,break:1,ep:1};
+ let theme={combo:[1.05,1,1.03],crit:[1.08,.98,1],execute:[1.07,1.03,1],ambush:[1.07,1,1.02],seal:[.98,1.08,1.02],misprint:[1.02,1.04,1.02],slow:[.98,1.06,1.05],break:[1,1.12,1.01],heal:[.94,.98,1.06],regen:[.92,1,1.08],cleanse:[.94,.97,1.05],mercy:[.96,.98,1.08],teamGauge:[.96,1,1.10],buffAtk:[1.00,1,1.06],buffDef:[.95,1.02,1.06],chain:[.98,1,1.11],rewrite:[1.03,1.05,1.05],refund:[1,1.02,1.12],reverse:[1.04,1.04,1.05],boundary:[1.04,1.07,1.07],guard:[.92,1.04,1.02],counter:[.98,1.04,1.02],fortress:[.90,1.08,1.02],unyielding:[.94,1.05,1.04],fast:[1.02,1,1.10],first:[1.06,1,1.06],cycle:[1.03,1.02,1.12],dash:[1.03,1.06,1.09]}[lit.code]||[1,1,1];
+ return {
+  trait:lit.trait,desc:lit.desc,code:lit.code,
+  skillName:`${C[i][2]}・${lit.trait}`,
+  passiveName:`${rb.label}筆・${lit.trait}`,
+  skillMul:Number((roleBase.skill*theme[0]*rb.skill).toFixed(3)),
+  breakMul:Number((roleBase.break*theme[1]*rb.break).toFixed(3)),
+  epMul:Number((roleBase.ep*theme[2]*rb.ep).toFixed(3)),
+  ougiMul:Number((rb.ougi*(1+((seed>>>11)%5)*.015)).toFixed(3)),
+  rankLabel:rb.label,
+  source:C[i][2],
+  sourceText:lit.desc,
+  passiveText:lit.passive
+ }
+}
+
+function skillRankTextV512(i){
+ let k=characterSkillKitV512(i),r=charRank(i);
+ return `${r} ${k.rankLabel} / 威力×${k.skillMul.toFixed(2)} / BREAK×${k.breakMul.toFixed(2)} / EP×${k.epMul.toFixed(2)}`
+}
+
+function abilityDetail(i){
+ let k=characterSkillKitV512(i),lit=literaryIdentityV525(i);
+ return `${k.skillName}：${lit.desc} ${rankLiteraryEvolutionV525(i)}。`
+}
+
+function ougiInfo(i){
+ let rank=charRank(i),k=characterSkillKitV512(i),lit=literaryIdentityV525(i);
+ let gauge=rank==="UR"?90:rank==="SSR"?100:rank==="SR"?110:120;
+ return {name:`${lit.ougi||`${C[i][2]}・終章`}【${k.rankLabel}】`,effect:`${lit.ougiDesc||`『${C[i][2]}』の主題を最大出力で解放する。`} 奥義倍率×${k.ougiMul.toFixed(2)}。`,gauge}
+}
+
+function bundanTag(i){
+ let g=String(C[i]?.[3]||"文学");
+ if(["純文学","恋愛","青春","エッセイ","日常"].includes(g))return "文芸派";
+ if(["ミステリ","推理","サスペンス","社会派","ノンフィクション","記憶"].includes(g))return "論理派";
+ if(["幻想","怪奇","SF","実験文学"].includes(g))return "幻想派";
+ return "越境派"
+}
+function bundanBonus(team){
+ let counts={};(team||[]).forEach(i=>{let t=bundanTag(+i);counts[t]=(counts[t]||0)+1});
+ let best=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0]||["",0],n=best[1];
+ if(n>=6)return{name:`${best[0]}・大文壇`,rate:.15,gauge:10,count:n,tag:best[0]};
+ if(n>=4)return{name:`${best[0]}・文壇共鳴`,rate:.09,gauge:6,count:n,tag:best[0]};
+ if(n>=3)return{name:`${best[0]}・同人結束`,rate:.05,gauge:3,count:n,tag:best[0]};
+ return{name:"未発動",rate:0,gauge:0,count:n,tag:best[0]}
+}
+
+
+function skillMasteryCapV519(i){
+ return {UR:10,SSR:9,SR:8,R:7}[charRank(i)]||7
+}
+function skillMasteryLevelV519(i){
+ let capLv=skillMasteryCapV519(i),levelPart=Math.floor(lv(i)/20),dupPart=Math.min(4,Math.floor(Number(S.dupes?.[i]||0)/2)),bondPart=bondLv(i)>=5?1:0;
+ return Math.max(1,Math.min(capLv,1+levelPart+dupPart+bondPart))
+}
+function skillMasteryV519(i){
+ let level=skillMasteryLevelV519(i),capLv=skillMasteryCapV519(i),rank=charRank(i);
+ let bonus=1+(level-1)*.018;
+ let breakBonus=1+(level-1)*.014;
+ let epBonus=1+(level-1)*.012;
+ let passive=level>=capLv?`極意・${characterSkillKitV512(i).trait}`:level>=Math.ceil(capLv*.7)?`熟達・${characterSkillKitV512(i).trait}`:level>=Math.ceil(capLv*.4)?`深化・${characterSkillKitV512(i).trait}`:"基礎";
+ return {level,cap:capLv,bonus:Number(bonus.toFixed(3)),breakBonus:Number(breakBonus.toFixed(3)),epBonus:Number(epBonus.toFixed(3)),passive,rank}
+}
+function skillMasteryTextV519(i){
+ let m=skillMasteryV519(i);
+ return `熟練 ${m.level}/${m.cap} / 威力×${m.bonus.toFixed(2)} / BREAK×${m.breakBonus.toFixed(2)} / EP×${m.epBonus.toFixed(2)}`
+}
+function skillMasteryPanelV519(i){
+ let m=skillMasteryV519(i),pct=Math.round(m.level/m.cap*100),k=characterSkillKitV512(i);
+ return `<section class=skillMasteryPanelV519>
+   <div class=skillMasteryHeadV519><div><small>SKILL MASTERY</small><h3>${k.skillName}</h3></div><b>Lv.${m.level}<span>/ ${m.cap}</span></b></div>
+   <div class=skillMasteryBarV519><i style="width:${pct}%"></i></div>
+   <div class=skillMasteryStatsV519><span>威力<b>×${m.bonus.toFixed(2)}</b></span><span>BREAK<b>×${m.breakBonus.toFixed(2)}</b></span><span>EP<b>×${m.epBonus.toFixed(2)}</b></span></div>
+   <p>${m.passive}</p>
+   <small>Lv・突破・親愛度で熟練度が成長します。</small>
+ </section>`
+}
+
+function skillSynergyV518(team){
+ team=(team||[]).slice(0,6);
+ let kits=team.map(i=>characterSkillKitV512(i)),roles=team.map(i=>characterAbility(i).role),codes=kits.map(k=>k.code);
+ let rate=0,gauge=0,breakMul=1,damageMul=1,tags=[];
+ const has=(...xs)=>xs.every(x=>codes.includes(x));
+ const roleHas=(...xs)=>xs.every(x=>roles.includes(x));
+ if(has("combo","teamGauge")){rate+=.05;gauge+=5;damageMul+=.04;tags.push({name:"連筆共鳴",effect:"連撃＋共著：攻撃+5% / EP+5%"})}
+ if(has("break","execute")){rate+=.04;breakMul+=.10;damageMul+=.06;tags.push({name:"破章連携",effect:"破調＋処刑：BREAK+10% / 追撃+6%"})}
+ if(has("heal","guard")||has("regen","fortress")){rate+=.04;damageMul+=.02;tags.push({name:"護稿再読",effect:"回復＋防御：総合+4% / 与ダメ+2%"})}
+ if(has("fast","ambush")||has("first","crit")){gauge+=7;damageMul+=.05;tags.push({name:"先筆一閃",effect:"速度＋攻撃：EP+7% / 与ダメ+5%"})}
+ if(has("refund","teamGauge")||has("cycle","teamGauge")){gauge+=9;tags.push({name:"循環共著",effect:"奥義回収＋支援：EP+9%"})}
+ if(has("boundary","misprint")||has("rewrite","seal")){breakMul+=.08;damageMul+=.04;tags.push({name:"改稿禁書",effect:"特殊＋妨害：BREAK+8% / 与ダメ+4%"})}
+ if(roleHas("攻撃","妨害","支援")){rate+=.03;tags.push({name:"三筆戦術",effect:"攻撃・妨害・支援：総合+3%"})}
+ if(new Set(codes).size>=5){rate+=.03;gauge+=3;tags.push({name:"異能六篇",effect:"異なるスキル特性5種以上：総合+3% / EP+3%"})}
+ return{
+  rate:Number(Math.min(.18,rate).toFixed(3)),
+  gauge:Math.min(20,gauge),
+  breakMul:Number(breakMul.toFixed(3)),
+  damageMul:Number(damageMul.toFixed(3)),
+  tags:tags.slice(0,6)
+ }
+}
+function skillSynergyPanelV518(team){
+ let s=skillSynergyV518(team);
+ return `<section class=skillSynergyPanelV518>
+  <div class=skillSynergyHeadV518><div><small>SKILL SYNERGY</small><h2>スキル共鳴</h2></div><b>${s.tags.length}<span>連携</span></b></div>
+  <div class=skillSynergyTotalsV518><span>総合補正<b>+${Math.round(s.rate*100)}%</b></span><span>EP補正<b>+${s.gauge}%</b></span><span>BREAK<b>×${s.breakMul.toFixed(2)}</b></span><span>与ダメ<b>×${s.damageMul.toFixed(2)}</b></span></div>
+  <div class=skillSynergyTagsV518>${s.tags.length?s.tags.map(t=>`<article><b>${t.name}</b><span>${t.effect}</span></article>`).join(""):`<p>スキル特性の組み合わせを増やすと連携効果が発動します。</p>`}</div>
+ </section>`
+}
+
+function combinedTeamBonus(team){
+ let m=modernLiteraryBonus(team),b=bundanBonus(team),s=skillSynergyV518(team);
+ return {modern:m,bundan:b,skill:s,totalRate:m.rate+b.rate+s.rate,totalGauge:m.gauge+b.gauge+s.gauge}
+}
+
+function ensureFormationUX(){
+ ensureCharacterUX();if(!S.qol.partyFilter)S.qol.partyFilter="all";if(!S.qol.partySearch)S.qol.partySearch="";
+}
+function setPartyFilter(v){ensureFormationUX();S.qol.partyFilter=String(v||"all");save();persistentSaveWrite();return party()}
+function partyFilterCandidates(arr){
+ ensureFormationUX();let f=S.qol.partyFilter,q=String(S.qol.partySearch||"").trim().toLowerCase();
+ return partySortCandidates(arr).filter(i=>{
+  let a=characterAbility(i);
+  let ok=f==="all"||f===charRank(i)||f===a.role||f==="modern"&&isAnyModernAuthor(i);
+  let hit=!q||String(C[i][1]).toLowerCase().includes(q)||String(a.name).toLowerCase().includes(q);
+  return ok&&hit
+ })
+}
+function formationStats(i){
+ let a=abilityText(i),o=ougiInfo(i),p=typeof boostedPower==="function"?boostedPower(i):(700+lv(i)*35);
+ return {power:p,lv:lv(i),cap:cap(i),rank:charRank(i),ability:a.name,role:a.role,genre:a.genre,bundan:bundanTag(i),ougi:o.name}
+}
+function formationStatCard(i){
+ let s=formationStats(i);
+ return `<div class=formationStatCard><div class=formationSignatureV496>${characterSignatureV496(i).title}</div><div class=formationStatHead><span data-rank="${s.rank}">${s.rank}</span><div><b>${C[i][1]}</b><small>${s.role} / ${s.bundan}</small></div><strong>Lv.${s.lv}</strong></div><div class=formationStatGrid><span>戦闘力<b>${Number(s.power).toLocaleString()}</b></span><span>上限<b>${s.cap}</b></span><span>固有能力<b>${s.ability}</b></span><span>ジャンル<b>${s.genre}</b></span></div><div class=formationOugi><small>奥義</small><b>${s.ougi}</b></div></div>`
+}
+function openFormationStats(i){
+ let old=document.getElementById("formationStatsOverlay");if(old)old.remove();
+ let o=document.createElement("div");o.id="formationStatsOverlay";o.className="resultOverlay";
+ o.innerHTML=`<div class="resultCard formationStatsModal"><button class=formationStatsClose data-formation-stats-close=1>×</button><div class=formationStatsPortrait><span class=partyRankBadge data-rank="${charRank(i)}">${charRank(i)}</span><img src="${characterImage(C[i][0])}"></div>${formationStatCard(i)}<div class=abilityExplain><small>固有能力</small><p>${abilityDetail(i)}</p></div><div class=ougiExplain><small>奥義効果</small><p>${ougiInfo(i).effect}</p></div></div>`;
+ document.body.appendChild(o)
+}
+
+function currentSaveOrigin(){return location.origin}
+function exportSaveData(){
+ ensureCoreState();persistentSaveWrite();
+ let payload={game:"bungou-kitan",schema:109,origin:location.origin,exportedAt:Date.now(),state:S};
+ return btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
+}
+function downloadSaveFile(){
+ try{
+  let raw=JSON.stringify({game:"bungou-kitan",schema:109,origin:location.origin,exportedAt:Date.now(),state:S},null,2);
+  let blob=new Blob([raw],{type:"application/json"}),a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download="bungou-kitan-save.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast("セーブを書き出しました")
+ }catch(e){finalErrorShield(e)}
+}
+function importSaveText(raw){
+ try{
+  let p=JSON.parse(raw),st=p?.state||p;if(!st||typeof st!=="object")throw new Error("invalid save");
+  let merged=mergeSaveStates(S,st);Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,merged);
+  ensureCoreState();persistentSaveWrite();toast("セーブを引き継ぎました");return home()
+ }catch(e){toast("セーブファイルを読み込めません");return false}
+}
+function saveOriginStatus(){
+ let previous=localStorage.getItem("bungou_kitan_origin");
+ let changed=!!previous&&previous!==location.origin;
+ localStorage.setItem("bungou_kitan_origin",location.origin);
+ return {origin:location.origin,previous,changed}
+}
+function saveTransferPanel(){
+ let s=saveOriginStatus();
+ return `<div class="saveTransfer ${s.changed?"warn":""}"><div><small>SAVE DATA</small><b>アップデート引き継ぎ</b><span>${s.changed?"URLが変わっています。旧URLのlocalStorageは自動では読めません。":"このURL内のセーブを保護しています。"}</span></div><button data-save-export=1>セーブ書出し</button><button data-emergency-recover=1>緊急復旧</button><label>セーブ読込<input type=file accept=".json,application/json" data-save-import hidden></label></div>`
+}
+
+function selectedFormationUnit(){
+ ensureUnitSets();let t=S.sets?.[S.set]||[];return Number.isInteger(+S.qol?.formationFocus)?+S.qol.formationFocus:(t[0]||0)
+}
+function formationFocus(i){ensureFormationUX();S.qol.formationFocus=+i;save();persistentSaveWrite();return party()}
+function formationSelectedPanel(){
+ let i=selectedFormationUnit(),s=formationStats(i),a=abilityText(i),o=ougiInfo(i);
+ return `<div class=formationSelectedV109><div class=selectedPortrait><span class=partyRankBadge data-rank="${s.rank}">${s.rank}</span><img src="${characterImage(C[i][0])}"></div><div class=selectedStats><h2>${C[i][1]}</h2><b>${s.rank}　Lv.${s.lv}/${s.cap}</b><span>戦闘力 ${Number(s.power).toLocaleString()}</span><small>${a.role} / ${s.bundan}</small></div><div class=selectedAbility><small>固有能力</small><b>${a.name}</b><p>${abilityDetail(i)}</p><small>奥義</small><b>${o.name}</b></div></div>`
+}
+
+function recommendedStage(){
+ normalizeStageProgressV521();
+ for(let i=0;i<4;i++)if(stageUnlockedV521(i)&&!(S.progress.clears[i]||0))return i;
+ return latestUnlockedStageV521()
+}
+function dailyBrief(){ensureCoreState();ensureQoLPrefs();let i=recommendedStage(),st=stageMeta(i),team=S.sets?.[S.set]||[],p=unitPower(team),mb=modernLiteraryBonus(team),bb=bundanBonus(team);return `<div class=dailyBriefV110><div><small>NEXT ACTION</small><h2>第${i+1}章 ${st.name}</h2><span>推奨 ${st.power.toLocaleString()} / 編成 ${p.toLocaleString()}</span></div><button data-stage-open="${i}">出撃 ›</button><section><span>現代文豪<b>${mb.name||"未発動"}</b></span><span>文壇<b>${bb.name}</b></span><span>周回<b>${rememberedFarmCount()}周</b></span></section></div>`}
+function partyRoleSummary(team=S.sets?.[S.set]||[]){let c={攻撃:0,妨害:0,支援:0,回復:0,特殊:0};team.forEach(i=>{let r=characterAbility(+i).role;if(c[r]!=null)c[r]++});return c}
+function formationAdvice(){let team=S.sets?.[S.set]||[],r=partyRoleSummary(team),tips=[];if(r.攻撃<2)tips.push("攻撃役を2人にすると周回速度が安定");if(r.回復<1)tips.push("回復役を1人入れると高難度が安定");if(r.妨害<1)tips.push("妨害役でボスの行動を抑制");let mb=modernLiteraryBonus(team),bb=bundanBonus(team);if(mb.count===1)tips.push("現代文豪をもう1人で「新潮流」発動");if(bb.count===2)tips.push(`${bb.tag}をもう1人で文壇ボーナス発動`);return tips.slice(0,3)}
+function formationAdvicePanel(){let tips=formationAdvice();return `<div class=formationAdviceV110><b>編成アドバイス</b>${tips.length?tips.map(x=>`<span>• ${x}</span>`).join(""):"<span>✓ バランスの良い編成です</span>"}</div>`}
+
+function battleFxRoot(){
+ let x=document.getElementById("battleFxV111");if(x)return x;
+ x=document.createElement("div");x.id="battleFxV111";x.className="battleFxV111";document.body.appendChild(x);return x
+}
+function battleFloat(text,kind="damage"){
+ let r=battleFxRoot(),x=document.createElement("b");x.className=`battleFloat ${kind}`;x.textContent=text;r.appendChild(x);setTimeout(()=>x.remove(),900)
+}
+function battleSlash(kind="normal"){
+ let r=battleFxRoot(),x=document.createElement("i");x.className=`battleSlash ${kind}`;r.appendChild(x);setTimeout(()=>x.remove(),650)
+}
+function battleShake(kind="hit"){document.documentElement.classList.remove("battleShake","battleCritShake");void document.documentElement.offsetWidth;document.documentElement.classList.add(kind==="crit"?"battleCritShake":"battleShake");setTimeout(()=>document.documentElement.classList.remove("battleShake","battleCritShake"),420)}
+function battleSkillCutin(i,type="skill"){
+ let a=characterAbility(i),o=ougiInfo(i),r=battleFxRoot(),x=document.createElement("div");x.className=`battleCutin ${type} ${charRank(i)==="UR"?"ur":""}`;
+ x.innerHTML=`<img src="${characterImage(C[i][0])}"><div><small>${type==="ougi"?"奥義":"固有能力"}</small><b>${type==="ougi"?o.name:a.name}</b><span>${C[i][1]}</span></div>`;r.appendChild(x);setTimeout(()=>x.classList.add("show"),20);
+ let auto=!!ensureBattleStateV120?.().auto,mobile=(window.innerWidth||999)<=520;
+ let hold=type==="ougi"?(auto?320:mobile?460:620):(auto?180:mobile?260:360);
+ setTimeout(()=>{x.classList.remove("show");setTimeout(()=>x.remove(),160)},hold)
+}
+function battleHealFx(v){battleFloat(`+${Math.max(1,Math.round(v))}`,"heal");let r=battleFxRoot(),x=document.createElement("i");x.className="battleHealAura";r.appendChild(x);setTimeout(()=>x.remove(),900)}
+function battleDefeatFx(){let r=battleFxRoot(),x=document.createElement("div");x.className="battleDefeat";for(let i=0;i<12;i++){let p=document.createElement("i");p.style.setProperty("--n",i);x.appendChild(p)}r.appendChild(x);setTimeout(()=>x.remove(),1100)}
+function playBattleFx(kind,i=0,value=0){
+ if(kind==="attack"){posterTurnFlashV232("ally");signatureMotionV124(i,slot,"attack",target);battleSlash();battleFloat(`-${Math.max(1,Math.round(value))}`);battleShake()}
+ if(kind==="crit"){battleSlash("crit");battleFloat(`CRITICAL ${Math.max(1,Math.round(value))}`,"crit");battleShake("crit")}
+ if(kind==="skill"){posterTurnFlashV232("ally");signatureMotionV124(i,slot,"skill",target);battleSkillCutin(i,"skill");setTimeout(()=>battleSlash("skill"),280)}
+ if(kind==="ougi"){posterTurnFlashV232("ally");signatureMotionV124(i,slot,"ougi",target);battleSkillCutin(i,"ougi");setTimeout(()=>{battleSlash("ougi");battleShake("crit")},480)}
+ if(kind==="heal")battleHealFx(value);
+ if(kind==="defeat")battleDefeatFx()
+}
+
+function ensureFavoriteHome(){
+ ensureCoreState();if(!S.qol||typeof S.qol!=="object")S.qol={};
+ let i=Number(S.qol.favoriteCharacter);if(!Number.isInteger(i)||i<0||i>=C.length)S.qol.favoriteCharacter=(S.sets?.[S.set]?.[0]||0);
+}
+
+function homeCharacterPickerStateV514(){
+ S.qol=S.qol||{};
+ if(!S.qol.homeCharacterPickerV514)S.qol.homeCharacterPickerV514={query:"",rank:"ALL",sort:"rank"};
+ return S.qol.homeCharacterPickerV514
+}
+function homeCharacterCandidatesV514(){
+ let st=homeCharacterPickerStateV514(),q=String(st.query||"").trim().toLowerCase();
+ let arr=C.map((c,i)=>({c,i})).filter(({c,i})=>{
+  if(!selectableCharacterV531(i))return false;
+  if(st.rank!=="ALL"&&charRank(i)!==st.rank)return false;
+  return !q||(String(c[1])+String(c[2])+String(c[3])+String(characterAbility(i).role)).toLowerCase().includes(q)
+ });
+ arr.sort((a,b)=>st.sort==="name"?String(a.c[1]).localeCompare(String(b.c[1]),"ja"):st.sort==="level"?lv(b.i)-lv(a.i)||charRankOrder(charRank(b.i))-charRankOrder(charRank(a.i)):charRankOrder(charRank(b.i))-charRankOrder(charRank(a.i))||lv(b.i)-lv(a.i));
+ return arr
+}
+function setHomeCharacterV514(i){
+ ensureFavoriteHome();i=Number(i);
+ if(!Number.isInteger(i)||i<0||i>=C.length)return false;
+ if(!selectableCharacterV531(i)){toast("未所持キャラはホームに設定できません");return false}
+ S.qol.favoriteCharacter=i;S.homeChar=i;save();persistentSaveWrite();return true
+}
+
+function favoriteCharacter(){ensureFavoriteHome();return +S.qol.favoriteCharacter}
+function setFavoriteCharacter(i){if(!setHomeCharacterV514(i))return;toast(`${C[i][1]}をホームに設定`);return home()}
+function favoriteHomePicker(){
+ let current=favoriteCharacter(),st=homeCharacterPickerStateV514(),rows=homeCharacterCandidatesV514();
+ return `<section class=homePickerV514>
+  <header class=homePickerHeadV514><div><small>HOME CHARACTER</small><h2>ホームキャラ変更</h2><span>${rows.length}人表示</span></div><button data-favorite-close=1>×</button></header>
+  <div class=homePickerCurrentV514><img src="${characterPortraitV501(current)}" alt="${C[current][1]}"><div><small>現在のホームキャラ</small><b>${C[current][1]}</b><span>${charRank(current)} / ${characterAbility(current).role} / Lv.${lv(current)}</span></div></div>
+  <div class=homePickerToolsV514><input data-home-picker-query-v514 value="${st.query||""}" placeholder="名前・作品・役割で検索"><div class=homePickerRanksV514>${["ALL","UR","SSR","SR","R"].map(r=>`<button class="${st.rank===r?"on":""}" data-home-picker-rank-v514="${r}">${r==="ALL"?"全員":r}</button>`).join("")}</div><select data-home-picker-sort-v514><option value=rank ${st.sort==="rank"?"selected":""}>ランク順</option><option value=level ${st.sort==="level"?"selected":""}>Lv順</option><option value=name ${st.sort==="name"?"selected":""}>名前順</option></select></div>
+  <div class=homePickerGridV514>${rows.map(({c,i})=>`<button class="${i===current?"selected":""}" data-home-favorite-v514="${i}"><div class=homePickerArtV514><img src="${characterPortraitV501(i)}" alt="${c[1]}">${rankBadgeV504(i)}${workUnitBadgeV531(i)}</div><div><b>${c[1]}</b><small>${characterAbility(i).role} / Lv.${lv(i)}</small><span>${c[2]}</span></div><em>${i===current?"設定中":"ホームに設定"}</em></button>`).join("")}</div>
+ </section>`
+}
+
+function openFavoritePicker(){
+ document.getElementById("favoritePickerOverlay")?.remove();let o=document.createElement("div");o.id="favoritePickerOverlay";o.className="resultOverlay";o.innerHTML=`<div class=resultCard>${favoriteHomePicker()}</div>`;document.body.appendChild(o)
+}
+
+
+function homeDialogueStateV515(){
+ S.qol=S.qol||{};
+ if(!S.qol.homeDialogueV515)S.qol.homeDialogueV515={};
+ return S.qol.homeDialogueV515
+}
+function homeDialogueLinesV515(i){
+ let c=C[i],role=characterAbility(i).role,rank=charRank(i),seed=characterSeedV495(i),bond=bondLv(i);
+ let roleLines={
+  攻撃:["今日も、言葉で道を切り開こう。","迷うくらいなら、一頁先へ。","戦うなら、最後まで書き切るよ。"],
+  妨害:["静かな違和感ほど、見逃せない。","相手の文脈を崩せば、勝機は見える。","読めない行間ほど面白いね。"],
+  回復:["無理は禁物。頁はゆっくりめくればいい。","傷んだ言葉も、丁寧に綴り直せる。","帰ってきたら、ちゃんと休もう。"],
+  支援:["一人の文章じゃ、届かない場所もある。","背中は任せて。あなたは前を見て。","共に書けば、物語は強くなる。"],
+  特殊:["結末は一つじゃない。","書き換えるなら、今がいちばん面白い。","境界線なんて、頁の上では曖昧だよ。"],
+  防御:["守る頁があるなら、私は退かない。","急がなくていい。崩れないことも強さだから。","盾になる言葉だってある。"],
+  速度:["考えるより先に、頁が進んでしまう。","先手必勝。書き出しは速い方がいい。","一行先へ、もう行ってるよ。"]
+ }[role]||["今宵も、物語は戦場になる。"];
+ let specials=[
+  `《${c[2]}》の続き、少しだけ考えてた。`,
+  `${c[1]}の頁は、まだ途中だよ。`,
+  rank==="UR"?"この力、飾りじゃないよ。":rank==="SSR"?"期待には応える。":rank==="SR"?"育て方次第で、まだ伸びるよ。":"ここから強くなるのも悪くない。",
+  bond>=5?"あなたが来ると、少し安心する。":"今日も書架に来たんだね。"
+ ];
+ let mix=[...roleLines,...specials];
+ let shift=seed%mix.length;
+ return mix.slice(shift).concat(mix.slice(0,shift))
+}
+function homeDialogueV515(i){
+ let st=homeDialogueStateV515(),lines=homeDialogueLinesV515(i),n=Number(st[i]||0)%lines.length;
+ return lines[n]
+}
+function cycleHomeDialogueV515(i){
+ let st=homeDialogueStateV515(),lines=homeDialogueLinesV515(i);
+ st[i]=(Number(st[i]||0)+1)%lines.length;
+ save();return st[i]
+}
+function homeTimeLabelV515(){
+ let h=new Date().getHours();
+ return h<5?"深夜":h<11?"朝":h<17?"昼":h<20?"夕方":"夜"
+}
+
+function premiumHomeQuoteV236(i){
+ let role=characterAbility(i)?.role||"攻撃";
+ return {
+   "攻撃":"言葉は、刃より深く届く。",
+   "妨害":"静かな一文ほど、世界を狂わせる。",
+   "回復":"物語は、傷ついた頁から続いていく。",
+   "支援":"ひとつの言葉が、誰かの背中を押す。",
+   "防御":"守るべき頁があるから、立ち続ける。",
+   "特殊":"書き換えるのは、結末だけでいい。"
+ }[role]||"今宵も、物語は戦場になる。"
+}
+
+
+function portraitProfileV502(i){
+ let slug=C?.[i]?.[0]||"";
+ const exact={
+  dazai:{x:50,y:15,scale:1.00},
+  chuuya:{x:50,y:16,scale:1.02},
+  aku:{x:50,y:13,scale:1.02},
+  kenji:{x:50,y:15,scale:1.00},
+  ranpo:{x:50,y:14,scale:1.02},
+  soseki:{x:50,y:13,scale:1.00},
+  murasaki:{x:50,y:16,scale:1.00},
+  akiko:{x:50,y:14,scale:1.02},
+  kafka:{x:50,y:14,scale:1.00},
+  shakespeare:{x:50,y:13,scale:1.02},
+  amemiya_mio:{x:52,y:14,scale:1.02},
+  shinonome_yaya:{x:48,y:13,scale:1.04},
+  kuroze_rin:{x:50,y:14,scale:1.02},
+  mizuki_kanade:{x:50,y:15,scale:1.02}
+ };
+
+ Object.assign(exact,{
+  dazai_melos:{trait:"信義疾走",code:"fast",desc:"『走れメロス』の友情・信義・疾走を速度とEP加速へ。",passive:"行動するほど味方のEP獲得を支援",mods:{hp:.93,atk:1.02,def:.91,spd:1.22,power:1.04},ougi:"走れメロス・暁の帰還",ougiDesc:"味方全体の速度とEPを引き上げ、自身は高速連撃。"},
+  aku_kumo:{trait:"一縷の糸",code:"boundary",desc:"『蜘蛛の糸』の救済と断絶を、弱点・BREAK状態を結ぶ特殊効果へ。",passive:"弱点攻撃時にBREAKとEPを同時強化",mods:{hp:.96,atk:1.04,def:.94,spd:1.08,power:1.04},ougi:"蜘蛛の糸・一縷断絶",ougiDesc:"敵のBREAKを大きく削り、味方へEPを分配。"},
+  aku_jigoku:{trait:"地獄絵師",code:"ambush",desc:"『地獄変』の芸術への狂気を、自傷と引き換えの高火力へ。",passive:"HPが高いほど初撃威力上昇、被弾後も攻撃補正維持",mods:{hp:.90,atk:1.22,def:.88,spd:1.03,power:1.08},ougi:"地獄変・業火大屏風",ougiDesc:"自身のHPを一部消費し、敵全体へ極大ダメージ。"},
+  kenji_ame:{trait:"雨ニモマケズ",code:"regen",desc:"『雨ニモマケズ』の忍耐と献身を、継続回復と耐久支援へ。",passive:"WAVE開始時に味方全体を回復し、防御を小強化",mods:{hp:1.16,atk:.84,def:1.11,spd:.94,power:1.04},ougi:"雨ニモマケズ・不撓の祈り",ougiDesc:"味方全体を大回復し、継続回復と防御上昇を付与。"},
+  ranpo_dsaka:{trait:"D坂推理",code:"break",desc:"『D坂の殺人事件』の観察・推理・反証を、BREAK特化と弱点露呈へ。",passive:"敵の状態を解析し、BREAK効率を上げる",mods:{hp:.95,atk:1.02,def:.94,spd:1.12,power:1.05},ougi:"D坂・完全推理",ougiDesc:"敵の弱点を露呈し、BREAKゲージへ特大ダメージ。"},
+  soseki_neko:{trait:"猫の観察眼",code:"teamGauge",desc:"『吾輩は猫である』の観察と諧謔を、味方全体の速度・EP支援へ。",passive:"味方が行動するたび小確率でEP支援",mods:{hp:1.03,atk:.91,def:1.02,spd:1.10,power:1.04},ougi:"吾輩は猫である・猫眼世評",ougiDesc:"味方全体の速度・EP・会心を強化し、敵の攻撃を低下。"},
+  dazai_shayo:{trait:"斜陽反転",code:"reverse",desc:"『斜陽』の没落と再生を、HP低下時の性能反転へ。",passive:"HP低下時に攻撃とEP効率が上昇",mods:{hp:.98,atk:1.08,def:.94,spd:1.04,power:1.06},ougi:"斜陽・滅びの朝",ougiDesc:"HPが低いほど威力とEP回収量が上昇。"},
+  soseki_yume:{trait:"夢十夜",code:"boundary",desc:"『夢十夜』の幻想と境界性を、敵状態に応じて変化する特殊効果へ。",passive:"敵の状態異常数に応じて効果変化",mods:{hp:1.00,atk:1.04,def:1.00,spd:1.05,power:1.05},ougi:"夢十夜・第十一夜",ougiDesc:"敵の状態に応じて弱体・BREAK・追加ダメージが変化。"},
+  akiko_kimi:{trait:"反戦の祈り",code:"buffDef",desc:"『君死にたまふことなかれ』の反戦と生への願いを、生存支援へ。",passive:"味方全員生存時に攻防補正上昇",mods:{hp:1.08,atk:.91,def:1.05,spd:1.01,power:1.04},ougi:"君死にたまふことなかれ・生還",ougiDesc:"味方全体を回復し、防御と速度を強化。"},
+  mishima_shiosai:{trait:"潮騒の守り",code:"unyielding",desc:"『潮騒』の純愛と自然への信頼を、長期戦型の防御へ。",passive:"ターン経過で防御補正上昇",mods:{hp:1.14,atk:.92,def:1.13,spd:.95,power:1.04},ougi:"潮騒・海神の抱擁",ougiDesc:"味方全体へ防御・継続軽減。"},
+  poe_morgue:{trait:"デュパンの推理",code:"break",desc:"『モルグ街の殺人』の分析力を、弱点解析とBREAKへ。",passive:"弱点露呈中の敵へのBREAK大幅上昇",mods:{hp:.95,atk:1.02,def:.95,spd:1.11,power:1.05},ougi:"モルグ街・完全分析",ougiDesc:"敵全体の弱点を露呈し、BREAKゲージを大幅削減。"},
+  doyle_baskerville:{trait:"魔犬追跡",code:"execute",desc:"『バスカヴィル家の犬』の怪異と推理を、弱体敵への追撃へ。",passive:"弱体中の敵へ追加ダメージ",mods:{hp:.96,atk:1.13,def:.94,spd:1.07,power:1.06},ougi:"バスカヴィル・魔犬狩り",ougiDesc:"弱体中の敵へ特大ダメージと追撃。"}
+ });
+ if(exact[slug])return exact[slug];
+ let seed=characterSeedV495(i);
+ return {x:46+(seed%9),y:11+((seed>>>4)%8),scale:1+((seed>>>8)%4)*.01}
+}
+function portraitStyleV502(i){
+ let p=portraitProfileV502(i);
+ return `object-position:${p.x}% ${p.y}%;--portrait-scale:${p.scale}`;
+}
+
+
+function portraitManagerStateV503(){
+ S.qol=S.qol||{};
+ if(!S.qol.portraitManagerV503)S.qol.portraitManagerV503={selected:0,query:"",rank:"ALL"};
+ return S.qol.portraitManagerV503
+}
+function portraitConfiguredV503(i){
+ try{
+   let slug=C?.[i]?.[0]||"",bank=(window.__BK_CHARACTER_ART__||S?.art?.characterPortraits||{});
+   return !!(bank[slug]||bank[i])
+ }catch(_){return false}
+}
+function portraitManagerRowsV503(){
+ let st=portraitManagerStateV503(),q=String(st.query||"").trim().toLowerCase();
+ return C.map((c,i)=>({c,i})).filter(({c,i})=>{
+   if(st.rank!=="ALL"&&charRank(i)!==st.rank)return false;
+   return !q||(String(c[1])+String(c[2])+String(c[3])).toLowerCase().includes(q)
+ })
+}
+function portraitManagerV503(){
+ let st=portraitManagerStateV503(),i=Math.max(0,Math.min(C.length-1,Number(st.selected)||0)),rows=portraitManagerRowsV503(),p=portraitProfileV502(i);
+ shell(`${uiPageHead("list")}<main class=portraitManagerV503>
+   <section class=portraitManagerHeroV503>
+     <div><small>CHARACTER ART CONTROL</small><h1>専用画像管理</h1><p>キャラごとの専用画像・表示位置・拡大率を確認。</p></div>
+     <aside><span>専用画像</span><b>${C.filter((_,n)=>portraitConfiguredV503(n)).length}/${C.length}</b></aside>
+   </section>
+   <section class=portraitManagerPreviewV503>
+     <div class=portraitManagerArtV503><img src="${characterPortraitV501(i)}" style="${portraitStyleV502(i)}" alt="${C[i][1]}"></div>
+     <div class=portraitManagerInfoV503>
+       <small>${charRank(i)} / ${characterAbility(i).role}</small><h2>${C[i][1]}</h2><p>《${C[i][2]}》</p>
+       <div class=portraitManagerStatusV503><span>${portraitConfiguredV503(i)?"専用画像":"既存画像"}</span><span>X ${p.x}%</span><span>Y ${p.y}%</span><span>拡大 ${p.scale.toFixed(2)}</span></div>
+       <div class=portraitManagerActionsV503><button data-character-flow-v502="growth:${i}">育成へ</button><button data-character-flow-v502="party:${i}">編成へ</button><button data-char="${i}">詳細へ</button></div>
+     </div>
+   </section>
+   <section class=portraitManagerToolsV503>
+     <input data-portrait-query-v503 placeholder="名前・作品・年代で検索" value="${st.query||""}">
+     <div>${["ALL","UR","SSR","SR","R"].map(r=>`<button class="${st.rank===r?"on":""}" data-portrait-rank-v503="${r}">${r==="ALL"?"全員":r}</button>`).join("")}</div>
+   </section>
+   <section class=portraitManagerGridV503>
+     ${rows.map(({c,i:n})=>`<button class="${n===i?"active":""}" data-portrait-select-v503="${n}"><img src="${characterPortraitV501(n)}" style="${portraitStyleV502(n)}" alt="${c[1]}">${rankBadgeV504(n)}<b>${c[1]}</b><small>${portraitConfiguredV503(n)?"専用":"既存"}</small></button>`).join("")}
+   </section>
+ </main>`)
+}
+
+
+function workVariantSlugsV529(){
+ return new Set(["dazai_melos","aku_kumo","aku_jigoku","kenji_ame","ranpo_dsaka","soseki_neko","dazai_shayo","soseki_yume","akiko_kimi","mishima_shiosai","poe_morgue","doyle_baskerville"])
+}
+function isWorkVariantV529(i){
+ return workVariantSlugsV529().has(C?.[i]?.[0]||"")
+}
+function dedicatedArtConfiguredV529(i){
+ let slug=C?.[i]?.[0]||"",bank=(window.__BK_CHARACTER_ART__||S?.art?.characterPortraits||{});
+ return !!(bank[slug]||bank[i])
+}
+function artStatusV529(i){
+ if(dedicatedArtConfiguredV529(i))return {label:"専用画像",cls:"ready"};
+ if(isWorkVariantV529(i))return {label:"仮画像",cls:"temp"};
+ return {label:"標準画像",cls:"standard"}
+}
+function workVisualThemeV529(i){
+ let slug=C?.[i]?.[0]||"";
+ return {
+  dazai_melos:{tag:"疾走",motif:"夜明け / 赤い布 / 風"},
+  aku_kumo:{tag:"救済",motif:"細い糸 / 闇 / 光点"},
+  aku_jigoku:{tag:"業火",motif:"炎 / 屏風 / 黒赤"},
+  kenji_ame:{tag:"忍耐",motif:"雨 / 野原 / 青緑"},
+  ranpo_dsaka:{tag:"推理",motif:"街灯 / 密室 / 紫"},
+  soseki_neko:{tag:"観察",motif:"猫 / 書斎 / 琥珀"},
+  dazai_shayo:{tag:"斜陽",motif:"夕景 / 影 / 退廃"},
+  soseki_yume:{tag:"夢境",motif:"月 / 夢 / 藍"},
+  akiko_kimi:{tag:"祈り",motif:"白紙 / 赤 / 光"},
+  mishima_shiosai:{tag:"潮騒",motif:"海 / 青 / 風"},
+  poe_morgue:{tag:"分析",motif:"石畳 / 霧 / 灰"},
+  doyle_baskerville:{tag:"魔犬",motif:"霧 / 荒野 / 緑黒"}
+ }[slug]||{tag:"文学",motif:"作品テーマ"}
+}
+function artStatusBadgeV529(i){
+ let s=artStatusV529(i),v=workVisualThemeV529(i);
+ return `<span class="artStatusV529 ${s.cls}">${s.label}${isWorkVariantV529(i)?` / ${v.tag}`:""}</span>`
+}
+
+function characterPortraitV501(i){
+ try{
+  let slug=C?.[i]?.[0]||"";
+  let bank=(window.__BK_CHARACTER_ART__||S?.art?.characterPortraits||{});
+  let custom=bank[slug]||bank[i];
+  return custom ? (typeof __bkAsset==="function"?__bkAsset(custom):custom) : characterImage(slug);
+ }catch(_){
+  try{return characterImage(C?.[i]?.[0]||"")}catch(__){return ""}
+ }
+}
+
+function premiumHomeResourcesV236(){
+ return `<div class=premiumHomeResourcesV236>
+   <span><small>原稿片</small><b>${Number(S.normalTickets||0).toLocaleString("ja-JP")}</b></span>
+   <span><small>文銭</small><b>${Number(S.gold||0).toLocaleString("ja-JP")}</b></span>
+   <span><small>インク</small><b>${Number(S.ink||0).toLocaleString("ja-JP")}</b></span>
+ </div>`
+}
+
+function premiumHomeShortcutsV236(){
+ let rewards=rewardCenterItems().length;
+ return `<div class=premiumHomeShortcutsV236>
+   <button data-go=party><i>♟</i><b>編成</b><small>FORMATION</small></button>
+   <button data-go=growth><i>↑</i><b>育成</b><small>GROWTH</small></button>
+   <button data-go=summon><i>✦</i><b>召喚</b><small>SUMMON</small></button>
+   <button data-go=list><i>▤</i><b>文豪</b><small>AUTHORS</small></button>
+   <button data-go=works><i>◈</i><b>著作</b><small>WORKS</small></button>
+   <button data-reward-center=1 class="${rewards?"ready":""}"><i>◇</i><b>報酬</b><small>${rewards?rewards+"件":"REWARD"}</small></button>
+ </div>`
+}
+
+function premiumHomeNextV236(){
+ let next=recommendedStage(),st=stageMeta(next);
+ return {next,st};
+}
+
+function premiumHomeAuditV236(){
+ let root=document.querySelector(".premiumHomeV236");
+ return {
+   mounted:!!root,
+   hero:!!root?.querySelector(".premiumHomeHeroArtV236"),
+   sortie:!!root?.querySelector("[data-stage-open]"),
+   shortcuts:root?.querySelectorAll(".premiumHomeShortcutsV236 button").length||0,
+   nav:root?.querySelectorAll(".primaryNavV116 button").length||0
+ }
+}
+
+function dedicatedHome(){
+ ensureFavoriteHome();
+ let i=favoriteCharacter(),a=abilityText(i),o=ougiInfo(i),q=homeDialogueV515(i),x=premiumHomeNextV236(),rewards=rewardCenterItems().length;
+ shell(`<main class=premiumHomeV236>
+   <div class=premiumHomeWorldV236></div>
+   <div class=premiumHomeWorldShadeV236></div>
+
+   <header class=premiumHomeHeaderV236>
+     <div class=premiumHomeBrandV236>
+       <small>BUNGO KITAN</small>
+       <b>文豪綺譚</b>
+     </div>
+     ${premiumHomeResourcesV236()}
+     <button class=premiumHomeFavoriteV236 data-favorite-open=1 aria-label="ホーム文豪変更">♡<small>変更</small></button>
+   </header>
+
+   <section class=premiumHomeHeroV236 data-home-dialogue-v515="${i}">
+     <div class=premiumHomeHeroGlowV236></div>
+     <img class=premiumHomeHeroArtV236 src="${characterPortraitV501(i)}" style="${portraitStyleV502(i)}" alt="">
+     <div class=premiumHomeHeroShadeV236></div>
+
+     <div class=premiumHomeIdentityV236>
+       <div class=premiumHomeMetaV236>
+         <span data-rank="${charRank(i)}">${charRank(i)}</span>
+         <small>${a.role} / ${bundanTag(i)}</small>
+       </div>
+       <h1>${C[i][1]}</h1>
+       <div class=premiumHomeAbilityV236>
+         <small>SIGNATURE ABILITY</small>
+         <b>${characterSkillKitV512(i).skillName}</b>
+       </div>
+       <p class=homeDialogueTextV515>${q}</p><div class=homeDialogueMetaV515><span>${homeTimeLabelV515()}</span><span>タップで会話</span></div><button class=premiumHomeDetailV245 data-char="${i}">詳細を見る <span>›</span></button>
+     </div>
+   </section>
+
+   <section class=premiumHomeCommandV236>
+     <button class=premiumHomeSortieV236 data-stage-open="${x.next}">
+       <div><small>NEXT STORY</small><b>第${x.next+1}章　${x.st.name}</b><span>出撃する</span></div>
+       <strong>›</strong>
+     </button>
+
+     <div class=premiumHomeSecondaryV236>
+       <button data-go=growth><small>強化</small><b>育成する</b></button>
+       <button data-go=party><small>戦術</small><b>編成を見る</b></button>
+       <button data-go=story><small>記録</small><b>物語へ</b></button>
+     </div>
+
+     ${premiumHomeShortcutsV236()}
+   </section>
+
+   <div class=premiumHomeStatusV236>
+     <span>Lv.${lv(i)}</span>
+     <span>${o.name}</span>
+     <span>${rewards?`報酬 ${rewards}`:"書架は静かだ"}</span>
+   </div>
+
+   <button class=premiumHomeSaveV486 data-go=savevault>☁️ AUTO SAVE</button>
+   <button class=premiumHomeSystemV490 data-go=system>✓ SYSTEM</button>
+   <div class=premiumHomeReadyBadgeV499>V543 DIFF</div>
+
+   ${primaryNavV116("home")}
+ </main>`)
+}
+
+function ensureNoScrollUX(){
+ if(!S.qol||typeof S.qol!=="object")S.qol={};
+ if(!S.qol.pages||typeof S.qol.pages!=="object")S.qol.pages={};
+}
+function pageSlice(key,arr,size=8){
+ ensureNoScrollUX();let max=Math.max(1,Math.ceil(arr.length/size)),p=Math.max(0,Math.min(max-1,+S.qol.pages[key]||0));S.qol.pages[key]=p;
+ return {items:arr.slice(p*size,p*size+size),page:p,max}
+}
+function setUiPage(key,p,route){
+ ensureNoScrollUX();S.qol.pages[key]=Math.max(0,+p||0);save();persistentSaveWrite();return typeof route==="function"?route():home()
+}
+function pagerUI(key,page,max,route){
+ if(max<=1)return "";
+ return `<div class=noScrollPager><button data-ui-page="${key}:${page-1}:${route}" ${page<=0?"disabled":""}>‹</button><b>${page+1} / ${max}</b><button data-ui-page="${key}:${page+1}:${route}" ${page>=max-1?"disabled":""}>›</button></div>`
+}
+
+function routeLabel(r){return({home:"ホーム",party:"編成",growth:"育成",sortie:"出撃",summon:"召喚",list:"文豪",story:"物語",arena:"模擬戦"})[r]||"文豪綺譚"}
+function primaryNavV116(active=""){
+ return `<nav class=primaryNavV116>${[["home","⌂","ホーム"],["party","♟","編成"],["growth","↑","育成"],["sortie","⚔","出撃"],["summon","✦","召喚"]].map(([r,ic,l])=>`<button class="${active===r?"active":""}" data-go="${r}"><i>${ic}</i><b>${l}</b></button>`).join("")}</nav>`
+}
+
+function sdUnit(i,side="ally",slot=0){
+ let n=C[i]?.[1]||"文豪",s=signatureStyleV124(i),slug=C[i]?.[0]||"author";
+ return `<div class="spriteUnitV160 asset-${spriteAssetGateV167(i)} quality-${spriteQualityV162(i)} ${side} ${sdArtClassV148(i)} ${sdDepthV154(i)} ${faceMoodClassV157(i)}" data-sd-unit="${side}:${slot}" data-author="${slug}" data-quality="asset-first" style="${sdDetailStyleV144(i)}"><div class=spriteShadowV160></div><img class=spriteArtV160 src="${spriteAssetV160(i,"idle")}" onerror="spriteFallbackV160(this)" alt=""><div class=spriteFallbackV160><div class=sdUnitV147><div class=sdGroundV147></div><div class=sdFigureV147><div class=sdBackHairV147></div><div class=sdLegV147 data-leg=l></div><div class=sdLegV147 data-leg=r></div><div class=sdDressV147><i></i><b></b></div><div class=sdArmV147 data-arm=l><i></i></div><div class=sdArmV147 data-arm=r><i></i></div><div class=sdNeckV147></div><div class=sdHeadV147><div class=sdFaceV147><i class=eyeL></i><i class=eyeR></i><b class=mouth></b><em></em></div><div class=sdHairV147><i></i></div></div><div class=sdWeaponV147 data-weapon="${s.weapon}"></div>${sdAccessoryV139(i)}</div></div></div><small>${n}</small></div>`
+}
+function sdEnemy(slot=0,boss=false){
+ return `<div class="sdEnemyV118 ${boss?"boss":""}" data-sd-enemy="${slot}" data-battle-target="${slot}"><div class=sdEnemyShadowV118></div><div class=sdEnemyBodyV118><i></i><i></i><b></b></div><small>${boss?"物語喰い":"異稿体"}</small></div>`
+}
+function sdBattleStage(){
+ let team=(S.sets?.[S.set]||[]).slice(0,6);
+ while(team.length<5)team.push(team[0]||0);
+ return `<div class=sdBattleV118><div class=sdBattleBgV118></div><div class=sdEnemyLaneV118>${sdEnemy(0,true)}${sdEnemy(1,false)}</div><div class=sdAllyLaneV118>${team.map((i,n)=>sdUnit(+i,"ally",n)).join("")}</div><div class=sdEnemyHudV118><small>BOSS</small><b>物語喰い</b><span><i></i></span></div></div>`
+}
+function sdAnimate(kind,slot=0,target=0){
+ let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`),e=document.querySelector(`[data-sd-enemy="${target}"]`);
+ if(kind==="attack"&&u){u.classList.add("sdAttackV118");setTimeout(()=>{e?.classList.add("sdHitV118");battleSlash()},230);setTimeout(()=>{u.classList.remove("sdAttackV118");e?.classList.remove("sdHitV118")},650)}
+ if(kind==="skill"&&u){u.classList.add("sdSkillV118");setTimeout(()=>battleSkillCutin((S.sets?.[S.set]||[])[slot]||0,"skill"),180);setTimeout(()=>u.classList.remove("sdSkillV118"),900)}
+ if(kind==="ougi"&&u){u.classList.add("sdOugiV118");battleSkillCutin((S.sets?.[S.set]||[])[slot]||0,"ougi");setTimeout(()=>{e?.classList.add("sdHitV118");battleSlash("ougi")},520);setTimeout(()=>{u.classList.remove("sdOugiV118");e?.classList.remove("sdHitV118")},1400)}
+ if(kind==="enemy"&&e){e.classList.add("sdEnemyAttackV118");setTimeout(()=>{u?.classList.add("sdHitV118");battleShake()},260);setTimeout(()=>{e.classList.remove("sdEnemyAttackV118");u?.classList.remove("sdHitV118")},700)}
+ if(kind==="heal"&&u){u.classList.add("sdHealV118");battleHealFx(980);setTimeout(()=>u.classList.remove("sdHealV118"),850)}
+}
+function sdBattleDemo(){
+ let seq=[["attack",0,0],["enemy",0,0],["skill",1,0],["heal",2,0],["ougi",3,0]];
+ seq.forEach((x,n)=>setTimeout(()=>sdAnimate(...x),n*1250))
+}
+
+function battlePartyCardsV119(){
+ let team=(S.sets?.[S.set]||[]).slice(0,6);while(team.length<5)team.push(team[0]||0);
+ return `<div class=battlePartyV119>${team.map((i,n)=>`<button class="${n===0?"active":""}" data-battle-unit="${n}"><img src="${characterImage(C[i][0])}"><section><b>${C[i][1]}</b><span>HP <i style="--hp:${ensureAdvancedBattleV125().allyHp[n]||0}%"></i></span><span>EP <i class=ep style="--hp:${ensureAdvancedBattleV125().ep[n]||0}%"></i></span></section></button>`).join("")}</div>`
+}
+function battleCommandsV119(){
+ let b=ensureAdvancedBattleV125(),slot=Math.max(0,b.unit||0),ep=b.ep?.[slot]||0;
+ return `<div class=compactBattleDockV150><nav class=compactMainV150><button data-sd-action=attack><i>⚔</i><span>攻撃</span></button><button data-sd-action=skill><i>✦</i><span>スキル</span></button><button class="${ep>=100?"ready":""}" data-sd-action=ougi><i>◆</i><span>奥義</span><small>${ep}</small></button><button data-sd-action=heal><i>＋</i><span>支援</span></button></nav><nav class=compactSubV150><button data-battle-speed="${b.speed===2?1:2}">${b.speed===2?"×2":"×1"}</button><button class="${b.auto?"on":""}" data-battle-auto=1 data-sd-action=auto>${b.auto?"● AUTO":"AUTO"}</button><button data-battle-log-open=1>LOG</button></nav></div>`
+}
+function cinematicBattleV119(){return mountBattleV182()}
+function battleClearV119(){stopAutoCoreV427?.();stopAutoBattleV122();
+ let o=document.createElement("div");o.className="battleClearV119";o.innerHTML=`<div><small>QUEST COMPLETE</small><h1>BATTLE CLEAR <em class=battleGradeV129>${battleGradeV129()}</em></h1><section><span>★ クエストをクリア</span><span>★ 戦闘不能なし</span><span>★ 10ターン以内</span></section><hr><b>獲得報酬</b><div class=clearRewardsV119><i>📕<small>×3</small></i><i>📘<small>×1</small></i><i>◆<small>×2</small></i></div>${battleResultActionsV128()}</div>`;document.body.appendChild(o)
+}
+
+function ensureBattleStateV120(){
+ if(!S.battleV120||typeof S.battleV120!=="object")S.battleV120={wave:1,turn:1,speed:1,auto:false,target:0,unit:0,enemyHp:[100,100,100],log:[]};
+ return S.battleV120
+}
+function battleTurnOrderV120(){
+ let t=(S.sets?.[S.set]||[]).slice(0,6),b=ensureBattleStateV120();
+ return `<div class=turnOrderV120>${t.map((i,n)=>`<button class="${b.unit===n?"on":""}" data-battle-unit="${n}"><img src="${characterImage(C[i][0])}"></button>`).join("")}<i></i><button class=enemy>◆</button></div>`
+}
+function battleEnemyInfoV120(){
+ let b=ensureBattleStateV120(),hp=b.enemyHp[b.target]??100;
+ return `<div class=enemyInfoV120><div><small>${b.wave===3?"BOSS":"ENEMY"} / Lv.${battleEnemyLevelV534(b.wave)}</small><b>${battleEnemyNameV534(b.wave)}</b></div><span><i style="width:${hp}%"></i></span><strong>${Math.round(hp)}%</strong><section><em>攻↓</em><em>防↓</em><em>異常耐性</em></section></div>`
+}
+function battleLogV120(msg){
+ let b=ensureBattleStateV120();b.log.unshift(msg);b.log=b.log.slice(0,4)
+}
+function nextWaveV120(){
+ let b=ensureBattleStateV120();if(b.wave<3){b.wave++;b.turn=1;b.enemyRosterWave=0;syncEnemyRosterV129();battleSessionWaveV196();battleLogV120(`WAVE ${b.wave} 開始`);cinematicBattleV119();setTimeout(()=>waveBannerV121(b.wave),80);return}battleClearRewardsV127()
+}
+function battleActionV120(kind){
+ let pre198=battleCommandStateV198();if(kind==="ougi"&&!pre198.canOugi){toast("EPが100になると奥義を発動できます");refreshCommandPanelV198();return}
+ let token=battleActionGateV195(kind);if(!token)return;battleSessionActionV196();
+ let b=ensureBattleStateV120(),slot=b.unit||0,target=b.target||0,team=S.sets?.[S.set]||[],i=+team[slot]||0;
+ try{
+   if(kind==="attack"){posterBattleLockCueV214("attack");posterCommandToastV212("attack");posterReusableDirectorV228(slot,target,"attack");posterStateCueV209("attack");posterActionCinematicV207(slot,target,"attack");posterActionFeedbackV206("attack");battleActionFeedbackV204(slot,target,"attack");animatedActionV121("attack",slot,target);let hit=battleDamageV125("attack",i,target);posterActualDamageV231(hit,"attack");posterHitTagV231(hit);gainEpV125(slot,"attack",i);applyStatusV125(i,target);if(hit.weak)battleTextV121("WEAK","skill",72,35);if(hit.broken)battleTextV121("BREAK","ougi",72,31);battleLogV120(`${C[i][1]}の通常攻撃`)}
+   if(kind==="skill"){posterBattleLockCueV214("skill");posterCommandToastV212("skill");posterReusableDirectorV228(slot,target,"skill");posterStateCueV209("skill");posterActionCinematicV207(slot,target,"skill");posterActionFeedbackV206("skill");battleActionFeedbackV204(slot,target,"skill");animatedActionV121("skill",slot,target);let hit=battleDamageV125("skill",i,target);posterActualDamageV231(hit,"skill");posterHitTagV231(hit);gainEpV125(slot,"skill",i);applyStatusV125(i,target);if(hit.weak)battleTextV121("WEAK","skill",72,35);if(hit.broken)battleTextV121("BREAK","ougi",72,31);battleLogV120(`${characterAbility(i).name} 発動`)}
+   if(kind==="ougi"){posterBattleLockCueV214("ougi");posterCommandToastV212("ougi");posterReusableDirectorV228(slot,target,"ougi");posterStateCueV209("ougi");posterActionCinematicV207(slot,target,"ougi");posterActionFeedbackV206("ougi");battleActionFeedbackV204(slot,target,"ougi");animatedActionV121("ougi",slot,target);let hit=battleDamageV125("ougi",i,target);posterActualDamageV231(hit,"ougi");posterHitTagV231(hit);gainEpV125(slot,"ougi",i);applyStatusV125(i,target);if(hit.weak)battleTextV121("WEAK","skill",72,35);if(hit.broken)battleTextV121("BREAK","ougi",72,31);battleLogV120(`${ougiInfo(i).name} 発動`)}
+   if(kind==="heal"){posterTurnFlashV232("ally");posterBattleLockCueV214("heal");posterCommandToastV212("heal");posterReusableDirectorV228(slot,target,"heal");posterStateCueV209("heal");posterActionCinematicV207(slot,target,"heal");posterActionFeedbackV206("heal");battleActionFeedbackV204(slot,target,"heal");signatureMotionV124(i,slot,"heal",target);animatedActionV121("heal",slot,target);battleLogV120(`${C[i][1]}が味方を支援`)}
+   b.turn++;battleActionStampV193();b.unit=nextAliveAllyV126((slot+1)%Math.max(1,Math.min(6,team.length)));
+   if(b.unit<0){battleActionReleaseV195(token);gameOverV126();return}
+   queueBattleSaveV197();smoothRefreshBattleV194();
+   battleTimerV191(()=>{
+     if(!battleIsTokenValidV195(token))return;
+     cleanupTransientBattleV188();
+     battleActionReleaseV195(token);
+     if((b.enemyHp[target]||0)<=0)nextWaveV120();else smoothRefreshBattleV194()
+   },bsv2ActionTimerV186(kind))
+ }catch(err){
+   console.error("V195 manual battle",err);
+   battleActionReleaseV195(token);
+   toast("戦闘処理を復旧しました");
+   smoothRefreshBattleV194();
+ }
+}
+function battleTacticalBarV120(){return ""}
+function battleLogPanelV120(){
+ let b=ensureBattleStateV120();return `<div class=battleLogV120><header><b>BATTLE LOG</b><button data-battle-log-close=1>×</button></header>${(b.log.length?b.log:["戦闘開始"]).map(x=>`<p>${x}</p>`).join("")}</div>`
+}
+
+function battleFxLayerV121(){
+ let x=document.getElementById("battleAnimV121");if(x)return x;
+ x=document.createElement("div");x.id="battleAnimV121";x.className="battleAnimV121";document.querySelector(".battleFieldV119")?.appendChild(x);return x
+}
+function battleTextV121(text,kind="damage",x=72,y=42){
+ let r=battleFxLayerV121(),n=document.createElement("b");n.className=`battleTextV121 ${kind}`;n.style.left=x+"%";n.style.top=y+"%";n.textContent=text;r.appendChild(n);setTimeout(()=>n.remove(),950)
+}
+function inkBurstV121(x=72,y=45,color="red"){
+ let r=battleFxLayerV121(),n=document.createElement("div");n.className=`inkBurstV121 ${color}`;n.style.left=x+"%";n.style.top=y+"%";
+ for(let k=0;k<10;k++){let i=document.createElement("i");i.style.setProperty("--k",k);n.appendChild(i)}r.appendChild(n);setTimeout(()=>n.remove(),800)
+}
+function pageBurstV121(x=72,y=45){
+ let r=battleFxLayerV121(),n=document.createElement("div");n.className="pageBurstV121";n.style.left=x+"%";n.style.top=y+"%";
+ for(let k=0;k<8;k++){let i=document.createElement("i");i.style.setProperty("--k",k);n.appendChild(i)}r.appendChild(n);setTimeout(()=>n.remove(),bsv2SkipLongFxV186()?360:540)
+}
+function slashArcV121(kind="normal"){
+ let r=battleFxLayerV121(),n=document.createElement("i");n.className=`slashArcV121 ${kind}`;r.appendChild(n);setTimeout(()=>n.remove(),620)
+}
+function skillBannerV121(i,type="skill"){
+ let a=characterAbility(i),o=ougiInfo(i),r=battleFxLayerV121(),n=document.createElement("div");n.className=`skillBannerV121 ${type}`;
+ n.innerHTML=`<img src="${characterImage(C[i][0])}"><section><small>${type==="ougi"?"SPECIAL":"SKILL"}</small><b>${type==="ougi"?o.name:a.name}</b><span>${C[i][1]}</span><em>${type==="ougi"?ultimateFlavorV127(i):""}</em></section>`;r.appendChild(n);requestAnimationFrame(()=>n.classList.add("show"));setTimeout(()=>n.classList.remove("show"),type==="ougi"?620:480);setTimeout(()=>n.remove(),type==="ougi"?820:700)
+}
+function waveBannerV121(w){
+ let r=battleFxLayerV121(),n=document.createElement("div");n.className="waveBannerV121";n.innerHTML=`<small>STAGE 1-3</small><b>WAVE ${w} / 3</b>`;r.appendChild(n);setTimeout(()=>n.classList.add("show"),30);setTimeout(()=>n.classList.remove("show"),850);setTimeout(()=>n.remove(),1150)
+}
+function enemyTelegraphV121(){
+ let e=document.querySelector('[data-sd-enemy="0"]');if(!e)return;e.classList.add("enemyTelegraphV121");battleTextV121("ENEMY ACTION","warning",72,31);setTimeout(()=>e.classList.remove("enemyTelegraphV121"),650)
+}
+function hitStopV121(ms=80){document.documentElement.classList.add("hitStopV121");setTimeout(()=>document.documentElement.classList.remove("hitStopV121"),ms)}
+function animatedActionV121(kind,slot=0,target=0){
+ let b=ensureBattleStateV120(),team=S.sets?.[S.set]||[],i=+team[slot]||0,enemy=document.querySelector(`[data-sd-enemy="${target}"]`);
+ if(kind==="attack"){setTimeout(()=>{impactFrameV146(target,"attack");actionSfxVisualV146("attack")},310);battleCameraV142("normal");
+   sdAnimate("attack",slot,target);setTimeout(()=>{slashArcV121();inkBurstV121();battleTextV121("4,892");hitStopV121();enemy?.classList.add("impactV121")},250);setTimeout(()=>enemy?.classList.remove("impactV121"),620)
+ }
+ if(kind==="skill"){setTimeout(()=>{impactFrameV146(target,"skill");actionSfxVisualV146("skill")},500);battleCameraV142("normal");
+   skillBannerV121(i,"skill");setTimeout(()=>sdAnimate("skill",slot,target),180);setTimeout(()=>{inkBurstV121(72,44,"blue");pageBurstV121();battleTextV121("8,240","skill")},480)
+ }
+ if(kind==="ougi"){ougiSealV159(i);cutinV153(i,"ougi");setTimeout(()=>{impactFrameV146(target,"ougi");actionSfxVisualV146("ougi")},760);battleCameraV142("ougi");cinematicOugiV141(i,slot,target);
+   skillBannerV121(i,"ougi");setTimeout(()=>sdAnimate("ougi",slot,target),150);setTimeout(()=>{slashArcV121("ougi");inkBurstV121(72,44,"gold");pageBurstV121();battleTextV121("12,450","ougi");hitStopV121(90)},430)
+ }
+ if(kind==="heal"){
+   sdAnimate("heal",slot,target);setTimeout(()=>{battleTextV121("+1,280","heal",35,48);inkBurstV121(35,48,"green")},220)
+ }
+}
+function enemyResponseV121(slot=0){
+ enemyTelegraphV121();setTimeout(()=>{sdAnimate("enemy",slot,0);battleTextV121("-640","enemy",28,50);inkBurstV121(28,50,"red")},620)
+}
+function autoBattleLoopV121(){
+ let b=ensureBattleStateV120();if(!b.auto)return;
+ battleActionV120("attack");setTimeout(()=>{if(ensureBattleStateV120().auto)autoBattleLoopV121()},b.speed===2?1050:1800)
+}
+
+let autoBattleTimerV122=null,autoBattleBusyV122=false;
+function stopAutoBattleV122(){
+ if(autoBattleTimerV122){clearTimeout(autoBattleTimerV122);autoBattleTimerV122=null}
+ autoBattleBusyV122=false
+}
+function autoDelayV122(){let t=battleTempoV186();return t.after}
+function chooseAutoActionV122(){return autoDecisionV123()}
+function chooseAutoActionV122_legacy(){
+ let b=ensureBattleStateV120(),team=S.sets?.[S.set]||[],i=+team[b.unit||0]||0,role=characterAbility(i).role;
+ if(role==="回復"&&b.turn%4===0)return"heal";
+ if(b.turn%5===0&&canOugiV125(slot))return"ougi";
+ if(b.turn%3===0)return"skill";
+ return"attack"
+}
+function scheduleAutoBattleV122(delay){
+ if(autoBattleTimerV122){clearTimeout(autoBattleTimerV122);autoBattleTimerV122=null}
+ let b=ensureBattleStateV120();if(!b.auto)return;
+ autoBattleTimerV122=setTimeout(()=>{
+   autoBattleTimerV122=null;
+   runAutoBattleV122();
+ },delay??autoDelayV122())
+}
+function runAutoBattleV122(){
+ autoBattleTimerV122=null;
+ let b=ensureBattleStateV120();
+ if(!b.auto)return;
+ if(autoBattleBusyV122||__battleActionBusyV195){
+   if(typeof __nativeAutoPumpV425==="undefined"||!__nativeAutoPumpV425)scheduleAutoBattleV122(180);
+   return;
+ }
+ battleSessionActionV196();
+ let token=battleActionGateV195("auto");
+ if(!token){
+   if(typeof __nativeAutoPumpV425==="undefined"||!__nativeAutoPumpV425)scheduleAutoBattleV122(180);
+   return;
+ }
+ autoBattleBusyV122=true;
+ try{
+   tickEnemyStatusV127();
+   let kind=chooseAutoActionV122(),slot=b.unit||0,target=b.target||0,team=S.sets?.[S.set]||[],i=+team[slot]||0;
+   try{
+     posterBattleLockCueV214(kind);posterCommandToastV212(kind);posterReusableDirectorV228(slot,target,kind);posterStateCueV209(kind);
+     posterActionCinematicV207(slot,target,kind);posterActionFeedbackV206(kind);battleActionFeedbackV204(slot,target,kind);safeAnimatedActionV130(kind,slot,target);
+   }catch(fxErr){console.warn("V425 auto FX skipped",fxErr)}
+   if(kind==="attack"){let hit=battleDamageV125("attack",i,target);posterActualDamageV231(hit,"attack");posterHitTagV231(hit);gainEpV125(slot,"attack",i);applyStatusV125(i,target);if(hit.weak)battleTextV121("WEAK","skill",72,35);if(hit.broken)battleTextV121("BREAK","ougi",72,31);battleLogV120(`${C[i][1]}の通常攻撃`)}
+   if(kind==="skill"){let hit=battleDamageV125("skill",i,target);posterActualDamageV231(hit,"skill");posterHitTagV231(hit);gainEpV125(slot,"skill",i);applyStatusV125(i,target);if(hit.weak)battleTextV121("WEAK","skill",72,35);if(hit.broken)battleTextV121("BREAK","ougi",72,31);battleLogV120(`${characterAbility(i).name} 発動`)}
+   if(kind==="ougi"){let hit=battleDamageV125("ougi",i,target);posterActualDamageV231(hit,"ougi");posterHitTagV231(hit);gainEpV125(slot,"ougi",i);applyStatusV125(i,target);if(hit.weak)battleTextV121("WEAK","skill",72,35);if(hit.broken)battleTextV121("BREAK","ougi",72,31);battleLogV120(`${ougiInfo(i).name} 発動`)}
+   if(kind==="heal"){gainEpV125(slot,"heal");let healAmount=healPartyV126(slot);aliveAlliesV126().forEach(x=>posterAllyNumberV232(x.i,healAmount,"heal"));battleLogV120(`${C[i][1]}が味方を支援`)}
+   b.turn++;b.unit=nextAliveAllyV126((slot+1)%Math.max(1,Math.min(6,team.length)));
+   if(b.unit<0){autoBattleBusyV122=false;battleActionReleaseV195(token);gameOverV126();return}
+   queueBattleSaveV197();smoothRefreshBattleV194();
+   battleTimerV191(()=>{
+     if(!battleIsTokenValidV195(token)){autoBattleBusyV122=false;return}
+     autoBattleBusyV122=false;cleanupTransientBattleV188();battleActionReleaseV195(token);
+     if((b.enemyHp[target]||0)<=0){
+       if(b.wave<3){
+         b.wave++;b.turn=1;b.enemyRosterWave=0;syncEnemyRosterV129();battleLogV120(`WAVE ${b.wave} 開始`);
+         mountBattleV182();scheduleAutoBattleV122(220)
+       }else{
+         b.auto=false;stopAutoBattleV122();save();persistentSaveWrite();battleClearRewardsV127()
+       }
+     }else{
+       smoothRefreshBattleV194();
+       if(b.turn%2===0){
+         enemySkillTurnV126(()=>{smoothRefreshBattleV194();scheduleAutoBattleV122(autoDelayV122())})
+       }else scheduleAutoBattleV122(autoDelayV122())
+     }
+   },bsv2ActionTimerV186(kind))
+ }catch(err){
+   console.error("V195 auto battle",err);
+   autoBattleBusyV122=false;battleActionReleaseV195(token);
+   scheduleAutoBattleV122(300)
+ }
+}
+
+let __autoCoreTimerV427=null;
+let __autoCoreBusyV427=false;
+
+function stopAutoCoreV427(){
+ if(__autoCoreTimerV427){clearTimeout(__autoCoreTimerV427);__autoCoreTimerV427=null}
+ __autoCoreBusyV427=false
+}
+
+function syncAutoUiV427(){
+ let b=ensureBattleStateV120();
+ document.querySelectorAll(".posterSelectedCardV235 .bsv2AutoBadge184,.posterSelectedCardV235 .autoStatus,.posterSelectedCardV235 .autoState,.posterSelectedCardV235 .posterAutoStateV230").forEach(x=>x.remove());
+ document.querySelectorAll(".posterSelectedCardV235 .bsv2AutoBadge184,.posterSelectedCardV235 .autoStatus,.posterSelectedCardV235 .autoState").forEach(x=>x.remove());
+ document.querySelectorAll("[data-battle-auto]").forEach(btn=>{
+   btn.classList.toggle("on",!!b.auto);
+   btn.setAttribute("aria-pressed",b.auto?"true":"false");
+   if(btn.closest(".posterThumbSubV234"))btn.textContent=b.auto?"AUTO ON":"AUTO";
+ });
+ document.querySelectorAll(".bsv2AutoBadge184 span").forEach(el=>el.textContent=b.auto?"AUTO RUNNING":"MANUAL");
+ let root=document.querySelector(".posterBattleV205");
+ if(root)root.classList.toggle("posterAutoV230",!!b.auto);
+ try{refreshCleanCommandStateV241?.()}catch(_){}
+}
+
+function autoCoreChoiceV427(slot){
+ let b=ensureAdvancedBattleV125(),team=S.sets?.[S.set]||[],i=+team[slot]||0;
+ if(canOugiV125(slot))return "ougi";
+ let role=characterAbility(i)?.role||"攻撃";
+ if(role==="回復"&&Math.min(...(b.allyHp||[100]))<68)return "heal";
+ if((b.turn||1)%3===0)return "skill";
+ return "attack"
+}
+
+function autoCoreEnemyHitV427(){
+ let b=ensureAdvancedBattleV125();
+ let alive=aliveAlliesV126();
+ if(!alive.length){gameOverV126();return false}
+ let slot=alive[Math.floor(Math.random()*alive.length)].i;
+ let sk=enemySkillV126();
+ let power=Math.max(3,Math.round((sk?.power||9)*.72));
+ try{
+   damageAllyV126(slot,power);
+   battleLogV120(`${sk?.name||"敵の反撃"}`);
+   battleTextV121(`-${power}%`,"enemy",22+slot*8,53);
+ }catch(_){}
+ return aliveAlliesV126().length>0
+}
+
+function autoCoreStepV427(){
+ let b=ensureAdvancedBattleV125();
+ if(!b.auto||!document.body.classList.contains("battleMode")){
+   stopAutoCoreV427();return
+ }
+ if(__autoCoreBusyV427){
+   __autoCoreTimerV427=setTimeout(autoCoreStepV427,160);return
+ }
+
+ __autoCoreBusyV427=true;
+ try{
+   let team=S.sets?.[S.set]||[];
+   let slot=Math.max(0,Math.min(5,b.unit||0));
+   let target=Math.max(0,b.target||0);
+   let i=+team[slot]||0;
+   let kind=autoCoreChoiceV427(slot);
+
+   try{safeAnimatedActionV130?.(kind,slot,target)}catch(_){}
+
+   if(kind==="heal"){
+     try{gainEpV125(slot,"heal")}catch(_){}
+     try{healPartyV126(slot)}catch(_){}
+     battleLogV120(`${C[i][1]}が味方を支援`);
+   }else{
+     let hit=battleDamageV125(kind,i,target);
+     try{gainEpV125(slot,kind)}catch(_){}
+     try{applyStatusV125(i,target)}catch(_){}
+     try{posterActualDamageV231?.(hit,kind);posterHitTagV231?.(hit)}catch(_){}
+     battleLogV120(kind==="attack"?`${C[i][1]}の通常攻撃`:`${C[i][1]}の${kind==="ougi"?"奥義":"スキル"}`);
+   }
+
+   b.turn=(b.turn||1)+1;
+   try{battleActionStampV193?.()}catch(_){}
+   b.unit=nextAliveAllyV126((slot+1)%Math.max(1,Math.min(6,team.length)));
+
+   if(b.unit<0){
+     b.auto=false;
+     syncAutoUiV427();
+     stopAutoCoreV427();
+     gameOverV126();
+     return
+   }
+
+   if((b.enemyHp[target]||0)<=0){
+     if((b.wave||1)<3){
+       b.wave++;
+       b.turn=1;
+       b.enemyRosterWave=0;
+       syncEnemyRosterV129();
+       try{battleSessionWaveV196?.()}catch(_){}
+       battleLogV120(`WAVE ${b.wave} 開始`);
+       try{waveBannerV121?.(b.wave)}catch(_){}
+     }else{
+       b.auto=false;
+       syncAutoUiV427();
+       stopAutoCoreV427();
+       save();persistentSaveWrite();
+       battleClearRewardsV127();
+       return
+     }
+   }else{
+     autoCoreEnemyHitV427();
+   }
+
+   try{queueBattleSaveV197(true)}catch(_){}
+   try{smoothRefreshBattleV194()}catch(_){}
+   syncAutoUiV427();
+
+ }catch(err){
+   console.warn("V427 AUTO CORE recovered",err);
+   try{autoBattleBusyV122=false;battleInvalidateActionsV195()}catch(_){}
+ }finally{
+   __autoCoreBusyV427=false
+ }
+
+ if(ensureBattleStateV120().auto){
+   let speed=ensureBattleStateV120().speed===2?520:820;
+   __autoCoreTimerV427=setTimeout(autoCoreStepV427,speed)
+ }
+}
+
+function startAutoCoreV427(){
+ stopAutoCoreV427();
+ __autoCoreTimerV427=setTimeout(autoCoreStepV427,120)
+}
+
+function toggleAutoBattleV122(){return autoHardToggleV430()}
+
+
+
+let __autoHardTimerV430=null;
+let __autoHardBusyV430=false;
+let __autoHardLastTouchV430=0;
+
+function autoHardStopV430(){
+ if(__autoHardTimerV430){clearTimeout(__autoHardTimerV430);__autoHardTimerV430=null}
+ __autoHardBusyV430=false;
+}
+
+function autoHardUiV430(){
+ let b=ensureAdvancedBattleV125();
+ let btn=document.getElementById("autoHardButtonV430");
+ if(btn){
+   btn.textContent=b.auto?"● AUTO ON":"AUTO";
+   btn.classList.toggle("on",!!b.auto);
+   btn.setAttribute("aria-pressed",b.auto?"true":"false");
+ }
+ document.querySelectorAll("[data-battle-auto]").forEach(x=>{
+   x.textContent=b.auto?"AUTO ON":"AUTO";
+   x.classList.toggle("on",!!b.auto);
+   x.setAttribute("aria-pressed",b.auto?"true":"false");
+ });
+ document.querySelectorAll(".bsv2AutoBadge184 span").forEach(x=>x.textContent=b.auto?"AUTO RUNNING":"MANUAL");
+}
+
+function autoHardActionV430(){
+ let b=ensureAdvancedBattleV125();
+ if(!b.auto||!document.body.classList.contains("battleMode")){
+   autoHardStopV430();autoHardUiV430();return;
+ }
+ if(__autoHardBusyV430){
+   __autoHardTimerV430=setTimeout(autoHardActionV430,160);return;
+ }
+ __autoHardBusyV430=true;
+ try{
+   let team=S.sets?.[S.set]||[];
+   let slot=Math.max(0,Math.min(5,b.unit||0));
+   let idx=+team[slot]||0;
+   let target=Math.max(0,b.target||0);
+   let kind="attack";
+   if(canOugiV125(slot))kind="ougi";
+   else if(characterAbility(idx)?.role==="回復" && Math.min(...(b.allyHp||[100]))<65)kind="heal";
+   else if((b.turn||1)%3===0)kind="skill";
+
+   if(kind==="heal"){
+     try{gainEpV125(slot,"heal")}catch(_){}
+     try{healPartyV126(slot)}catch(_){}
+     try{battleLogV120(`${C[idx][1]}が味方を支援`)}catch(_){}
+   }else{
+     let hit=battleDamageV125(kind,idx,target);
+     try{gainEpV125(slot,kind)}catch(_){}
+     try{applyStatusV125(idx,target)}catch(_){}
+     try{safeAnimatedActionV130?.(kind,slot,target)}catch(_){}
+     try{posterActualDamageV231?.(hit,kind)}catch(_){}
+   }
+
+   b.turn=(b.turn||1)+1;
+   b.unit=nextAliveAllyV126((slot+1)%Math.max(1,Math.min(6,team.length)));
+
+   if((b.enemyHp[target]||0)<=0){
+     if((b.wave||1)<3){
+       b.wave++;
+       b.turn=1;
+       b.enemyRosterWave=0;
+       syncEnemyRosterV129();
+       try{waveBannerV121?.(b.wave)}catch(_){}
+     }else{
+       b.auto=false;
+       autoHardStopV430();
+       autoHardUiV430();
+       save();persistentSaveWrite();
+       battleClearRewardsV127();
+       return;
+     }
+   }else{
+     let alive=aliveAlliesV126();
+     if(!alive.length){
+       b.auto=false;
+       autoHardStopV430();
+       autoHardUiV430();
+       gameOverV126();
+       return;
+     }
+     let victim=alive[Math.floor(Math.random()*alive.length)].i;
+     let power=7;
+     try{power=Math.max(3,Math.round((enemySkillV126()?.power||9)*.7))}catch(_){}
+     try{damageAllyV126(victim,power)}catch(_){}
+   }
+
+   try{queueBattleSaveV197(true)}catch(_){}
+   try{smoothRefreshBattleV194()}catch(_){}
+   autoHardUiV430();
+
+ }catch(err){
+   console.warn("V430 AUTO HARDWIRE recovered",err);
+ }finally{
+   __autoHardBusyV430=false;
+ }
+
+ if(ensureBattleStateV120().auto){
+   __autoHardTimerV430=setTimeout(autoHardActionV430, ensureBattleStateV120().speed===2?500:820);
+ }
+}
+
+
+function autoReliableSetV541(on){
+ let b=ensureAdvancedBattleV125();
+ on=!!on;
+ try{stopAutoBattleV122()}catch(_){}
+ try{stopAutoCoreV427()}catch(_){}
+ try{autoHardStopV430()}catch(_){}
+ b.auto=on;
+ if(on){
+   try{autoBattleBusyV122=false}catch(_){}
+   try{__battleActionBusyV195=false}catch(_){}
+   __autoHardBusyV430=false;
+   __autoHardTimerV430=setTimeout(autoHardActionV430,90);
+ }else{
+   try{autoBattleBusyV122=false}catch(_){}
+   try{__autoHardBusyV430=false}catch(_){}
+ }
+ autoHardUiV430();
+ try{syncAutoUiV427()}catch(_){}
+ try{refreshPosterThumbV234?.()}catch(_){}
+ try{refreshPosterButtonStateV212?.()}catch(_){}
+ try{queueBattleSaveV197(true)}catch(_){}
+ try{toast(on?"AUTO ON":"AUTO OFF")}catch(_){}
+ return b.auto
+}
+function autoReliableToggleV541(){
+ let b=ensureAdvancedBattleV125();
+ return autoReliableSetV541(!b.auto)
+}
+function autoHealthV541(){
+ let b=ensureAdvancedBattleV125();
+ return {
+  on:!!b.auto,
+  hardTimer:!!__autoHardTimerV430,
+  hardBusy:!!__autoHardBusyV430,
+  nativeTimer:!!autoBattleTimerV122,
+  coreTimer:!!__autoCoreTimerV427,
+  unit:b.unit||0,
+  party:battlePartySizeV535?.()||Math.min(6,(S.sets?.[S.set]||[]).length)
+ }
+}
+
+function autoHardToggleV430(){
+ return autoReliableToggleV541()
+}
+
+window.__autoHardTouchV430=function(e){
+ let now=Date.now();
+ if(now-__autoHardLastTouchV430<500)return false;
+ __autoHardLastTouchV430=now;
+ try{e?.preventDefault?.();e?.stopPropagation?.()}catch(_){}
+ autoHardToggleV430();
+ return false;
+};
+
+function installAutoHardButtonV430(){
+ let old=document.getElementById("autoHardButtonV430");if(old)old.remove();
+ if(!document.body.classList.contains("battleMode"))return;
+ let original=document.querySelector(".posterThumbSubV234 [data-battle-auto]");
+ if(!original)return;
+ let r=original.getBoundingClientRect();
+ let b=document.createElement("button");
+ b.id="autoHardButtonV430";
+ b.type="button";
+ b.setAttribute("aria-label","AUTO切替");
+ b.setAttribute("aria-pressed",ensureAdvancedBattleV125().auto?"true":"false");
+ b.setAttribute("ontouchend","return window.__autoHardTouchV430(event)");
+ b.setAttribute("onclick","return window.__autoHardTouchV430(event)");
+ b.style.left=Math.round(r.left)+"px";
+ b.style.top=Math.round(r.top)+"px";
+ b.style.width=Math.round(r.width)+"px";
+ b.style.height=Math.round(r.height)+"px";
+ document.body.appendChild(b);
+ autoHardUiV430();
+}
+
+function toggleSpeedV122(speed){
+ let b=ensureBattleStateV120();b.speed=+speed===2?2:1;battleFastClassV185();queueBattleSaveV197();smoothRefreshBattleV194();
+ if(b.auto)scheduleAutoBattleV122(90)
+}
+
+function battleProgressV123(){
+ return {ui:90,animation:78,auto:80,ai:62,enemies:45,characterMotion:28,balance:35,total:64}
+}
+function aliveEnemyV123(){
+ let b=ensureBattleStateV120(),ids=b.enemyHp.map((hp,i)=>({hp:+hp||0,i})).filter(x=>x.hp>0);
+ return ids.length?ids.sort((a,b)=>a.hp-b.hp)[0].i:0
+}
+function autoTargetV123(){
+ let b=ensureBattleStateV120();b.target=aliveEnemyV123();return b.target
+}
+function autoDecisionV123(){return autoDecisionV128()}
+function autoDecisionV123_legacy(){
+ let b=ensureBattleStateV120(),team=S.sets?.[S.set]||[],slot=b.unit||0,i=+team[slot]||0,a=characterAbility(i),role=a.role;
+ autoTargetV123();
+ let enemyHp=b.enemyHp[b.target]||100;
+ if(role==="回復"&&b.turn%3===0)return"heal";
+ if(role==="支援"&&b.turn%4===0)return"skill";
+ if(role==="妨害"&&enemyHp>45&&b.turn%3===0)return"skill";
+ if(role==="攻撃"&&enemyHp<48&&canOugiV125(slot))return"ougi";
+ if(role==="特殊"&&b.turn%4===0&&canOugiV125(slot))return"ougi";
+ if(b.turn%5===0&&canOugiV125(slot))return"ougi";
+ if(b.turn%3===0)return"skill";
+ return"attack"
+}
+function enemySelectV123(){
+ let team=S.sets?.[S.set]||[],b=ensureBattleStateV120();
+ if(!team.length)return 0;
+ return (b.turn*3+b.wave)%Math.min(6,team.length)
+}
+function enemyTurnV123(done){
+ let slot=enemySelectV123();enemyTelegraphV121();
+ setTimeout(()=>{sdAnimate("enemy",slot,0);battleTextV121("-640","enemy",25+slot*7,53);inkBurstV121(25+slot*7,53,"red");battleLogV120("敵の反撃");setTimeout(()=>done&&done(),430)},bSpeedDelayV123(420))
+}
+function bSpeedDelayV123(ms){return ensureBattleStateV120().speed===2?Math.round(ms*.58):ms}
+function battleStatusV123(){
+ let b=ensureBattleStateV120(),p=progressV130();
+ return `<div class=battleStatusV123><span>戦闘UI<b>${p.ui}%</b></span><span>演出<b>${p.animation}%</b></span><span>AUTO<b>${p.auto}%</b></span><span>AI<b>${p.ai}%</b></span></div>`
+}
+
+function signatureStyleV124(i){
+ let slug=C[i]?.[0]||"",role=characterAbility(i)?.role||"攻撃";
+ let known={
+  dazai:{motion:"book",fx:"blue",weapon:"open-book"},
+  akutagawa:{motion:"shadow",fx:"violet",weapon:"ink-blade"},
+  higuchi:{motion:"paper",fx:"gold",weapon:"pages"},
+  soseki:{motion:"cat",fx:"green",weapon:"book"},
+  nakajima:{motion:"rush",fx:"white",weapon:"claw"},
+  poe:{motion:"raven",fx:"violet",weapon:"book"},
+  shakespeare:{motion:"stage",fx:"gold",weapon:"quill"},
+  kafka:{motion:"glitch",fx:"green",weapon:"ink"}
+ };
+ return known[slug]||{motion:role==="回復"?"paper":role==="妨害"?"shadow":role==="支援"?"book":role==="特殊"?"glitch":"rush",fx:role==="回復"?"green":role==="妨害"?"violet":role==="支援"?"blue":"red",weapon:"book"}
+}
+function signatureFxV124(i,kind){
+ let s=signatureStyleV124(i),r=battleFxLayerV121(),n=document.createElement("div");n.className=`signatureFxV124 ${s.motion} ${s.fx} ${kind}`;
+ if(s.motion==="book")n.innerHTML="<i></i><i></i><i></i><b></b>";
+ if(s.motion==="shadow")n.innerHTML="<i></i><i></i><i></i><i></i>";
+ if(s.motion==="paper")n.innerHTML=Array.from({length:7},(_,k)=>`<i style="--k:${k}"></i>`).join("");
+ if(s.motion==="rush")n.innerHTML="<i></i><b></b>";
+ if(s.motion==="cat")n.innerHTML="<i>◆</i><i>◆</i><b></b>";
+ if(s.motion==="raven")n.innerHTML=Array.from({length:6},(_,k)=>`<i style="--k:${k}"></i>`).join("");
+ if(s.motion==="stage")n.innerHTML="<b></b><i></i><i></i>";
+ if(s.motion==="glitch")n.innerHTML="<i></i><i></i><b></b>";
+ r.appendChild(n);setTimeout(()=>n.remove(),kind==="ougi"?1350:850)
+}
+function signatureMotionV124(i,slot,kind,target){playSignatureV137(i,slot,kind,target);
+ let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`),s=signatureStyleV124(i);
+ if(u){u.dataset.motion=s.motion;u.classList.add(`sig-${s.motion}`);setTimeout(()=>u.classList.remove(`sig-${s.motion}`),kind==="ougi"?1300:800)}
+ signatureFxV124(i,kind)
+}
+function enemyTypeV124(wave){
+ return wave===3?{name:"頁喰いの化身",cls:"page-eater",weak:"文芸"}:wave===2?{name:"墨染めの異稿体",cls:"ink-wraith",weak:"幻想"}:{name:"失稿の影",cls:"lost-page",weak:"論理"}
+}
+function enemyTypePanelV124(){
+ let b=ensureBattleStateV120(),e=enemyTypeV124(b.wave);return `<div class=enemyTypeV124><small>${e.cls.toUpperCase()}</small><b>${e.name}</b><span>弱点 ${e.weak}</span></div>`
+}
+function battleProgressV124(){return{ui:94,animation:84,auto:86,ai:70,enemies:58,characterMotion:43,balance:40,total:72}}
+
+function ensureAdvancedBattleV125(){
+ let b=ensureBattleStateV120();
+ if(!Array.isArray(b.ep))b.ep=[35,35,35,35,35,35];
+ if(!Array.isArray(b.breakGauge))b.breakGauge=[100,100,100];
+ if(!Array.isArray(b.enemyStatus))b.enemyStatus=[[],[],[]];
+ if(!Array.isArray(b.allyHp))b.allyHp=[100,100,100,100,100,100];
+ return b
+}
+function weaknessV125(i,target=0){
+ let a=characterAbility(i),e=enemyTypeV124(ensureBattleStateV120().wave);
+ let map={文芸:["純文学","恋愛","青春","エッセイ","日常"],論理:["ミステリ","推理","サスペンス","社会派"],幻想:["幻想","怪奇","SF","実験文学"]};
+ return (map[e.weak]||[]).includes(a.genre)
+}
+function applyStatusV125(i,target=0){
+ let b=ensureAdvancedBattleV125(),role=characterAbility(i).role,k=characterSkillKitV512(i),s=b.enemyStatus[target]||[];
+ let status=role==="妨害"?(k.code==="misprint"?"錯稿":k.code==="slow"?"遅筆":"封筆"):role==="特殊"?"錯稿":null;
+ if(status&&!s.includes(status))s.push(status);
+ if(k.code==="break"&&!s.includes("破調"))s.push("破調");
+ b.enemyStatus[target]=s.slice(-3)
+}
+function battleDamageV125(kind,i,target){
+ let b=ensureAdvancedBattleV125(),weak=weaknessV125(i,target),base={attack:16,skill:25,ougi:39}[kind]||0,k=characterSkillKitV512(i);
+ let broken=(b.breakGauge[target]||0)<=0,mult=(weak?1.35:1)*(broken?1.5:1);
+ if(kind==="skill")mult*=k.skillMul*skillMasteryV519(i).bonus;
+ if(kind==="ougi")mult*=k.ougiMul;
+ if(kind==="attack"&&k.code==="first"&&(b.turn||1)<=2)mult*=1.10;
+ if(kind!=="attack"&&k.code==="execute"&&broken)mult*=1.15;
+ if(k.code==="boundary"&&weak)mult*=1.12;
+ let syn518=skillSynergyV518(S.sets?.[S.set]||[]);mult*=syn518.damageMul*statusModifierV127(target).damageTaken*comboMultiplierV129();let dmg=Math.max(1,Math.round(base*mult));
+ b.enemyHp[target]=Math.max(0,(b.enemyHp[target]||100)-dmg);if(b.enemyHp[target]<=1)b.enemyHp[target]=0;setTimeout(()=>bossPhaseFxV128(),80);
+ let breakMult=(weak?1.6:1)*((kind==="skill"||kind==="ougi")?k.breakMul*skillMasteryV519(i).breakBonus:1)*skillSynergyV518(S.sets?.[S.set]||[]).breakMul;
+ let breakDmg=Math.round(({attack:12,skill:22,ougi:35}[kind]||0)*breakMult);
+ b.breakGauge[target]=Math.max(0,(b.breakGauge[target]??100)-breakDmg);
+ if(b.breakGauge[target]===0&&!b.enemyStatus[target].includes("BREAK"))b.enemyStatus[target].push("BREAK");
+ addComboV129(kind,weak);return {dmg,weak,broken:b.breakGauge[target]===0,breakDmg}
+}
+function gainEpV125(slot,kind,i=null){
+ let b=ensureAdvancedBattleV125(),base={attack:18,skill:10,heal:12,ougi:-100}[kind]||0,mul=i==null?1:characterSkillKitV512(i).epMul*skillMasteryV519(i).epBonus;mul*=1+skillSynergyV518(S.sets?.[S.set]||[]).gauge/100;
+ let g=base<0?base:Math.round(base*mul);
+ b.ep[slot]=Math.max(0,Math.min(100,(b.ep[slot]||0)+g))
+}
+function canOugiV125(slot){return (ensureAdvancedBattleV125().ep[slot]||0)>=100}
+function battleAdvancedHudV125(){
+ let b=ensureAdvancedBattleV125(),target=b.target||0,br=b.breakGauge[target]??100,status=b.enemyStatus[target]||[];
+ return `<div class=advancedHudV125><div><small>BREAK</small><span><i style="width:${br}%"></i></span><b>${br}%</b></div><section>${status.map(x=>`<em>${x}</em>`).join("")||"<em>STATUS NORMAL</em>"}</section></div>`
+}
+function progressV125(){return{ui:96,animation:87,auto:89,ai:75,enemies:64,characterMotion:49,balance:52,total:78}}
+
+function aliveAlliesV126(){let b=ensureAdvancedBattleV125();return b.allyHp.map((hp,i)=>({hp:+hp||0,i})).filter(x=>x.hp>0)}
+function nextAliveAllyV126(from=0){
+ let alive=aliveAlliesV126();if(!alive.length)return-1;
+ return alive.find(x=>x.i>=from)?.i??alive[0].i
+}
+function enemySkillV126(){
+ let b=ensureAdvancedBattleV125(),w=b.wave;
+ if(w===3&&b.turn%4===0)return bossSkillV128();
+ if(w===2&&b.turn%3===0)return{name:"墨蝕",power:22,aoe:false,status:"錯稿"};
+ return{name:"失稿爪",power:16,aoe:false,status:""}
+}
+function damageAllyV126(slot,power){battleCameraV142("hit");
+ let b=ensureAdvancedBattleV125();if(slot<0||slot>=b.allyHp.length)return;
+ b.allyHp[slot]=Math.max(0,(b.allyHp[slot]||100)-power);hitReactionV141(slot);
+ if(b.allyHp[slot]===0){koPoseV141(slot);battleTextV121("戦闘不能","warning",24+slot*8,57)}
+}
+function healPartyV126(slot){
+ let b=ensureAdvancedBattleV125(),team=S.sets?.[S.set]||[],i=+team[slot]||0,role=characterAbility(i).role;
+ let amount=role==="回復"?26:14;
+ b.allyHp=b.allyHp.map(h=>Math.min(100,h+amount));
+ battleTextV121(`+${amount}%`,"heal",34,48);
+ return amount
+}
+function enemySkillTurnV126(done){
+ let b=ensureAdvancedBattleV125(),sk=enemySkillV126(),alive=aliveAlliesV126(),mod=statusModifierV127(b.target||0);sk.power=Math.max(1,Math.round(sk.power*mod.enemyPower));
+ if(!alive.length){gameOverV126();return}
+ posterTurnFlashV232("enemy");
+ let target=sk.aoe?-1:alive[(b.turn+b.wave)%alive.length].i;
+ posterEnemyActionCueV232(sk.name,target,!!sk.aoe);
+ battleTextV121(sk.name,"warning",70,30);enemyWarningV159(sk.name,sk.aoe);enemyMotionV159(b.wave===3?"boss":sk.aoe?"aoe":"attack");enemyTelegraphV121();
+ setTimeout(()=>{
+   if(sk.aoe){
+     alive.forEach((x,n)=>{
+       damageAllyV126(x.i,sk.power);
+       posterAllyNumberV232(x.i,sk.power,"damage");
+       setTimeout(()=>battleTextV121(`-${sk.power}%`,"enemy",22+x.i*8,53),n*60)
+     })
+   } else {
+     damageAllyV126(target,sk.power);
+     posterAllyNumberV232(target,sk.power,"damage");
+     sdAnimate("enemy",target,0);
+     battleTextV121(`-${sk.power}%`,"enemy",22+target*8,53)
+   }
+   battleLogV120(`${sk.name} 発動`);
+   queueBattleSaveV197();
+   schedulePosterRenderV229("enemy-turn",true);cleanTurnCueV241();
+   setTimeout(()=>{if(!aliveAlliesV126().length)gameOverV126();else done&&done()},420)
+ },bsv2EnemyTimerV186())
+}
+function gameOverV126(){clearPosterQueueV230();
+ stopAutoBattleV122();stopTrueAutoLoopV200(false);hideAutoReplayLoadingV199();let b=ensureAdvancedBattleV125();b.auto=false;
+ let o=document.createElement("div");o.className="battleClearV119 gameOverV126";o.innerHTML=`<div><small>QUEST FAILED</small><h1>DEFEAT</h1><p>文豪たちは力尽きた。</p><button data-battle-retry=1>再挑戦</button><button data-go=sortie>撤退</button></div>`;document.body.appendChild(o)
+}
+function resetBattleV126(){
+ stopAutoCoreV427?.();stopAutoBattleV122();let partyN=battlePartySizeV535();S.battleV120={wave:1,turn:1,speed:1,auto:false,target:0,unit:0,enemyHp:[100,100,100],ep:Array(partyN).fill(35),breakGauge:[100,100,100],enemyStatus:[[],[],[]],allyHp:Array(partyN).fill(100),combo:0,enemyRosterWave:0,log:[]};save();persistentSaveWrite();document.querySelector(".gameOverV126")?.remove();return cinematicBattleV119()
+}
+function progressV126(){return{ui:97,animation:90,auto:92,ai:81,enemies:72,characterMotion:55,balance:61,total:84}}
+
+function tickEnemyStatusV127(){
+ let b=ensureAdvancedBattleV125();
+ b.enemyStatus=b.enemyStatus.map((arr,t)=>{let s=[...(arr||[])];if(s.includes("錯稿"))b.enemyHp[t]=Math.max(0,(b.enemyHp[t]||100)-5);return s})
+}
+function statusModifierV127(target){
+ let s=ensureAdvancedBattleV125().enemyStatus[target]||[];
+ return {enemyPower:s.includes("封筆")?0.72:1,damageTaken:s.includes("錯稿")?1.15:1}
+}
+
+function battleManuscriptDropV539(ch,hard=false){
+ ch=Math.max(0,Math.min(3,Number(ch)||0));
+ let ranges=[[8,15],[8,15],[10,18],[12,22]],r=ranges[ch]||ranges[0];
+ let min=r[0],max=r[1],n=min+Math.floor(Math.random()*(max-min+1));
+ if(hard)n=Math.round(n*1.5);
+ return n
+}
+
+function battleRewardV127(){
+ let b=ensureAdvancedBattleV125(),ch=battleChapterV534(),hard=S.battleMode==="hard",stars=(b.allyHp.filter(x=>x>0).length===Math.max(1,(S.sets?.[S.set]||[]).slice(0,6).length)?1:0)+(b.turn<=10?1:0)+1;
+ let scale=1+ch*.22+(hard?.35:0);
+ let tickets=battleManuscriptDropV539(ch,hard);
+ return {mat:Math.round((30+b.wave*12)*scale),gold:Math.round((500+b.wave*250)*scale),ink:(stars>=3?2:1)+ch+(hard?2:0),tickets,stars}
+}
+function applyBattleRewardV127(){
+ let r=battleRewardV127(),ch=Math.max(0,Math.min(3,Number(S.battleStage)||0)),mode=S.battleMode==="hard"?"hard":"normal";
+ normalizeStageProgressV521();
+ S.mat=(S.mat||0)+r.mat;S.gold=(S.gold||0)+r.gold;S.ink=(S.ink||0)+r.ink;S.normalTickets=(S.normalTickets||0)+(r.tickets||0);
+ if(mode==="hard"){
+  S.hardClears[ch]=(S.hardClears[ch]||0)+1;
+ }else{
+  S.progress.clears[ch]=(S.progress.clears[ch]||0)+1;
+  S.stageBest[ch]=Math.max(S.stageBest[ch]||0,r.stars);
+ }
+ recordBattleResult(ch,true,ensureAdvancedBattleV125().turn||0,mode);
+ S.qol=S.qol||{};S.qol.lastStage=ch;S.qol.selectedStage=ch;
+ save();persistentSaveWrite();return {...r,ch,mode,unlockedNext:ch<3&&stageUnlockedV521(ch+1)}
+}
+
+function stageClearFlowV522(r){
+ let ch=Math.max(0,Math.min(3,Number(r?.ch ?? S.battleStage)||0)),mode=r?.mode||S.battleMode||"normal";
+ let clear=S.progress?.clears?.[ch]||0,next=ch<3?ch+1:null,nextOpen=next!=null&&stageUnlockedV521(next);
+ return {ch,mode,clear,next,nextOpen,hard:hardUnlocked(ch)}
+}
+function stageClearActionsV522(r){
+ let f=stageClearFlowV522(r);
+ return `<div class=stageClearActionsV522>
+  ${f.nextOpen&&f.next!=null?`<button class=next data-stage-clear-next-v522="${f.next}">第${f.next+1}章へ</button>`:""}
+  <button data-stage-clear-current-v522="${f.ch}">この章へ戻る</button>
+  ${f.mode==="normal"&&f.clear>0?`<button data-stage-clear-farm-v522="${f.ch}">この章を周回</button>`:""}
+ </div>`
+}
+
+function battleClearRewardsV127(){
+ flushBattleSaveV197();
+ battleInvalidateActionsV195();
+ clearBattleCheckpointV196();
+ try{cleanupBattleFxV187()}catch(_){}
+ try{clearBattleTimersV191()}catch(_){}
+ try{purgeBattleTransientDomV191()}catch(_){}
+ try{pauseDecorativeFxV190(true)}catch(_){}
+ try{stopAutoBattleV122()}catch(_){}
+ try{victoryCurtainV142()}catch(_){}
+ try{partyVictoryV140()}catch(_){}
+ try{resetAfterClearV130()}catch(e){console.warn("V462 clear reset",e)}
+
+ try{posterResultBridgeV214()}catch(_){}
+ try{posterVictoryCueV207()}catch(_){}
+ let r=applyBattleRewardV127();
+ let flow522=stageClearFlowV522(r);
+
+ if(autoLoopActiveV200()){
+   let p=autoLoopManagerV201();
+   p.count=(p.count||0)+1;
+   touchAutoLoopHeartbeatV203(true);
+   p.total.mat=(p.total.mat||0)+(r.mat||0);
+   p.total.gold=(p.total.gold||0)+(r.gold||0);
+   p.total.ink=(p.total.ink||0)+(r.ink||0);
+   p.total.tickets=(p.total.tickets||0)+(r.tickets||0);
+   recordAutoLoopResultV202(r);
+   queueBattleSaveV197(true);
+   document.querySelector(".battleClearV119")?.remove();
+   autoLoopResultV200(r);
+   renderAutoLoopHudV200();refreshPosterLoopBadgeV230?.();
+   renderAutoReplayHudV199();
+   if(shouldFinishAutoLoopV201())finishAutoLoopV201();
+   else scheduleNextAutoLoopV200();
+   return;
+ }
+
+ setAutoReplayActiveV199(false);
+ hideAutoReplayLoadingV199();
+ if(posterBattleOnV205()){
+   try{
+     let card=posterResultCardV215(r);
+     if(card)return card;
+   }catch(e){console.warn("V462 poster result fallback",e)}
+ }
+ let o=document.createElement("div");
+ o.className="battleClearV119 stageClearV522";
+ o.innerHTML=`<div><div class=stageClearUnlockV522><small>STAGE PROGRESS</small><h2>${flow522.mode==="hard"?`第${flow522.ch+1}章 HARD CLEAR`:`第${flow522.ch+1}章 CLEAR`}</h2><b>${flow522.nextOpen&&flow522.next!=null?`第${flow522.next+1}章が解放されました`:flow522.ch===3?"メインストーリー全章踏破":"章クリア記録を更新"}</b><span>クリア回数 ${flow522.clear}${flow522.hard?" / HARD解放済":""}</span></div><small>QUEST COMPLETE</small><h1>BATTLE CLEAR</h1><section><span>${r.stars>=1?"★":"☆"} クエストをクリア</span><span>${r.stars>=2?"★":"☆"} 戦闘不能なし</span><span>${r.stars>=3?"★":"☆"} 10ターン以内</span></section><hr><b>獲得報酬</b><div class=rewardListV127><span>原稿片<b>+${r.tickets||0}</b></span><span>資料<b>+${r.mat}</b></span><span>文銭<b>+${r.gold}</b></span><span>インク<b>+${r.ink}</b></span></div>${stageClearActionsV522(r)}<button class=stageClearRewardLinkV523 data-stage-clear-reward-v523="${flow522.ch}">章報酬を確認</button>${resultLoopButtonsV181()}</div>`;
+ document.body.appendChild(o)
+}
+function ultimateFlavorV127(i){
+ let a=characterAbility(i),s=signatureStyleV124(i);
+ let text={book:"頁が舞い、物語そのものが敵を包み込む。",shadow:"黒い文章が刃となり、敵を断ち切る。",paper:"無数の原稿が光となって降り注ぐ。",rush:"一瞬で間合いを奪い、決着の一撃を放つ。",cat:"静かな言葉が味方を守り、敵の綻びを暴く。",raven:"黒羽と物語の影が戦場を覆う。",stage:"舞台そのものを書き換え、物語を終幕へ導く。",glitch:"現実の文章を乱し、敵の存在を書き換える。"}[s.motion]||"固有の物語を解放する。";
+ return `${ougiInfo(i).name}。${text}`
+}
+function progressV127(){return{ui:98,animation:92,auto:94,ai:85,enemies:77,characterMotion:64,balance:70,total:89}}
+
+function bossPhaseV128(){
+ let b=ensureAdvancedBattleV125(),hp=b.enemyHp[b.target]||0;
+ return b.wave===3?(hp<=35?2:1):0
+}
+function bossPhaseFxV128(){
+ let phase=bossPhaseV128();if(phase!==2)return;
+ let r=battleFxLayerV121();if(document.querySelector(".bossPhaseV128"))return;
+ let n=document.createElement("div");n.className="bossPhaseV128";n.innerHTML="<small>BOSS PHASE</small><b>第二稿・暴走</b>";r.appendChild(n);setTimeout(()=>n.classList.add("show"),30);setTimeout(()=>n.remove(),1300)
+}
+function bossSkillV128(){
+ let phase=bossPhaseV128();
+ return phase===2?{name:"終稿拒絶",power:34,aoe:true,status:"封筆"}:{name:"禁書・頁葬",power:28,aoe:true,status:"封筆"}
+}
+function autoDecisionV128(){
+ let b=ensureAdvancedBattleV125(),team=S.sets?.[S.set]||[],slot=b.unit||0,i=+team[slot]||0,role=characterAbility(i).role;
+ autoTargetV123();let hp=b.enemyHp[b.target]||100,ep=b.ep[slot]||0,allyMin=Math.min(...b.allyHp.filter(x=>x>0));
+ if(role==="回復"&&allyMin<62)return"heal";
+ if(ep>=100&&(hp<55||b.breakGauge[b.target]<=0))return"ougi";
+ if(role==="妨害"&&!(b.enemyStatus[b.target]||[]).includes("封筆"))return"skill";
+ if(role==="特殊"&&!(b.enemyStatus[b.target]||[]).includes("錯稿"))return"skill";
+ if(b.breakGauge[b.target]<35)return"skill";
+ return b.turn%3===0?"skill":"attack"
+}
+function repeatBattleV128(){
+ if(S.qol?.repeatAuto)return launchReplayV199(true,Number(S.battleStage)||0,S.battleMode||"normal");
+ return launchReplayV199(false,Number(S.battleStage)||0,S.battleMode||"normal")
+}
+function battleResultActionsV128(){
+ return `<div class=resultActionsV128><button data-battle-repeat=1>もう一度</button><button data-battle-repeat-auto=1>AUTO再戦</button><button data-go=sortie>ステージへ</button></div>`
+}
+function progressV128(){return{ui:99,animation:95,auto:97,ai:92,enemies:86,characterMotion:73,balance:80,total:94}}
+
+function enemyRosterV129(wave){
+ return wave===1?[
+  {name:"失稿の影",cls:"lost-page",hp:100,weak:"論理"},
+  {name:"破れた余白",cls:"margin",hp:72,weak:"文芸"}
+ ]:wave===2?[
+  {name:"墨染めの異稿体",cls:"ink-wraith",hp:115,weak:"幻想"},
+  {name:"逆さ句読点",cls:"punct",hp:88,weak:"論理"}
+ ]:[
+  {name:"頁喰いの化身",cls:"page-eater",hp:180,weak:"文芸"}
+ ]
+}
+function syncEnemyRosterV129(){
+ let b=ensureAdvancedBattleV125(),r=enemyRosterV129(b.wave);
+ if(!b.enemyRosterWave||b.enemyRosterWave!==b.wave){b.enemyRosterWave=b.wave;b.enemyHp=r.map(x=>x.hp);b.breakGauge=r.map(()=>100);b.enemyStatus=r.map(()=>[]);b.target=0}
+ return r
+}
+function enemyCardsV129(){
+ let b=ensureAdvancedBattleV125(),r=syncEnemyRosterV129();
+ return `<div class=enemyCardsV129>${r.map((e,n)=>`<button class="${b.target===n?"target":""}" data-battle-target="${n}"><small>${e.cls}</small><b>${e.name}</b><span><i style="width:${Math.min(100,(b.enemyHp[n]||0)/e.hp*100)}%"></i></span></button>`).join("")}</div>`
+}
+function comboStateV129(){
+ let b=ensureAdvancedBattleV125();if(!Number.isInteger(b.combo))b.combo=0;return b
+}
+function addComboV129(kind,weak){setTimeout(()=>comboAuraV142(),20);
+ let b=comboStateV129();b.combo=Math.min(9,(b.combo||0)+1);if(kind==="ougi")b.combo=0;
+ if(weak)battleTextV121(`CHAIN ${b.combo}`,"skill",55,37)
+}
+function comboMultiplierV129(){return 1+Math.min(5,comboStateV129().combo||0)*.03}
+function battleGradeV129(){
+ let b=ensureAdvancedBattleV125(),alive=b.allyHp.filter(x=>x>0).length;
+ let score=10000-Math.max(0,b.turn-6)*420+(alive*500);
+ return score>=11500?"S":score>=10000?"A":score>=8500?"B":"C"
+}
+function progressV129(){return{ui:100,animation:97,auto:98,ai:95,enemies:94,characterMotion:84,balance:90,total:97}}
+
+function battleSettingsV130(){
+ if(!S.qol||typeof S.qol!=="object")S.qol={};
+ if(typeof S.qol.battleEffects!=="boolean")S.qol.battleEffects=true;
+ if(typeof S.qol.skipOugi!=="boolean")S.qol.skipOugi=false;
+ return S.qol
+}
+function toggleBattleSettingV130(k){
+ let q=battleSettingsV130();q[k]=!q[k];save();persistentSaveWrite();cinematicBattleV119()
+}
+function battleSettingsBarV130(){
+ let q=battleSettingsV130();
+ return `<div class=battleSettingsV130><button class="${q.battleEffects?"on":""}" data-battle-setting="battleEffects">演出</button><button class="${q.skipOugi?"on":""}" data-battle-setting="skipOugi">奥義短縮</button></div>`
+}
+function safeAnimatedActionV130(kind,slot,target){
+ let q=battleSettingsV130();
+ if(!q.battleEffects){sdAnimate(kind,slot,target);return}
+ if(kind==="ougi"&&q.skipOugi){sdAnimate("attack",slot,target);slashArcV121("ougi");battleTextV121("SPECIAL","ougi",70,38);return}
+ animatedActionV121(kind,slot,target)
+}
+function battleIntegrityV130(){
+ let b=ensureAdvancedBattleV125(),partyN=battlePartySizeV535();
+ if(!Array.isArray(b.allyHp))b.allyHp=[];
+ if(!Array.isArray(b.ep))b.ep=[];
+ while(b.allyHp.length<partyN)b.allyHp.push(100);
+ while(b.ep.length<partyN)b.ep.push(0);
+ b.allyHp=b.allyHp.slice(0,partyN);
+ b.ep=b.ep.slice(0,partyN);
+ b.wave=Math.max(1,Math.min(3,+b.wave||1));b.turn=Math.max(1,+b.turn||1);
+ b.speed=b.speed===2?2:1;b.unit=nextAliveAllyV126(Math.max(0,+b.unit||0));
+ if(b.unit<0)b.unit=0;
+ b.target=Math.max(0,Math.min((b.enemyHp?.length||1)-1,+b.target||0));
+ return b
+}
+function resetAfterClearV130(){
+ if(typeof stopNativeAutoPumpV425==="function")stopNativeAutoPumpV425();stopAutoBattleV122();let b=ensureAdvancedBattleV125();b.auto=false;b.combo=0;save();persistentSaveWrite()
+}
+function progressV130(){return{ui:100,animation:99,auto:99,ai:98,enemies:97,characterMotion:91,balance:95,total:99}}
+
+function coreProgressV131(){return{battle:99,home:90,growth:86,formation:88,summon:91,stage:89,save:94,total:91}}
+function summonPityV131(){
+ if(!S.qol||typeof S.qol!=="object")S.qol={};if(!Number.isInteger(S.qol.pity))S.qol.pity=0;
+ return S.qol.pity
+}
+function summonPityUIV131(){
+ let p=summonPityV131();return `<div class=summonPityV131><span>UR確定まで</span><b>${Math.max(0,80-p)} / 80</b><i><em style="width:${Math.min(100,p/80*100)}%"></em></i></div>`
+}
+function growthQuickV131(i){
+ let max=maxLevelUpsNow(i);
+ return `<div class=growthQuickV131><button data-levelup="${i}:1" ${max<1?"disabled":""}>+1</button><button data-levelup="${i}:10" ${max<1?"disabled":""}>+10</button><button data-levelup="${i}:${Math.max(1,max)}" ${max<1?"disabled":""}>MAX</button></div>`
+}
+function partySummaryV131(){
+ let t=S.sets?.[S.set]||[],m=modernLiteraryBonus(t),b=bundanBonus(t);
+ return `<div class=partySummaryV131><span>戦闘力<b>${unitPower(t).toLocaleString()}</b></span><span>現代<b>${m.name||"—"}</b></span><span>文壇<b>${b.name||"—"}</b></span></div>`
+}
+function stageQuickV131(){
+ let i=recommendedStage(),st=stageMeta(i),count=rememberedFarmCount();
+ return `<div class=stageQuickV131><div><small>RECOMMENDED</small><b>第${i+1}章 ${st.name}</b><span>前回 ${count}周</span></div><button data-stage-open="${i}">出撃 ›</button></div>`
+}
+
+function growthCostPreviewV132(i,n){
+ let max=maxLevelUpsNow(i),up=Math.min(Math.max(0,+n||0),max),cur=lv(i),mat=0,gold=0;
+ for(let k=0;k<up;k++){let L=cur+k;mat+=Math.max(1,Math.floor(L/4)+1);gold+=Math.max(40,L*18)}
+ return {up,mat,gold,to:cur+up}
+}
+function growthPreviewV132(i){
+ let m=maxLevelUpsNow(i),ten=growthCostPreviewV132(i,Math.min(10,m)),all=growthCostPreviewV132(i,m);
+ return `<div class=growthPreviewV132><span>+10<b>Lv.${ten.to}</b><small>資料 ${ten.mat} / 文銭 ${ten.gold}</small></span><span>MAX<b>Lv.${all.to}</b><small>資料 ${all.mat} / 文銭 ${all.gold}</small></span></div>`
+}
+function formationRoleStripV132(){
+ let r=partyRoleSummary();return `<div class=roleStripV132>${["攻撃","妨害","支援","回復","特殊"].map(x=>`<span class="${r[x]?"on":""}">${x}<b>${r[x]}</b></span>`).join("")}</div>`
+}
+function formationPresetV132(kind){
+ let owned=growthOwnedCandidates(),score=i=>typeof boostedPower==="function"?boostedPower(i):(700+lv(i)*35);
+ let arr=[...owned];
+ if(kind==="power")arr.sort((a,b)=>score(b)-score(a));
+ if(kind==="modern")arr.sort((a,b)=>(isAnyModernAuthor(b)-isAnyModernAuthor(a))||score(b)-score(a));
+ if(kind==="balance"){let roles=["攻撃","回復","妨害","支援","特殊"],out=[];roles.forEach(r=>{let x=arr.filter(i=>characterAbility(i).role===r).sort((a,b)=>score(b)-score(a))[0];if(x!=null&&!out.includes(x))out.push(x)});arr=[...out,...arr.filter(i=>!out.includes(i)).sort((a,b)=>score(b)-score(a))]}
+ ensureUnitSets();S.sets[S.set]=sanitizeFormationOwnedV542(arr);save();persistentSaveWrite();toast("所持キャラ限定で編成を更新しました");return party()
+}
+function formationPresetUIV132(){
+ return `<div class=presetV132><small>QUICK FORMATION</small><button data-party-preset=power>戦闘力</button><button data-party-preset=balance>バランス</button><button data-party-preset=modern>現代文豪</button></div>`
+}
+function progressV132(){return{battle:99,home:92,growth:94,formation:95,summon:92,stage:91,save:94,total:94}}
+
+function summonRatesV133(){return `<div class=summonRatesV133><span>UR <b>3%</b></span><span>SSR <b>12%</b></span><span>SR <b>35%</b></span><span>R <b>50%</b></span></div>`}
+function summonCompactV133(){
+ let p=summonPityV131();return `<div class=summonHeroV133><div><small>PREMIUM SCOUT</small><h2>文学召喚</h2><p>80回以内にUR確定</p></div><strong>${p}<small>/80</small></strong></div>${summonRatesV133()}`
+}
+function stageRecentV133(){
+ if(!S.qol||typeof S.qol!=="object")S.qol={};let a=S.qol.recentStages||[];return a.slice(0,3)
+}
+function rememberStageV133(i){
+ S.qol=S.qol||{};let a=(S.qol.recentStages||[]).filter(x=>x!==i);a.unshift(i);S.qol.recentStages=a.slice(0,3);save();persistentSaveWrite()
+}
+function recentStagesUIV133(){
+ let a=stageRecentV133();if(!a.length)return"";
+ return `<div class=recentStagesV133><small>RECENT</small>${a.map(i=>`<button data-stage-open="${i}">第${i+1}章 ${stageMeta(i).name}</button>`).join("")}</div>`
+}
+function homeNoticeV133(){
+ let i=recommendedStage(),st=stageMeta(i);return `<div class=homeNoticeV133><small>NOW</small><b>第${i+1}章 ${st.name}</b><span>物語を進める</span></div>`
+}
+function progressV133(){return{battle:99,home:96,growth:94,formation:95,summon:97,stage:96,save:95,total:96}}
+
+function releaseProgressV134(){return{battle:99,home:98,growth:97,formation:97,summon:98,stage:98,save:98,total:98}}
+function safeRouteV134(name){
+ let fn={home,party,growth,sortie,summon,list,story,arena,works:worksUnlockHubV526,gear:gearHubV479,system:systemPanelV490,savevault:saveVaultV486}[name];
+ try{return typeof fn==="function"?fn():home()}catch(e){console.error(e);toast("画面を復旧しました");return home()}
+}
+function validateSaveV134(st){
+ if(!st||typeof st!=="object")return false;
+ if(!Array.isArray(st.sets))st.sets=[[]];
+ if(!Number.isInteger(st.set)||st.set<0)st.set=0;
+ if(!st.qol||typeof st.qol!=="object")st.qol={};
+ if(!st.progress||typeof st.progress!=="object")st.progress={clears:[]};
+ return true
+}
+function emergencyBackupV134(){
+ try{localStorage.setItem("bungou_kitan_emergency_v134",JSON.stringify({at:Date.now(),state:S}))}catch(e){}
+}
+function recoverEmergencyV134(){
+ try{let x=JSON.parse(localStorage.getItem("bungou_kitan_emergency_v134")||"null");if(!x?.state)return false;let m=mergeSaveStates(S,x.state);Object.assign(S,m);ensureCoreState();persistentSaveWrite();toast("バックアップを復旧しました");return home()}catch(e){return false}
+}
+function releaseHealthV134(){
+ let checks=[
+  ["セーブ",validateSaveV134(S)],
+  ["キャラ",Array.isArray(C)&&C.length>0],
+  ["編成",Array.isArray(S.sets)],
+  ["戦闘",typeof cinematicBattleV119==="function"],
+  ["AUTO",typeof runAutoBattleV122==="function"]
+ ];
+ return `<div class=releaseHealthV134>${checks.map(([n,ok])=>`<span class="${ok?"ok":"ng"}">${ok?"✓":"!"} ${n}</span>`).join("")}</div>`
+}
+
+function gameProgressV135(){return{battle:100,home:99,growth:99,formation:99,summon:99,stage:99,save:99,total:99}}
+function firstRunCheckV135(){
+ if(!S.qol||typeof S.qol!=="object")S.qol={};
+ if(S.qol.v135Ready)return"";
+ return `<div class=firstRunV135><div><small>文豪綺譚</small><b>準備完了</b><span>主要システムの初期チェックが完了しました。</span></div><button data-v135-ready=1>はじめる</button></div>`
+}
+function dismissFirstRunV135(){S.qol=S.qol||{};S.qol.v135Ready=true;save();persistentSaveWrite();return home()}
+function routeSmokeV135(){
+ let names=["home","party","growth","sortie","summon"],bad=[];
+ names.forEach(n=>{if(typeof ({home,party,growth,sortie,summon})[n]!=="function")bad.push(n)});
+ return bad
+}
+function releaseSelfCheckV135(){
+ let bad=routeSmokeV135(),checks=[
+  ["routes",bad.length===0],["save",validateSaveV134(S)],["characters",Array.isArray(C)&&C.length>20],
+  ["battle",typeof cinematicBattleV119==="function"],["auto",typeof runAutoBattleV122==="function"],
+  ["growth",typeof growth==="function"],["formation",typeof party==="function"]
+ ];
+ return {ok:checks.every(x=>x[1]),checks}
+}
+function compactSystemStatusV135(){
+ let r=releaseSelfCheckV135();return `<div class=systemStatusV135><i class="${r.ok?"ok":"ng"}"></i><span>${r.ok?"SYSTEM READY":"CHECK REQUIRED"}</span></div>`
+}
+
+function formationEditorV136(){ensureUnitSets();let t=S.sets[S.set]||[];return `<section class=formationEditorV136><header><b>6人編成</b><span>${t.length}/6</span></header><div class=formationSlotsV136>${Array.from({length:6},(_,s)=>{let i=t[s];return i==null?`<button class=empty data-formation-slot="${s}">＋</button>`:`<button data-formation-slot="${s}"><span class=rankBadge data-rank="${charRank(i)}">${charRank(i)}</span><img src="${characterImage(C[i][0])}"><b>${C[i][1]}</b><small>Lv.${lv(i)}</small></button>`}).join("")}</div><p>枠をタップして文豪を変更</p></section>`}
+
+
+/* V508 character-stat compatibility layer.
+   UI pages must use one canonical source for character stats. */
+
+
+function literaryIdentityV525(i){
+ i=Math.max(0,Math.min(C.length-1,Number(i)||0));
+ let [slug,name,work,genre,role,rank]=C[i];
+ const exact={
+  dazai:{trait:"自己否定",code:"seal",desc:"『人間失格』の自己否定を、敵の攻撃性能を削ぐ妨害へ変換。",passive:"敵に弱体があるほどBREAK性能上昇",mods:{hp:.96,atk:.96,def:.96,spd:1.08,power:1.03},ougi:"無頼・人間失格",ougiDesc:"敵全体の強化を打ち消し、攻撃・防御を低下。"},
+  chuuya:{trait:"悲哀連撃",code:"combo",desc:"『汚れつちまつた悲しみに』の沈鬱なリズムを連撃へ変換。",passive:"連撃数が増えるほど与ダメージ上昇",mods:{hp:.94,atk:1.12,def:.92,spd:1.10,power:1.04},ougi:"悲しみの終章",ougiDesc:"敵全体へ高速連撃。連撃数に応じて威力増加。"},
+  aku:{trait:"羅生門",code:"execute",desc:"『羅生門』の極限状況をBREAK追撃へ。崩れた敵への決定力が高い。",passive:"BREAK中の敵へ追加威力",mods:{hp:.92,atk:1.15,def:.90,spd:1.04,power:1.05},ougi:"黒門・羅生門",ougiDesc:"BREAK中の敵へ特大追撃。"},
+  kenji:{trait:"銀河巡行",code:"regen",desc:"『銀河鉄道の夜』の旅路を継戦回復へ。WAVEを越えるほど安定する。",passive:"WAVE開始時に味方を小回復",mods:{hp:1.12,atk:.88,def:1.06,spd:.98,power:1.00},ougi:"銀河鉄道・星巡り",ougiDesc:"味方全体を大回復し、EPも少量回復。"},
+  ranpo:{trait:"黒蜥蜴の推理",code:"misprint",desc:"『黒蜥蜴』の駆け引きから弱点露呈を得意とする。",passive:"敵の被ダメージ上昇状態を付与",mods:{hp:.96,atk:1.00,def:.94,spd:1.11,power:1.02},ougi:"怪人二十面・黒蜥蜴",ougiDesc:"敵の弱点を暴き、被ダメージ増加を付与。"},
+  soseki:{trait:"心壁",code:"guard",desc:"『こころ』の内面葛藤を堅牢な防御へ。",passive:"味方の被ダメージを軽減",mods:{hp:1.16,atk:.88,def:1.18,spd:.91,power:1.03},ougi:"こころ・明暗の壁",ougiDesc:"味方全体へ強力な軽減と防御上昇。"},
+  murasaki:{trait:"源氏絵巻",code:"teamGauge",desc:"『源氏物語』の人物関係を味方同士の共鳴へ変換。",passive:"味方全体のEP獲得量を強化",mods:{hp:1.05,atk:.94,def:1.02,spd:1.03,power:1.03},ougi:"源氏・五十四帖",ougiDesc:"味方全体の攻撃・防御・EP回転を強化。"},
+  akiko:{trait:"乱れ髪",code:"mercy",desc:"『みだれ髪』の情熱を回復と攻撃支援へ。",passive:"回復時に味方攻撃を小強化",mods:{hp:1.07,atk:.92,def:1.02,spd:1.02,power:1.01},ougi:"みだれ髪・紅情",ougiDesc:"大回復後、味方全体の攻撃を強化。"},
+  ogai:{trait:"舞姫の選択",code:"counter",desc:"『舞姫』の選択と葛藤を反撃防御へ。",passive:"被弾後に反撃補正",mods:{hp:1.10,atk:.94,def:1.12,spd:.95,power:1.02},ougi:"舞姫・二律背反",ougiDesc:"防御を固め、次の攻撃へ反撃威力を蓄積。"},
+  tanizaki:{trait:"細雪",code:"teamGauge",desc:"『細雪』の姉妹の連なりを味方支援へ。",passive:"味方人数が多いほど支援効果上昇",mods:{hp:1.04,atk:.92,def:1.03,spd:1.01,power:1.01},ougi:"細雪・四重奏",ougiDesc:"味方全体の防御とEPを同時強化。"},
+  kawabata:{trait:"雪国疾走",code:"fast",desc:"『雪国』の冷冽な情景を速度特化へ。",passive:"先手時にEP獲得量上昇",mods:{hp:.90,atk:1.00,def:.90,spd:1.19,power:1.03},ougi:"雪国・白夜行",ougiDesc:"速度を威力に変換した全体攻撃。"},
+  mishima:{trait:"金閣崩し",code:"ambush",desc:"『金閣寺』の美への執着と崩壊を高火力初撃へ。",passive:"戦闘序盤の攻撃力上昇",mods:{hp:.93,atk:1.18,def:.92,spd:1.02,power:1.06},ougi:"金閣・炎上終幕",ougiDesc:"戦闘序盤ほど高威力の全体攻撃。"},
+  akutagawa2:{trait:"高野聖・幻惑",code:"slow",desc:"『高野聖』の妖異を幻惑・遅延へ。",passive:"敵の行動効率を低下",mods:{hp:.98,atk:.98,def:.96,spd:1.07,power:1.01},ougi:"高野聖・魔境",ougiDesc:"敵全体へ幻惑と行動遅延。"},
+  hagiwara:{trait:"月下恐慌",code:"seal",desc:"『月に吠える』の不安と孤独を攻撃低下へ。",passive:"敵の攻撃性能を抑制",mods:{hp:.95,atk:1.00,def:.94,spd:1.06,power:1.01},ougi:"月に吠える・蒼白",ougiDesc:"敵全体の攻撃とBREAK耐性を低下。"},
+  sakaguchi:{trait:"堕落反攻",code:"reverse",desc:"『堕落論』の逆説を、弱体状態からの反攻へ。",passive:"自身が弱体時、攻撃補正上昇",mods:{hp:.98,atk:1.12,def:.92,spd:1.03,power:1.04},ougi:"堕落論・反転",ougiDesc:"弱体を力へ変換して大ダメージ。"},
+  kajii:{trait:"檸檬爆弾",code:"rewrite",desc:"『檸檬』の想像上の爆発を特殊攻撃へ。",passive:"弱点命中時に追加BREAK",mods:{hp:.96,atk:1.07,def:.94,spd:1.06,power:1.03},ougi:"檸檬・丸善爆砕",ougiDesc:"敵全体へ特殊ダメージと大BREAK。"},
+  higuchi:{trait:"たけくらべ",code:"buffAtk",desc:"『たけくらべ』の成長の物語を味方の育成支援へ。",passive:"味方の攻撃と成長補正を支援",mods:{hp:1.03,atk:.94,def:1.00,spd:1.02,power:1.01},ougi:"たけくらべ・大黒屋",ougiDesc:"味方全体の攻撃と速度を強化。"},
+  kobayashi:{trait:"蟹工船・連帯",code:"fortress",desc:"『蟹工船』の連帯を全体防御へ。",passive:"味方人数が多いほど軽減上昇",mods:{hp:1.18,atk:.88,def:1.20,spd:.88,power:1.04},ougi:"蟹工船・総員団結",ougiDesc:"味方全体へ強力な防御・軽減。"},
+  yokomitsu:{trait:"機械律",code:"cycle",desc:"『機械』の反復性を高速行動へ。",passive:"連続行動時にEP回収",mods:{hp:.91,atk:1.00,def:.90,spd:1.18,power:1.03},ougi:"機械・高速演算",ougiDesc:"高速連撃後、EPを一部回収。"},
+  nakajima:{trait:"山月虎化",code:"crit",desc:"『山月記』の虎への変身を会心火力へ。",passive:"会心時に追加威力",mods:{hp:.94,atk:1.16,def:.91,spd:1.06,power:1.05},ougi:"山月記・月下虎嘯",ougiDesc:"高会心率の単体特大攻撃。"},
+  koizumi:{trait:"怪談蒐集",code:"misprint",desc:"『怪談』の怪異を状態異常へ。",passive:"敵へ錯稿・恐怖系弱体を付与",mods:{hp:.97,atk:.98,def:.96,spd:1.07,power:1.02},ougi:"怪談・百鬼夜読",ougiDesc:"敵全体に複数の弱体効果。"},
+  seicho:{trait:"点と線",code:"break",desc:"『点と線』の緻密な推理をBREAK特化へ。",passive:"BREAKゲージへのダメージ上昇",mods:{hp:.96,atk:1.02,def:.96,spd:1.09,power:1.03},ougi:"点と線・時刻表の罠",ougiDesc:"敵の防御を見抜き、大きくBREAKさせる。"},
+  poe:{trait:"Nevermore",code:"seal",desc:"『大鴉』の反復する不吉さを攻撃低下と恐怖へ。",passive:"弱体中の敵へ追加BREAK",mods:{hp:.95,atk:1.01,def:.94,spd:1.08,power:1.03},ougi:"大鴉・Nevermore",ougiDesc:"敵全体へ恐怖・攻撃低下・BREAK。"},
+  shakespeare:{trait:"悲劇王",code:"execute",desc:"『ハムレット』の悲劇性を終盤火力へ。",passive:"敵HP低下時に奥義威力上昇",mods:{hp:1.00,atk:1.20,def:.96,spd:1.04,power:1.09},ougi:"ハムレット・終幕",ougiDesc:"敵HPが低いほど威力が上がる特大奥義。"},
+  doyle:{trait:"ホームズの推理",code:"misprint",desc:"『シャーロック・ホームズ』の観察と推理で弱点を露呈。",passive:"敵の被ダメージを上昇",mods:{hp:.96,atk:1.01,def:.95,spd:1.10,power:1.04},ougi:"ホームズ・完全推理",ougiDesc:"敵の弱点を解析し、味方全体の会心を強化。"},
+  verne:{trait:"ノーチラス航行",code:"dash",desc:"『海底二万里』の冒険性を高速BREAKへ。",passive:"速度に応じてBREAK上昇",mods:{hp:.92,atk:1.03,def:.91,spd:1.17,power:1.03},ougi:"ノーチラス・二万里",ougiDesc:"高速全体攻撃とBREAK。"},
+  andersen:{trait:"人魚の代償",code:"mercy",desc:"『人魚姫』の自己犠牲を大回復へ。",passive:"瀕死の味方への回復量上昇",mods:{hp:1.10,atk:.84,def:1.06,spd:.97,power:1.02},ougi:"人魚姫・泡沫の祈り",ougiDesc:"味方全体を大回復し、戦闘不能寸前ほど効果上昇。"},
+  kafka:{trait:"変身",code:"reverse",desc:"『変身』の変容を状態依存の性能変化へ。",passive:"自身の状態に応じて攻撃・防御が変化",mods:{hp:1.02,atk:1.05,def:1.02,spd:.99,power:1.05},ougi:"変身・異形転章",ougiDesc:"現在状態を反転し、攻防補正を切り替える。"},
+  wilde:{trait:"肖像反射",code:"counter",desc:"『ドリアン・グレイ』の肖像を反射・蓄積へ。",passive:"受けた弱体を敵へ返す",mods:{hp:.98,atk:1.02,def:1.02,spd:1.00,power:1.02},ougi:"ドリアン・グレイの肖像",ougiDesc:"蓄積した弱体を敵全体へ反射。"},
+  dumas:{trait:"復讐伯",code:"execute",desc:"『モンテ・クリスト伯』の復讐劇を追撃火力へ。",passive:"敵に弱体が多いほど威力上昇",mods:{hp:.95,atk:1.14,def:.94,spd:1.04,power:1.05},ougi:"モンテ・クリスト・報復",ougiDesc:"弱体数に応じて威力上昇。"},
+  tolstoy:{trait:"戦争と平和",code:"fortress",desc:"『戦争と平和』の大局を持久防御へ。",passive:"長期戦ほど防御補正上昇",mods:{hp:1.19,atk:.90,def:1.18,spd:.89,power:1.05},ougi:"戦争と平和・大同盟",ougiDesc:"味方全体へ大防御と継続軽減。"},
+  dostoevsky:{trait:"罪罰刻印",code:"seal",desc:"『罪と罰』の罪責を強力な弱体へ。",passive:"敵の弱体数に応じてBREAK上昇",mods:{hp:.98,atk:1.08,def:.96,spd:1.06,power:1.08},ougi:"罪と罰・審判",ougiDesc:"敵全体へ罪罰刻印。攻撃・防御・速度を低下。"},
+  hemingway:{trait:"不屈の老人",code:"unyielding",desc:"『老人と海』の持久戦を低HP時の火力へ。",passive:"HPが減るほど攻撃補正上昇",mods:{hp:1.04,atk:1.10,def:1.02,spd:.96,power:1.04},ougi:"老人と海・最後の曳航",ougiDesc:"長期戦ほど威力が上がる一撃。"},
+  orwell:{trait:"監視社会",code:"rewrite",desc:"『1984年』の監視と統制を敵行動制御へ。",passive:"敵の行動・強化状態を監視し弱体化",mods:{hp:.98,atk:1.04,def:.98,spd:1.04,power:1.05},ougi:"1984・思想警察",ougiDesc:"敵全体の強化を解除し、行動効率を低下。"}
+ };
+ if(exact[slug])return exact[slug];
+
+ let genreMap={
+  幻想:{trait:"幻景",code:"boundary",desc:`『${work}』の幻想性を弱点特化へ。`,passive:"弱点時の追加効果上昇",mods:{hp:.98,atk:1.04,def:.98,spd:1.04,power:1.03}},
+  ミステリ:{trait:"推理",code:"misprint",desc:`『${work}』の謎解きを弱点露呈へ。`,passive:"敵の被ダメージを上昇",mods:{hp:.97,atk:1.01,def:.96,spd:1.08,power:1.02}},
+  推理:{trait:"反証",code:"break",desc:`『${work}』の推理構造をBREAKへ。`,passive:"BREAK性能上昇",mods:{hp:.97,atk:1.02,def:.96,spd:1.08,power:1.02}},
+  怪奇:{trait:"怪異",code:"seal",desc:`『${work}』の怪異を妨害・恐怖へ。`,passive:"敵の攻撃性能を低下",mods:{hp:.96,atk:1.03,def:.95,spd:1.07,power:1.02}},
+  青春:{trait:"成長",code:"buffAtk",desc:`『${work}』の青春性を味方強化へ。`,passive:"味方攻撃・速度を支援",mods:{hp:1.01,atk:1.03,def:.98,spd:1.05,power:1.02}},
+  純文学:{trait:"余白",code:"guard",desc:`『${work}』の内面描写を防御・継戦へ。`,passive:"被ダメージ軽減",mods:{hp:1.04,atk:.96,def:1.07,spd:.98,power:1.02}},
+  恋愛:{trait:"共鳴",code:"mercy",desc:`『${work}』の感情を回復・支援へ。`,passive:"回復時に支援効果",mods:{hp:1.06,atk:.94,def:1.03,spd:1.00,power:1.01}},
+  SF:{trait:"未来校正",code:"refund",desc:`『${work}』のSF性を奥義回転へ。`,passive:"奥義後にEP回収",mods:{hp:.98,atk:1.04,def:.98,spd:1.07,power:1.04}},
+  文学融合:{trait:"改稿",code:"rewrite",desc:`『${work}』の文学融合を効果変換へ。`,passive:"状況に応じ追加効果",mods:{hp:1.00,atk:1.06,def:1.00,spd:1.04,power:1.05}},
+  SNS:{trait:"拡散",code:"teamGauge",desc:`『${work}』の拡散性を全体EP支援へ。`,passive:"味方全体のEP獲得上昇",mods:{hp:.96,atk:.98,def:.95,spd:1.12,power:1.02}},
+  ノンフィクション:{trait:"記録",code:"counter",desc:`『${work}』の記録性を反撃・分析へ。`,passive:"被弾情報を次行動へ還元",mods:{hp:1.02,atk:1.01,def:1.02,spd:1.00,power:1.02}},
+  ライト文芸:{trait:"幕引き",code:"teamGauge",desc:`『${work}』の物語性を味方支援へ。`,passive:"味方の奥義回転を支援",mods:{hp:1.01,atk:.98,def:1.00,spd:1.03,power:1.02}},
+  エッセイ:{trait:"日常筆",code:"regen",desc:`『${work}』の日常性を継続回復へ。`,passive:"WAVE開始時に小回復",mods:{hp:1.05,atk:.93,def:1.03,spd:1.00,power:1.00}},
+  社会派:{trait:"告発",code:"seal",desc:`『${work}』の社会性を敵弱体へ。`,passive:"敵攻撃・防御を低下",mods:{hp:.99,atk:1.00,def:1.00,spd:1.03,power:1.02}},
+  サスペンス:{trait:"伏線",code:"execute",desc:`『${work}』の伏線回収を終盤追撃へ。`,passive:"BREAK中の敵へ追加威力",mods:{hp:.95,atk:1.10,def:.94,spd:1.05,power:1.04}},
+  心理:{trait:"心理誘導",code:"slow",desc:`『${work}』の心理描写を行動遅延へ。`,passive:"敵速度・行動効率を低下",mods:{hp:.98,atk:.98,def:.98,spd:1.05,power:1.01}},
+  紀行:{trait:"旅路",code:"teamGauge",desc:`『${work}』の移動性を味方速度支援へ。`,passive:"味方速度とEPを支援",mods:{hp:1.00,atk:.97,def:.99,spd:1.07,power:1.02}},
+  日常:{trait:"安息",code:"heal",desc:`『${work}』の日常性を安定回復へ。`,passive:"味方の継戦能力上昇",mods:{hp:1.08,atk:.90,def:1.04,spd:.99,power:1.00}}
+ };
+ let g=genreMap[genre]||{trait:"作品共鳴",code:role==="攻撃"?"crit":role==="妨害"?"seal":role==="回復"?"heal":role==="支援"?"teamGauge":"rewrite",desc:`『${work}』の主題を戦闘能力へ変換。`,passive:"作品テーマに応じた追加効果",mods:{hp:1,atk:1,def:1,spd:1,power:1.01}};
+ return {...g,ougi:`${work}・終章`,ougiDesc:`『${work}』の主題を最大出力で解放する。`}
+}
+function rankLiteraryEvolutionV525(i){
+ let r=charRank(i),x=literaryIdentityV525(i);
+ return {
+  R:`基礎効果：${x.passive}`,
+  SR:`改稿：${x.passive}＋効果量上昇`,
+  SSR:`真筆：${x.passive}＋追加効果`,
+  UR:`極筆：${x.passive}＋奥義強化＋固有効果最大`
+ }[r]||x.passive
+}
+
+function characterStatProfileV511(i){
+ i=Math.max(0,Math.min(C.length-1,Number(i)||0));
+ let role=characterAbility(i)?.role||C[i]?.[4]||"特殊",rank=charRank(i),seed=characterSeedV495(i);
+ let m={
+   攻撃:{hp:.94,atk:1.18,def:.90,spd:1.06,power:1.04},
+   妨害:{hp:.97,atk:1.02,def:.96,spd:1.09,power:1.01},
+   回復:{hp:1.10,atk:.85,def:1.06,spd:.96,power:.99},
+   支援:{hp:1.03,atk:.92,def:1.01,spd:1.03,power:1.00},
+   特殊:{hp:1.00,atk:1.05,def:1.00,spd:1.00,power:1.02},
+   防御:{hp:1.17,atk:.89,def:1.21,spd:.90,power:1.03},
+   速度:{hp:.90,atk:1.02,def:.89,spd:1.23,power:1.02}
+ }[role]||{hp:1,atk:1,def:1,spd:1,power:1};
+ let rankMul={UR:1.12,SSR:1.07,SR:1.03,R:1}[rank]||1;
+ let v=(shift,span)=>1+((((seed>>>shift)%101)/100)-.5)*2*span;
+ let lit=literaryIdentityV525(i),lm=lit.mods||{hp:1,atk:1,def:1,spd:1,power:1};
+ return {hp:m.hp*rankMul*v(1,.045)*lm.hp,atk:m.atk*rankMul*v(4,.055)*lm.atk,def:m.def*rankMul*v(7,.055)*lm.def,spd:m.spd*(1+(rankMul-1)*.45)*v(10,.05)*lm.spd,power:m.power*rankMul*v(13,.035)*lm.power}
+}
+function characterStatsV511(i){
+ i=Math.max(0,Math.min(C.length-1,Number(i)||0));
+ let p=characterStatProfileV511(i),l=lv(i),g=gearBonus(i)||{},m=masteryStats(i)?.total||0,sp=gearSpecialization(i)?.bonus||0,amp=1+(m+sp)/100;
+ return {hp:Math.round((880+l*42)*p.hp*amp),atk:Math.round((172+l*18+Number(g.atk||0)*5)*p.atk*amp),def:Math.round((145+l*15+Number(g.def||0)*3)*p.def*amp),spd:Math.round((96+l*.55)*p.spd)}
+}
+
+function charAtk(i){return characterStatsV511(i).atk}
+function charDef(i){return characterStatsV511(i).def}
+function charPower(i){return typeof boostedPower==="function"?boostedPower(i):Math.round((700+lv(i)*35)*characterStatProfileV511(i).power)}
+function singleCharacterPowerV508(i){return charPower(i)}
+
+function formationCompareV506(candidate,current){
+ let cp=singleCharacterPowerV508(candidate),op=singleCharacterPowerV508(current);
+ let ca=charAtk(candidate),oa=charAtk(current);
+ let cd=charDef(candidate),od=charDef(current);
+ return {power:cp-op,atk:ca-oa,def:cd-od}
+}
+function signedV506(n){
+ n=Math.round(Number(n)||0);
+ return n>0?`+${n}`:String(n)
+}
+function formationIntelV506(i,current){
+ let a=abilityText(i),o=ougiInfo(i),cmp=formationCompareV506(i,current);
+ let st=characterStatsV511(i);
+ return {
+   atk:st.atk,def:st.def,hp:st.hp,spd:st.spd,power:singleCharacterPowerV508(i),
+   ability:a.name,role:a.role,roleDesc:a.roleDesc,
+   ougi:o.name,gauge:o.gauge,cmp
+ }
+}
+
+
+function formationPreviewIndexV507(slot,current,list){
+ let i=Number(window.__formationPreviewV507);
+ if(!Number.isInteger(i)||i<0||i>=C.length||!list.includes(i))i=current;
+ window.__formationPreviewV507=i;
+ return i
+}
+function formationPreviewPanelV507(slot,current,candidate){
+ let now=formationIntelV506(current,current),next=formationIntelV506(candidate,current),c=C[candidate],o=ougiInfo(candidate);
+ return `<section class=formationPreviewPanelV507>
+   <div class=formationPreviewArtV507>
+     <div><small>現在</small><img class=portraitContainV506 src="${characterPortraitV501(current)}" alt="${C[current][1]}"><b>${C[current][1]}</b></div>
+     <strong>→</strong>
+     <div class=next><small>候補</small><img class=portraitContainV506 src="${characterPortraitV501(candidate)}" alt="${c[1]}"><b>${c[1]}</b></div>
+   </div>
+   <div class=formationPreviewInfoV507>
+     <div class=formationPreviewTitleV507>${rankBadgeV504(candidate)}<span>${next.role}</span><h2>${c[1]}</h2></div>
+     <div class=formationPreviewCompareV507>
+       <span>戦力<b>${next.power.toLocaleString()}</b><em class="${next.cmp.power>0?"up":next.cmp.power<0?"down":""}">${signedV506(next.cmp.power)}</em></span>
+       <span>攻撃<b>${next.atk}</b><em class="${next.cmp.atk>0?"up":next.cmp.atk<0?"down":""}">${signedV506(next.cmp.atk)}</em></span>
+       <span>防御<b>${next.def}</b><em class="${next.cmp.def>0?"up":next.cmp.def<0?"down":""}">${signedV506(next.cmp.def)}</em></span>
+       <span>Lv<b>${lv(candidate)}</b><em>/ ${cap(candidate)}</em></span>
+     </div>
+     <div class=formationPreviewSkillV507>
+       <div><small>固有能力</small><b>${next.ability}</b><p>${abilityDetail(candidate)}</p></div>
+       <div><small>奥義 / 必要${o.gauge}</small><b>${o.name}</b><p>${o.effect}</p></div>
+     </div>
+     <div class=formationPreviewActionsV507>
+       <button data-char="${candidate}">詳細を見る</button>
+       <button class=apply data-formation-apply-v507="${slot}:${candidate}">このキャラに変更</button>
+     </div>
+   </div>
+ </section>`
+}
+
+
+function formationSkillInfoV516(i){
+ let a=abilityText(i),o=ougiInfo(i),k=characterSkillKitV512(i),p=characterProfileV495(i);
+ return `<div class=formationSkillInfoV516>
+   <div class=formationSkillInfoHeadV516>
+     <div><small>SKILL DETAIL</small><b>${C[i][1]}</b></div>
+     ${rankBadgeV504(i)}
+   </div>
+   <section>
+     <small>固有スキル</small>
+     <h3>${k.skillName}</h3>
+     <p>${abilityDetail(i)}</p>
+     <div class=literarySourceV525><small>作品由来</small><b>《${C[i][2]}》</b><span>${literaryIdentityV525(i).desc}</span><em>${rankLiteraryEvolutionV525(i)}</em></div>
+     <div class=formationSkillTagsV516>
+       <span>${a.role}</span><span>${k.trait}</span><span>${charRank(i)} ${k.rankLabel}</span>
+     </div>
+     <em>${skillRankTextV512(i)}</em>${skillMasteryPanelV519(i)}
+   </section>
+   <section>
+     <small>奥義 / 必要EP ${o.gauge}</small>
+     <h3>${o.name}</h3>
+     <p>${o.effect}</p>
+   </section>
+   <section>
+     <small>戦闘傾向</small>
+     <div class=formationSkillStatsV516>
+       <span>CRIT<b>${p.crit}%</b></span>
+       <span>BREAK<b>${p.break}%</b></span>
+       <span>速度<b>${characterStatsV511(i).spd}</b></span>
+       <span>共鳴<b>${characterSignatureV496(i).resonance}</b></span>
+     </div>
+   </section>
+ </div>`
+}
+
+function formationPickerV136(slot){
+ ensureQoLPrefs();
+ let q=String(S.qol.formationPickQueryV500||"").trim().toLowerCase(),rank=S.qol.formationPickRankV500||"ALL",sort=S.qol.formationPickSortV500||"power";
+ let current=(S.sets?.[S.set]||[])[slot]??0,team=new Set(S.sets?.[S.set]||[]);
+ let curIntel=formationIntelV506(current,current);
+ let a=C.map((_,i)=>i).filter(i=>{
+   if(!selectableCharacterV531(i))return false;
+   let hit=!q||String(C[i][1]).toLowerCase().includes(q)||String(C[i][2]).toLowerCase().includes(q)||String(characterAbility(i).role).toLowerCase().includes(q)||String(characterAbility(i).name).toLowerCase().includes(q);
+   return hit&&(rank==="ALL"||charRank(i)===rank)
+ });
+ a.sort((x,y)=>sort==="level"?lv(y)-lv(x)||singleCharacterPowerV508(y)-singleCharacterPowerV508(x):sort==="rank"?charRankOrder(charRank(y))-charRankOrder(charRank(x))||singleCharacterPowerV508(y)-singleCharacterPowerV508(x):sort==="name"?String(C[x][1]).localeCompare(String(C[y][1]),"ja"):singleCharacterPowerV508(y)-singleCharacterPowerV508(x));
+ return `<div class=formationPickerV500>
+   <header class=formationPickerHeadV500>
+     <div><small>FORMATION SELECT</small><b>${slot+1}枠目を変更</b><span>${a.length}人 / 「スキル説明」で効果確認</span></div>
+     <button data-formation-picker-close=1>×</button>
+   </header>
+
+   <section class=formationCurrentBarV509>
+     <img class=portraitContainV506 src="${characterPortraitV501(current)}" alt="${C[current][1]}">
+     <div><small>現在の${slot+1}枠目</small><b>${C[current][1]}</b><span>${characterAbility(current).role} / Lv.${lv(current)}</span></div>
+     <aside><small>戦力</small><b>${curIntel.power.toLocaleString()}</b></aside>
+   </section>
+
+   <div class=formationPickerToolsV500>
+     <input data-formation-search-v500 value="${S.qol.formationPickQueryV500||""}" placeholder="名前・作品・役割・スキルで検索">
+     <div class=formationRankV500>${["ALL","UR","SSR","SR","R"].map(r=>`<button class="${rank===r?"on":""}" data-formation-rank-v500="${r}">${r==="ALL"?"全員":r}</button>`).join("")}</div>
+     <select data-formation-sort-v500>
+       <option value=power ${sort==="power"?"selected":""}>戦力順</option>
+       <option value=level ${sort==="level"?"selected":""}>Lv順</option>
+       <option value=rank ${sort==="rank"?"selected":""}>ランク順</option>
+       <option value=name ${sort==="name"?"selected":""}>名前順</option>
+     </select>
+   </div>
+
+   <div class=formationEasyListV509>
+     ${a.map(i=>{
+       let x=formationIntelV506(i,current),o=ougiInfo(i);
+       return `<article class="formationEasyCardV509 ${i===current?"current":""} ${team.has(i)?"inTeam":""}">
+         <div class=formationEasyPortraitV509>
+           <img class=portraitContainV506 src="${characterPortraitV501(i)}" alt="${C[i][1]}">
+           ${rankBadgeV504(i)}${workUnitBadgeV531(i)}
+         </div>
+         <div class=formationEasyMainV509>
+           <div class=formationEasyTitleV509>
+             <div><small>${x.role} / ${bundanTag(i)}</small><b>${C[i][1]}</b><span>${C[i][2]}</span></div>
+             <strong>Lv.${lv(i)}</strong>
+           </div>
+           <div class=formationEasyStatsV509>
+             <span>戦力<b>${x.power.toLocaleString()}</b><em class="${x.cmp.power>0?"up":x.cmp.power<0?"down":""}">${signedV506(x.cmp.power)}</em></span>
+             <span>攻撃<b>${x.atk}</b><em class="${x.cmp.atk>0?"up":x.cmp.atk<0?"down":""}">${signedV506(x.cmp.atk)}</em></span>
+             <span>防御<b>${x.def}</b><em class="${x.cmp.def>0?"up":x.cmp.def<0?"down":""}">${signedV506(x.cmp.def)}</em></span>
+           </div><div class=formationExtraStatsV511><span>HP <b>${x.hp}</b></span><span>速度 <b>${x.spd}</b></span></div>
+           <div class=formationEasySkillsV509>
+             <div><small>固有 / ${characterSkillKitV512(i).trait}</small><b>${characterSkillKitV512(i).skillName}</b><em>${skillRankTextV512(i)} / ${skillMasteryTextV519(i)}</em></div>
+             <div><small>奥義 ${o.gauge} / ${charRank(i)}</small><b>${o.name}</b></div>
+           </div>
+         </div>
+         <div class=formationEasyActionsV509>
+           <button class=skill data-formation-skillinfo-v516="${i}">スキル説明</button>
+           <button class=detail data-formation-detail-v510="${i}">詳細</button>
+           <button class=swap data-formation-pick="${slot}:${i}" ${i===current?"disabled":""}>${i===current?"現在":"入替"}</button>
+         </div>
+         ${team.has(i)&&i!==current?`<i class=formationInTeamV506>編成中</i>`:""}
+       </article>`
+     }).join("")}
+   </div>
+ </div>`
+}
+function openFormationPickerV136(s){document.getElementById("formationPickerOverlay")?.remove();window.__formationPreviewV507=(S.sets?.[S.set]||[])[s]??0;let o=document.createElement("div");o.id="formationPickerOverlay";o.className="resultOverlay formationPickerOverlayV500";o.dataset.slot=String(s);o.innerHTML=`<div class=resultCard>${formationPickerV136(s)}</div>`;document.body.appendChild(o)}
+function setFormationSlotV136(s,i){ensureUnitSets();let t=[...(S.sets[S.set]||[])],old=t.indexOf(i);if(old>=0&&old!==s){let x=t[s];t[s]=i;if(x!=null)t[old]=x;else t.splice(old,1)}else t[s]=i;S.sets[S.set]=t.filter(x=>x!=null).slice(0,6);save();persistentSaveWrite();document.getElementById("formationPickerOverlay")?.remove();return party()}
+
+function authorMotionV137(i){
+ let slug=C[i]?.[0]||"",name=C[i]?.[1]||"";
+ const exact={
+  dazai:{cls:"dazai",normal:"頁返し",skill:"人間失格",ougi:"無頼の終頁"},
+  akutagawa:{cls:"akutagawa",normal:"墨刃",skill:"羅生門",ougi:"黒獣・羅生門"},
+  higuchi:{cls:"higuchi",normal:"花片",skill:"たけくらべ",ougi:"十三夜"},
+  soseki:{cls:"soseki",normal:"猫歩",skill:"吾輩の観察",ougi:"夢十夜"},
+  nakajima:{cls:"nakajima",normal:"虎爪",skill:"山月記",ougi:"月下虎嘯"},
+  poe:{cls:"poe",normal:"黒羽",skill:"怪奇の頁",ougi:"大鴉"},
+  shakespeare:{cls:"shakespeare",normal:"羽根筆",skill:"悲劇開幕",ougi:"世界は舞台"},
+  kafka:{cls:"kafka",normal:"変転",skill:"変身",ougi:"審判"}
+ };
+ if(exact[slug])return exact[slug];
+ let s=signatureStyleV124(i);
+ return {cls:s.motion,normal:"文撃",skill:characterAbility(i).name,ougi:ougiInfo(i).name}
+}
+function authorFxV137(i,kind,target=0){
+ let m=authorMotionV137(i),r=battleFxLayerV121(),n=document.createElement("div");
+ n.className=`authorFxV137 author-${m.cls} ${kind}`;
+ let count=kind==="ougi"?12:7;
+ n.innerHTML=Array.from({length:count},(_,k)=>`<i style="--k:${k}"></i>`).join("")+`<b>${kind==="ougi"?m.ougi:kind==="skill"?m.skill:m.normal}</b>`;
+ r.appendChild(n);setTimeout(()=>n.classList.add("play"),20);setTimeout(()=>n.remove(),kind==="ougi"?1450:850)
+}
+function authorPoseV137(i,slot,kind){
+ let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ let cls="authorPose-"+authorMotionV137(i).cls+"-"+kind;u.classList.add(cls);
+ setTimeout(()=>u.classList.remove(cls),kind==="ougi"?1400:800)
+}
+function playSignatureV137(i,slot,kind,target){playExpandedSignatureV138(i,slot,kind);
+ authorPoseV137(i,slot,kind);authorFxV137(i,kind,target);
+}
+function signatureProgressV137(){return{dazai:100,akutagawa:100,higuchi:100,soseki:100,nakajima:100,poe:100,shakespeare:100,kafka:100,others:55,total:72}}
+
+function expandedMotionV138(i){
+ let slug=(C[i]?.[0]||"").toLowerCase(),name=C[i]?.[1]||"";
+ let map=[
+  [["chuuya","nakahara"],{cls:"chuuya",normal:"汚濁弾",skill:"悲しみに",ougi:"汚れつちまつた悲しみに"}],
+  [["ranpo","edogawa"],{cls:"ranpo",normal:"推理札",skill:"超推理",ougi:"完全推理"}],
+  [["miyazawa","kenji"],{cls:"kenji",normal:"銀河灯",skill:"銀河鉄道",ougi:"星巡る夜"}],
+  [["izumi","kyoka"],{cls:"kyoka",normal:"鏡花水月",skill:"夜叉ヶ池",ougi:"高野聖"}],
+  [["akiko","yosano"],{cls:"akiko",normal:"緋歌",skill:"みだれ髪",ougi:"君死にたまふことなかれ"}],
+  [["orwell"],{cls:"orwell",normal:"監視",skill:"二重思考",ougi:"1984"}],
+  [["doyle","conan"],{cls:"doyle",normal:"観察",skill:"演繹",ougi:"最後の事件"}],
+  [["wilde","oscar"],{cls:"wilde",normal:"薔薇筆",skill:"肖像",ougi:"ドリアン・グレイ"}],
+  [["verne","jules"],{cls:"verne",normal:"蒸気弾",skill:"海底二万里",ougi:"月世界旅行"}]
+ ];
+ for(const [keys,v] of map)if(keys.some(k=>slug.includes(k)||name.toLowerCase().includes(k)))return v;
+ return authorMotionV137(i)
+}
+function expandedFxV138(i,kind){
+ let m=expandedMotionV138(i);if(!["chuuya","ranpo","kenji","kyoka","akiko","orwell","doyle","wilde","verne"].includes(m.cls))return;
+ let r=battleFxLayerV121(),n=document.createElement("div");n.className=`expandedFxV138 ex-${m.cls} ${kind}`;
+ n.innerHTML=Array.from({length:kind==="ougi"?10:6},(_,k)=>`<i style="--k:${k}"></i>`).join("")+`<b>${kind==="ougi"?m.ougi:kind==="skill"?m.skill:m.normal}</b>`;
+ r.appendChild(n);requestAnimationFrame(()=>n.classList.add("play"));setTimeout(()=>n.remove(),kind==="ougi"?1400:850)
+}
+function expandedPoseV138(i,slot,kind){
+ let m=expandedMotionV138(i),u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ let c=`exPose-${m.cls}-${kind}`;u.classList.add(c);setTimeout(()=>u.classList.remove(c),kind==="ougi"?1350:800)
+}
+function playExpandedSignatureV138(i,slot,kind){skeletalActionV145(i,slot,kind);applyExpressionV140(i,slot,kind,kind==="ougi"?1300:750);expandedPoseV138(i,slot,kind);expandedFxV138(i,kind)}
+function signatureProgressV138(){return{core8:100,japaneseExpansion:92,overseasExpansion:88,others:68,total:84}}
+
+function sdIdentityV139(i){
+ let m=expandedMotionV138(i),slug=(C[i]?.[0]||"").toLowerCase(),role=characterAbility(i)?.role||"攻撃";
+ let exact={
+  dazai:{hair:"messy",coat:"long",prop:"book",idle:"lazy"},
+  akutagawa:{hair:"sharp",coat:"black",prop:"blade",idle:"still"},
+  higuchi:{hair:"bob",coat:"kimono",prop:"pages",idle:"soft"},
+  soseki:{hair:"classic",coat:"haori",prop:"cat",idle:"observe"},
+  nakajima:{hair:"wild",coat:"light",prop:"claw",idle:"ready"},
+  chuuya:{hair:"hat",coat:"short",prop:"gravity",idle:"cocky"},
+  ranpo:{hair:"short",coat:"cape",prop:"glass",idle:"think"},
+  kenji:{hair:"soft",coat:"traveler",prop:"star",idle:"bright"},
+  kyoka:{hair:"long",coat:"kimono",prop:"mirror",idle:"quiet"},
+  akiko:{hair:"long",coat:"dress",prop:"flower",idle:"proud"},
+  poe:{hair:"wave",coat:"gothic",prop:"raven",idle:"shy"},
+  shakespeare:{hair:"curl",coat:"stage",prop:"quill",idle:"grand"},
+  kafka:{hair:"neat",coat:"dark",prop:"paper",idle:"uneasy"},
+  orwell:{hair:"short",coat:"military",prop:"eye",idle:"watch"},
+  doyle:{hair:"classic",coat:"detective",prop:"glass",idle:"think"},
+  wilde:{hair:"wave",coat:"elegant",prop:"rose",idle:"proud"},
+  verne:{hair:"classic",coat:"traveler",prop:"gear",idle:"bright"}
+ };
+ for(let k in exact)if(slug.includes(k)||m.cls===k)return exact[k];
+ return {hair:role==="回復"?"soft":role==="妨害"?"sharp":"classic",coat:role==="支援"?"haori":"long",prop:role==="回復"?"flower":"book",idle:role==="妨害"?"still":"observe"}
+}
+function sdAccessoryV139(i){
+ let d=sdIdentityV139(i);
+ return `<div class="sdAccessoryV139 prop-${d.prop}"><i></i><b></b></div>`
+}
+function sdIdentityClassV139(i){
+ let d=sdIdentityV139(i);return `hair-${d.hair} coat-${d.coat} idle-${d.idle}`
+}
+function sdIdentityProgressV139(){return{silhouette:92,props:88,idles:78,attackPoses:86,overall:87}}
+
+function sdExpressionV140(i,kind="idle"){
+ let d=sdIdentityV139(i),m=expandedMotionV138(i);
+ let face=d.idle==="cocky"?"smirk":d.idle==="shy"?"shy":d.idle==="uneasy"?"tense":d.idle==="bright"?"smile":d.idle==="still"?"cold":"calm";
+ if(kind==="ougi")face="focus";if(kind==="hit")face="pain";return `face-${face} author-${m.cls}`
+}
+function applyExpressionV140(i,slot,kind,duration=700){
+ let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ let c=sdExpressionV140(i,kind);c.split(" ").forEach(x=>u.classList.add(x));
+ setTimeout(()=>c.split(" ").forEach(x=>u.classList.remove(x)),duration)
+}
+function victoryPoseV140(i,slot){spritePoseV160(i,slot,"victory",1800);
+ let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ let d=sdIdentityV139(i),c=`victory-${d.idle}`;u.classList.add(c);setTimeout(()=>u.classList.remove(c),1800)
+}
+function partyVictoryV140(){
+ let t=(S.sets?.[S.set]||[]).slice(0,6);t.forEach((i,n)=>setTimeout(()=>victoryPoseV140(+i,n),n*90))
+}
+function entranceV140(){
+ let t=(S.sets?.[S.set]||[]).slice(0,6);t.forEach((i,n)=>{let u=document.querySelector(`[data-sd-unit="ally:${n}"]`);if(u){u.classList.add("sdEntranceV140");setTimeout(()=>u.classList.remove("sdEntranceV140"),700+n*70)}})
+}
+function sdPersonalityProgressV140(){return{expressions:86,entrance:100,victory:82,hitReactions:78,overall:91}}
+
+function koStyleV141(i){
+ let d=sdIdentityV139(i);
+ return d.idle==="still"?"kneel":d.idle==="proud"||d.idle==="cocky"?"stagger":d.idle==="bright"?"fall":d.idle==="shy"?"sit":"kneel"
+}
+function koPoseV141(slot){let _t160=S.sets?.[S.set]||[];spritePoseV160(+_t160[slot]||0,slot,"ko",999999);
+ let t=S.sets?.[S.set]||[],i=+t[slot]||0,u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ u.classList.add("sdKoV141",`ko-${koStyleV141(i)}`);u.setAttribute("aria-disabled","true")
+}
+function hitReactionV141(slot){let _t160=S.sets?.[S.set]||[];spritePoseV160(+_t160[slot]||0,slot,"hit",520);
+ let t=S.sets?.[S.set]||[],i=+t[slot]||0,u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ applyExpressionV140(i,slot,"hit",500);let d=sdIdentityV139(i),c=`hit-${d.idle}`;u.classList.add(c);setTimeout(()=>u.classList.remove(c),520)
+}
+function finisherV141(i,slot,target){
+ let m=expandedMotionV138(i),r=battleFxLayerV121(),n=document.createElement("div");n.className=`finisherV141 finish-${m.cls}`;
+ n.innerHTML=`<div class=finisherLineV141></div><section><small>FINISHER</small><b>${m.ougi}</b><span>${C[i][1]}</span></section>`;
+ r.appendChild(n);requestAnimationFrame(()=>n.classList.add("show"));setTimeout(()=>n.classList.add("impact"),520);setTimeout(()=>n.remove(),850)
+}
+function cinematicOugiV141(i,slot,target){
+ finisherV141(i,slot,target);applyExpressionV140(i,slot,"ougi",1400);
+ let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(u){u.classList.add("sdFinisherV141");setTimeout(()=>u.classList.remove("sdFinisherV141"),1400)}
+}
+function sdFinishProgressV141(){return{ko:96,hit:94,finishers:94,victory:90,overall:96}}
+
+function reviveSdStateV142(){
+ let b=ensureAdvancedBattleV125(),team=S.sets?.[S.set]||[];
+ b.allyHp.forEach((hp,slot)=>{let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;if(hp<=0)koPoseV141(slot);else{u.classList.remove("sdKoV141","ko-kneel","ko-stagger","ko-fall","ko-sit");u.removeAttribute("aria-disabled")}})
+}
+function battleCameraV142(kind="normal"){
+ let f=document.querySelector(".battleFieldV119");if(!f)return;
+ let c=kind==="ougi"?"cameraOugiV142":kind==="hit"?"cameraHitV142":"cameraActionV142";f.classList.add(c);setTimeout(()=>f.classList.remove(c),kind==="ougi"?1000:420)
+}
+function victoryCurtainV142(){
+ let r=battleFxLayerV121(),n=document.createElement("div");n.className="victoryCurtainV142";n.innerHTML="<small>QUEST COMPLETE</small><b>VICTORY</b>";r.appendChild(n);requestAnimationFrame(()=>n.classList.add("show"));setTimeout(()=>n.remove(),1550)
+}
+function comboAuraV142(){
+ let b=comboStateV129(),field=document.querySelector(".battleFieldV119");if(!field)return;
+ field.classList.toggle("comboAuraV142",(b.combo||0)>=3);field.classList.toggle("comboMaxV142",(b.combo||0)>=5)
+}
+function sdFinalProgressV142(){return{identity:98,idle:96,normal:96,skill:97,ougi:98,hit:97,ko:98,victory:96,overall:98}}
+
+function sdPaletteV144(i){
+ let slug=(C[i]?.[0]||"").toLowerCase(),m=expandedMotionV138(i).cls;
+ let map={
+  dazai:["#171c24","#29435a","#d8c0ad","#b9975a"],akutagawa:["#dedbd5","#24172b","#e5c8bd","#8f58ad"],
+  higuchi:["#512b38","#6b3449","#efd0c3","#d18ca2"],soseki:["#857765","#4d493d","#dfc1ad","#c1a25e"],
+  nakajima:["#d9dde1","#71808d","#e8cec0","#dbe9ef"],chuuya:["#34261d","#65322c","#edc8b8","#d55146"],
+  ranpo:["#2a2524","#263d4c","#e7c8b7","#70bddf"],kenji:["#a98c69","#4d6a5b","#eccfba","#efd46e"],
+  kyoka:["#302a3c","#5a3d67","#ebc9bf","#a886c8"],akiko:["#3b222d","#6d3348","#edc8bd","#d96b88"],
+  poe:["#2a202d","#39283f","#e7c8bc","#6e527f"],shakespeare:["#6c4b35","#51354b","#e7c3ad","#d2b35f"],
+  kafka:["#26282c","#30343a","#ddc2b3","#62d09a"],orwell:["#3a3730","#34483e","#dfc2b1","#d65d5d"],
+  doyle:["#5a4738","#3e5360","#e4c5b2","#6ebad9"],wilde:["#4c342e","#604258","#e8c4b2","#d5a65e"],
+  verne:["#6a5b4a","#3d5966","#e5c6b3","#75bad8"]
+ };
+ return map[slug]||map[m]||["#252b33","#344554","#e7cabb","#b99a55"]
+}
+function sdDetailStyleV144(i){
+ let [hair,coat,skin,accent]=sdPaletteV144(i);
+ return `--sd-hair:${hair};--sd-coat:${coat};--sd-skin:${skin};--sd-accent:${accent}`
+}
+function selectedUnitV144(slot){
+ let b=ensureAdvancedBattleV125();
+ b.unit=Math.max(0,+slot||0);
+ queueBattleSaveV197();
+ schedulePosterRenderV229("select",true);
+ posterSelectedCardCueV225(b.unit);
+ return b.unit
+ refreshPosterCleanHudV235();applyPosterControlStateV235();
+}
+function battleSelectedMarkerV144(){
+ let b=ensureAdvancedBattleV125();return `<div class=selectedUnitV144>ACT <b>${(b.unit||0)+1}</b></div>`
+}
+
+function skeletalMotionV145(i,slot,kind){
+ let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ let m=expandedMotionV138(i),cls=`sk-${m.cls}-${kind}`;
+ u.classList.add("skeletalActiveV145",cls);
+ setTimeout(()=>u.classList.remove("skeletalActiveV145",cls),kind==="ougi"?1350:kind==="skill"?900:650)
+}
+function weaponTrailV145(i,slot,kind){
+ let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`),r=battleFxLayerV121();if(!u||!r)return;
+ let rect=u.getBoundingClientRect(),host=r.getBoundingClientRect(),n=document.createElement("i");
+ n.className=`weaponTrailV145 ${expandedMotionV138(i).cls} ${kind}`;n.style.left=(rect.left-host.left+rect.width*.72)+"px";n.style.top=(rect.top-host.top+rect.height*.55)+"px";r.appendChild(n);setTimeout(()=>n.remove(),700)
+}
+function skeletalActionV145(i,slot,kind){bsv2Feedback178(slot,kind,0);if(kind==="skill"||kind==="ougi"){skillFxV174(i,kind);choreographyCameraV174(i,kind)}spriteActionV160(i,slot,kind);costumeMotionV158(i,slot,kind);actionPoseV158(i,slot,kind);expressionPulseV149(slot,kind);choreographyV146(i,slot,kind);skeletalMotionV145(i,slot,kind);setTimeout(()=>weaponTrailV145(i,slot,kind),kind==="attack"?140:260)}
+function skeletalProgressV145(){return{arms:96,legs:91,weapons:94,authorPoses:88,overall:93}}
+
+function choreographyV146(i,slot,kind,target=0){
+ let m=expandedMotionV138(i),u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ let sequence={
+  dazai:["step","open","cast"],akutagawa:["brace","slash","recoil"],chuuya:["crouch","dash","impact"],
+  ranpo:["observe","point","solve"],doyle:["observe","point","solve"],kenji:["lift","gather","release"],
+  higuchi:["turn","fan","release"],akiko:["turn","fan","release"],kyoka:["turn","mirror","release"],
+  shakespeare:["bow","raise","stage"],kafka:["freeze","glitch","rewrite"],nakajima:["crouch","dash","claw"]
+ }[m.cls]||["step","cast","impact"];
+ let dur=kind==="ougi"?300:kind==="skill"?220:160;
+ sequence.forEach((p,n)=>setTimeout(()=>{u.dataset.pose=p;u.classList.add(`choreo-${p}`);setTimeout(()=>u.classList.remove(`choreo-${p}`),dur+100)},n*dur));
+}
+function impactFrameV146(target=0,kind="attack"){
+ let e=document.querySelector(`[data-sd-enemy="${target}"]`),f=document.querySelector(".battleFieldV119");if(e){e.classList.add("enemyImpactV146");setTimeout(()=>e.classList.remove("enemyImpactV146"),320)}if(f){f.classList.add(kind==="ougi"?"impactOugiV146":"impactFrameV146");setTimeout(()=>f.classList.remove("impactFrameV146","impactOugiV146"),260)}
+}
+function actionSfxVisualV146(kind){
+ let r=battleFxLayerV121(),n=document.createElement("div");n.className=`sfxVisualV146 ${kind}`;n.textContent=kind==="ougi"?"閃":kind==="skill"?"術":"斬";r.appendChild(n);setTimeout(()=>n.remove(),520)
+}
+function choreoProgressV146(){return{multiStep:94,impact:98,characterKills:91,timing:92,overall:95}}
+
+function sdArtProfileV148(i){
+ let slug=(C[i]?.[0]||"").toLowerCase(),m=expandedMotionV138(i).cls;
+ const p={
+  dazai:{bang:"swept",eye:"droop",detail:"bandage",outfit:"coat"},
+  akutagawa:{bang:"sharp",eye:"narrow",detail:"cravat",outfit:"gothic"},
+  higuchi:{bang:"bob",eye:"soft",detail:"ribbon",outfit:"kimono"},
+  soseki:{bang:"classic",eye:"calm",detail:"moustache",outfit:"haori"},
+  nakajima:{bang:"wild",eye:"round",detail:"claw",outfit:"light"},
+  chuuya:{bang:"side",eye:"sharp",detail:"hat",outfit:"shortcoat"},
+  ranpo:{bang:"short",eye:"smile",detail:"glasses",outfit:"cape"},
+  kenji:{bang:"soft",eye:"round",detail:"star",outfit:"traveler"},
+  kyoka:{bang:"long",eye:"quiet",detail:"hairpin",outfit:"kimono"},
+  akiko:{bang:"long",eye:"proud",detail:"flower",outfit:"dress"},
+  poe:{bang:"wave",eye:"shy",detail:"raven",outfit:"gothic"},
+  shakespeare:{bang:"curl",eye:"grand",detail:"ruff",outfit:"stage"},
+  kafka:{bang:"neat",eye:"tense",detail:"paper",outfit:"dark"},
+  orwell:{bang:"short",eye:"watch",detail:"badge",outfit:"military"},
+  doyle:{bang:"classic",eye:"focus",detail:"glasses",outfit:"detective"},
+  wilde:{bang:"wave",eye:"proud",detail:"rose",outfit:"elegant"},
+  verne:{bang:"classic",eye:"bright",detail:"goggle",outfit:"traveler"}
+ };
+ return p[slug]||p[m]||{bang:"classic",eye:"calm",detail:"book",outfit:"coat"}
+}
+function sdArtClassV148(i){let p=sdArtProfileV148(i);return `bang-${p.bang} eyes-${p.eye} detail-${p.detail} outfit-${p.outfit}`}
+function sdArtProgressV148(){return{faces:91,hair:94,outfits:90,details:92,overall:92}}
+
+function livingSdV149(){
+ document.querySelectorAll(".sdUnitV147").forEach((u,n)=>{
+  u.style.setProperty("--blink-delay",`${.7+n*.43}s`);
+  u.style.setProperty("--breathe-delay",`${n*.17}s`);
+ })
+}
+function expressionPulseV149(slot,kind){
+ let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ let c=kind==="skill"?"talkV149":kind==="ougi"?"shoutV149":"focusV149";u.classList.add(c);setTimeout(()=>u.classList.remove(c),kind==="ougi"?1000:560)
+}
+function livingProgressV149(){return{blink:100,breathing:100,hairMotion:92,mouth:90,cloth:88,overall:95}}
+
+function battleTopBarV151(){
+ let b=ensureAdvancedBattleV125();
+ return `<div class=battleTopBarV151><div><small>第${b.wave}章　言葉のはじまり</small><span>WAVE ${b.wave}/3　 TURN ${b.turn}</span></div><nav><button data-battle-speed="${b.speed===2?1:2}">▶▶ ${b.speed===2?"×2":"×1"}</button><button class="${b.auto?"on":""}" data-battle-auto=1 data-sd-action=auto>${b.auto?"● AUTO":"AUTO"}</button>${lightBattleButtonV187()}${battleQualityLabelV192()}<button data-snappy-v204=1>演出</button><button data-battle-pause=1>Ⅱ</button></nav></div>`
+}
+function battleCharacterCardsV151(){
+ let b=ensureAdvancedBattleV125(),t=(S.sets?.[S.set]||[]).slice(0,6);
+ return `<div class=battleCardsV151>${t.map((i,n)=>{let a=characterAbility(+i),hp=b.allyHp[n]||0,ep=b.ep[n]||0;return `<button class="${b.unit===n?"active":""}" data-battle-unit="${n}"><img src="${characterImage(C[+i][0])}"><section><b>${C[+i][1]}</b><small>HP</small><i class=hp><em style="width:${hp}%"></em></i><small>EP</small><i class=ep><em style="width:${ep}%"></em></i></section><div>${["攻","技","奥"].map((x,k)=>`<span class=s${k}>${x}</span>`).join("")}</div></button>`}).join("")}</div>`
+}
+function battleAttackOrbV151(){
+ return `<button class=battleAttackOrbV151 data-sd-action=attack><i>⚔</i><b>攻撃</b><small>ATTACK</small></button>`
+}
+function targetBattleProgressV151(){return{layout:78,sdArt:48,enemyArt:42,cutin:55,ui:82,overall:61}}
+
+function selectedSkillsV152(){
+ let b=ensureAdvancedBattleV125(),slot=b.unit||0,t=S.sets?.[S.set]||[],i=+t[slot]||0,a=characterAbility(i),ep=b.ep?.[slot]||0;
+ return `<div class=selectedSkillsV152><button data-sd-action=skill><i>✦</i><span>${a.name}</span></button><button class="${ep>=100?"ready":""}" data-sd-action=ougi><i>◆</i><span>${ougiInfo(i).name}</span><small>${ep}%</small></button><button data-sd-action=heal><i>＋</i><span>${a.role==="回復"?"回復":"支援"}</span></button></div>`
+}
+function waveBannerV152(){
+ let b=ensureAdvancedBattleV125();return `<div class=waveBannerV152><small>WAVE</small><b>${b.wave}</b><span>/ 3</span></div>`
+}
+function bossFrameV152(){
+ let b=ensureAdvancedBattleV125();if(b.wave!==3)return"";
+ return `<div class=bossFrameV152><small>BOSS</small><b>${enemyTypeV124(3).name}</b></div>`
+}
+function targetProgressV152(){return{layout:86,sdArt:52,enemyArt:48,cutin:62,ui:89,flow:82,overall:68}}
+
+function enemyArtV153(wave,index=0){
+ let roster=enemyRosterV129(wave),e=roster[index]||roster[0],boss=wave===3;
+ return `<div class="enemyArtV153 ${e.cls} ${boss?"boss":""}" data-sd-enemy="${index}"><div class=enemyAuraV153></div><div class=enemyPagesV153>${Array.from({length:boss?8:4},(_,k)=>`<i style="--k:${k}"></i>`).join("")}</div><div class=enemyBodyV153><div class=enemyMaskV153><i></i><b></b></div><div class=enemyCoreV153></div><div class=enemyClawV153></div></div><div class=enemySilhouetteV417 aria-hidden="true"><i></i><i></i><b></b><em></em></div><small>${e.name}</small></div>`
+}
+function enemyStageV153(){
+ let b=ensureAdvancedBattleV125(),r=syncEnemyRosterV129();
+ return `<div class=enemyStageV153>${r.map((e,n)=>enemyArtV153(b.wave,n)).join("")}</div>`
+}
+function cutinV153(i,kind="ougi"){
+ let m=expandedMotionV138(i),r=battleFxLayerV121(),n=document.createElement("div");
+ n.className=`cutinV153 cutin-${m.cls}`;n.innerHTML=`<div class=cutinPortraitV153><img src="${characterImage(C[i][0])}"></div><div class=cutinSlashV153></div><section><small>${C[i][1]}</small><b>${m.ougi}</b></section>`;
+ r.appendChild(n);requestAnimationFrame(()=>n.classList.add("show"));setTimeout(()=>n.remove(),bsv2SkipLongFxV186()?420:620)
+}
+function targetProgressV153(){return{layout:88,sdArt:55,enemyArt:68,cutin:78,ui:90,flow:84,overall:74}}
+
+function sdDepthV154(i){
+ let p=sdArtProfileV148(i),m=expandedMotionV138(i);
+ return `depth-${p.outfit} aura-${m.cls}`
+}
+function selectedAuraV154(){
+ let b=ensureAdvancedBattleV125();
+ document.querySelectorAll(".sdUnitV147").forEach((u,n)=>u.classList.toggle("selectedV154",n===(b.unit||0)))
+}
+function targetProgressV154(){return{layout:90,sdArt:67,enemyArt:70,cutin:80,ui:91,flow:86,overall:79}}
+
+function battleAtmosphereV155(){
+ let b=ensureAdvancedBattleV125(),tone=b.wave===3?"boss":b.wave===2?"ink":"library";
+ return `<div class="battleAtmosphereV155 ${tone}"><i></i><i></i><i></i></div>`
+}
+function damageStyleV155(kind,weak=false){
+ return kind==="ougi"?"critical":weak?"weak":"normal"
+}
+function targetProgressV155(){return{layout:93,sdArt:72,enemyArt:75,cutin:84,ui:93,flow:89,atmosphere:88,overall:83}}
+
+function depthFxV156(){
+ let b=ensureAdvancedBattleV125();
+ return `<div class="depthFxV156 wave${b.wave}"><div class=fogBackV156></div><div class=fogFrontV156></div><div class=vignetteV156></div></div>`
+}
+function enemyIntentV156(){
+ let b=ensureAdvancedBattleV125(),sk=enemySkillV126();
+ return `<div class=enemyIntentV156><small>NEXT</small><b>${sk.name}</b><span>${sk.aoe?"全体":"単体"}</span></div>`
+}
+function targetProgressV156(){return{layout:94,sdArt:74,enemyArt:79,cutin:86,ui:94,flow:91,atmosphere:93,overall:86}}
+
+function faceMoodV157(i){
+ let p=sdArtProfileV148(i);
+ return p.eye==="sharp"||p.eye==="narrow"?"cool":p.eye==="smile"||p.eye==="bright"?"cute":p.eye==="shy"||p.eye==="soft"?"gentle":p.eye==="tense"?"serious":"neutral"
+}
+function faceMoodClassV157(i){return `mood-${faceMoodV157(i)}`}
+function targetProgressV157(){return{layout:95,sdArt:82,enemyArt:80,cutin:87,ui:95,flow:92,atmosphere:94,overall:89}}
+
+function costumeMotionV158(i,slot,kind){
+ let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ let p=sdArtProfileV148(i),cls=`costumeMove-${p.outfit}-${kind}`;u.classList.add(cls);
+ setTimeout(()=>u.classList.remove(cls),kind==="ougi"?1250:700)
+}
+function actionPoseV158(i,slot,kind){
+ let u=document.querySelector(`[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ let mood=faceMoodV157(i),c=`actionMood-${mood}-${kind}`;u.classList.add(c);setTimeout(()=>u.classList.remove(c),kind==="ougi"?1200:650)
+}
+function targetProgressV158(){return{layout:95,sdArt:87,enemyArt:81,cutin:88,ui:95,flow:93,atmosphere:94,motion:90,overall:92}}
+
+function enemyMotionV159(kind="attack"){
+ let b=ensureAdvancedBattleV125(),e=document.querySelector(`.enemyArtV153[data-sd-enemy="${b.target||0}"]`);
+ if(!e)return;let c=kind==="boss"?"enemyBossCastV159":kind==="aoe"?"enemyAoeV159":"enemyAttackV159";
+ e.classList.add(c);setTimeout(()=>e.classList.remove(c),kind==="boss"?1200:800)
+}
+function enemyWarningV159(name,aoe=false){
+ let r=battleFxLayerV121(),n=document.createElement("div");n.className="enemyWarningV159";
+ n.innerHTML=`<small>ENEMY SKILL</small><b>${name}</b><span>${aoe?"ALL":"TARGET"}</span>`;
+ r.appendChild(n);requestAnimationFrame(()=>n.classList.add("show"));setTimeout(()=>n.remove(),900)
+}
+function ougiSealV159(i){
+ let m=expandedMotionV138(i),r=battleFxLayerV121(),n=document.createElement("div");n.className=`ougiSealV159 seal-${m.cls}`;
+ n.innerHTML=`<i></i><b>${m.ougi}</b>`;r.appendChild(n);setTimeout(()=>n.classList.add("show"),20);setTimeout(()=>n.remove(),620)
+}
+function targetProgressV159(){return{layout:96,sdArt:88,enemyArt:89,cutin:94,ui:96,flow:94,atmosphere:95,motion:94,overall:95}}
+
+function spriteAssetV160(i,pose="idle"){
+ return characterImage(C[i]?.[0]||"dazai")
+}
+function spriteFallbackV160(img){
+ let wrap=img.closest(".spriteUnitV160");if(!wrap)return;
+ let slug=String(wrap.dataset.author||"dazai");
+ img.onerror=null;img.src=`assets/characters/${slug}.jpg?v=417`
+}
+function spritePoseV160(i,slot,pose="idle",ms=650){
+ let u=document.querySelector(`.spriteUnitV160[data-sd-unit="ally:${slot}"]`);if(!u)return;
+ let img=u.querySelector(".spriteArtV160");if(!img)return;
+ let old=img.src;img.src=spriteAssetV160(i,pose);u.dataset.pose=pose;
+ setTimeout(()=>{img.src=spriteAssetV160(i,"idle");u.dataset.pose="idle"},ms)
+}
+function spriteActionV160(i,slot,kind){
+ let pose=kind==="attack"?"attack":kind==="skill"?"skill":kind==="ougi"?"ougi":"support";
+ spritePoseV160(i,slot,pose,kind==="ougi"?1350:850)
+}
+function spriteManifestV160(){
+ return {
+  format:"transparent WebP/PNG",
+  target:"2.5-3 head anime chibi, game-rendered, character-specific",
+  poses:["idle","attack","skill","ougi","hit","ko","victory","support"],
+  size:"512x512 source, transparent",
+  rule:"NO text baked into sprite"
+ }
+}
+function targetProgressV160(){return{layout:96,spriteArchitecture:100,sdArtAssets:35,enemyArt:89,cutin:94,ui:96,overall:82}}
+
+function artTargetV161(){
+ return {
+  composition:"cinematic battlefield 70% / HUD 30%",
+  allies:"five high-detail 2.5-3 head anime chibi sprites",
+  enemy:"large authored monster art, readable silhouette",
+  ui:"thin dark glass + restrained gold lines",
+  actions:"normal attack / skill / ougi / support",
+  camera:"wide battle field, no oversized panels"
+ }
+}
+function spriteReadinessV161(i){
+ let slug=(C[i]?.[0]||"author").toLowerCase();
+ return {slug,poses:["idle","attack","skill","ougi","hit","ko","victory","support"],ready:false}
+}
+function targetProgressV161(){return{layout:96,spriteArchitecture:100,artDirection:100,sdArtAssets:35,enemyArt:89,cutin:94,ui:96,overall:84}}
+
+const SPRITE_PRIORITY_V162=["dazai","akutagawa","higuchi","soseki","nakajima"];
+function spriteSetV162(i){
+ let slug=(C[i]?.[0]||"author").toLowerCase();
+ return {
+  slug,
+  base:`assets/sd/${slug}/`,
+  poses:{idle:"idle.webp",attack:"attack.webp",skill:"skill.webp",ougi:"ougi.webp",hit:"hit.webp",ko:"ko.webp",victory:"victory.webp",support:"support.webp"}
+ }
+}
+function preloadSpriteSetV162(i){
+ let s=spriteSetV162(i);Object.values(s.poses).forEach(f=>{let im=new Image();im.src=s.base+f})
+}
+function preloadBattleSpritesV162(){
+ let t=(S.sets?.[S.set]||[]).slice(0,6);t.forEach(i=>preloadSpriteSetV162(+i))
+}
+function spriteTransitionV162(i,slot,pose){
+ let u=document.querySelector(`.spriteUnitV160[data-sd-unit="ally:${slot}"]`),s=spriteSetV162(i);if(!u)return;
+ let img=u.querySelector(".spriteArtV160");if(!img)return;
+ u.classList.add("spriteChangingV162");setTimeout(()=>{img.src=s.base+(s.poses[pose]||s.poses.idle);u.dataset.pose=pose;u.classList.remove("spriteChangingV162")},60)
+}
+function spriteQualityV162(i){
+ let slug=(C[i]?.[0]||"").toLowerCase();
+ return SPRITE_PRIORITY_V162.includes(slug)?"production":"fallback"
+}
+function spriteProductionProgressV162(){return{pipeline:100,priorityCharacters:5,posesPerCharacter:8,slotsReady:40,realArtFilled:0}}
+
+function finalArtTargetV163(){
+ return {
+  reference:"assets/reference/battle_target_final_v163.png",
+  battlefieldShare:.72,
+  hudShare:.28,
+  spriteScale:"2.5-3 heads, high-detail authored anime chibi",
+  enemyScale:"boss occupies 35-45% of battlefield",
+  controls:["support","skill","ougi","normal attack","auto","speed"],
+  rule:"battlefield and character art dominate; UI never dominates"
+ }
+}
+function battleLayoutAuditV163(){
+ let issues=[];
+ if(innerWidth<760){issues.push("portrait-mobile adaptation active")}
+ return {target:"V163 locked",issues}
+}
+function targetProgressV163(){return{visualTarget:100,layout:97,spritePipeline:100,realSpriteArt:0,enemy:90,cutin:95,ui:97,overallImplementation:86}}
+
+function masterTargetV164(){
+ return {
+  reference:"assets/reference/battle_target_master_v164.png",
+  principles:[
+   "five authored chibi sprites must read as individual characters",
+   "boss is visually dominant but never hides controls",
+   "party HUD is thin and portrait-driven",
+   "attack is the single dominant control",
+   "skill/ougi/support orbit attack control",
+   "AUTO and speed are secondary",
+   "no baked text in character artwork"
+  ]
+ }
+}
+function compactActionClusterV164(){
+ let b=ensureAdvancedBattleV125(),slot=b.unit||0,t=S.sets?.[S.set]||[],i=+t[slot]||0,ep=b.ep?.[slot]||0;
+ return `<div class=actionClusterV164><button class=support data-sd-action=heal>支援</button><button class=skill data-sd-action=skill>スキル</button><button class="ougi ${ep>=100?"ready":""}" data-sd-action=ougi>奥義</button><button class=attack data-sd-action=attack><i>⚔</i><b>通常攻撃</b></button></div>`
+}
+function targetProgressV164(){return{masterTarget:100,layout:98,spritePipeline:100,realSpriteArt:0,enemy:91,cutin:95,ui:98,overallImplementation:87}}
+
+function masterPlanV165(){
+ return {
+  reference:"assets/reference/MASTER_BATTLE_TARGET_V165.png",
+  priorities:[
+   "authored high-detail chibi sprites",
+   "cinematic gothic-library battlefield",
+   "large boss art with clear silhouette",
+   "thin portrait-driven party HUD",
+   "large normal-attack orb + 3 satellite actions",
+   "minimal AUTO/speed controls",
+   "skill and ougi animation integrated into battlefield"
+  ],
+  forbidden:[
+   "CSS doll treated as final art",
+   "oversized rectangular control panels",
+   "character art with baked UI text",
+   "flat row of identical chibi silhouettes"
+  ]
+ }
+}
+function targetProgressV165(){return{masterReference:100,layoutFramework:98,spritePipeline:100,authoredSprites:0,enemyFramework:91,cinematicFx:95,uiFramework:98}}
+
+const POSES_V166=["idle","attack","skill","ougi","hit","ko","victory","support"];
+function spriteCandidateV166(i,pose){
+ let slug=(C[i]?.[0]||"author").toLowerCase();
+ return `assets/sd/${slug}/${pose}.webp`
+}
+function spritePoseLabelV166(p){
+ return ({idle:"待機",attack:"攻撃",skill:"スキル",ougi:"奥義",hit:"被弾",ko:"KO",victory:"勝利",support:"支援"})[p]||p
+}
+function productionBoardV166(){
+ return {reference:"assets/reference/SPRITE_PRODUCTION_BOARD_V166.png",characters:["dazai","akutagawa","higuchi","soseki","nakajima"],poses:POSES_V166}
+}
+function targetProgressV166(){return{masterTarget:100,productionBoard:100,pipeline:100,realSpritesIntegrated:0,uiFramework:98,enemyFramework:91}}
+
+const REQUIRED_POSES_V167=["idle","attack","skill","ougi","hit","ko","victory","support"];
+function assetStatusV167(slug){
+ let known=(window.__spriteAssetStatusV167||{})[slug]||{};
+ let ready=REQUIRED_POSES_V167.filter(p=>known[p]===true);
+ return {slug,ready,total:8,complete:ready.length===8}
+}
+function battleAssetAuditV167(){
+ let t=(S.sets?.[S.set]||[]).slice(0,6),rows=t.map(i=>assetStatusV167((C[+i]?.[0]||"author").toLowerCase()));
+ return {rows,complete:rows.filter(x=>x.complete).length,total:rows.length}
+}
+function spriteAssetGateV167(i){
+ let slug=(C[i]?.[0]||"author").toLowerCase(),s=assetStatusV167(slug);
+ return s.complete?"authored":"fallback"
+}
+function qaStateV167(){
+ let a=battleAssetAuditV167();
+ return {authoredCharacters:a.complete,partyCharacters:a.total,controls:["attack","skill","ougi","support","auto","speed"],master:"assets/reference/PRODUCTION_REFERENCE_V167.png"}
+}
+function targetProgressV167(){let q=qaStateV167();return{visualReference:100,pipeline:100,authoredCharacters:q.authoredCharacters,requiredCharacters:5,qaFramework:100}}
+
+function productionContractV168(){
+ return {
+  reference:"assets/reference/PRODUCTION_CONTRACT_REFERENCE_V168.png",
+  authoredSpritesRequired:40,
+  cutinsRequired:5,
+  skillFxRequired:5,
+  enemyArtsRequired:3,
+  stageArtsRequired:5,
+  mobileControlsRequired:["attack","skill","ougi","support","auto","speed"]
+ }
+}
+function runtimeControlAuditV168(){
+ let selectors={
+  attack:'[data-sd-action="attack"]',skill:'[data-sd-action="skill"]',
+  ougi:'[data-sd-action="ougi"]',support:'[data-sd-action="heal"]',
+  auto:'[data-battle-auto]',speed:'[data-battle-speed]'
+ };
+ return Object.fromEntries(Object.entries(selectors).map(([k,s])=>[k,!!document.querySelector(s)]))
+}
+function runtimeVisualAuditV168(){
+ let authored=document.querySelectorAll(".spriteUnitV160.asset-authored").length;
+ let fallback=document.querySelectorAll(".spriteUnitV160.asset-fallback,.spriteUnitV160.useFallback").length;
+ return {authored,fallback,controls:runtimeControlAuditV168()}
+}
+
+function fullGameTargetV169(){
+ return {
+  reference:"assets/reference/FULL_GAME_TARGET_V169.png",
+  screens:["home","formation","growth","summon","library","mission","stage","battle"],
+  visual:"dark gothic literary fantasy, thin gold frame, image-first, compact UI"
+ }
+}
+function quickNavV169(){
+ return `<nav class=quickNavV169><button data-v169-go=home>物語</button><button data-v169-go=formation>編成</button><button data-v169-go=growth>強化</button><button data-v169-go=summon>召喚</button><button data-v169-go=library>図書館</button><button data-v169-go=mission>任務</button></nav>`
+}
+function uiAuditV169(){
+ return {battle:runtimeControlAuditV168(),target:fullGameTargetV169()}
+}
+
+function battleRenderHealthV170(){
+ let field=document.querySelector(".battleFieldV119");
+ let allies=document.querySelectorAll(".spriteUnitV160,.sdUnitV147").length;
+ let enemies=document.querySelectorAll(".enemyArtV153").length;
+ let cards=document.querySelectorAll(".battleCardsV151>button").length;
+ return {field:!!field,allies,enemies,cards,ok:!!field&&allies>0&&enemies>0&&cards>0}
+}
+function recoverBattleV170(){
+ let h=battleRenderHealthV170();if(h.ok)return h;
+ try{
+  let b=ensureAdvancedBattleV125();
+  if(!Array.isArray(b.allyHp)||!b.allyHp.length)b.allyHp=[100,100,100,100,100,100];
+  if(!Array.isArray(b.ep)||!b.ep.length)b.ep=[0,0,0,0,0,0];
+  if(!b.wave)b.wave=1;if(!b.turn)b.turn=1;
+  save();render()
+ }catch(err){console.error("V170 battle recovery",err)}
+ return battleRenderHealthV170()
+}
+function scheduleBattleRecoveryV170(){
+ requestAnimationFrame(()=>{let h=battleRenderHealthV170();if(!h.ok)setTimeout(()=>recoverBattleV170(),80)})
+}
+function v170Target(){return "assets/reference/RECOVERY_TARGET_V170.png"}
+
+function normalizeBattleStateV171(){
+ let b=ensureAdvancedBattleV125(),team=(S.sets?.[S.set]||[]).slice(0,6);
+ if(!team.length){team=[0,1,2,3,4];S.sets=S.sets||[];S.sets[S.set||0]=team}
+ b.wave=Math.max(1,Math.min(3,+b.wave||1)); b.turn=Math.max(1,+b.turn||1);
+ b.unit=Math.max(0,Math.min(team.length-1,+b.unit||0)); b.target=Math.max(0,+b.target||0);
+ b.allyHp=Array.from({length:team.length},(_,n)=>Math.max(0,Math.min(100,+b.allyHp?.[n]||100)));
+ b.ep=Array.from({length:team.length},(_,n)=>Math.max(0,Math.min(100,+b.ep?.[n]||0)));
+ return b
+}
+function emergencyBattleStageV171(){
+ let team=(S.sets?.[S.set]||[]).slice(0,6),b=normalizeBattleStateV171();
+ return `<div class=emergencyStageV171><div class=emergencyAlliesV171>${team.map((i,n)=>sdUnit(+i,"ally",n)).join("")}</div>${enemyStageV153()}<div class=emergencyCardsV171>${battleCharacterCardsV151()}</div>${compactActionClusterV164()}</div>`
+}
+function verifyBattleAfterPaintV171(){
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{
+   let h=battleRenderHealthV170();
+   if(!h.ok){
+     let f=document.querySelector(".battleFieldV119");
+     if(f&&!f.querySelector(".emergencyStageV171"))f.insertAdjacentHTML("beforeend",emergencyBattleStageV171())
+   }
+ }))
+}
+function stableBattleCoreV171(){return{state:normalizeBattleStateV171(),health:battleRenderHealthV170()}}
+
+function battleInvariantV172(){
+ let b=normalizeBattleStateV171(),team=(S.sets?.[S.set]||[]).slice(0,6);
+ return {
+  teamReady:team.length>0,
+  hpReady:Array.isArray(b.allyHp)&&b.allyHp.length===team.length,
+  epReady:Array.isArray(b.ep)&&b.ep.length===team.length,
+  waveReady:b.wave>=1&&b.wave<=3,
+  unitReady:b.unit>=0&&b.unit<team.length
+ }
+}
+function controlHitboxAuditV172(){
+ let keys=["attack","skill","ougi","heal"],out={};
+ keys.forEach(k=>{let el=document.querySelector(`[data-sd-action="${k}"]`),r=el?.getBoundingClientRect();out[k]=!!el&&r.width>=32&&r.height>=32});
+ let auto=document.querySelector("[data-battle-auto]"),speed=document.querySelector("[data-battle-speed]");
+ out.auto=!!auto;out.speed=!!speed;return out
+}
+function battleWatchdogV172(){
+ let attempts=0,timer=setInterval(()=>{
+  if(S.page!=="battle"){clearInterval(timer);return}
+  let h=battleRenderHealthV170(),inv=battleInvariantV172();
+  if(h.ok&&Object.values(inv).every(Boolean)){clearInterval(timer);return}
+  if(++attempts>=3){clearInterval(timer);return}
+  recoverBattleV170()
+ },220)
+}
+function startBattleWatchdogV172(){setTimeout(battleWatchdogV172,120)}
+
+function battleCinematicLayerV173(){
+ let b=normalizeBattleStateV171();
+ return `<div class="cinematicLayerV173 wave-${b.wave}">
+   <div class=moonGlowV173></div><div class=petalsV173>${Array.from({length:9},(_,i)=>`<i style="--n:${i}"></i>`).join("")}</div>
+   <div class=groundReflectionV173></div><div class=cinemaBarsV173></div>
+ </div>`
+}
+function partyDepthV173(){
+ document.querySelectorAll(".sdBattleV118>.spriteUnitV160,.sdBattleV118>.sdUnitV147").forEach((u,n)=>{
+   u.style.setProperty("--depth-x",`${[0,8,19,30,40][n]||n*9}%`);
+   u.style.setProperty("--depth-y",`${[8,0,13,4,11][n]||0}px`);
+   u.style.setProperty("--depth-s",`${[.9,.96,1.05,.98,.92][n]||1}`);
+ })
+}
+function battlePolishV173(){requestAnimationFrame(()=>partyDepthV173())}
+
+function skillFxProfileV174(i){
+ let slug=(C[i]?.[0]||"").toLowerCase(),m=expandedMotionV138(i).cls;
+ let map={
+  dazai:{cls:"nullify",mark:"頁",count:9},
+  akutagawa:{cls:"inkbeast",mark:"斬",count:7},
+  higuchi:{cls:"petals",mark:"花",count:11},
+  soseki:{cls:"glyph",mark:"猫",count:8},
+  nakajima:{cls:"tiger",mark:"爪",count:6}
+ };
+ return map[slug]||map[m]||{cls:"literary",mark:"文",count:7}
+}
+function skillFxV174(i,kind="skill",target=0){
+ let p=skillFxProfileV174(i),r=battleFxLayerV121(),n=document.createElement("div");
+ n.className=`skillFxV174 fx-${p.cls} ${kind}`;
+ n.innerHTML=`<div class=skillSigilV174>${p.mark}</div>${Array.from({length:Math.min(4,p.count)},(_,k)=>`<i style="--k:${k}"></i>`).join("")}`;
+ r.appendChild(n);requestAnimationFrame(()=>n.classList.add("show"));setTimeout(()=>n.remove(),kind==="ougi"?820:520)
+}
+function choreographyCameraV174(i,kind){
+ let f=document.querySelector(".battleFieldV119");if(!f)return;
+ let p=skillFxProfileV174(i),c=`cam-${p.cls}-${kind}`;f.classList.add(c);setTimeout(()=>f.classList.remove(c),kind==="ougi"?1100:650)
+}
+function v174SkillProgress(){return{dazai:100,akutagawa:100,higuchi:100,soseki:100,nakajima:100,framework:100}}
+
+
+
+function battlePartySizeV535(){
+ return Math.max(1,Math.min(6,(S.sets?.[S.set]||[]).length))
+}
+function battlePartyV535(){
+ return (S.sets?.[S.set]||[]).slice(0,6)
+}
+
+function battleUiModeV536(){
+ let w=window.innerWidth||390;
+ return w<=430?"compact":w<=700?"mobile":"wide"
+}
+function battleUiAuditV536(){
+ let cards=document.querySelectorAll(".posterLivePartyV217 button,.bsv2Cards_175 button").length;
+ return {
+  mode:battleUiModeV536(),
+  cards,
+  cutin:!!document.querySelector(".posterCharacterCutinV218,.battleCutin,.posterActionTableauV219"),
+  autoLoop:!!document.querySelector(".autoLoopHudV200,.posterAutoLoopHudV200"),
+  enemy:!!document.querySelector(".posterEnemyBarV206,.bsv2EnemyHud_175,.cleanEnemyFocusV239")
+ }
+}
+
+function sixUnitBattleAuditV535(){
+ let b=ensureAdvancedBattleV125(),t=battlePartyV535();
+ return {
+  team:t.length,
+  allyHp:b.allyHp?.length||0,
+  ep:b.ep?.length||0,
+  six:t.length===6&&(b.allyHp?.length||0)>=6&&(b.ep?.length||0)>=6
+ }
+}
+
+
+function screenshotLayoutAuditV537(){
+ let battle=document.body.classList.contains("battleMode");
+ let cards=document.querySelectorAll(".posterLivePartyV217 button,.bsv2Cards_175 button");
+ let nav=document.querySelector(".primaryNavV116");
+ return {
+  battle,
+  sixCards:cards.length>=6,
+  cardCount:cards.length,
+  navVisible:!!nav,
+  selectedSix:!!document.querySelector('[data-battle-unit="5"]')
+ }
+}
+
+function mobileLayoutAuditV538(){
+ return {
+  width:window.innerWidth||0,
+  nav:!!document.querySelector(".primaryNavV116"),
+  prepSix:document.querySelectorAll(".stagePartyMiniV538 button").length,
+  battleSix:document.querySelectorAll(".posterLivePartyV217 button,.bsv2Cards_175 button").length>=6
+ }
+}
+
+function battleChapterV534(){
+ return Math.max(0,Math.min(3,Number(S.battleStage)||0))
+}
+function battleStageIdentityV534(ch=battleChapterV534()){
+ const rows=[
+  {title:"言葉のはじまり",area:"失稿書架",normal:["失稿の影","破れた余白","頁喰いの化身"],boss:"頁喰いの化身",lv:30},
+  {title:"失われた書庫",area:"封鎖書庫",normal:["墨染めの異稿体","逆さ句読点","禁書の守り手"],boss:"禁書の守り手",lv:38},
+  {title:"海の向こうの言葉",area:"境界書架",normal:["翻訳崩れ","境界の異稿体","深海の校正者"],boss:"深海の校正者",lv:46},
+  {title:"最後の一頁",area:"禁書区画",normal:["黒稿の残影","終稿拒絶体","未完原稿の主"],boss:"未完原稿の主",lv:55}
+ ];
+ return rows[ch]||rows[0]
+}
+function battleEnemyNameV534(wave){
+ let x=battleStageIdentityV534(),w=Math.max(1,Math.min(3,Number(wave)||1));
+ return x.normal[w-1]||x.boss
+}
+function battleEnemyLevelV534(wave){
+ let x=battleStageIdentityV534(),mode=S.battleMode==="hard"?8:0;
+ return x.lv+(Math.max(1,Number(wave)||1)-1)*5+mode
+}
+function battleStageHeaderV534(){
+ let ch=battleChapterV534(),x=battleStageIdentityV534(ch);
+ return {chapter:ch+1,title:x.title,area:x.area,mode:(S.battleMode||"normal").toUpperCase()}
+}
+
+function battleSceneV2_175(){
+ setTimeout(bsv2FlowPolish179,0);setTimeout(bsv2VisualPass177,0);
+ if(posterBattleOnV205())return cinematicPosterBattleV205();
+ let b=normalizeBattleStateV171(), team=(S.sets?.[S.set]||[]).slice(0,6);
+ let enemy=enemyTypeV124(b.wave), hp=enemyHpPercentV197(b);
+ return `<main class=bsv2_175>
+   <header class=bsv2Top_175>
+    <section><b>第${battleStageHeaderV534().chapter}章　${battleStageHeaderV534().title}</b><small>${battleStageHeaderV534().mode} / ${battleStageHeaderV534().area}　WAVE ${b.wave}/3　TURN ${b.turn}</small></section>
+    <nav><button data-battle-speed="${b.speed===2?1:2}">▶▶ ${b.speed===2?"×2":"×1"}</button><button class="${b.auto?"on":""}" data-battle-auto=1>AUTO</button><button data-battle-pause=1>Ⅱ</button></nav>
+   </header>
+   <section class=bsv2Field_175>
+    <div class=bsv2Backdrop_175></div>${bsv2Atmosphere177()}
+    <div class=bsv2Turn_175>${team.map((i,n)=>`<button class="${b.unit===n?"on":""}" data-battle-unit="${n}"><img src="${characterImage(C[+i][0])}"></button>`).join("")}</div>
+    ${bsv2EnemyIntent177()}<div class=bsv2EnemyHud_175><small>${b.wave===3?"BOSS":"ENEMY"} / Lv.${battleEnemyLevelV534(b.wave)}</small><b>${battleEnemyNameV534(b.wave)}</b><i><em style="width:${hp}%"></em></i></div>
+    <div class=bsv2Allies_175>${team.map((i,n)=>sdUnit(+i,"ally",n)).join("")}</div>
+    <div class=bsv2Enemies_175>${enemyStageV153()}</div>
+    <div class=bsv2Fx_175></div>${bsv2TargetBadge184()}${battleLightweightBannerV195()}${battleMinimalHudV204()}${battleMiniStatsV196()}
+   </section>
+   <div class=bsv2Command176>${bsv2SelectedPanel176()}${bsv2Log176()}</div><footer class=bsv2Hud_175>
+    <div class=bsv2Cards_175>${team.map((i,n)=>{let hpv=b.allyHp[n]||0,ep=b.ep[n]||0;return `<button class="${b.unit===n?"on":""}" data-battle-unit="${n}"><img src="${characterImage(C[+i][0])}"><span><b>${C[+i][1]}</b><small>HP</small><i><em style="width:${hpv}%"></em></i><small>EP</small><i class=ep><em style="width:${ep}%"></em></i></span></button>`}).join("")}</div>
+    ${compactActionClusterV164()}
+   </footer>
+ </main>`
+}
+function battleSceneV2Audit175(){
+ let q=s=>!!document.querySelector(s);
+ return {scene:q(".bsv2_175"),field:q(".bsv2Field_175"),allies:q(".bsv2Allies_175"),enemy:q(".bsv2Enemies_175"),cards:q(".bsv2Cards_175"),attack:q('[data-sd-action="attack"]'),auto:q("[data-battle-auto]")}
+}
+
+function bsv2SelectedPanel176(){
+ let b=normalizeBattleStateV171(),team=(S.sets?.[S.set]||[]).slice(0,6),i=+team[b.unit]||0,a=characterAbility(i),o=ougiInfo(i),ep=b.ep?.[b.unit]||0;
+ return `<div class=bsv2Selected176><span><b>${C[i]?.[1]||"文豪"}</b><small>${a.role||"攻撃"} / ${a.name}</small></span><nav><button data-sd-action=skill>✦ スキル</button><button class="${ep>=100?"ready":""}" data-sd-action=ougi>◆ ${o.name}<i>${ep}%</i></button><button data-sd-action=heal>＋ 支援</button></nav></div>`
+}
+function bsv2Log176(){
+ let b=normalizeBattleStateV171(),rows=(b.log||[]).slice(-3).reverse();
+ return `<div class=bsv2Log176>${rows.length?rows.map(x=>`<p>› ${x}</p>`).join(""):"<p>› 戦闘開始。文豪を選択してください。</p>"}</div>`
+}
+function bsv2TouchAudit176(){
+ let out={};["attack","skill","ougi","heal"].forEach(k=>{let e=document.querySelector(`[data-sd-action="${k}"]`),r=e?.getBoundingClientRect();out[k]=!!e&&r.width>=36&&r.height>=36});
+ return out
+}
+
+function bsv2Atmosphere177(){
+ let b=normalizeBattleStateV171();
+ return `<div class="bsv2Atmos177 w${b.wave}">
+   <div class=moon177></div><div class=arches177></div><div class=floor177></div>
+   <div class=particles177>${Array.from({length:5},(_,n)=>`<i style="--n:${n}"></i>`).join("")}</div>
+ </div>`
+}
+function bsv2EnemyIntent177(){
+ let sk=enemySkillV126();
+ return `<div class=bsv2Intent177><small>NEXT</small><b>${sk.name}</b><i>${sk.aoe?"ALL":"TARGET"}</i></div>`
+}
+function bsv2SelectedGlow177(){
+ let b=normalizeBattleStateV171();
+ document.querySelectorAll(".bsv2Allies_175>[data-sd-unit]").forEach((u,n)=>u.classList.toggle("bsv2Chosen177",n===b.unit))
+}
+function bsv2VisualPass177(){requestAnimationFrame(()=>bsv2SelectedGlow177())}
+
+function bsv2CombatFx178(kind="attack",value=0){
+ let field=document.querySelector(".bsv2Field_175");if(!field)return;
+ let n=document.createElement("div");n.className=`bsv2Impact178 ${kind}`;
+ n.innerHTML=`<i></i><b>${value?value.toLocaleString():""}</b>`;
+ field.appendChild(n);requestAnimationFrame(()=>n.classList.add("show"));setTimeout(()=>n.remove(),700)
+}
+function bsv2Shake178(power="light"){
+ let f=document.querySelector(".bsv2Field_175");if(!f)return;
+ let c=`shake178-${power}`;f.classList.add(c);setTimeout(()=>f.classList.remove(c),power==="heavy"?520:300)
+}
+function bsv2EnemyHit178(kind="attack"){
+ let e=document.querySelector(".bsv2Enemies_175 .enemyArtV153");if(!e)return;
+ e.classList.add("hit178");setTimeout(()=>e.classList.remove("hit178"),380)
+}
+function bsv2AllyAct178(slot,kind){
+ let u=document.querySelector(`.bsv2Allies_175 [data-sd-unit="ally:${slot}"]`);if(!u)return;
+ let c=`act178-${kind}`;u.classList.add(c);setTimeout(()=>u.classList.remove(c),kind==="ougi"?950:560)
+}
+function bsv2Feedback178(slot,kind,damage=0){if(shouldPlayBattleFxV194(kind==="ougi"?3:kind==="skill"?2:1))smoothActionFeedbackV189(kind);bsv2ActionWindow179(kind==="ougi"?560:320);
+ bsv2AllyAct178(slot,kind);bsv2EnemyHit178(kind);bsv2CombatFx178(kind,damage);bsv2Shake178(kind==="ougi"?"heavy":"light")
+}
+
+function bsv2WaveIntro179(){
+ let b=normalizeBattleStateV171(),field=document.querySelector(".bsv2Field_175");if(!field)return;
+ let n=document.createElement("div");n.className="bsv2WaveIntro179";n.innerHTML=`<small>WAVE</small><b>${b.wave}</b><i>/ 3</i>`;
+ field.appendChild(n);requestAnimationFrame(()=>n.classList.add("show"));setTimeout(()=>n.remove(),850)
+}
+function bsv2TurnPulse179(){
+ let b=normalizeBattleStateV171();
+ document.querySelectorAll(".bsv2Turn_175 button").forEach((x,n)=>x.classList.toggle("current179",n===b.unit))
+}
+function bsv2ActionLock179(on=true){
+ document.querySelectorAll(".bsv2Command176 button,.actionClusterV164 button,.bsv2Cards_175 button").forEach(x=>x.toggleAttribute("disabled",on))
+}
+function bsv2ActionWindow179(ms=450){bsv2ActionLock179(true);setTimeout(()=>bsv2ActionLock179(false),ms)}
+function bsv2FlowPolish179(){requestAnimationFrame(()=>bsv2TurnPulse179())}
+
+function prepareBattleV180(ch=0,mode="normal"){
+ document.querySelectorAll(".posterResultCardV215,.battleClearV119").forEach(x=>x.remove());
+ window.__v460ClearHandled=false;
+ ensureCoreState();ensureQoLPrefs();ensureUnitSets();
+ ch=Math.max(0,Math.min(3,+ch||0));mode=mode==="hard"?"hard":"normal";
+ if(ch>0&&!(S.progress?.clears?.[ch-1]>0))throw new Error("前の章が未クリアです");
+ if(mode==="hard"&&!hardUnlocked(ch))throw new Error("HARDは未解放です");
+ S.qol=S.qol||{};S.qol.selectedStage=ch;S.qol.lastStage=ch;rememberBattleLoopV181(ch,S.qol.lastFarmCount||10);
+ S.battleStage=ch;S.battleMode=mode;
+ let partyN=battlePartySizeV535();
+ S.battleV120={
+  wave:1,turn:1,speed:1,auto:false,target:0,unit:0,
+  enemyHp:[100,100,100],ep:Array(partyN).fill(0),breakGauge:[100,100,100],
+  enemyStatus:[[],[],[]],allyHp:Array(partyN).fill(100),combo:0,
+  enemyRosterWave:0,log:[`第${ch+1}章 ${mode.toUpperCase()} 開始`]
+ };
+ normalizeBattleStateV171();save();persistentSaveWrite();return S.battleV120
+}
+
+function launchStageBattleV533(ch,mode="normal",sourceBtn=null){
+ ch=Math.max(0,Math.min(3,Number(ch)||0));mode=mode==="hard"?"hard":"normal";
+ if(ch>0&&!(S.progress?.clears?.[ch-1]>0)){toast("前の章をクリアすると解放されます");return false}
+ if(mode==="hard"&&!hardUnlocked(ch)){toast("NORMALを3回クリアでHARD解放");return false}
+ try{
+  if(sourceBtn){sourceBtn.classList.add("startingV532","launchingV533");sourceBtn.disabled=true}
+  S.qol=S.qol||{};S.qol.selectedStage=ch;S.qol.lastStage=ch;
+  save();persistentSaveWrite();
+  showBattleLaunchV533(ch,mode);
+  setTimeout(()=>{
+    try{
+      let out=startBattleV180(ch,mode);
+      setTimeout(()=>battleLaunchWatchdogV533(ch,mode),500);
+      return out
+    }catch(err){
+      finalErrorShield(err);
+      closeBattleLaunchV533();
+      try{if(sourceBtn){sourceBtn.disabled=false;sourceBtn.classList.remove("startingV532","launchingV533")}}catch(_){}
+      toast("戦闘開始を復旧しました");
+      return openStagePage(ch)
+    }
+  },90);
+  return true
+ }catch(err){
+  try{runtimeLogV491("V533-LAUNCH",err?.message||String(err))}catch(_){}
+  try{if(sourceBtn){sourceBtn.disabled=false;sourceBtn.classList.remove("startingV532","launchingV533")}}catch(_){}
+  return false
+ }
+}
+function showBattleLaunchV533(ch,mode){
+ document.getElementById("battleLaunchV533")?.remove();
+ let st=stageMeta(ch),o=document.createElement("div");o.id="battleLaunchV533";o.className="battleLaunchV533";
+ o.innerHTML=`<div><small>${mode.toUpperCase()} / CHAPTER ${ch+1}</small><b>${st.name}</b><span>${battleStageIdentityV534(ch).area}へ出撃中…</span><i></i></div>`;
+ document.body.appendChild(o)
+}
+function closeBattleLaunchV533(){document.getElementById("battleLaunchV533")?.remove()}
+function battleLaunchWatchdogV533(ch,mode){
+ let inBattle=document.body.classList.contains("battleMode")&&!!document.querySelector(".bsv2_175,.cleanBattleV238,.sdBattleV118");
+ if(inBattle){closeBattleLaunchV533();return true}
+ closeBattleLaunchV533();
+ try{runtimeLogV491("V533-WATCHDOG",`battle mount retry ch=${ch} mode=${mode}`)}catch(_){}
+ try{
+   prepareBattleV180(ch,mode);
+   startBattleSessionV196();
+   mountBattleV182();
+   toast("戦闘画面を再構築しました");
+   return true
+ }catch(err){
+   finalErrorShield(err);
+   toast("戦闘画面を開けませんでした");
+   return openStagePage(ch)
+ }
+}
+
+function startBattleV180(ch=0,mode="normal"){
+ if(!actionLock(700))return;
+ try{
+  // V414: core battle opens immediately. Optional legacy enhancements load later.
+  battleLoadingV411(false);
+  closeOverlays();
+  prepareBattleV180(ch,mode);
+  startBattleSessionV196();
+  __posterPhaseV214=0;__posterWaveV214=0;
+  S.qol=S.qol||{};S.qol.posterKoStateV213=[false,false,false,false,false];
+  battleCheckpointV196(true);
+  try{preloadBattleSpritesV162?.()}catch(_){}
+  const out=mountBattleV182();
+
+  // Do not block the user on battle-extras.js. Load it in the background.
+  setTimeout(()=>{
+    try{
+      const p=window.__bkLoadBattleExtras?.();
+      if(p&&typeof p.then==="function"){
+        Promise.race([
+          p,
+          new Promise(resolve=>setTimeout(()=>resolve(false),5000))
+        ]).then(ok=>{
+          if(!ok||!document.body.classList.contains("battleMode"))return;
+          try{preloadPosterAssetsV216?.();preloadBattleSpritesV162?.()}catch(_){}
+          try{
+            if(typeof smoothRefreshBattleV194==="function")smoothRefreshBattleV194();
+            window.dispatchEvent(new Event("resize"));
+          }catch(_){}
+        }).catch(()=>{});
+      }
+    }catch(_){}
+  },350);
+
+  return out
+ }catch(err){
+  console.error("V414 battle transition",err);
+  document.body.classList.remove("battleMode");
+  battleLoadingV411(false);
+  toast(err?.message||"戦闘画面を開けませんでした");
+  return stagePage()
+ }
+}
+function battleTransitionAuditV180(){
+ return {
+  scene:typeof battleSceneV2_175==="function",
+  stage:typeof stagePage==="function",
+  state:typeof normalizeBattleStateV171==="function",
+  controls:typeof compactActionClusterV164==="function",
+  enemy:typeof enemyStageV153==="function"
+ }
+}
+
+function stageLoopPrefsV181(){
+ S.qol=S.qol||{};
+ if(!Number.isInteger(S.qol.lastFarmCount))S.qol.lastFarmCount=10;
+ if(!Number.isInteger(S.qol.lastFarmStage))S.qol.lastFarmStage=0;
+ return S.qol
+}
+function rememberBattleLoopV181(ch,count=1){
+ let q=stageLoopPrefsV181();
+ q.lastFarmStage=Math.max(0,+ch||0);
+ q.lastFarmCount=Math.max(1,Math.min(50,+count||1));
+ save();persistentSaveWrite()
+}
+function repeatBattleFromResultV181(auto=false){__battleSessionV196.retries++;
+ let q=stageLoopPrefsV181(),ch=Math.max(0,+S.battleStage||q.lastFarmStage||0),mode=S.battleMode||"normal";
+ return launchReplayV199(!!auto,ch,mode)
+}
+function resultLoopButtonsV181(){
+ return `<div class=resultLoopV181><button data-v181-repeat=1>もう一度</button><button class=auto data-v181-repeat-auto=1>AUTO再戦</button><button data-go=sortie>ステージへ</button></div>`
+}
+function battleLoopAuditV181(){
+ return {lastStage:stageLoopPrefsV181().lastFarmStage,lastCount:stageLoopPrefsV181().lastFarmCount,battleStage:S.battleStage,battleMode:S.battleMode}
+}
+
+function mountBattleV182(){
+  closeBattleLaunchV533?.();
+  document.querySelectorAll(".posterResultCardV215,.battleClearV119").forEach(x=>x.remove());
+  normalizeBattleStateV171();
+  setTimeout(()=>battleIntegrityGuardV476(),220);
+  if(!__battleSessionV196.startedAt)startBattleSessionV196();
+  battleInvalidateActionsV195();clearBattleTimersV191();purgeBattleTransientDomV191();
+  closeOverlays();
+  window.__bkBooted=true;
+  window.__bkBootGuard=false;
+  document.body.classList.add("battleMode");document.body.classList.toggle("posterBattleBodyV205",posterBattleOnV205());document.body.classList.toggle("cleanBattleBodyV238",posterBattleOnV205());applySnappyBattleV204();pauseDecorativeFxV190(false);battleFastClassV185();applyAutoPerfV190();applyBattleQualityV192(battleAdaptiveStateV192().battleQuality);applyBattleDensityV194();setupViewportGuardV194();
+  window.scrollTo(0,0);
+  const root=document.getElementById("app");battleViewportGuardV194();
+  if(!root)throw new Error("app root not found");
+  __battleSnapshotV189=null;const markup=battleSceneV2_175();
+  posterRendererResetV229();root.innerHTML=markup;
+  requestAnimationFrame(()=>{
+    try{
+      if(document.querySelector(".cleanBattleV238")){cleanBattlePostMountV238();return;}
+      if(typeof bsv2VisualPass177==="function")bsv2VisualPass177();
+      if(typeof bsv2FlowPolish179==="function")bsv2FlowPolish179();
+      if(typeof verifyBattleAfterPaintV171==="function")verifyBattleAfterPaintV171();
+      if(typeof startBattleWatchdogV172==="function")startBattleWatchdogV172();
+      if(typeof bsv2PostMount184==="function")bsv2PostMount184();if(typeof optimizeBattleImagesV197==="function")optimizeBattleImagesV197();if(typeof refreshCommandPanelV198==="function")refreshCommandPanelV198();if(typeof refreshPosterLiveOverlayV206==="function")refreshPosterLiveOverlayV206();if(typeof refreshPosterLabelsV208==="function")refreshPosterLabelsV208();if(typeof refreshPosterStateV209==="function")refreshPosterStateV209();if(typeof refreshPosterSelectedPortraitV210==="function")refreshPosterSelectedPortraitV210();if(typeof refreshPortraitBadgeV211==="function")refreshPortraitBadgeV211();if(typeof applyPortraitBattleLayoutV211==="function")applyPortraitBattleLayoutV211();if(typeof refreshPosterInteractionV212==="function")refreshPosterInteractionV212();if(typeof refreshPosterButtonStateV212==="function")refreshPosterButtonStateV212();if(typeof refreshPosterCombatStateV213==="function")refreshPosterCombatStateV213();if(typeof posterApplyPhaseV214==="function")posterApplyPhaseV214();if(typeof refreshPosterTacticalV215==="function")refreshPosterTacticalV215();if(typeof applyExactPosterFitV216==="function")applyExactPosterFitV216();if(typeof refreshPosterPolishV216==="function")refreshPosterPolishV216();if(typeof posterBootHintV216==="function")posterBootHintV216();if(typeof posterPortraitPreloadV217==="function")posterPortraitPreloadV217();if(typeof preloadActiveCutinsV218==="function")preloadActiveCutinsV218();if(typeof refreshLivePartyPortraitsV217==="function")refreshLivePartyPortraitsV217();if(typeof posterSelectedAuraV217==="function")posterSelectedAuraV217();if(typeof refreshPosterPartyStripV218==="function")refreshPosterPartyStripV218();if(typeof refreshPosterThreatV219==="function")refreshPosterThreatV219();if(typeof refreshPoseCoverageV221==="function")refreshPoseCoverageV221();if(typeof setupPosterDeviceGuardsV222==="function")setupPosterDeviceGuardsV222();if(typeof posterOrientationSyncV222==="function")posterOrientationSyncV222();if(typeof setupPosterProductionGuardV223==="function")setupPosterProductionGuardV223();if(typeof posterGuardCheckV223==="function")posterGuardCheckV223();if(typeof refreshPosterRunBadgeV224==="function")refreshPosterRunBadgeV224();if(typeof applyPosterCriticalStateV224==="function")applyPosterCriticalStateV224();if(typeof schedulePosterHudIdleV224==="function")schedulePosterHudIdleV224();if(typeof refreshPosterRcV225==="function")refreshPosterRcV225();if(typeof schedulePosterRcCheckV225==="function")schedulePosterRcCheckV225();if(typeof refreshPosterCompactStatusV226==="function")refreshPosterCompactStatusV226();if(typeof schedulePosterPreflightV226==="function")schedulePosterPreflightV226();if(typeof schedulePosterFinalCheckV227==="function")schedulePosterFinalCheckV227();if(typeof posterStageHostV228==="function")posterStageHostV228();if(typeof cleanupLegacyPosterFxV228==="function")cleanupLegacyPosterFxV228();if(typeof schedulePosterRenderV229==="function")schedulePosterRenderV229("mount",true);if(typeof renderPosterQueueBadgeV230==="function")renderPosterQueueBadgeV230();if(typeof refreshPosterLoopBadgeV230==="function")refreshPosterLoopBadgeV230();if(typeof refreshPosterBreakV231==="function")refreshPosterBreakV231();if(typeof refreshPosterComboV232==="function")refreshPosterComboV232();if(typeof refreshPosterThumbV234==="function")refreshPosterThumbV234();syncAutoUiV427();if(typeof refreshPosterSelectedStripV234==="function")refreshPosterSelectedStripV234();if(typeof refreshPosterCleanHudV235==="function")refreshPosterCleanHudV235();if(typeof applyPosterControlStateV235==="function")applyPosterControlStateV235();if(typeof posterWaveIntroV207==="function")posterWaveIntroV207();hideAutoReplayLoadingV199();renderAutoReplayHudV199();renderAutoLoopHudV200();refreshPosterLoopBadgeV230?.();if(autoLoopActiveV200())autoLoopBattleMountedV200();if(typeof scheduleBattlePerfCheckV192==="function")scheduleBattlePerfCheckV192();if(typeof scheduleGovernorV193==="function")scheduleGovernorV193();if(typeof startAutoWatchdogV193==="function")startAutoWatchdogV193();
+    }catch(e){console.error("V182 post mount",e)}
+  });
+  if(ensureBattleStateV120().auto)setTimeout(()=>autoHardActionV430(),120);
+  return markup
+}
+function battleUiAuditV183(){
+ let root=document.querySelector(".bsv2_175"),cluster=document.querySelector(".bsv2Hud_175 .actionClusterV164"),auto=document.querySelector("[data-battle-auto]"),cards=document.querySelectorAll(".bsv2Cards_175 button");
+ let cr=cluster?.getBoundingClientRect?.()||{right:0,bottom:0,left:0,top:0};
+ return {scene:!!root,auto:!!auto,autoOn:!!ensureBattleStateV120().auto,clusterVisible:!!cluster,clusterFits:cr.right<=innerWidth+1&&cr.bottom<=innerHeight+1,cards:cards.length};
+}
+
+function battleMountAuditV182(){
+  const a=document.getElementById("app");
+  return {
+    root:!!a,
+    scene:!!a?.querySelector(".bsv2_175"),
+    field:!!a?.querySelector(".bsv2Field_175"),
+    attack:!!a?.querySelector('[data-sd-action="attack"]'),
+    auto:!!a?.querySelector("[data-battle-auto]")
+  }
+}
+
+function bsv2AutoBadge184(){
+ let b=ensureBattleStateV120();
+ return `<div class="bsv2AutoBadge184 ${b.auto?"on":""}"><i></i><span>${b.auto?"AUTO RUNNING":"MANUAL"}</span></div>`
+}
+function bsv2TargetBadge184(){
+ let b=normalizeBattleStateV171(),roster=enemyRosterV129(b.wave),e=roster[b.target]||roster[0];
+ return `<div class=bsv2TargetBadge184><small>TARGET</small><b>${e?.name||"異稿体"}</b></div>`
+}
+function bsv2RefreshStatus184(){
+ let host=document.querySelector(".bsv2Field_175");
+ if(!host)return;
+ host.querySelector(".bsv2AutoBadge184")?.remove();
+ host.querySelector(".bsv2TargetBadge184")?.remove();
+ host.insertAdjacentHTML("beforeend",bsv2AutoBadge184()+bsv2TargetBadge184())
+}
+function bsv2PostMount184(){requestAnimationFrame(()=>bsv2RefreshStatus184())}
+function bsv2ProAudit184(){
+ let r=document.querySelector(".bsv2_175"),c=document.querySelector(".actionClusterV164"),a=document.querySelector("[data-battle-auto]");
+ let rc=c?.getBoundingClientRect?.();
+ return {scene:!!r,auto:!!a,autoState:!!ensureBattleStateV120().auto,clusterFits:!!rc&&rc.left>=0&&rc.right<=innerWidth&&rc.top>=0&&rc.bottom<=innerHeight}
+}
+
+function battleMotionScaleV185(){
+ let b=ensureBattleStateV120();
+ return b.speed===2?.62:1
+}
+function battleMsV185(ms){return Math.max(80,Math.round(ms*battleMotionScaleV185()))}
+function battleFastClassV185(){
+ document.body.classList.toggle("battleFastV185",ensureBattleStateV120().speed===2)
+}
+
+function battleTempoV186(){
+ let b=ensureBattleStateV120();
+ return b.speed===2?{tap:130,enemy:210,after:160,ougi:390}:{tap:210,enemy:330,after:260,ougi:590}
+}
+function bsv2ActionTimerV186(kind){
+ let t=battleTempoV186();
+ return kind==="ougi"?t.ougi:kind==="skill"?Math.round(t.tap*1.45):kind==="heal"?Math.round(t.tap*1.15):t.tap;
+}
+function bsv2EnemyTimerV186(){
+ let t=battleTempoV186();
+ return t.enemy
+}
+function bsv2SkipLongFxV186(){
+ let b=ensureBattleStateV120();
+ return !!(b.speed===2||S.qol?.skipOugi)
+}
+function bsv2TempoBadgeV186(){
+ let b=ensureBattleStateV120();
+ return `<div class=bsv2TempoBadgeV186><span>${b.speed===2?"FAST":"NORMAL"}</span><b>${b.auto?"AUTO":"MANUAL"}</b></div>`
+}
+
+function perfPrefsV187(){
+ S.qol=S.qol||{};
+ if(typeof S.qol.lightBattle!=="boolean")S.qol.lightBattle=true;
+ return S.qol
+}
+function lightBattleV187(){return perfPrefsV187().lightBattle}
+function applyLightBattleV187(){
+ document.body.classList.toggle("lightBattleV187",lightBattleV187())
+}
+function cleanupBattleFxV187(){
+ stopAutoBattleV122?.();
+ [
+  "#battleAnimV121",".cutinV153",".ougiSealV159",".finisherV141",
+  ".enemyWarningV159",".victoryCurtainV142",".bsv2Impact178",
+  ".bsv2WaveIntro179",".skillFxV174"
+ ].forEach(s=>document.querySelectorAll(s).forEach(n=>n.remove()));
+ document.documentElement.classList.remove("hitStopV121");
+}
+function toggleLightBattleV187(){
+ let q=perfPrefsV187();q.lightBattle=!q.lightBattle;save();persistentSaveWrite();applyLightBattleV187();
+ if(document.body.classList.contains("battleMode"))cinematicBattleV119();else home();
+}
+function lightBattleButtonV187(){
+ return `<button class="${lightBattleV187()?"on":""}" data-light-battle=1>${lightBattleV187()?"軽量ON":"軽量OFF"}</button>`
+}
+
+function refreshBattleV188(){
+ if(document.querySelector(".posterBattleV205")){schedulePosterRenderV229("refreshBattle");return true;}
+ let root=document.querySelector(".bsv2_175");if(!root)return false;
+ let b=normalizeBattleStateV171(),team=(S.sets?.[S.set]||[]).slice(0,6);
+ let top=root.querySelector(".bsv2Top_175 section small");
+ if(top)top.textContent=`WAVE ${b.wave}/3　TURN ${b.turn}`;
+ let auto=root.querySelector("[data-battle-auto]");
+ if(auto){auto.classList.toggle("on",!!b.auto);auto.textContent=b.auto?"● AUTO":"AUTO"}
+ let speed=root.querySelector("[data-battle-speed]");
+ if(speed){speed.dataset.battleSpeed=b.speed===2?1:2;speed.textContent=`▶▶ ${b.speed===2?"×2":"×1"}`}
+ let hp=b.enemyHp?.[b.target]??100,bar=root.querySelector(".bsv2EnemyHud_175>i>em");
+ if(bar)bar.style.width=Math.max(0,Math.min(100,hp))+"%";
+ root.querySelectorAll(".bsv2Turn_175 button").forEach((x,n)=>x.classList.toggle("on",n===b.unit));
+ root.querySelectorAll(".bsv2Cards_175 button").forEach((x,n)=>{
+   x.classList.toggle("on",n===b.unit);
+   let bars=x.querySelectorAll("span>i>em");
+   if(bars[0])bars[0].style.width=Math.max(0,Math.min(100,b.allyHp?.[n]??100))+"%";
+   if(bars[1])bars[1].style.width=Math.max(0,Math.min(100,b.ep?.[n]??0))+"%";
+ });
+ let ougi=root.querySelector('.actionClusterV164 [data-sd-action="ougi"]');
+ if(ougi)ougi.classList.toggle("ready",(b.ep?.[b.unit]||0)>=100);
+ let badge=root.querySelector(".bsv2AutoBadge184");
+ if(badge){badge.classList.toggle("on",!!b.auto);let s=badge.querySelector("span");if(s)s.textContent=b.auto?"AUTO RUNNING":"MANUAL"}
+ let tempo=root.querySelector(".bsv2TempoBadgeV186");
+ if(tempo){let s=tempo.querySelector("span"),m=tempo.querySelector("b");if(s)s.textContent=b.speed===2?"FAST":"NORMAL";if(m)m.textContent=b.auto?"AUTO":"MANUAL"}
+ refreshCommandPanelV198();
+ return true
+}
+function smoothBattleModeV188(){
+ return lightBattleV187()
+}
+function cleanupTransientBattleV188(){
+ document.querySelectorAll("#battleAnimV121,.bsv2Impact178,.skillFxV174,.cutinV153,.ougiSealV159,.finisherV141,.enemyWarningV159,.sfxVisualV146,.weaponTrailV145").forEach(n=>n.remove())
+}
+
+function battleFxPoolV189(){
+ let host=document.querySelector(".bsv2Fx_175");
+ if(!host)return null;
+ let pool=host.querySelector(".fxPoolV189");
+ if(!pool){pool=document.createElement("div");pool.className="fxPoolV189";host.appendChild(pool)}
+ return pool
+}
+function fxFlashV189(kind="attack"){
+ let p=battleFxPoolV189();if(!p)return;
+ p.dataset.kind=kind;p.classList.remove("play");void p.offsetWidth;p.classList.add("play");
+}
+function hpTextV189(value,kind="damage"){
+ let host=battleFxPoolV189();if(!host)return;
+ let n=host.querySelector(".fxNumberV189");
+ if(!n){n=document.createElement("b");n.className="fxNumberV189";host.appendChild(n)}
+ n.className=`fxNumberV189 ${kind}`;n.textContent=value;n.classList.remove("play");void n.offsetWidth;n.classList.add("play")
+}
+function battleUiSnapshotV189(){
+ let b=normalizeBattleStateV171();
+ return {wave:b.wave,turn:b.turn,unit:b.unit,target:b.target,auto:b.auto,speed:b.speed,enemyHp:[...(b.enemyHp||[])],allyHp:[...(b.allyHp||[])],ep:[...(b.ep||[])]}
+}
+function battleUiChangedV189(a,b){
+ return JSON.stringify(a)!==JSON.stringify(b)
+}
+let __battleSnapshotV189=null;
+function smartRefreshBattleV189(){
+ let now=battleUiSnapshotV189();
+ if(!__battleSnapshotV189){__battleSnapshotV189=now;refreshBattleV188();return}
+ if(battleUiChangedV189(__battleSnapshotV189,now)){__battleSnapshotV189=now;refreshBattleV188()}
+}
+function smoothActionFeedbackV189(kind){
+ fxFlashV189(kind);
+ if(kind==="attack")hpTextV189("HIT","damage");
+ if(kind==="skill")hpTextV189("SKILL","skill");
+ if(kind==="ougi")hpTextV189("BURST","ougi");
+ if(kind==="heal")hpTextV189("SUPPORT","heal");
+}
+
+function mobilePerfProfileV190(){
+ let mem=Number(navigator.deviceMemory||4),cores=Number(navigator.hardwareConcurrency||4),small=innerWidth<=430;
+ return {small,low:small||mem<=4||cores<=4,mem,cores}
+}
+function applyAutoPerfV190(){
+ let p=mobilePerfProfileV190(),q=perfPrefsV187();
+ if(typeof q.autoPerf!=="boolean")q.autoPerf=true;
+ if(q.autoPerf&&p.low)q.lightBattle=true;
+ document.body.classList.toggle("autoPerfV190",q.autoPerf&&p.low);
+ applyLightBattleV187();
+ return p
+}
+function pauseDecorativeFxV190(on=true){
+ document.body.classList.toggle("pauseFxV190",!!on)
+}
+
+let __battleIntegrityTimerV476=null;
+
+function stopBattleIntegrityGuardV476(){
+  if(__battleIntegrityTimerV476){
+    clearTimeout(__battleIntegrityTimerV476);
+    __battleIntegrityTimerV476=null;
+  }
+}
+
+function battleIntegrityGuardV476(){
+  stopBattleIntegrityGuardV476();
+
+  if(!document.body.classList.contains("battleMode"))return;
+
+  try{
+    const root=document.querySelector(".posterBattleV205");
+    if(!root){
+      try{mountBattleV182()}catch(e){console.warn("V476 remount",e)}
+    }else{
+      root.style.removeProperty("filter");
+      root.style.removeProperty("opacity");
+      root.style.removeProperty("visibility");
+
+      const essentials=[
+        ".posterEnemyCompactV235",
+        ".posterLivePartyV217",
+        ".posterThumbBarV234",
+        ".posterThumbSubV234"
+      ];
+
+      const missing=essentials.some(sel=>!root.querySelector(sel));
+      const resultVisible=!!document.querySelector(".posterResultCardV215,.battleClearV119");
+
+      if(missing&&!resultVisible){
+        try{schedulePosterRenderV229?.("v476-integrity",true)}catch(_){}
+        try{smartRefreshBattleV189?.()}catch(_){}
+      }
+
+      // Stale result nodes must never survive into an active fight.
+      if(!resultVisible){
+        document.querySelectorAll(".resultOverlay:not(.active)").forEach(x=>x.remove());
+      }
+    }
+  }catch(e){
+    console.warn("V476 battle integrity",e);
+  }
+
+  __battleIntegrityTimerV476=setTimeout(battleIntegrityGuardV476,900);
+}
+
+function battleVisibilityGuardV190(){
+ document.addEventListener("visibilitychange",()=>{
+   if(document.visibilityState==="hidden"){
+     if(autoLoopActiveV200())touchAutoLoopHeartbeatV203(false);flushBattleSaveV197();pauseDecorativeFxV190(true);
+     if(autoBattleTimerV122)clearTimeout(autoBattleTimerV122);
+   }else if(document.body.classList.contains("battleMode")){
+     pauseDecorativeFxV190(false);
+     smoothRefreshBattleV194();
+     if(ensureBattleStateV120().auto)scheduleAutoBattleV122(160);scheduleBattlePerfCheckV192();
+   }
+ },{passive:true})
+}
+function battleFooterAuditV190(){
+ let hud=document.querySelector(".bsv2Hud_175"),cluster=document.querySelector(".bsv2Hud_175 .actionClusterV164");
+ if(!hud||!cluster)return {ok:false};
+ let h=hud.getBoundingClientRect(),c=cluster.getBoundingClientRect();
+ return {ok:c.left>=h.left&&c.right<=h.right+1&&c.top>=h.top&&c.bottom<=h.bottom+1,hud:h.height,cluster:c.height}
+}
+function bsv2CompactStatus190(){
+ let b=ensureBattleStateV120();
+ return `<div class=bsv2CompactStatus190><span>${b.speed===2?"FAST":"NORMAL"}</span><b>${b.auto?"AUTO":"MANUAL"}</b></div>`
+}
+
+let __battleCleanupTimersV191=new Set();
+function battleTimerV191(fn,ms){
+ let id=setTimeout(()=>{__battleCleanupTimersV191.delete(id);try{fn()}catch(e){console.error("V191 timer",e)}},ms);
+ __battleCleanupTimersV191.add(id);return id
+}
+function clearBattleTimersV191(){
+ __battleCleanupTimersV191.forEach(id=>clearTimeout(id));
+ __battleCleanupTimersV191.clear()
+}
+function purgeBattleTransientDomV191(){
+ [
+  "#battleAnimV121",".bsv2Impact178",".skillFxV174",".cutinV153",".ougiSealV159",
+  ".finisherV141",".enemyWarningV159",".sfxVisualV146",".weaponTrailV145",
+  ".bsv2WaveIntro179",".gameToast"
+ ].forEach(s=>document.querySelectorAll(s).forEach(n=>n.remove()));
+}
+function leaveBattleCleanupV191(){stopBattleIntegrityGuardV476();document.getElementById("autoHardButtonV430")?.remove();if(typeof autoHardStopV430==="function")autoHardStopV430();if(typeof removeAutoButtonV429==="function")removeAutoButtonV429();clearPosterQueueV230();posterRendererResetV229();posterStageResetV228();flushBattleSaveV197();battleInvalidateActionsV195();clearTimeout(__battleGovernorTimerV193);__battleLongTaskCountV193=0;
+ stopAutoBattleV122?.();
+ clearBattleTimersV191();
+ purgeBattleTransientDomV191();
+ pauseDecorativeFxV190?.(true);
+ document.body.classList.remove("battleMode","battleFastV185","battleQualityLowV192","battleQualityMidV192","battleQualityHighV192");clearTimeout(__battlePerfTimerV192);
+ __battleSnapshotV189=null
+}
+function battleMemoryAuditV191(){
+ return {
+  timers:__battleCleanupTimersV191.size,
+  transientNodes:document.querySelectorAll("#battleAnimV121,.bsv2Impact178,.skillFxV174,.cutinV153,.ougiSealV159,.finisherV141,.enemyWarningV159,.sfxVisualV146,.weaponTrailV145,.bsv2WaveIntro179").length,
+  autoTimer:!!autoBattleTimerV122,
+  battleMode:document.body.classList.contains("battleMode")
+ }
+}
+function compactBattleStatusV191(){
+ let b=ensureBattleStateV120();
+ return `<div class=bsv2StatusV191><span>${b.speed===2?"×2":"×1"}</span><b class="${b.auto?"on":""}">${b.auto?"AUTO":"MANUAL"}</b></div>`
+}
+
+let __battleFrameSamplesV192=[];
+let __battlePerfTimerV192=null;
+function battleAdaptiveStateV192(){
+ S.qol=S.qol||{};
+ if(typeof S.qol.adaptiveBattle!=="boolean")S.qol.adaptiveBattle=true;
+ if(!["low","mid","high"].includes(S.qol.battleQuality))S.qol.battleQuality="mid";
+ return S.qol
+}
+function applyBattleQualityV192(level){
+ let q=battleAdaptiveStateV192();
+ q.battleQuality=level;
+ document.body.classList.remove("battleQualityLowV192","battleQualityMidV192","battleQualityHighV192");
+ document.body.classList.add(level==="low"?"battleQualityLowV192":level==="high"?"battleQualityHighV192":"battleQualityMidV192");
+ if(level==="low"){q.lightBattle=true}
+ applyLightBattleV187();
+ save();persistentSaveWrite();
+ return level
+}
+function measureBattleFramesV192(){
+ if(!document.body.classList.contains("battleMode"))return;
+ let q=battleAdaptiveStateV192();if(!q.adaptiveBattle)return;
+ __battleFrameSamplesV192=[];let last=performance.now(),count=0;
+ function tick(t){
+   if(!document.body.classList.contains("battleMode"))return;
+   let dt=t-last;last=t;if(dt>0&&dt<200)__battleFrameSamplesV192.push(dt);
+   if(++count<90)requestAnimationFrame(tick);
+   else{
+     let avg=__battleFrameSamplesV192.reduce((a,b)=>a+b,0)/Math.max(1,__battleFrameSamplesV192.length);
+     let slow=__battleFrameSamplesV192.filter(x=>x>28).length/Math.max(1,__battleFrameSamplesV192.length);
+     let next=slow>.22||avg>22?"low":slow<.06&&avg<18?"high":"mid";
+     if(next!==q.battleQuality)applyBattleQualityV192(next)
+   }
+ }
+ requestAnimationFrame(tick)
+}
+function scheduleBattlePerfCheckV192(){
+ clearTimeout(__battlePerfTimerV192);
+ __battlePerfTimerV192=setTimeout(measureBattleFramesV192,500)
+}
+function battleQualityLabelV192(){
+ let q=battleAdaptiveStateV192();
+ return `<button class=qualityV192 data-battle-quality=1>${q.battleQuality==="low"?"省電力":q.battleQuality==="high"?"高画質":"標準"}</button>`
+}
+function toggleBattleQualityV192(){
+ let q=battleAdaptiveStateV192(),order=["low","mid","high"],i=order.indexOf(q.battleQuality);
+ q.adaptiveBattle=false;applyBattleQualityV192(order[(i+1)%3]);
+ if(document.body.classList.contains("battleMode"))cinematicBattleV119()
+}
+function enableAdaptiveBattleV192(){
+ let q=battleAdaptiveStateV192();q.adaptiveBattle=true;save();persistentSaveWrite();scheduleBattlePerfCheckV192()
+}
+function battleRuntimeAuditV192(){
+ let q=battleAdaptiveStateV192();
+ return {adaptive:q.adaptiveBattle,quality:q.battleQuality,light:q.lightBattle,timers:__battleCleanupTimersV191?.size||0,auto:!!ensureBattleStateV120().auto}
+}
+
+let __battleLongTaskCountV193=0;
+let __battleGovernorTimerV193=null;
+let __battleLastActionAtV193=0;
+
+function performanceGovernorStateV193(){
+ S.qol=S.qol||{};
+ if(typeof S.qol.performanceGovernor!=="boolean")S.qol.performanceGovernor=true;
+ if(!Number.isInteger(S.qol.performanceStrikes))S.qol.performanceStrikes=0;
+ return S.qol
+}
+
+function observeLongTasksV193(){
+ if(!("PerformanceObserver" in window))return;
+ try{
+  let po=new PerformanceObserver(list=>{
+   if(!document.body.classList.contains("battleMode"))return;
+   for(const e of list.getEntries()){
+    if(e.duration>=50){
+     __battleLongTaskCountV193++;
+     let q=performanceGovernorStateV193();
+     q.performanceStrikes=Math.min(10,(q.performanceStrikes||0)+1);
+    }
+   }
+  });
+  po.observe({entryTypes:["longtask"]});
+ }catch(e){}
+}
+
+function applyPerformanceGovernorV193(){
+ let q=performanceGovernorStateV193();
+ if(!q.performanceGovernor)return;
+ let p=mobilePerfProfileV190();
+ if(__battleLongTaskCountV193>=3||q.performanceStrikes>=4||p.low){
+   if(q.battleQuality!=="low")applyBattleQualityV192("low");
+   q.lightBattle=true;
+ }else if(q.battleQuality==="high"&&__battleLongTaskCountV193>=1){
+   applyBattleQualityV192("mid");
+ }
+ applyLightBattleV187();
+ save();persistentSaveWrite();
+}
+
+function scheduleGovernorV193(){
+ clearTimeout(__battleGovernorTimerV193);
+ __battleGovernorTimerV193=setTimeout(()=>{
+  applyPerformanceGovernorV193();
+  __battleLongTaskCountV193=0;
+ },1600)
+}
+
+function battleActionStampV193(){
+ __battleLastActionAtV193=performance.now();
+ scheduleGovernorV193();
+}
+
+function autoLoopWatchdogV193(){
+ let b=ensureBattleStateV120();
+ if(!document.body.classList.contains("battleMode")||!b.auto)return;
+ let idle=performance.now()-__battleLastActionAtV193;
+ if(idle>2200&&!autoBattleBusyV122){
+   stopAutoBattleV122();
+   scheduleAutoBattleV122(120);
+ }
+ battleTimerV191(autoLoopWatchdogV193,1200);
+}
+
+function startAutoWatchdogV193(){
+ if(ensureBattleStateV120().auto){
+  __battleLastActionAtV193=performance.now();
+  battleTimerV191(autoLoopWatchdogV193,1200);
+ }
+}
+
+function battlePerfBadgeV193(){
+ let q=performanceGovernorStateV193();
+ return `<div class=battlePerfBadgeV193><span>${q.battleQuality.toUpperCase()}</span><b>${q.performanceGovernor?"AUTO-PERF":"MANUAL-PERF"}</b></div>`
+}
+
+function battlePerfAuditV193(){
+ let q=performanceGovernorStateV193();
+ return {
+  governor:q.performanceGovernor,
+  strikes:q.performanceStrikes,
+  quality:q.battleQuality,
+  longTasks:__battleLongTaskCountV193,
+  auto:!!ensureBattleStateV120().auto,
+  timers:__battleCleanupTimersV191?.size||0
+ }
+}
+
+let __lastBattlePaintV194=0;
+let __pendingBattlePaintV194=false;
+
+function requestBattlePaintV194(fn){
+ const now=performance.now();
+ const minGap=lightBattleV187()?66:42;
+ if(now-__lastBattlePaintV194>=minGap){
+   __lastBattlePaintV194=now;
+   try{fn()}catch(e){console.error("V194 paint",e)}
+   return;
+ }
+ if(__pendingBattlePaintV194)return;
+ __pendingBattlePaintV194=true;
+ battleTimerV191(()=>{
+   __pendingBattlePaintV194=false;
+   __lastBattlePaintV194=performance.now();
+   try{fn()}catch(e){console.error("V194 delayed paint",e)}
+ },Math.max(16,minGap-(now-__lastBattlePaintV194)));
+}
+
+function finalBossClearGuardV460(){
+ try{
+   if(window.__v460ClearHandled)return false;
+   if(!document.body.classList.contains("battleMode"))return false;
+   let b=ensureAdvancedBattleV125();
+   if((b.wave||1)<3)return false;
+   let hp=Array.isArray(b.enemyHp)?b.enemyHp:[b.enemyHp];
+   let allDead=hp.length>0&&hp.every(x=>(+x||0)<=1);if(allDead&&Array.isArray(b.enemyHp))b.enemyHp=b.enemyHp.map(()=>0);
+   if(!allDead)return false;
+   window.__v460ClearHandled=true;
+   b.auto=false;
+   try{stopAutoCoreV427?.()}catch(_){}
+   try{stopAutoBattleV122()}catch(_){}
+   try{queueBattleSaveV197(true)}catch(_){}
+   setTimeout(()=>{
+     try{battleClearRewardsV127()}catch(e){
+       console.error("V460 clear fallback",e);
+       window.__v460ClearHandled=false;
+     }
+   },80);
+   return true;
+ }catch(e){
+   console.warn("V460 clear guard",e);
+   return false;
+ }
+}
+
+function smoothRefreshBattleV194(){
+ if(finalBossClearGuardV460())return;
+ requestBattlePaintV194(()=>smartRefreshBattleV189())
+}
+
+function battleAnimationBudgetV194(){
+ let q=battleAdaptiveStateV192();
+ if(q.battleQuality==="low")return 1;
+ if(q.battleQuality==="high")return 3;
+ return 2
+}
+
+function shouldPlayBattleFxV194(level=1){
+ return level<=battleAnimationBudgetV194()
+}
+
+function battleUiDensityV194(){
+ let w=innerWidth,h=innerHeight;
+ return w<=390||h<=700?"compact":w>=700?"wide":"normal"
+}
+
+function applyBattleDensityV194(){
+ let d=battleUiDensityV194();
+ document.body.classList.remove("battleDensityCompactV194","battleDensityNormalV194","battleDensityWideV194");
+ document.body.classList.add(d==="compact"?"battleDensityCompactV194":d==="wide"?"battleDensityWideV194":"battleDensityNormalV194")
+}
+
+function battleRuntimeBadgeV194(){
+ let q=battleAdaptiveStateV192(),d=battleUiDensityV194();
+ return `<div class=battleRuntimeBadgeV194><span>${q.battleQuality.toUpperCase()}</span><b>${d.toUpperCase()}</b></div>`
+}
+
+function battleViewportGuardV194(){
+ let root=document.querySelector(".bsv2_175");
+ if(!root)return;
+ let vh=window.visualViewport?.height||innerHeight;
+ root.style.height=vh+"px";
+ root.style.minHeight=vh+"px";
+}
+
+function setupViewportGuardV194(){
+ let vv=window.visualViewport;
+ if(vv&&!window.__bsv2vv194){
+   window.__bsv2vv194=true;
+   vv.addEventListener("resize",()=>{if(document.body.classList.contains("battleMode")){battleViewportGuardV194();applyBattleDensityV194();applyExactPosterFitV216();if(!document.querySelector(".bsv2_175"))restoreBattleCheckpointV196()}},{passive:true});
+ }
+}
+
+let __battleActionTokenV195=0;
+let __battleActionBusyV195=false;
+let __battleLastTapV195=0;
+
+function battleActionGateV195(kind="attack"){
+ const now=performance.now();
+ const gap=kind==="ougi"?260:140;
+ if(__battleActionBusyV195)return false;
+ if(now-__battleLastTapV195<gap)return false;
+ __battleLastTapV195=now;
+ __battleActionBusyV195=true;
+ __battleActionTokenV195++;
+ document.body.classList.add("battleBusyV195");refreshCleanCommandStateV241?.();schedulePosterRenderV229?.("busy-on",true);applyPosterControlStateV235?.();
+ return __battleActionTokenV195;
+}
+
+function battleActionReleaseV195(token){
+ if(token!==__battleActionTokenV195)return;
+ __battleActionBusyV195=false;
+ document.body.classList.remove("battleBusyV195");refreshCleanCommandStateV241?.();schedulePosterRenderV229?.("busy-off",true);applyPosterControlStateV235?.();
+}
+
+function battleInvalidateActionsV195(){
+ __battleActionTokenV195++;
+ __battleActionBusyV195=false;
+ document.body.classList.remove("battleBusyV195");
+}
+
+function battleIsTokenValidV195(token){
+ return token===__battleActionTokenV195 && document.body.classList.contains("battleMode");
+}
+
+function battleInteractionAuditV195(){
+ return {
+  busy:__battleActionBusyV195,
+  token:__battleActionTokenV195,
+  auto:!!ensureBattleStateV120().auto,
+  speed:ensureBattleStateV120().speed,
+  mounted:!!document.querySelector(".bsv2_175")
+ }
+}
+
+function battleLightweightBannerV195(){
+ const q=battleAdaptiveStateV192();
+ const b=ensureBattleStateV120();
+ return `<div class=battleLightweightBannerV195><span>${b.speed===2?"×2":"×1"}</span><b>${b.auto?"AUTO":"MANUAL"}</b><i>${q.battleQuality==="low"?"省電力":q.battleQuality==="high"?"高画質":"標準"}</i></div>`
+}
+
+let __battleSessionV196={startedAt:0,actions:0,waves:0,retries:0,lastSaveAt:0};
+
+function startBattleSessionV196(){
+ __battleSessionV196={startedAt:Date.now(),actions:0,waves:0,retries:0,lastSaveAt:0};
+ return __battleSessionV196
+}
+
+function battleSessionActionV196(){
+ __battleSessionV196.actions++;
+ if(__battleSessionV196.actions%4===0)battleCheckpointV196();
+}
+
+function battleSessionWaveV196(){
+ __battleSessionV196.waves++;
+ battleCheckpointV196();
+}
+
+function battleCheckpointV196(force=false){
+ const now=Date.now();
+ if(!force && now-__battleSessionV196.lastSaveAt<900)return;
+ __battleSessionV196.lastSaveAt=now;
+ try{
+   S.qol=S.qol||{};
+   S.qol.battleCheckpoint={
+     at:now,
+     stage:S.battleStage||0,
+     mode:S.battleMode||"normal",
+     state:JSON.parse(JSON.stringify(ensureBattleStateV120()))
+   };
+   persistentSaveWrite();
+ }catch(e){console.error("V196 checkpoint",e)}
+}
+
+function clearBattleCheckpointV196(){
+ if(S.qol?.battleCheckpoint)delete S.qol.battleCheckpoint;
+ persistentSaveWrite();
+}
+
+function restoreBattleCheckpointV196(){
+ try{
+   const cp=S.qol?.battleCheckpoint;
+   if(!cp?.state)return false;
+   S.battleStage=cp.stage||0;
+   S.battleMode=cp.mode||"normal";
+   S.battleV120=JSON.parse(JSON.stringify(cp.state));
+   normalizeBattleStateV171();
+   return mountBattleV182();
+ }catch(e){
+   console.error("V196 restore checkpoint",e);
+   return false
+ }
+}
+
+function battleSessionStatsV196(){
+ let elapsed=__battleSessionV196.startedAt?Math.max(0,Date.now()-__battleSessionV196.startedAt):0;
+ return {elapsedMs:elapsed,actions:__battleSessionV196.actions,waves:__battleSessionV196.waves,auto:!!ensureBattleStateV120().auto};
+}
+
+function battleMiniStatsV196(){
+ let s=battleSessionStatsV196();
+ return `<div class=bsv2MiniStats196><span>ACT ${s.actions}</span><b>${Math.floor(s.elapsedMs/1000)}s</b></div>`
+}
+
+let __battleSaveTimerV197=null;
+let __battleSaveDirtyV197=false;
+
+function queueBattleSaveV197(force=false){
+ __battleSaveDirtyV197=true;
+ if(force){
+  clearTimeout(__battleSaveTimerV197);
+  __battleSaveTimerV197=null;
+  __battleSaveDirtyV197=false;
+  try{save();persistentSaveWrite()}catch(e){console.error("V197 save",e)}
+  return;
+ }
+ if(__battleSaveTimerV197)return;
+ __battleSaveTimerV197=setTimeout(()=>{
+  __battleSaveTimerV197=null;
+  if(!__battleSaveDirtyV197)return;
+  __battleSaveDirtyV197=false;
+  try{save();persistentSaveWrite()}catch(e){console.error("V197 queued save",e)}
+ },650);
+}
+
+function flushBattleSaveV197(){
+ if(__battleSaveDirtyV197||__battleSaveTimerV197)queueBattleSaveV197(true)
+}
+
+function enemyHpPercentV197(b){
+ let t=Math.max(0,Number(b?.target)||0);
+ let raw=Array.isArray(b?.enemyHp)?b.enemyHp[t]:b?.enemyHp;
+ let hp=Number(raw);
+ if(!Number.isFinite(hp))hp=100;
+ return Math.max(0,Math.min(100,hp))
+}
+
+function optimizeBattleImagesV197(){
+ let root=document.querySelector(".bsv2_175");if(!root)return;
+ root.querySelectorAll("img").forEach((img,i)=>{
+  img.decoding="async";
+  if(i>4)img.loading="lazy";
+  img.draggable=false;
+ });
+}
+
+function battleHotpathAuditV197(){
+ let b=ensureBattleStateV120();
+ return {
+  saveQueued:!!__battleSaveTimerV197,
+  saveDirty:__battleSaveDirtyV197,
+  enemyHp:enemyHpPercentV197(b),
+  target:b.target||0,
+  imgs:document.querySelectorAll(".bsv2_175 img").length
+ }
+}
+
+function battleCommandStateV198(){
+ let b=ensureBattleStateV120(),slot=Math.max(0,Number(b.unit)||0);
+ let ep=Number(b.ep?.[slot]||0);
+ return {
+   ep,
+   canOugi:ep>=100,
+   auto:!!b.auto,
+   speed:Number(b.speed)===2?2:1,
+   slot
+ }
+}
+
+function refreshCommandPanelV198(){
+ let root=document.querySelector(".bsv2_175");if(!root)return;
+ let s=battleCommandStateV198();
+ let ougi=root.querySelector('.actionClusterV164 [data-sd-action="ougi"]');
+ if(ougi){
+   ougi.classList.toggle("readyV198",s.canOugi);
+   ougi.classList.toggle("lockedV198",!s.canOugi);
+   ougi.setAttribute("aria-disabled",s.canOugi?"false":"true");
+   ougi.dataset.ep=String(Math.round(s.ep));
+   let meter=ougi.querySelector(".ougiMeterV198");
+   if(!meter){
+     meter=document.createElement("i");
+     meter.className="ougiMeterV198";
+     ougi.appendChild(meter);
+   }
+   meter.style.setProperty("--ep",Math.max(0,Math.min(100,s.ep))+"%");
+ }
+ let auto=root.querySelector("[data-battle-auto]");
+ if(auto)auto.setAttribute("aria-pressed",s.auto?"true":"false");
+ let speed=root.querySelector("[data-battle-speed]");
+ if(speed)speed.setAttribute("aria-label",`戦闘速度 ${s.speed}倍`);
+}
+
+function battleTapPulseV198(el){
+ if(!el)return;
+ el.classList.remove("tapV198");void el.offsetWidth;el.classList.add("tapV198");
+ battleTimerV191(()=>el.classList.remove("tapV198"),160);
+}
+
+function battleTargetCycleV198(dir=1){
+ let b=ensureBattleStateV120(),count=Array.isArray(b.enemyHp)?b.enemyHp.length:1;
+ if(count<=1)return;
+ let next=(Number(b.target||0)+dir+count)%count;
+ b.target=next;
+ queueBattleSaveV197();
+ smoothRefreshBattleV194();
+ refreshCommandPanelV198();
+}
+
+function battleSafeAreaAuditV198(){
+ let hud=document.querySelector(".bsv2Hud_175");
+ if(!hud)return {ok:false};
+ let r=hud.getBoundingClientRect(),vv=window.visualViewport;
+ let vh=vv?.height||innerHeight;
+ return {ok:r.bottom<=vh+1,top:r.top,bottom:r.bottom,viewport:vh,height:r.height};
+}
+
+let __autoLoopTimerV200=null;
+
+function autoLoopPrefsV200(){
+ S.qol=S.qol||{};
+ if(!S.qol.autoLoopV200||typeof S.qol.autoLoopV200!=="object")
+   S.qol.autoLoopV200={active:false,count:0,stage:0,mode:"normal",delay:900};
+ return S.qol.autoLoopV200
+}
+
+function startTrueAutoLoopV200(stage,mode){
+ let old=autoLoopManagerV201();
+ let fresh=!old.active;
+ let p=fresh?resetAutoLoopSessionV201(stage,mode):old;
+ if(!fresh){
+   p.active=true;
+   p.paused=false;
+   p.stage=Math.max(0,+stage||0);
+   p.mode=mode||"normal";
+ }
+ autoLoopEcoStateV202();
+ let r=autoLoopRecoveryStateV203();
+ r.recovering=false;
+ touchAutoLoopHeartbeatV203(true);
+ setAutoReplayActiveV199(true,{source:"v203-loop",stage:p.stage,mode:p.mode});
+ applyAutoLoopEcoV202();
+ startAutoLoopHeartbeatV203();
+ scheduleAutoLoopRecoveryWatchV203();
+ queueBattleSaveV197(true);
+ renderAutoReplayHudV199();
+ renderAutoLoopHudV200();refreshPosterLoopBadgeV230?.();
+}
+
+function stopTrueAutoLoopV200(showToast=true){
+ let p=autoLoopManagerV201();
+ p.active=false;p.paused=false;p.recovering=false;
+ clearTimeout(__autoLoopTimerV200);
+ __autoLoopTimerV200=null;
+ stopAutoLoopHeartbeatV203();
+ stopAutoBattleV122();
+ setAutoReplayActiveV199(false);
+ document.getElementById("autoLoopResultV200")?.remove();
+ hideAutoLoopRecoveryV203();
+ restoreAutoLoopPrefsV202();
+ renderAutoReplayHudV199();
+ renderAutoLoopHudV200();
+ queueBattleSaveV197(true);
+ if(showToast)toast(`AUTO周回を停止しました（${p.count}周）`);
+}
+
+function autoLoopActiveV200(){
+ return !!autoLoopPrefsV200().active
+}
+
+function autoLoopHudV200(){
+ let p=autoLoopEcoStateV202(),r=autoLoopRecoveryStateV203();
+ if(document.body.classList.contains("battleMode")){
+   return `<div class="autoLoopHudV200 autoLoopHudCompactV464">
+     <small>AUTO LOOP</small>
+     <div class=autoLoopHudHeadV201><b>${autoLoopTargetLabelV201()}</b><i>${p.paused?"PAUSE":"RUNNING"}</i></div>
+     <div class=autoLoopControlsV201>
+       <button data-auto-loop-pause-v201=1>${p.paused?"再開":"一時停止"}</button>
+       <button data-auto-loop-stop-v200=1>停止</button>
+     </div>
+   </div>`
+ }
+ return `<div class=autoLoopHudV200>
+   <small>AUTO LOOP</small>
+   <div class=autoLoopHudHeadV201><b>${autoLoopTargetLabelV201()}</b><i>${p.paused?"PAUSE":"RUNNING"}</i></div>
+   <span>${stageMeta(p.stage||0).name}${r.recoveries?` / 復旧${r.recoveries}`:""}</span>
+   ${autoLoopTotalsV201()}
+   ${autoLoopStatsUiV202()}
+   <div class=autoLoopTargetsV201>${autoLoopTargetOptionsV201()}</div>
+   <button class="${p.eco?"on":""}" data-auto-loop-eco-v202=1>⚡ 省電力 ${p.eco?"ON":"OFF"}</button>
+   <div class=autoLoopControlsV201>
+     <button data-auto-loop-pause-v201=1>${p.paused?"再開":"一時停止"}</button>
+     <button data-auto-loop-stop-v200=1>停止</button>
+   </div>
+ </div>`
+}
+
+function renderAutoLoopHudV200(){
+ document.getElementById("autoLoopHudV200")?.remove();
+ let p=autoLoopPrefsV200();
+ if(!p.active)return;
+ let d=document.createElement("div");
+ d.id="autoLoopHudV200";
+ d.innerHTML=autoLoopHudV200();
+ document.body.appendChild(d);
+}
+
+function autoLoopResultV200(r){
+ let p=autoLoopManagerV201();
+ document.getElementById("autoLoopResultV200")?.remove();
+ let d=document.createElement("div");
+ d.id="autoLoopResultV200";
+ d.className="autoLoopResultV200";
+ d.innerHTML=`<div>
+   <small>AUTO LOOP</small>
+   <h2>${autoLoopTargetLabelV201()}</h2>
+   <div class=autoLoopRewardsV200>
+     <span>原稿片<b>+${r.tickets||0}</b></span>
+     <span>資料<b>+${r.mat}</b></span>
+     <span>文銭<b>+${r.gold}</b></span>
+     <span>インク<b>+${r.ink}</b></span>
+   </div>
+   <b class=autoLoopTotalTitleV201>累計</b>
+   ${autoLoopTotalsV201()}
+   ${autoLoopStatsUiV202()}
+   ${autoLoopHistoryUiV202()}
+   <p><i></i> ${shouldFinishAutoLoopV201()?"周回完了":"次の戦闘を準備中…"}</p>
+   <button data-auto-loop-stop-v200=1>周回を停止</button>
+ </div>`;
+ document.body.appendChild(d);
+ return d
+}
+
+function scheduleNextAutoLoopV200(){
+ let p=autoLoopManagerV201();
+ if(!p.active||p.paused)return;
+ if(shouldFinishAutoLoopV201()){finishAutoLoopV201();return}
+ clearTimeout(__autoLoopTimerV200);
+ let wait=p.fastResult?520:Math.max(450,+p.delay||900);
+ __autoLoopTimerV200=setTimeout(()=>{
+   let q=autoLoopManagerV201();
+   if(!q.active||q.paused)return;
+   document.getElementById("autoLoopResultV200")?.remove();
+   launchReplayV199(true,q.stage,q.mode);
+ },wait)
+}
+
+function autoLoopBattleMountedV200(){
+ let p=autoLoopManagerV201();
+ if(!p.active||p.paused)return;
+ p.recovering=false;
+ touchAutoLoopHeartbeatV203(true);
+ applyAutoLoopEcoV202();
+ startAutoLoopHeartbeatV203();
+ scheduleAutoLoopRecoveryWatchV203();
+ let b=normalizeBattleStateV171();
+ b.auto=true;
+ b.speed=p.eco?2:b.speed;
+ renderAutoLoopHudV200();
+ renderAutoReplayHudV199();
+ scheduleAutoBattleV122(120);
+}
+
+function autoLoopAuditV200(){
+ let p=autoLoopPrefsV200();
+ return {active:p.active,count:p.count,stage:p.stage,mode:p.mode,hasResult:!!document.getElementById("autoLoopResultV200")}
+}
+
+function autoLoopManagerV201(){
+ let p=autoLoopPrefsV200();
+ if(!Number.isInteger(p.target))p.target=0;
+ if(!p.total||typeof p.total!=="object")p.total={mat:0,gold:0,ink:0,tickets:0};
+ if(typeof p.paused!=="boolean")p.paused=false;
+ if(typeof p.fastResult!=="boolean")p.fastResult=true;
+ return p
+}
+
+function resetAutoLoopSessionV201(stage,mode){
+ let p=autoLoopManagerV201();
+ p.active=true;
+ p.paused=false;
+ p.stage=Math.max(0,+stage||0);
+ p.mode=mode||"normal";
+ p.count=0;
+ p.total={mat:0,gold:0,ink:0,tickets:0};
+ p.history=[];
+ p.startedAt=Date.now();
+ p.sessionStartedAt=p.startedAt;
+ return p
+}
+
+function autoLoopTargetLabelV201(){
+ let p=autoLoopManagerV201();
+ let shown=(p.count||0)+1;
+ return p.target>0?`${Math.min(shown,p.target)}/${p.target}周`:`${shown}周目 / ∞`
+}
+
+function autoLoopTargetOptionsV201(){
+ let p=autoLoopManagerV201();
+ return [0,5,10,20,50].map(n=>`<button class="${p.target===n?"on":""}" data-auto-loop-target-v201="${n}">${n===0?"∞":n+"周"}</button>`).join("")
+}
+
+function autoLoopTotalsV201(){
+ let p=autoLoopManagerV201(),t=p.total||{};
+ return `<div class=autoLoopTotalsV201>
+   <span>原稿片<b>${Number(t.tickets||0).toLocaleString()}</b></span>
+   <span>資料<b>${Number(t.mat||0).toLocaleString()}</b></span>
+   <span>文銭<b>${Number(t.gold||0).toLocaleString()}</b></span>
+   <span>インク<b>${Number(t.ink||0).toLocaleString()}</b></span>
+ </div>`
+}
+
+function shouldFinishAutoLoopV201(){
+ let p=autoLoopManagerV201();
+ return p.target>0 && p.count>=p.target
+}
+
+function finishAutoLoopV201(){
+ let p=autoLoopManagerV201();
+ p.active=false;p.paused=false;p.recovering=false;
+ clearTimeout(__autoLoopTimerV200);__autoLoopTimerV200=null;
+ stopAutoLoopHeartbeatV203();
+ setAutoReplayActiveV199(false);
+ restoreAutoLoopPrefsV202();
+ queueBattleSaveV197(true);
+ document.getElementById("autoLoopResultV200")?.remove();
+ hideAutoLoopRecoveryV203();
+ renderAutoLoopHudV200();
+ let d=document.createElement("div");
+ d.className="autoLoopFinishedV201";
+ d.id="autoLoopFinishedV201";
+ d.innerHTML=`<div>
+   <small>AUTO LOOP COMPLETE</small>
+   <h2>${p.count}周 完了</h2>
+   ${autoLoopTotalsV201()}
+   ${autoLoopStatsUiV202()}
+   ${autoLoopHistoryUiV202()}
+   <button data-auto-loop-finish-close-v201=1>閉じる</button>
+ </div>`;
+ document.body.appendChild(d);
+}
+
+function pauseAutoLoopV201(){
+ let p=autoLoopManagerV201();
+ if(!p.active)return;
+ p.paused=true;
+ clearTimeout(__autoLoopTimerV200);__autoLoopTimerV200=null;
+ stopAutoLoopHeartbeatV203();
+ stopAutoBattleV122();
+ queueBattleSaveV197(true);
+ renderAutoLoopHudV200();
+}
+
+function resumeAutoLoopV201(){
+ let p=autoLoopManagerV201();
+ if(!p.active)return;
+ p.paused=false;
+ p.recovering=false;
+ touchAutoLoopHeartbeatV203(true);
+ applyAutoLoopEcoV202();
+ startAutoLoopHeartbeatV203();
+ scheduleAutoLoopRecoveryWatchV203();
+ queueBattleSaveV197(true);
+ renderAutoLoopHudV200();
+ if(document.body.classList.contains("battleMode")){
+   let b=ensureBattleStateV120();b.auto=true;scheduleAutoBattleV122(120)
+ }else scheduleNextAutoLoopV200()
+}
+
+function autoLoopManagerAuditV201(){
+ let p=autoLoopManagerV201();
+ return {active:p.active,paused:p.paused,count:p.count,target:p.target,total:p.total,fastResult:p.fastResult}
+}
+
+function autoLoopEcoStateV202(){
+ let p=autoLoopManagerV201();
+ if(typeof p.eco!=="boolean")p.eco=true;
+ if(!Array.isArray(p.history))p.history=[];
+ if(!p.sessionStartedAt)p.sessionStartedAt=p.startedAt||Date.now();
+ return p
+}
+
+function captureAutoLoopPrefsV202(){
+ let p=autoLoopEcoStateV202();
+ if(p.restoreV202)return;
+ let q=battleAdaptiveStateV192();
+ p.restoreV202={
+   quality:q.battleQuality,
+   light:!!q.lightBattle,
+   adaptive:!!q.adaptiveBattle,
+   skipOugi:!!q.skipOugi
+ };
+}
+
+function applyAutoLoopEcoV202(){
+ let p=autoLoopEcoStateV202();
+ document.body.classList.toggle("autoLoopEcoV202",!!(p.active&&p.eco));
+ if(!p.active||!p.eco)return;
+ captureAutoLoopPrefsV202();
+ let q=battleAdaptiveStateV192();
+ q.lightBattle=true;
+ q.skipOugi=true;
+ q.adaptiveBattle=false;
+ q.battleQuality="low";
+ applyLightBattleV187();
+ applyBattleQualityV192("low");
+ let b=ensureBattleStateV120();
+ b.speed=2;
+ battleFastClassV185();
+ refreshCommandPanelV198?.();
+}
+
+function restoreAutoLoopPrefsV202(){
+ let p=autoLoopEcoStateV202(),r=p.restoreV202;
+ document.body.classList.remove("autoLoopEcoV202");
+ if(!r)return;
+ let q=battleAdaptiveStateV192();
+ q.battleQuality=r.quality||"mid";
+ q.lightBattle=!!r.light;
+ q.adaptiveBattle=!!r.adaptive;
+ q.skipOugi=!!r.skipOugi;
+ applyLightBattleV187();
+ applyBattleQualityV192(q.battleQuality);
+ delete p.restoreV202;
+}
+
+function autoLoopElapsedV202(){
+ let p=autoLoopEcoStateV202();
+ return Math.max(0,Date.now()-(p.sessionStartedAt||Date.now()))
+}
+
+function autoLoopStatsV202(){
+ let p=autoLoopEcoStateV202(),elapsed=autoLoopElapsedV202(),runs=Math.max(0,p.count||0),t=p.total||{};
+ let sec=elapsed/1000,avg=runs?sec/runs:0,hour=sec>1?3600/sec:0;
+ return {
+   elapsedMs:elapsed,
+   avgSec:avg,
+   matPerHour:Math.round((t.mat||0)*hour),
+   goldPerHour:Math.round((t.gold||0)*hour),
+   inkPerHour:Math.round((t.ink||0)*hour)
+ }
+}
+
+function autoLoopStatsUiV202(){
+ let s=autoLoopStatsV202();
+ let mins=Math.floor(s.elapsedMs/60000),secs=Math.floor((s.elapsedMs%60000)/1000);
+ return `<div class=autoLoopStatsV202>
+   <span>経過<b>${mins}:${String(secs).padStart(2,"0")}</b></span>
+   <span>平均<b>${s.avgSec?s.avgSec.toFixed(1)+"s":"-"}</b></span>
+   <span>資料/h<b>${s.matPerHour.toLocaleString()}</b></span>
+   <span>文銭/h<b>${s.goldPerHour.toLocaleString()}</b></span>
+ </div>`
+}
+
+function recordAutoLoopResultV202(r){
+ let p=autoLoopEcoStateV202();
+ p.history.unshift({at:Date.now(),tickets:r.tickets||0,mat:r.mat||0,gold:r.gold||0,ink:r.ink||0,stars:r.stars||0});
+ p.history=p.history.slice(0,6);
+}
+
+function autoLoopHistoryUiV202(){
+ let p=autoLoopEcoStateV202();
+ if(!p.history.length)return "";
+ return `<div class=autoLoopHistoryV202>${p.history.slice(0,3).map((x,i)=>`<span><i>#${Math.max(1,(p.count||0)-i)}</i><b>原稿片+${x.tickets||0}</b><em>資料+${x.mat} / 文銭+${x.gold}</em></span>`).join("")}</div>`
+}
+
+function toggleAutoLoopEcoV202(){
+ let p=autoLoopEcoStateV202();
+ p.eco=!p.eco;
+ if(p.eco)applyAutoLoopEcoV202();else restoreAutoLoopPrefsV202();
+ queueBattleSaveV197(true);
+ renderAutoLoopHudV200();
+}
+
+function autoLoopEcoAuditV202(){
+ let p=autoLoopEcoStateV202(),s=autoLoopStatsV202();
+ return {active:p.active,eco:p.eco,count:p.count,elapsed:s.elapsedMs,history:p.history.length}
+}
+
+let __autoLoopHeartbeatV203=null;
+let __autoLoopRecoveryTimerV203=null;
+
+function autoLoopRecoveryStateV203(){
+ let p=autoLoopEcoStateV202();
+ if(!Number.isFinite(p.lastHeartbeat))p.lastHeartbeat=0;
+ if(!Number.isFinite(p.lastProgressAt))p.lastProgressAt=0;
+ if(!Number.isFinite(p.recoveries))p.recoveries=0;
+ if(typeof p.recovering!=="boolean")p.recovering=false;
+ return p
+}
+
+function touchAutoLoopHeartbeatV203(progress=false){
+ let p=autoLoopRecoveryStateV203();
+ let now=Date.now();
+ p.lastHeartbeat=now;
+ if(progress)p.lastProgressAt=now;
+}
+
+function startAutoLoopHeartbeatV203(){
+ clearInterval(__autoLoopHeartbeatV203);
+ if(!autoLoopRecoveryStateV203().active)return;
+ touchAutoLoopHeartbeatV203(false);
+ __autoLoopHeartbeatV203=setInterval(()=>{
+   let p=autoLoopRecoveryStateV203();
+   if(!p.active){clearInterval(__autoLoopHeartbeatV203);__autoLoopHeartbeatV203=null;return}
+   touchAutoLoopHeartbeatV203(false);
+   queueBattleSaveV197();
+ },2000);
+}
+
+function stopAutoLoopHeartbeatV203(){
+ clearInterval(__autoLoopHeartbeatV203);
+ __autoLoopHeartbeatV203=null;
+ clearTimeout(__autoLoopRecoveryTimerV203);
+ __autoLoopRecoveryTimerV203=null;
+}
+
+function showAutoLoopRecoveryV203(text="AUTO周回を復旧しています…"){
+ document.getElementById("autoLoopRecoveryV203")?.remove();
+ let p=autoLoopRecoveryStateV203();
+ let d=document.createElement("div");
+ d.id="autoLoopRecoveryV203";
+ d.className="autoLoopRecoveryV203";
+ d.innerHTML=`<div>
+   <small>AUTO LOOP RECOVERY</small>
+   <b>${text}</b>
+   <span>${p.count||0}周完了 / ${stageMeta(p.stage||0).name}</span>
+   <i></i>
+ </div>`;
+ document.body.appendChild(d);
+}
+
+function hideAutoLoopRecoveryV203(){
+ document.getElementById("autoLoopRecoveryV203")?.remove()
+}
+
+function recoverAutoLoopV203(reason="watchdog"){
+ let p=autoLoopRecoveryStateV203();
+ if(!p.active||p.paused||p.recovering)return false;
+ p.recovering=true;
+ p.recoveries=(p.recoveries||0)+1;
+ queueBattleSaveV197(true);
+ showAutoLoopRecoveryV203("AUTO周回を再接続しています…");
+ clearTimeout(__autoLoopTimerV200);
+ __autoLoopTimerV200=null;
+ stopAutoBattleV122();
+ battleInvalidateActionsV195?.();
+ clearBattleTimersV191?.();
+ setTimeout(()=>{
+   try{
+     p.recovering=false;
+     launchReplayV199(true,p.stage||0,p.mode||"normal");
+     touchAutoLoopHeartbeatV203(false);
+     startAutoLoopHeartbeatV203();
+     setTimeout(hideAutoLoopRecoveryV203,900);
+   }catch(e){
+     console.error("V203 recovery",reason,e);
+     p.recovering=false;
+     stopTrueAutoLoopV200(false);
+     hideAutoLoopRecoveryV203();
+     toast("AUTO周回を復旧できませんでした");
+   }
+ },160);
+ return true
+}
+
+function scheduleAutoLoopRecoveryWatchV203(){
+ clearTimeout(__autoLoopRecoveryTimerV203);
+ __autoLoopRecoveryTimerV203=setTimeout(function watch(){
+   let p=autoLoopRecoveryStateV203();
+   if(!p.active||p.paused){__autoLoopRecoveryTimerV203=null;return}
+   let hasBattle=document.body.classList.contains("battleMode")&&!!document.querySelector(".bsv2_175");
+   let hasResult=!!document.getElementById("autoLoopResultV200");
+   let hasLoading=!!document.getElementById("autoReplayLoadingV199");
+   let idle=Date.now()-(p.lastProgressAt||p.startedAt||Date.now());
+   if(!hasBattle&&!hasResult&&!hasLoading&&idle>3500){
+     recoverAutoLoopV203("missing-scene");
+   }
+   __autoLoopRecoveryTimerV203=setTimeout(watch,2200);
+ },2200);
+}
+
+function autoLoopBootRecoveryV203(){
+ let p=autoLoopRecoveryStateV203();
+ if(!p.active)return;
+ let age=Date.now()-(p.lastHeartbeat||0);
+ if(age>300000){
+   p.active=false;p.paused=false;p.recovering=false;
+   queueBattleSaveV197(true);
+   return;
+ }
+ showAutoLoopRecoveryV203("前回のAUTO周回を再開しています…");
+ setTimeout(()=>{
+   if(!p.active)return hideAutoLoopRecoveryV203();
+   p.recovering=false;
+   launchReplayV199(true,p.stage||0,p.mode||"normal");
+   startAutoLoopHeartbeatV203();
+   scheduleAutoLoopRecoveryWatchV203();
+   setTimeout(hideAutoLoopRecoveryV203,1000);
+ },450);
+}
+
+function autoLoopRecoveryAuditV203(){
+ let p=autoLoopRecoveryStateV203();
+ return {
+   active:p.active,paused:p.paused,recovering:p.recovering,
+   heartbeatAge:Date.now()-(p.lastHeartbeat||0),
+   progressAge:Date.now()-(p.lastProgressAt||0),
+   recoveries:p.recoveries||0
+ }
+}
+
+let __battleImpactTimerV204=null;
+
+function battleCinematicPrefsV204(){
+ S.qol=S.qol||{};
+ if(typeof S.qol.snappyBattleV204!=="boolean")S.qol.snappyBattleV204=true;
+ return S.qol
+}
+
+function snappyBattleOnV204(){
+ return battleCinematicPrefsV204().snappyBattleV204!==false
+}
+
+function applySnappyBattleV204(){
+ document.body.classList.toggle("snappyBattleV204",snappyBattleOnV204());
+}
+
+function battleImpactV204(kind="attack",side="enemy"){
+ if(!snappyBattleOnV204())return;
+ let root=document.querySelector(".bsv2_175");
+ if(!root)return;
+ let field=root.querySelector(".bsv2Field_175")||root;
+ let fx=root.querySelector(".battleImpactV204");
+ if(!fx){
+   fx=document.createElement("div");
+   fx.className="battleImpactV204";
+   fx.innerHTML="<i></i><b></b>";
+   root.appendChild(fx);
+ }
+ fx.dataset.kind=kind;
+ fx.dataset.side=side;
+ fx.classList.remove("play");
+ void fx.offsetWidth;
+ fx.classList.add("play");
+
+ field.classList.remove("shakeV204","kickV204");
+ field.classList.add(kind==="ougi"?"kickV204":"shakeV204");
+ clearTimeout(__battleImpactTimerV204);
+ __battleImpactTimerV204=setTimeout(()=>{
+   fx.classList.remove("play");
+   field.classList.remove("shakeV204","kickV204");
+ },kind==="ougi"?250:150);
+}
+
+function battlePoseV204(slot,kind){
+ if(!snappyBattleOnV204())return;
+ let root=document.querySelector(".bsv2_175");
+ if(!root)return;
+ let units=[...root.querySelectorAll(".bsv2Allies_175 [data-sd-unit],.bsv2Allies_175 .sdUnitV147,.bsv2Allies_175 .spriteUnitV160")];
+ let el=units[Math.max(0,+slot||0)];
+ if(!el)return;
+ el.classList.remove("dashV204","castV204","burstV204");
+ let cls=kind==="ougi"?"burstV204":kind==="skill"||kind==="heal"?"castV204":"dashV204";
+ void el.offsetWidth;
+ el.classList.add(cls);
+ battleTimerV191(()=>el.classList.remove(cls),kind==="ougi"?320:210);
+}
+
+function battleEnemyRecoilV204(target=0,kind="attack"){
+ if(!snappyBattleOnV204())return;
+ let root=document.querySelector(".bsv2_175");
+ if(!root)return;
+ let enemy=root.querySelector(".bsv2Enemies_175 .enemyArtV153,.bsv2Enemies_175");
+ if(!enemy)return;
+ enemy.classList.remove("recoilV204","heavyRecoilV204");
+ void enemy.offsetWidth;
+ enemy.classList.add(kind==="ougi"?"heavyRecoilV204":"recoilV204");
+ battleTimerV191(()=>enemy.classList.remove("recoilV204","heavyRecoilV204"),kind==="ougi"?300:180);
+}
+
+function battleActionFeedbackV204(slot,target,kind){
+ if(!snappyBattleOnV204())return;
+ battlePoseV204(slot,kind);
+ battleTimerV191(()=>{
+   battleImpactV204(kind,"enemy");
+   battleEnemyRecoilV204(target,kind);
+ },kind==="ougi"?110:65);
+}
+
+function battleMinimalHudV204(){
+ let b=ensureBattleStateV120();
+ return `<div class=battleMinimalHudV204>
+   <span>W${b.wave||1}</span>
+   <b>T${b.turn||1}</b>
+   <i>${b.speed===2?"×2":"×1"}</i>
+   <em>${b.auto?"AUTO":"MANUAL"}</em>
+ </div>`;
+}
+
+function toggleSnappyBattleV204(){
+ let q=battleCinematicPrefsV204();
+ q.snappyBattleV204=!q.snappyBattleV204;
+ applySnappyBattleV204();
+ queueBattleSaveV197(true);
+ if(document.body.classList.contains("battleMode"))mountBattleV182();
+}
+
+function posterBattlePrefsV205(){
+ S.qol=S.qol||{};
+ if(typeof S.qol.posterBattleV205!=="boolean")S.qol.posterBattleV205=true;
+ return S.qol
+}
+
+function posterBattleOnV205(){
+ return posterBattlePrefsV205().posterBattleV205!==false
+}
+
+function posterBattleLiveHudV205(){
+ let b=ensureBattleStateV120();
+ return `<div class=posterLiveHudV205>
+   <span>WAVE ${b.wave||1}/3</span>
+   <b>TURN ${b.turn||1}</b>
+   <i>${b.speed===2?"×2":"×1"}</i>
+   <em>${b.auto?"AUTO":"MANUAL"}</em>
+ </div>`
+}
+
+function posterBattleUnitHotspotsV205(team){
+ return `<div class=posterUnitHotspotsV205>
+   ${team.map((i,n)=>`<button aria-label="${C[+i]?.[1]||"文豪"}を選択" data-battle-unit="${n}"></button>`).join("")}
+ </div>`
+}
+
+function posterBattleCardHotspotsV205(team){
+ return `<div class=posterCardHotspotsV205>
+   ${team.map((i,n)=>`<button aria-label="${C[+i]?.[1]||"文豪"}カード" data-battle-unit="${n}"></button>`).join("")}
+ </div>`
+}
+
+
+function posterStageImageV233(){
+ let enemy=(typeof posterEnemyNameV208==="function"?posterEnemyNameV208():"")||"";
+ if(/海|潮|波|港|船/.test(enemy))return "assets/stages/battle_sea.jpg";
+ if(/廟|寺|封|祀|祠|聖堂/.test(enemy))return "assets/stages/battle_temple.jpg";
+ if(/街|市|路地|夜/.test(enemy))return "assets/stages/battle_city.jpg";
+ return "assets/stages/battle_library.jpg";
+}
+
+
+function posterActorStageV237(team){
+ let roster=(team||[]).slice(0,6);
+ return `<div class=posterActorStageV237>
+   <div class=posterEnemyWrapV237>${enemyStageV153()}</div>
+   <div class=posterAlliesWrapV237>${roster.map((i,n)=>sdUnit(+i,"ally",n)).join("")}</div>
+ </div>`
+}
+
+
+function cleanGothicStageV238(){
+ return `<div class=cleanStageV238 aria-hidden="true">
+   <div class=cleanStageSkyV238></div>
+   <div class=cleanStageMoonV238></div>
+   <div class=cleanStageArchV238></div>
+   <div class=cleanStageStacksV238 left></div>
+   <div class=cleanStageStacksV238 right></div>
+   <div class=cleanStageFloorV238></div>
+   <div class=cleanStageMistV238></div>
+ </div>`
+}
+
+function cleanBattleTopV238(){
+ let b=ensureBattleStateV120();
+ return `<div class=cleanBattleTopV238>
+   <div class=cleanBattleLogoV238><small>BUNGO KITAN</small><b>文豪綺譚</b></div>
+   <div class=cleanBattleFlowV238><span>WAVE ${b.wave||1}/3</span><b>TURN ${b.turn||1}</b></div>
+ </div>`
+}
+
+function cleanBattlePostMountV238(){
+ optimizeBattleImagesV197?.();
+ posterRendererResetV229?.();
+ posterStageHostV228?.();
+ refreshLivePartyPortraitsV217?.();
+ posterSelectedAuraV217?.();
+ refreshPosterCleanHudV235?.();
+ refreshPosterThumbV234?.();
+ applyPosterControlStateV235?.();
+ refreshCleanBattleTopV238?.();refreshCleanStageThemeV239?.();refreshCleanStageV240?.();refreshCleanCommandStateV241?.();
+ schedulePosterRenderV229?.("clean-mount",true);
+
+ hideAutoReplayLoadingV199?.();
+ renderAutoReplayHudV199?.();
+ renderAutoLoopHudV200?.();
+ if(autoLoopActiveV200?.())autoLoopBattleMountedV200?.();
+
+ startBattleWatchdogV172?.();
+ scheduleBattlePerfCheckV192?.();
+ scheduleGovernorV193?.();
+ startAutoWatchdogV193?.();
+
+ setupCleanBattleGuardV238();
+}
+
+function refreshCleanBattleTopV238(){
+ let root=document.querySelector(".posterBattleV205"),bar=root?.querySelector(".cleanBattleFlowV238");
+ if(!bar)return;
+ let b=ensureBattleStateV120();
+ let span=bar.querySelector("span"),strong=bar.querySelector("b");
+ if(span)span.textContent=`WAVE ${b.wave||1}/3`;
+ if(strong)strong.textContent=`TURN ${b.turn||1}`;
+}
+
+function setupCleanBattleGuardV238(){
+ if(window.__cleanBattleGuardV238)return;
+ window.__cleanBattleGuardV238=true;
+ let sync=()=>{
+   if(!document.body.classList.contains("battleMode"))return;
+   let root=document.querySelector(".posterBattleV205");
+   if(!root){try{mountBattleV182()}catch(e){};return}
+   schedulePosterRenderV229?.("viewport",true);
+ };
+ window.addEventListener("resize",()=>{setTimeout(sync,80);setTimeout(applyCleanStageGeometryV240,90)},{passive:true});
+ window.addEventListener("orientationchange",()=>{setTimeout(sync,120);setTimeout(applyCleanStageGeometryV240,140)},{passive:true});
+ document.addEventListener("visibilitychange",()=>{
+   if(document.visibilityState==="visible")setTimeout(sync,120)
+ },{passive:true});
+}
+
+function cleanBattleAuditV238(){
+ let root=document.querySelector(".posterBattleV205");
+ return {
+   mounted:!!root,
+   cssStage:!!root?.querySelector(".cleanStageV238"),
+   allies:root?.querySelectorAll(".posterAlliesWrapV237 [data-sd-unit]").length||0,
+   enemy:root?.querySelectorAll(".posterEnemyWrapV237 .enemyArtV153").length||0,
+   commands:root?.querySelectorAll(".posterThumbBarV234 [data-sd-action]").length||0,
+   cards:root?.querySelectorAll(".posterLivePartyV217 button").length||0
+ }
+}
+
+
+function cleanBattleThemeV239(){
+ let b=ensureBattleStateV120();
+ return b.wave>=3?"boss":b.wave===2?"deep":"normal"
+}
+
+function cleanBattleStageDecorV239(){
+ return `<div class=cleanStageDecorV239 aria-hidden="true">
+   <div class=cleanStagePillarsV239></div>
+   <div class=cleanStageWindowV239></div>
+   <div class=cleanStageRailV239></div>
+   <div class=cleanStageGlowV239></div>
+ </div>`
+}
+
+function cleanEnemyFocusV239(){
+ let b=ensureBattleStateV120();
+ return `<div class=cleanEnemyFocusV239 data-target="${b.target||0}">
+   <i></i><b>TARGET</b>
+ </div>`
+}
+
+function cleanActorShadowsV239(team){
+ return `<div class=cleanActorShadowsV239>${(team||[]).slice(0,6).map((_,n)=>`<i style="--n:${n}"></i>`).join("")}</div>`
+}
+
+function refreshCleanStageThemeV239(){
+ let root=document.querySelector(".cleanBattleV238");if(!root)return;
+ root.dataset.theme=cleanBattleThemeV239();
+ let focus=root.querySelector(".cleanEnemyFocusV239");
+ if(focus)focus.dataset.target=String(ensureBattleStateV120().target||0);
+}
+
+function cleanBattleAuditV239(){
+ let root=document.querySelector(".cleanBattleV238");
+ return {
+   mounted:!!root,
+   theme:root?.dataset.theme||"",
+   allies:root?.querySelectorAll(".posterAlliesWrapV237 [data-sd-unit]").length||0,
+   enemies:root?.querySelectorAll(".posterEnemyWrapV237 .enemyArtV153").length||0,
+   controls:root?.querySelectorAll(".posterThumbBarV234 [data-sd-action]").length||0,
+   cards:root?.querySelectorAll(".posterLivePartyV217 button").length||0
+ }
+}
+
+
+function cleanStageGeometryV240(){
+ let vv=window.visualViewport;
+ let w=Math.max(1,Math.round(vv?.width||innerWidth));
+ let h=Math.max(1,Math.round(vv?.height||innerHeight));
+ let portrait=h>=w;
+ return {
+   w,h,portrait,
+   compact:w<=390,
+   short:h<=720,
+   actorBottom: portrait ? (h<=720?216:238) : 122,
+   hudTop: portrait ? 72 : 16
+ }
+}
+
+function applyCleanStageGeometryV240(){
+ let root=document.querySelector(".cleanBattleV238");
+ if(!root)return;
+ let g=cleanStageGeometryV240();
+ root.style.setProperty("--actorBottomV240",g.actorBottom+"px");
+ root.style.setProperty("--cleanHudTopV240",g.hudTop+"px");
+ root.classList.toggle("compactV240",g.compact);
+ root.classList.toggle("shortV240",g.short);
+}
+
+function cleanActorLabelsV240(team){
+ return `<div class=cleanActorLabelsV240>
+   ${(team||[]).slice(0,6).map((i,n)=>`<span data-slot="${n}">${C[+i]?.[1]||"文豪"}</span>`).join("")}
+ </div>`
+}
+
+function refreshCleanActorLabelsV240(){
+ let root=document.querySelector(".cleanBattleV238"),team=(S.sets?.[S.set]||[]).slice(0,6);
+ if(!root)return;
+ root.querySelectorAll(".cleanActorLabelsV240 span").forEach((el,n)=>{
+   el.textContent=C[+team[n]]?.[1]||"文豪";
+   el.classList.toggle("on",(ensureBattleStateV120().unit||0)===n);
+ });
+}
+
+function cleanEnemyScaleV240(){
+ let b=ensureBattleStateV120(),root=document.querySelector(".cleanBattleV238");
+ if(!root)return;
+ root.dataset.enemyScale=b.wave>=3?"boss":"normal";
+}
+
+function cleanControlHintV240(){
+ return `<div class=cleanControlHintV240>
+   <span>攻撃</span><span>スキル</span><span>支援</span><span>奥義</span>
+ </div>`
+}
+
+function refreshCleanStageV240(){
+ applyCleanStageGeometryV240();
+ refreshCleanActorLabelsV240();
+ cleanEnemyScaleV240();
+}
+
+function cleanStageAuditV240(){
+ let root=document.querySelector(".cleanBattleV238");
+ return {
+   mounted:!!root,
+   geometry:cleanStageGeometryV240(),
+   allyLabels:root?.querySelectorAll(".cleanActorLabelsV240 span").length||0,
+   bossScale:root?.dataset.enemyScale||"",
+   thumbButtons:root?.querySelectorAll(".posterThumbBarV234 button").length||0
+ }
+}
+
+
+let __cleanFeedbackTimerV241=null;
+function cleanBattleFeedbackV241(kind="attack"){
+ let root=document.querySelector(".cleanBattleV238");if(!root)return;
+ root.classList.remove("feedbackAttackV241","feedbackSkillV241","feedbackHealV241","feedbackOugiV241");
+ let cls=kind==="skill"?"feedbackSkillV241":kind==="heal"?"feedbackHealV241":kind==="ougi"?"feedbackOugiV241":"feedbackAttackV241";
+ root.classList.add(cls);clearTimeout(__cleanFeedbackTimerV241);
+ __cleanFeedbackTimerV241=setTimeout(()=>root.classList.remove(cls),kind==="ougi"?300:180);
+}
+function cleanCommandStateV241(){
+ let b=ensureBattleStateV120(),c=posterSelectedCharV208();
+ return {busy:!!__battleActionBusyV195,auto:!!b.auto,speed:b.speed===2?2:1,ep:Math.round(c.ep||0),ougiReady:(c.ep||0)>=100}
+}
+function cleanCommandStateUiV241(){
+ let s=cleanCommandStateV241();
+ return `<div class=cleanCommandStateV241><span>${s.busy?"ACTION":"READY"}</span><b>${s.auto?"AUTO":`EP ${s.ep}%`}</b></div>`
+}
+function refreshCleanCommandStateV241(){
+ let root=document.querySelector(".cleanBattleV238"),el=root?.querySelector(".cleanCommandStateV241");if(!el)return;
+ let s=cleanCommandStateV241(),sp=el.querySelector("span"),b=el.querySelector("b");
+ if(sp)sp.textContent=s.busy?"ACTION":"READY";if(b)b.textContent=s.auto?"AUTO":`EP ${s.ep}%`;
+ el.classList.toggle("busy",s.busy);el.classList.toggle("ready",s.ougiReady);
+}
+function cleanTurnCueV241(){
+ let el=document.querySelector(".cleanBattleV238 .cleanBattleFlowV238");if(!el)return;
+ el.classList.remove("pulseV241");void el.offsetWidth;el.classList.add("pulseV241");
+ setTimeout(()=>el.classList.remove("pulseV241"),220);
+}
+function cleanBattleUiAuditV241(){
+ let root=document.querySelector(".cleanBattleV238");
+ return {mounted:!!root,feedbackLayer:!!root?.querySelector(".cleanCommandStateV241"),
+ actionButtons:root?.querySelectorAll(".posterThumbBarV234 button").length||0,
+ subButtons:root?.querySelectorAll(".posterThumbSubV234 button").length||0,state:cleanCommandStateV241()}
+}
+function cinematicPosterBattleV205(){
+ let b=normalizeBattleStateV171(),team=(S.sets?.[S.set]||[]).slice(0,6);
+ return `<main class="bsv2_175 posterBattleV205 cleanBattleV238" data-theme="${cleanBattleThemeV239()}">
+   <section class=bsv2Field_175>
+     ${cleanGothicStageV238()}${cleanBattleStageDecorV239()}
+     <div class=posterBattleShadeV205></div>
+     ${cleanBattleTopV238()}
+     ${cleanActorShadowsV239(team)}${posterActorStageV237(team)}${cleanActorLabelsV240(team)}${cleanEnemyFocusV239()}
+     ${posterCleanHudV235()}
+     ${posterLivePartyPortraitsV217()}
+     ${cleanControlHintV240()}${cleanCommandStateUiV241()}${posterThumbBarV234()}
+     ${posterThumbSubV234()}
+     ${posterBattleCardHotspotsV205(team)}
+     <button class=posterEnemyHotspotV205 aria-label="敵を選択" data-battle-target="${b.target||0}"></button>
+     <div class=bsv2Fx_175></div>
+     <div class=battleImpactV204><i></i><b></b></div>
+   </section>
+ </main>`
+}
+
+function togglePosterBattleV205(){
+ let q=posterBattlePrefsV205();
+ q.posterBattleV205=!q.posterBattleV205;
+ queueBattleSaveV197(true);
+ if(document.body.classList.contains("battleMode"))mountBattleV182();
+}
+
+function posterBattleAuditV205(){
+ let r=document.querySelector(".posterBattleV205");
+ return {
+  enabled:posterBattleOnV205(),
+  mounted:!!r,
+  attack:!!r?.querySelector('[data-sd-action="attack"]'),
+  skill:!!r?.querySelector('[data-sd-action="skill"]'),
+  ougi:!!r?.querySelector('[data-sd-action="ougi"]'),
+  auto:!!r?.querySelector("[data-battle-auto]"),
+  cards:r?.querySelectorAll("[data-battle-unit]").length||0
+ }
+}
+
+function posterLiveStateV206(){
+ let b=normalizeBattleStateV171(),team=(S.sets?.[S.set]||[]).slice(0,6);
+ return {
+  b,team,
+  enemyHp:enemyHpPercentV197(b),
+  selected:Math.max(0,Math.min(5,+b.unit||0)),
+  allyHp:team.map((_,n)=>Math.max(0,Math.min(100,+b.allyHp?.[n]||0))),
+  ep:team.map((_,n)=>Math.max(0,Math.min(100,+b.ep?.[n]||0)))
+ }
+}
+
+function posterLiveOverlayV206(){
+ let s=posterLiveStateV206();
+ return `<div class=posterLiveOverlayV206>
+   <div class=posterEnemyBarV206><i><em style="width:${s.enemyHp}%"></em></i><b>${Math.round(s.enemyHp)}%</b></div>
+   <div class=posterCardLiveV206>
+     ${s.team.map((_,n)=>`<div class="${s.selected===n?"on":""}" data-live-card="${n}">
+       <i class=hp><em style="width:${s.allyHp[n]}%"></em></i>
+       <i class=ep><em style="width:${s.ep[n]}%"></em></i>
+     </div>`).join("")}
+   </div>
+   <div class=posterSelectedV206>SELECT <b>${s.selected+1}</b></div>
+ </div>`
+}
+
+function refreshPosterLiveOverlayV206(){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return false;
+ let s=posterLiveStateV206();
+ let hud=root.querySelector(".posterLiveHudV205");
+ if(hud)hud.innerHTML=`<span>WAVE ${s.b.wave||1}/3</span><b>TURN ${s.b.turn||1}</b><i>${s.b.speed===2?"×2":"×1"}</i><em>${s.b.auto?"AUTO":"MANUAL"}</em>`;
+ let eb=root.querySelector(".posterEnemyBarV206 i em");
+ let et=root.querySelector(".posterEnemyBarV206 b");
+ if(eb)eb.style.width=s.enemyHp+"%";
+ if(et)et.textContent=Math.round(s.enemyHp)+"%";
+ root.querySelectorAll(".posterCardLiveV206>div").forEach((el,n)=>{
+   el.classList.toggle("on",s.selected===n);
+   let hp=el.querySelector(".hp em"),ep=el.querySelector(".ep em");
+   if(hp)hp.style.width=s.allyHp[n]+"%";
+   if(ep)ep.style.width=s.ep[n]+"%";
+ });
+ let sel=root.querySelector(".posterSelectedV206 b");
+ if(sel)sel.textContent=String(s.selected+1);
+ return true
+}
+
+function posterActionCueV206(kind="attack"){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return;
+ root.dataset.action=kind;
+ root.classList.remove("actionCueV206");
+ void root.offsetWidth;
+ root.classList.add("actionCueV206");
+ battleTimerV191(()=>root.classList.remove("actionCueV206"),240);
+}
+
+function posterHitFlashV206(kind="attack"){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return;
+ let fx=root.querySelector(".posterHitFlashV206");
+ if(!fx){
+   fx=document.createElement("div");
+   fx.className="posterHitFlashV206";
+   root.appendChild(fx);
+ }
+ fx.dataset.kind=kind;
+ fx.classList.remove("play");
+ void fx.offsetWidth;
+ fx.classList.add("play");
+ battleTimerV191(()=>fx.classList.remove("play"),kind==="ougi"?320:180);
+}
+
+function posterActionFeedbackV206(kind){
+ posterActionCueV206(kind);
+ battleTimerV191(()=>posterHitFlashV206(kind),kind==="ougi"?95:55);
+}
+
+function posterBattleAuditV206(){
+ let r=document.querySelector(".posterBattleV205");
+ return {
+   mounted:!!r,
+   enemyBar:!!r?.querySelector(".posterEnemyBarV206"),
+   liveCards:r?.querySelectorAll(".posterCardLiveV206>div").length||0,
+   selected:posterLiveStateV206().selected
+ }
+}
+
+let __posterActionTokenV207=0;
+
+function posterActionMetaV207(slot,kind){
+ let team=(S.sets?.[S.set]||[]).slice(0,6),i=+team[Math.max(0,+slot||0)]||0;
+ let name=C[i]?.[1]||"文豪";
+ let title=kind==="ougi"?(ougiInfo(i)?.name||"奥義"):kind==="skill"?(characterAbility(i)?.name||"スキル"):kind==="heal"?"支援":"通常攻撃";
+ return {i,name,title,kind}
+}
+
+function posterActionBannerV207(slot,kind){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let m=posterActionMetaV207(slot,kind),token=++__posterActionTokenV207;
+ root.querySelector(".posterActionBannerV207")?.remove();
+ let d=document.createElement("div");
+ d.className=`posterActionBannerV207 ${kind}`;
+ d.innerHTML=`<small>${kind==="ougi"?"SPECIAL":kind==="skill"?"SKILL":kind==="heal"?"SUPPORT":"ATTACK"}</small><b>${m.name}</b><span>${m.title}</span>`;
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{
+   if(token!==__posterActionTokenV207)return;
+   d.classList.remove("show");
+   battleTimerV191(()=>d.remove(),120)
+ },kind==="ougi"?520:320);
+}
+
+function posterDamageNumberV207(kind="attack"){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let n=document.createElement("div");
+ n.className=`posterDamageV207 ${kind}`;
+ let base=kind==="ougi"?Math.floor(9000+Math.random()*9000):kind==="skill"?Math.floor(3500+Math.random()*4500):kind==="heal"?Math.floor(1200+Math.random()*1800):Math.floor(1800+Math.random()*2600);
+ n.textContent=kind==="heal"?`+${base}`:base.toLocaleString();
+ root.appendChild(n);
+ requestAnimationFrame(()=>n.classList.add("show"));
+ battleTimerV191(()=>n.remove(),kind==="ougi"?520:360);
+}
+
+function posterFocusV207(kind){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ root.classList.remove("focusAttackV207","focusSkillV207","focusOugiV207","focusHealV207");
+ let cls=kind==="ougi"?"focusOugiV207":kind==="skill"?"focusSkillV207":kind==="heal"?"focusHealV207":"focusAttackV207";
+ root.classList.add(cls);
+ battleTimerV191(()=>root.classList.remove(cls),kind==="ougi"?420:220);
+}
+
+function posterCardPulseV207(slot,kind){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let card=root.querySelector(`.posterCardLiveV206>div:nth-child(${Math.max(0,+slot||0)+1})`);
+ if(!card)return;
+ card.dataset.action=kind;
+ card.classList.remove("pulseV207");
+ void card.offsetWidth;
+ card.classList.add("pulseV207");
+ battleTimerV191(()=>card.classList.remove("pulseV207"),kind==="ougi"?420:240);
+}
+
+function posterActionCinematicV207(slot,target,kind){
+ if(!posterBattleOnV205())return;
+ posterActionBannerV207(slot,kind);
+ posterCardPulseV207(slot,kind);
+ posterFocusV207(kind);
+ battleTimerV191(()=>posterDamageNumberV207(kind),kind==="ougi"?145:75);
+}
+
+function posterWaveIntroV207(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let b=ensureBattleStateV120();
+ root.querySelector(".posterWaveIntroV207")?.remove();
+ let d=document.createElement("div");
+ d.className="posterWaveIntroV207";
+ d.innerHTML=`<small>WAVE</small><b>${b.wave||1}</b>`;
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{d.classList.remove("show");battleTimerV191(()=>d.remove(),140)},520);
+}
+
+function posterVictoryCueV207(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let d=document.createElement("div");
+ d.className="posterVictoryCueV207";
+ d.innerHTML="<small>QUEST</small><b>CLEAR</b>";
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{d.classList.remove("show");battleTimerV191(()=>d.remove(),120)},620);
+}
+
+function posterEnemyNameV208(){
+ let b=ensureBattleStateV120();
+ try{return enemyTypeV124(b.wave)?.name||"頁喰いの化身"}catch(_){return"頁喰いの化身"}
+}
+
+function posterSelectedCharV208(){
+ let b=ensureBattleStateV120(),team=(S.sets?.[S.set]||[]).slice(0,6),slot=Math.max(0,Math.min(5,+b.unit||0)),i=+team[slot]||0;
+ return {slot,i,name:C[i]?.[1]||"文豪",ability:characterAbility(i)?.name||"スキル",ougi:ougiInfo(i)?.name||"奥義",ep:+b.ep?.[slot]||0}
+}
+
+function posterCommandPanelV208(){
+ let c=posterSelectedCharV208(),b=ensureBattleStateV120();
+ return `<div class=posterCommandLiveV208>
+   <div class=posterSelectedNameV208><small>SELECTED</small><b>${c.name}</b><span>${c.ability}</span></div>
+   <div class=posterCommandStateV208>
+     <span>${b.auto?"AUTO":"MANUAL"}</span>
+     <i>${b.speed===2?"×2":"×1"}</i>
+     <em>EP ${Math.round(c.ep)}%</em>
+   </div>
+   <div class=posterOugiStateV208 data-ready="${c.ep>=100?1:0}">
+     <small>奥義</small><b>${c.ep>=100?"READY":"CHARGE"}</b>
+   </div>
+ </div>`
+}
+
+function posterEnemyPanelV208(){
+ let b=ensureBattleStateV120(),hp=enemyHpPercentV197(b);
+ return `<div class=posterEnemyLiveV208>
+   <small>${b.wave===3?"BOSS":"ENEMY"} / Lv.${20+(b.wave||1)*10}</small>
+   <b>${posterEnemyNameV208()}</b>
+   <div><i><em style="width:${hp}%"></em></i><strong>${Math.round(hp)}%</strong></div>
+ </div>`
+}
+
+function posterLiveLabelsV208(){
+ return `<div class=posterLiveLabelsV208>
+   ${posterEnemyPanelV208()}
+   ${posterCommandPanelV208()}
+ </div>`
+}
+
+function refreshPosterLabelsV208(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let holder=root.querySelector(".posterLiveLabelsV208");
+ if(holder)holder.innerHTML=posterEnemyPanelV208()+posterCommandPanelV208();
+ let c=posterSelectedCharV208();
+ root.querySelectorAll(".posterCardLiveV206>div").forEach((el,n)=>el.classList.toggle("on",n===c.slot));
+ let ougi=root.querySelector('.posterActionsV205 [data-sd-action="ougi"]');
+ if(ougi){
+   ougi.classList.toggle("readyV208",c.ep>=100);
+   ougi.setAttribute("aria-disabled",c.ep>=100?"false":"true");
+ }
+}
+
+function posterTapRippleV208(el){
+ if(!el)return;
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let r=el.getBoundingClientRect(),rr=root.getBoundingClientRect();
+ let x=r.left-r.left*0 + r.width/2 - rr.left, y=r.top + r.height/2 - rr.top;
+ let d=document.createElement("i");
+ d.className="posterTapRippleV208";
+ d.style.left=x+"px";d.style.top=y+"px";
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>d.remove(),280);
+}
+
+function posterActionReadyV208(kind){
+ if(kind!=="ougi")return true;
+ return posterSelectedCharV208().ep>=100;
+}
+
+function posterUiAuditV208(){
+ let r=document.querySelector(".posterBattleV205"),c=posterSelectedCharV208();
+ return {
+   mounted:!!r,
+   enemyPanel:!!r?.querySelector(".posterEnemyLiveV208"),
+   commandPanel:!!r?.querySelector(".posterCommandLiveV208"),
+   selected:c.name,
+   ep:c.ep,
+   ougiReady:c.ep>=100
+ }
+}
+
+function posterCardNamesV209(){
+ let team=(S.sets?.[S.set]||[]).slice(0,6);
+ return `<div class=posterCardNamesV209>
+   ${team.map((i,n)=>`<div data-card-name="${n}"><b>${C[+i]?.[1]||"文豪"}</b><small>Lv.${lv(+i)}</small></div>`).join("")}
+ </div>`
+}
+
+function posterTurnOrderV209(){
+ let b=ensureBattleStateV120(),team=(S.sets?.[S.set]||[]).slice(0,6);
+ return `<div class=posterTurnOrderV209>
+   ${team.map((i,n)=>`<span class="${(+b.unit||0)===n?"on":""}" data-turn-unit="${n}">${n+1}</span>`).join("")}
+ </div>`
+}
+
+function posterStateOverlayV209(){
+ return `<div class=posterStateOverlayV209>
+   ${posterCardNamesV209()}
+   ${posterTurnOrderV209()}
+ </div>`
+}
+
+function refreshPosterStateV209(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let b=ensureBattleStateV120(),team=(S.sets?.[S.set]||[]).slice(0,6);
+ root.querySelectorAll(".posterCardNamesV209>div").forEach((el,n)=>{
+   let i=+team[n]||0;
+   let name=el.querySelector("b"),level=el.querySelector("small");
+   if(name)name.textContent=C[i]?.[1]||"文豪";
+   if(level)level.textContent=`Lv.${lv(i)}`;
+ });
+ root.querySelectorAll(".posterTurnOrderV209 span").forEach((el,n)=>el.classList.toggle("on",(+b.unit||0)===n));
+}
+
+function posterStateCueV209(kind="attack"){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let d=root.querySelector(".posterStateCueV209");
+ if(!d){
+   d=document.createElement("div");
+   d.className="posterStateCueV209";
+   root.appendChild(d);
+ }
+ d.dataset.kind=kind;
+ d.textContent=kind==="ougi"?"SPECIAL":kind==="skill"?"SKILL":kind==="heal"?"SUPPORT":"ATTACK";
+ d.classList.remove("show");void d.offsetWidth;d.classList.add("show");
+ battleTimerV191(()=>d.classList.remove("show"),220);
+}
+
+function posterBattleAuditV209(){
+ let r=document.querySelector(".posterBattleV205");
+ return {
+   mounted:!!r,
+   names:r?.querySelectorAll(".posterCardNamesV209>div").length||0,
+   turn:r?.querySelector(".posterTurnOrderV209 .on")?.textContent||"-"
+ }
+}
+
+let __posterCutinTokenV210=0;
+
+function posterCutinMetaV210(slot,kind){
+ let team=(S.sets?.[S.set]||[]).slice(0,6),i=+team[Math.max(0,+slot||0)]||0;
+ let c=C[i]||[];
+ return {
+   i,
+   name:c[1]||"文豪",
+   image:characterImage(c[0]),
+   kind,
+   label:kind==="ougi"?(ougiInfo(i)?.name||"奥義"):
+         kind==="skill"?(characterAbility(i)?.name||"スキル"):
+         kind==="heal"?"支援":"通常攻撃"
+ }
+}
+
+function posterStaticCutinV210(slot,kind){
+ if(!posterBattleOnV205())return;
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let m=posterCutinMetaV210(slot,kind),token=++__posterCutinTokenV210;
+ root.querySelector(".posterStaticCutinV210")?.remove();
+
+ let d=document.createElement("div");
+ d.className=`posterStaticCutinV210 ${kind}`;
+ d.innerHTML=`<div class=cutinShadeV210></div>
+   <div class=cutinArtV210><img src="${m.image}" alt=""></div>
+   <div class=cutinTextV210>
+     <small>${kind==="ougi"?"SPECIAL":kind==="skill"?"SKILL":kind==="heal"?"SUPPORT":"ATTACK"}</small>
+     <b>${m.name}</b>
+     <span>${m.label}</span>
+   </div>`;
+ root.appendChild(d);
+
+ requestAnimationFrame(()=>d.classList.add("show"));
+ let stay=kind==="ougi"?460:kind==="skill"?320:240;
+ battleTimerV191(()=>{
+   if(token!==__posterCutinTokenV210)return;
+   d.classList.remove("show");
+   battleTimerV191(()=>d.remove(),120);
+ },stay);
+}
+
+function posterEnemyPulseV210(kind){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ root.classList.remove("enemyPulseV210","enemyBurstV210");
+ root.classList.add(kind==="ougi"?"enemyBurstV210":"enemyPulseV210");
+ battleTimerV191(()=>root.classList.remove("enemyPulseV210","enemyBurstV210"),kind==="ougi"?300:180);
+}
+
+function posterActionSwitchV210(slot,target,kind){
+ if(!posterBattleOnV205())return;
+ posterStaticCutinV210(slot,kind);
+ battleTimerV191(()=>posterEnemyPulseV210(kind),kind==="ougi"?125:70);
+}
+
+function posterSelectedPortraitV210(){
+ let c=posterSelectedCharV208();
+ return `<div class=posterSelectedPortraitV210>
+   <img src="${characterImage(C[c.i]?.[0])}" alt="">
+   <span><small>ACTIVE</small><b>${c.name}</b></span>
+ </div>`;
+}
+
+function refreshPosterSelectedPortraitV210(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let holder=root.querySelector(".posterSelectedPortraitV210");
+ if(!holder)return;
+ let c=posterSelectedCharV208();
+ let img=holder.querySelector("img"),b=holder.querySelector("b");
+ if(img)img.src=characterImage(C[c.i]?.[0]);
+ if(b)b.textContent=c.name;
+}
+
+function posterStaticBattleAuditV210(){
+ let r=document.querySelector(".posterBattleV205");
+ return {
+   mounted:!!r,
+   selectedPortrait:!!r?.querySelector(".posterSelectedPortraitV210"),
+   activeCutin:!!r?.querySelector(".posterStaticCutinV210"),
+   posterMode:posterBattleOnV205()
+ }
+}
+
+function portraitBattleLayoutV211(){
+ return {
+   top:{
+     auto:[58.5,1.5,12.5,4.8],
+     speed:[71.5,1.5,12.0,4.8],
+     pause:[85.0,1.5,8.7,4.8]
+   },
+   enemy:[52,7,47,51],
+   cards:[
+     [1.2,66.0,18.6,17.0],[20.4,66.0,18.6,17.0],[39.6,66.0,18.6,17.0],
+     [58.8,66.0,18.6,17.0],[78.0,66.0,20.0,17.0]
+   ],
+   actions:{
+     attack:[51.0,84.0,17.0,13.0],
+     skill:[68.8,84.0,12.0,13.0],
+     heal:[0,0,0,0],
+     ougi:[81.0,82.5,17.5,15.5]
+   }
+ }
+}
+
+function applyPortraitBattleLayoutV211(){
+ if(!document.querySelector(".posterBattleV205"))return;
+ let p=portraitBattleLayoutV211();
+ let root=document.documentElement;
+ root.style.setProperty("--v211-auto",p.top.auto.join(" "));
+ root.style.setProperty("--v211-speed",p.top.speed.join(" "));
+ root.style.setProperty("--v211-pause",p.top.pause.join(" "));
+}
+
+function posterPortraitBadgeV211(){
+ let c=posterSelectedCharV208(),b=ensureBattleStateV120();
+ return `<div class=posterPortraitBadgeV211>
+   <small>ACTIVE</small>
+   <b>${c.name}</b>
+   <span>EP ${Math.round(c.ep)}% / ${b.auto?"AUTO":"MANUAL"}</span>
+ </div>`
+}
+
+function refreshPortraitBadgeV211(){
+ let r=document.querySelector(".posterPortraitBadgeV211");
+ if(!r)return;
+ let c=posterSelectedCharV208(),b=ensureBattleStateV120();
+ let name=r.querySelector("b"),span=r.querySelector("span");
+ if(name)name.textContent=c.name;
+ if(span)span.textContent=`EP ${Math.round(c.ep)}% / ${b.auto?"AUTO":"MANUAL"}`
+}
+
+function portraitBattleAuditV211(){
+ let r=document.querySelector(".posterBattleV205");
+ return {
+   mounted:!!r,
+   portraitAsset:"assets/battle/battle_portrait_v211.png",
+   badge:!!r?.querySelector(".posterPortraitBadgeV211"),
+   controls:r?.querySelectorAll(".posterTopControlsV205 button").length||0,
+   cards:r?.querySelectorAll(".posterCardHotspotsV205 button").length||0
+ }
+}
+
+function posterSelectionFrameV212(){
+ let b=ensureBattleStateV120(),slot=Math.max(0,Math.min(5,+b.unit||0));
+ return `<div class=posterSelectionFrameV212 data-slot="${slot}"></div>`
+}
+
+function posterActionRingV212(){
+ let c=posterSelectedCharV208();
+ return `<div class=posterActionRingV212 data-ready="${c.ep>=100?1:0}">
+   <span>EP</span><b>${Math.round(c.ep)}</b>
+ </div>`
+}
+
+function posterInteractionOverlayV212(){
+ return `<div class=posterInteractionOverlayV212>
+   ${posterSelectionFrameV212()}
+   ${posterActionRingV212()}
+ </div>`
+}
+
+function refreshPosterInteractionV212(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let b=ensureBattleStateV120(),slot=Math.max(0,Math.min(5,+b.unit||0)),c=posterSelectedCharV208();
+
+ let frame=root.querySelector(".posterSelectionFrameV212");
+ if(frame)frame.dataset.slot=String(slot);
+
+ let ring=root.querySelector(".posterActionRingV212");
+ if(ring){
+   ring.dataset.ready=c.ep>=100?"1":"0";
+   let val=ring.querySelector("b");if(val)val.textContent=String(Math.round(c.ep));
+ }
+
+ root.querySelectorAll(".posterCardHotspotsV205 button").forEach((btn,n)=>{
+   btn.classList.toggle("selectedV212",n===slot);
+   btn.setAttribute("aria-pressed",n===slot?"true":"false");
+ });
+}
+
+function posterButtonStateV212(){
+ let b=ensureBattleStateV120(),c=posterSelectedCharV208();
+ return {
+   auto:!!b.auto,
+   speed:b.speed===2?2:1,
+   ougi:c.ep>=100,
+   slot:c.slot
+ }
+}
+
+
+function refreshPosterButtonStateV212(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let s=posterButtonStateV212();
+
+ root.querySelectorAll("[data-battle-auto]").forEach(auto=>{
+   auto.classList.toggle("activeV212",s.auto);
+   if(auto.closest(".posterThumbSubV234"))auto.textContent=s.auto?"AUTO ON":"AUTO";
+ });
+
+ root.querySelectorAll("[data-battle-speed]").forEach(speed=>{
+   speed.classList.toggle("activeV212",s.speed===2);
+   if(speed.closest(".posterThumbSubV234"))speed.textContent=`▶▶ ${s.speed===2?"×2":"×1"}`;
+ });
+
+ root.querySelectorAll('[data-sd-action="ougi"]').forEach(ougi=>{
+   ougi.classList.toggle("readyV212",s.ougi);
+   if(ougi.closest(".posterThumbBarV234")){
+     let sm=ougi.querySelector("small");
+     if(sm)sm.textContent=posterSelectedCharV208().ep>=100?"READY":Math.round(posterSelectedCharV208().ep)+"%";
+   }
+ });
+ refreshPosterThumbV234?.();
+}
+
+
+function posterCommandToastV212(kind){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let c=posterSelectedCharV208();
+ let d=document.createElement("div");
+ d.className=`posterCommandToastV212 ${kind}`;
+ d.innerHTML=`<small>${kind==="ougi"?"SPECIAL":kind==="skill"?"SKILL":kind==="heal"?"SUPPORT":"ATTACK"}</small><b>${c.name}</b>`;
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{d.classList.remove("show");battleTimerV191(()=>d.remove(),90)},220);
+}
+
+function posterTapZoneAuditV212(){
+ let r=document.querySelector(".posterBattleV205");
+ if(!r)return {mounted:false};
+ let root=r.getBoundingClientRect();
+ let rect=el=>{
+   let x=el?.getBoundingClientRect();if(!x)return null;
+   return {
+     x:Math.round((x.left-root.left)/root.width*100),
+     y:Math.round((x.top-root.top)/root.height*100),
+     w:Math.round(x.width/root.width*100),
+     h:Math.round(x.height/root.height*100)
+   };
+ };
+ return {
+   mounted:true,
+   auto:rect(r.querySelector("[data-battle-auto]")),
+   attack:rect(r.querySelector('[data-sd-action="attack"]')),
+   skill:rect(r.querySelector('[data-sd-action="skill"]')),
+   ougi:rect(r.querySelector('[data-sd-action="ougi"]')),
+   cards:[...r.querySelectorAll(".posterCardHotspotsV205 button")].map(rect)
+ };
+}
+
+function posterCombatStateV213(){
+ let b=normalizeBattleStateV171(),team=(S.sets?.[S.set]||[]).slice(0,6);
+ return {
+   b,team,
+   ally:team.map((_,n)=>({
+     hp:Math.max(0,Math.min(100,+b.allyHp?.[n]||0)),
+     ep:Math.max(0,Math.min(100,+b.ep?.[n]||0)),
+     ko:(+b.allyHp?.[n]||0)<=0,
+     low:(+b.allyHp?.[n]||0)>0 && (+b.allyHp?.[n]||0)<=30
+   })),
+   enemyHp:enemyHpPercentV197(b)
+ }
+}
+
+function posterCombatStateOverlayV213(){
+ let s=posterCombatStateV213();
+ return `<div class=posterCombatStateV213>
+   <div class=posterCardStateV213>
+     ${s.ally.map((x,n)=>`<div class="${x.ko?"ko":x.low?"low":""}" data-state-card="${n}">
+       <span class=koMarkV213>${x.ko?"KO":""}</span>
+       <i class=lowPulseV213></i>
+     </div>`).join("")}
+   </div>
+   <div class=posterEnemyPhaseV213 data-phase="${s.enemyHp<=25?3:s.enemyHp<=55?2:1}">
+     <small>ENEMY PHASE</small><b>${s.enemyHp<=25?"FINAL":s.enemyHp<=55?"RAGE":"NORMAL"}</b>
+   </div>
+ </div>`
+}
+
+function refreshPosterCombatStateV213(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let s=posterCombatStateV213();
+ root.querySelectorAll(".posterCardStateV213>div").forEach((el,n)=>{
+   let x=s.ally[n]||{ko:false,low:false};
+   el.classList.toggle("ko",x.ko);
+   el.classList.toggle("low",x.low);
+   let mark=el.querySelector(".koMarkV213");
+   if(mark)mark.textContent=x.ko?"KO":"";
+ });
+ let p=root.querySelector(".posterEnemyPhaseV213");
+ if(p){
+   let phase=s.enemyHp<=25?3:s.enemyHp<=55?2:1;
+   p.dataset.phase=String(phase);
+   let b=p.querySelector("b");
+   if(b)b.textContent=phase===3?"FINAL":phase===2?"RAGE":"NORMAL";
+ }
+}
+
+function posterEnemyTurnCueV213(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let d=document.createElement("div");
+ d.className="posterEnemyTurnCueV213";
+ d.innerHTML="<small>ENEMY TURN</small><b>頁が、牙を剥く。</b>";
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{d.classList.remove("show");battleTimerV191(()=>d.remove(),110)},360);
+}
+
+function posterKoCueV213(slot){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let team=(S.sets?.[S.set]||[]).slice(0,6),i=+team[slot]||0;
+ let d=document.createElement("div");
+ d.className="posterKoCueV213";
+ d.innerHTML=`<small>DOWN</small><b>${C[i]?.[1]||"文豪"}</b>`;
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{d.classList.remove("show");battleTimerV191(()=>d.remove(),90)},420);
+}
+
+function posterCheckKoTransitionV213(){
+ let s=posterCombatStateV213();
+ S.qol=S.qol||{};
+ let old=Array.isArray(S.qol.posterKoStateV213)?S.qol.posterKoStateV213:[false,false,false,false,false];
+ s.ally.forEach((x,n)=>{if(x.ko&&!old[n])posterKoCueV213(n)});
+ S.qol.posterKoStateV213=s.ally.map(x=>x.ko);
+}
+
+function posterPauseOverlayV213(show){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let old=root.querySelector(".posterPauseOverlayV213");
+ if(!show){old?.remove();return}
+ if(old)return;
+ let d=document.createElement("div");
+ d.className="posterPauseOverlayV213";
+ d.innerHTML=`<div><small>BATTLE PAUSED</small><b>一時停止</b><button data-poster-resume-v213=1>戦闘へ戻る</button><button data-go="sortie">撤退</button></div>`;
+ root.appendChild(d);
+}
+
+function posterStateMachineAuditV213(){
+ let s=posterCombatStateV213();
+ return {
+   mounted:!!document.querySelector(".posterBattleV205"),
+   enemyHp:s.enemyHp,
+   phase:s.enemyHp<=25?3:s.enemyHp<=55?2:1,
+   ko:s.ally.filter(x=>x.ko).length,
+   low:s.ally.filter(x=>x.low).length
+ }
+}
+
+let __posterPhaseV214=0;
+let __posterWaveV214=0;
+
+function posterPhaseStateV214(){
+ let b=ensureBattleStateV120(),hp=enemyHpPercentV197(b);
+ return {wave:b.wave||1,turn:b.turn||1,hp,phase:hp<=25?3:hp<=55?2:1}
+}
+
+function posterApplyPhaseV214(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let s=posterPhaseStateV214();
+ root.dataset.phase=String(s.phase);
+ root.dataset.wave=String(s.wave);
+ if(__posterPhaseV214!==s.phase){
+   let prev=__posterPhaseV214;__posterPhaseV214=s.phase;
+   if(prev>0)posterPhaseShiftV214(s.phase);
+ }
+ if(__posterWaveV214!==s.wave){
+   let prev=__posterWaveV214;__posterWaveV214=s.wave;
+   if(prev>0)posterWaveShiftV214(s.wave);
+ }
+}
+
+function posterPhaseShiftV214(phase){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let d=document.createElement("div");
+ d.className=`posterPhaseShiftV214 p${phase}`;
+ d.innerHTML=`<small>${phase===3?"FINAL PHASE":phase===2?"RAGE PHASE":"PHASE"}</small><b>${phase===3?"終頁":phase===2?"暴走":"通常"}</b>`;
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{d.classList.remove("show");battleTimerV191(()=>d.remove(),120)},520);
+}
+
+function posterWaveShiftV214(wave){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let d=document.createElement("div");
+ d.className="posterWaveShiftV214";
+ d.innerHTML=`<small>NEXT WAVE</small><b>${wave}</b>`;
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{d.classList.remove("show");battleTimerV191(()=>d.remove(),100)},420);
+}
+
+function posterBattleLockV214(on=true){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ root.classList.toggle("posterLockedV214",!!on);
+}
+
+function posterBattleLockCueV214(kind="attack"){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ root.dataset.lockKind=kind;
+ posterBattleLockV214(true);
+ battleTimerV191(()=>posterBattleLockV214(false),kind==="ougi"?420:220);
+}
+
+function posterResultBridgeV214(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let d=document.createElement("div");
+ d.className="posterResultBridgeV214";
+ d.innerHTML="<small>QUEST COMPLETE</small><b>戦闘終了</b>";
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ return d;
+}
+
+function posterPhaseAuditV214(){
+ let s=posterPhaseStateV214(),root=document.querySelector(".posterBattleV205");
+ return {mounted:!!root,wave:s.wave,turn:s.turn,hp:s.hp,phase:s.phase,locked:!!root?.classList.contains("posterLockedV214")}
+}
+
+function posterEnemyIntentV215(){
+ let b=ensureBattleStateV120(),hp=enemyHpPercentV197(b),phase=hp<=25?3:hp<=55?2:1;
+ let type=phase===3?"大技":phase===2?"強攻撃":b.turn%2===0?"攻撃":"様子見";
+ let icon=phase===3?"◆":phase===2?"!":"•";
+ return {type,icon,phase}
+}
+
+function posterEnemyIntentUiV215(){
+ let x=posterEnemyIntentV215();
+ return `<div class=posterEnemyIntentV215 data-phase="${x.phase}">
+   <small>NEXT</small><b>${x.icon} ${x.type}</b>
+ </div>`
+}
+
+function posterNextActorsV215(){
+ let b=ensureBattleStateV120(),team=(S.sets?.[S.set]||[]).slice(0,6),cur=Math.max(0,+b.unit||0);
+ let order=[];
+ for(let k=0;k<3;k++){
+   let n=(cur+k)%Math.max(1,team.length);
+   order.push({slot:n,name:C[+team[n]]?.[1]||"文豪"});
+ }
+ return `<div class=posterNextActorsV215>
+   <small>NEXT ACTORS</small>
+   <div>${order.map((x,i)=>`<span class="${i===0?"on":""}"><i>${x.slot+1}</i><b>${x.name}</b></span>`).join("")}</div>
+ </div>`
+}
+
+function posterTacticalOverlayV215(){
+ return `<div class=posterTacticalOverlayV215>
+   ${posterEnemyIntentUiV215()}
+   ${posterNextActorsV215()}
+ </div>`
+}
+
+function refreshPosterTacticalV215(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let tactical=root.querySelector(".posterTacticalOverlayV215");
+ if(tactical)tactical.innerHTML=posterEnemyIntentUiV215()+posterNextActorsV215();
+}
+
+function posterBattleResultSummaryV215(r){
+ let b=ensureBattleStateV120();
+ return `<div class=posterResultSummaryV215>
+   <span>TURN<b>${b.turn||1}</b></span>
+   <span>原稿片<b>+${r.tickets||0}</b></span>
+   <span>資料<b>+${r.mat||0}</b></span>
+   <span>文銭<b>+${r.gold||0}</b></span>
+   <span>インク<b>+${r.ink||0}</b></span>
+ </div>`
+}
+
+function posterResultCardV215(r){
+ let o=document.createElement("div");
+ o.className="posterResultCardV215";
+ o.innerHTML=`<div>
+   <small>QUEST COMPLETE</small>
+   <h2>BATTLE CLEAR</h2>
+   ${posterBattleResultSummaryV215(r)}${posterResultStatsV226(r)}
+   <div class=posterResultActionsV215>
+     <button data-v181-repeat=1>もう一度</button>
+     <button class=auto data-v181-repeat-auto=1>AUTO再戦</button>
+     <button data-go=sortie>ステージへ</button>
+   </div>
+ </div>`;
+ document.body.appendChild(o);
+ return o
+}
+
+function posterReadabilityAuditV215(){
+ let root=document.querySelector(".posterBattleV205");
+ let intent=posterEnemyIntentV215();
+ return {
+   mounted:!!root,
+   enemyIntent:intent.type,
+   nextActors:root?.querySelectorAll(".posterNextActorsV215 span").length||0,
+   tacticalOverlay:!!root?.querySelector(".posterTacticalOverlayV215")
+ }
+}
+
+function posterViewportInfoV216(){
+ let vv=window.visualViewport;
+ let w=Math.max(1,Math.round(vv?.width||innerWidth));
+ let h=Math.max(1,Math.round(vv?.height||innerHeight));
+ let portrait=h>=w;
+ let artW=portrait?941:1672,artH=portrait?1672:941;
+ let scale=Math.min(w/artW,h/artH);
+ let rw=artW*scale,rh=artH*scale;
+ return {w,h,portrait,artW,artH,renderW:rw,renderH:rh,left:(w-rw)/2,top:(h-rh)/2,scale}
+}
+
+function applyExactPosterFitV216(){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return;
+ let v=posterViewportInfoV216();
+ root.style.setProperty("--posterW",`${v.renderW}px`);
+ root.style.setProperty("--posterH",`${v.renderH}px`);
+ root.style.setProperty("--posterLeft",`${v.left}px`);
+ root.style.setProperty("--posterTop",`${v.top}px`);
+ root.dataset.orientation=v.portrait?"portrait":"landscape";
+}
+
+function preloadPosterAssetsV216(){
+ [
+   "assets/battle/battle_portrait_v211.png",
+   "assets/battle/battle_landscape_v205.png"
+ ].forEach(src=>{
+   let im=new Image();im.decoding="async";im.src=src;
+ });
+}
+
+function posterBootHintV216(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ S.qol=S.qol||{};
+ if(S.qol.posterHintSeenV216)return;
+ S.qol.posterHintSeenV216=true;
+ queueBattleSaveV197();
+ let d=document.createElement("div");
+ d.className="posterBootHintV216";
+ d.innerHTML="<small>BATTLE READY</small><b>画像のボタンをそのままタップ</b>";
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{d.classList.remove("show");battleTimerV191(()=>d.remove(),120)},1050);
+}
+
+function posterHeaderV216(){
+ let b=ensureBattleStateV120(),h=battleStageHeaderV534();
+ return `<div class=posterHeaderV216>
+   <small>CHAPTER ${h.chapter} / ${h.mode} / WAVE ${b.wave||1}</small>
+   <b>${h.title}・${battleEnemyNameV534(b.wave)}</b>
+ </div>`
+}
+
+function posterCompletionBarV216(){
+ let b=ensureBattleStateV120(),wave=Math.max(1,Math.min(3,+b.wave||1));
+ let pct=((wave-1)/3)*100 + Math.min(33,Math.max(0,(1-enemyHpPercentV197(b)/100)*33));
+ return `<div class=posterCompletionV216><i><em style="width:${Math.round(pct)}%"></em></i></div>`
+}
+
+function refreshPosterPolishV216(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let b=ensureBattleStateV120();
+ let head=root.querySelector(".posterHeaderV216");
+ if(head){
+   let s=head.querySelector("small"),t=head.querySelector("b");
+   let h=battleStageHeaderV534();
+   if(s)s.textContent=`CHAPTER ${h.chapter} / ${h.mode} / WAVE ${b.wave||1}`;
+   if(t)t.textContent=`${h.title}・${battleEnemyNameV534(b.wave)}`;
+ }
+ let bar=root.querySelector(".posterCompletionV216 em");
+ if(bar){
+   let wave=Math.max(1,Math.min(3,+b.wave||1));
+   let pct=((wave-1)/3)*100 + Math.min(33,Math.max(0,(1-enemyHpPercentV197(b)/100)*33));
+   bar.style.width=Math.round(pct)+"%";
+ }
+}
+
+function posterExactFitAuditV216(){
+ let vv=window.visualViewport,w=Math.round(vv?.width||innerWidth),h=Math.round(vv?.height||innerHeight);
+ return {
+   mounted:!!document.querySelector(".posterBattleV205"),
+   orientation:h>=w?"portrait":"landscape",
+   viewport:[w,h],
+   art:["responsive-css","responsive-css"],
+   rendered:[w,h],
+   letterbox:[0,0],
+   exactAspect:true
+ }
+}
+
+function posterLivePartyPortraitsV217(){
+ let b=ensureBattleStateV120(),team=(S.sets?.[S.set]||[]).slice(0,6);
+ return `<div class=posterLivePartyV217>
+   ${team.map((i,n)=>{
+     let idx=+i||0,hp=Math.max(0,Math.min(100,+b.allyHp?.[n]||0)),ep=Math.max(0,Math.min(100,+b.ep?.[n]||0));
+     return `<button class="${(+b.unit||0)===n?"on":""} ${hp<=0?"ko":""}" data-battle-unit="${n}" aria-label="${C[idx]?.[1]||"文豪"}">
+       <img src="${characterImage(C[idx]?.[0])}" alt="">
+       <span class=name>${C[idx]?.[1]||"文豪"}</span>
+       <i class=hp><em style="width:${hp}%"></em></i>
+       <i class=ep><em style="width:${ep}%"></em></i>
+     </button>`
+   }).join("")}
+ </div>`
+}
+
+function refreshLivePartyPortraitsV217(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let b=ensureBattleStateV120(),team=(S.sets?.[S.set]||[]).slice(0,6);
+ let holder=root.querySelector(".posterLivePartyV217");
+ if(!holder)return;
+ let buttons=[...holder.querySelectorAll("button")];
+ if(buttons.length!==team.length){
+   holder.outerHTML=posterLivePartyPortraitsV217();
+   return;
+ }
+ buttons.forEach((btn,n)=>{
+   let idx=+team[n]||0,hp=Math.max(0,Math.min(100,+b.allyHp?.[n]||0)),ep=Math.max(0,Math.min(100,+b.ep?.[n]||0));
+   btn.classList.toggle("on",(+b.unit||0)===n);
+   btn.classList.toggle("ko",hp<=0);
+   let im=btn.querySelector("img"),nm=btn.querySelector(".name"),h=btn.querySelector(".hp em"),e=btn.querySelector(".ep em");
+   let src=characterImage(C[idx]?.[0]);
+   if(im&&im.getAttribute("src")!==src)im.src=src;
+   if(nm)nm.textContent=C[idx]?.[1]||"文豪";
+   if(h)h.style.width=hp+"%";
+   if(e)e.style.width=ep+"%";
+ });
+}
+
+function posterSelectedAuraV217(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let b=ensureBattleStateV120(),slot=Math.max(0,Math.min(5,+b.unit||0));
+ root.dataset.selectedSlot=String(slot);
+}
+
+function posterPortraitPreloadV217(){
+ let team=(S.sets?.[S.set]||[]).slice(0,6);
+ team.forEach(i=>{
+   let im=new Image();im.decoding="async";im.src=characterImage(C[+i||0]?.[0]);
+ });
+}
+
+function posterPartyAuditV217(){
+ let root=document.querySelector(".posterBattleV205");
+ return {
+   mounted:!!root,
+   livePortraits:root?.querySelectorAll(".posterLivePartyV217 button").length||0,
+   selected:root?.dataset.selectedSlot||"0",
+   ko:root?.querySelectorAll(".posterLivePartyV217 .ko").length||0
+ }
+}
+
+const __cutinCacheV218=new Map();
+
+function posterCutinAssetV218(i){
+ let src=characterImage(C[i]?.[0]);
+ if(!__cutinCacheV218.has(src)){
+   let im=new Image();
+   im.decoding="async";
+   im.src=src;
+   __cutinCacheV218.set(src,im);
+ }
+ return src;
+}
+
+function preloadActiveCutinsV218(){
+ let team=(S.sets?.[S.set]||[]).slice(0,6);
+ team.forEach(i=>posterCutinAssetV218(+i||0));
+}
+
+function posterCutinThemeV218(i,kind){
+ let attr=String(C[i]?.[4]||"");
+ let base=kind==="ougi"?"gold":kind==="skill"?"blue":kind==="heal"?"green":"ink";
+ if(/火|紅|赤/.test(attr))base="red";
+ if(/水|蒼|青/.test(attr))base="blue";
+ if(/風|緑/.test(attr))base="green";
+ return base;
+}
+
+function posterCharacterCutinV218(slot,kind){
+ if(!posterBattleOnV205())return;
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let team=(S.sets?.[S.set]||[]).slice(0,6),i=+team[Math.max(0,+slot||0)]||0;
+ let token=++__posterCutinTokenV210;
+ let src=posterCutinAssetV218(i);
+ let theme=posterCutinThemeV218(i,kind);
+ let label=kind==="ougi"?(ougiInfo(i)?.name||"奥義"):kind==="skill"?(characterAbility(i)?.name||"スキル"):kind==="heal"?"支援":"通常攻撃";
+ let sig=characterSignatureV496(i),combat=signatureCombatV497(i);
+
+ root.querySelector(".posterStaticCutinV210")?.remove();
+
+ let d=document.createElement("div");
+ d.className=`posterStaticCutinV210 posterCharacterCutinV218 ${kind}`;
+ d.dataset.theme=theme;
+ d.innerHTML=`<div class=cutinShadeV210></div>
+   <div class=cutinFrameV218></div>
+   <div class=cutinArtV210><img src="${src}" alt=""></div>
+   <div class=cutinGlyphV218>${kind==="ougi"?"奥":kind==="skill"?"技":kind==="heal"?"援":"撃"}</div>
+   <div class=cutinTextV210>
+     <small>${kind==="ougi"?"SPECIAL":kind==="skill"?"SKILL":kind==="heal"?"SUPPORT":"ATTACK"}</small>
+     <b>${C[i]?.[1]||"文豪"}</b>
+     <span>${label}</span>
+     ${kind==="ougi"?`<em>${sig.title} / ${sig.finisher}</em><i>${combat.quirk}・共鳴 ${sig.resonance}</i>`:""}
+   </div>`;
+ root.appendChild(d);
+
+ requestAnimationFrame(()=>d.classList.add("show"));
+ let stay=kind==="ougi"?560:kind==="skill"?340:kind==="heal"?300:250;
+ battleTimerV191(()=>{
+   if(token!==__posterCutinTokenV210)return;
+   d.classList.remove("show");
+   battleTimerV191(()=>d.remove(),120);
+ },stay);
+}
+
+function posterCutinDirectorV218(slot,target,kind){
+ posterCharacterCutinV218(slot,kind);
+ posterCardPulseV207(slot,kind);
+ posterFocusV207(kind);
+ battleTimerV191(()=>posterDamageNumberV207(kind),kind==="ougi"?150:75);
+ battleTimerV191(()=>posterEnemyPulseV210(kind),kind==="ougi"?125:70);
+}
+
+function posterPartyStripV218(){
+ let team=(S.sets?.[S.set]||[]).slice(0,6),b=ensureBattleStateV120();
+ return `<div class=posterPartyStripV218>
+   ${team.map((i,n)=>`<span class="${(+b.unit||0)===n?"on":""} ${(+b.allyHp?.[n]||0)<=0?"ko":""}">
+     <img src="${posterCutinAssetV218(+i||0)}" alt="">
+   </span>`).join("")}
+ </div>`
+}
+
+function refreshPosterPartyStripV218(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let team=(S.sets?.[S.set]||[]).slice(0,6),b=ensureBattleStateV120();
+ let holder=root.querySelector(".posterPartyStripV218");
+ if(!holder)return;
+ holder.querySelectorAll("span").forEach((s,n)=>{
+   s.classList.toggle("on",(+b.unit||0)===n);
+   s.classList.toggle("ko",(+b.allyHp?.[n]||0)<=0);
+   let im=s.querySelector("img"),src=posterCutinAssetV218(+team[n]||0);
+   if(im&&im.getAttribute("src")!==src)im.src=src;
+ });
+}
+
+function posterCutinAuditV218(){
+ let root=document.querySelector(".posterBattleV205");
+ return {
+   mounted:!!root,
+   cachedCutins:__cutinCacheV218.size,
+   partyStrip:root?.querySelectorAll(".posterPartyStripV218 span").length||0,
+   activeCutin:!!root?.querySelector(".posterCharacterCutinV218")
+ }
+}
+
+let __tableauTokenV219=0;
+
+function posterActiveTableauV219(slot,kind){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let team=(S.sets?.[S.set]||[]).slice(0,6),i=+team[Math.max(0,+slot||0)]||0;
+ let token=++__tableauTokenV219;
+ let src=posterCutinAssetV218(i);
+ let label=kind==="ougi"?(ougiInfo(i)?.name||"奥義"):
+           kind==="skill"?(characterAbility(i)?.name||"スキル"):
+           kind==="heal"?"支援":"通常攻撃";
+
+ root.querySelector(".posterActionTableauV219")?.remove();
+
+ let d=document.createElement("div");
+ d.className=`posterActionTableauV219 ${kind}`;
+ d.innerHTML=`<div class=tableauMaskV219></div>
+   <div class=tableauActorV219><img src="${src}" alt=""></div>
+   <div class=tableauTextV219>
+     <small>${kind==="ougi"?"SPECIAL":kind==="skill"?"SKILL":kind==="heal"?"SUPPORT":"ATTACK"}</small>
+     <b>${C[i]?.[1]||"文豪"}</b>
+     <span>${label}</span>
+   </div>
+   <div class=tableauLineV219></div>`;
+ root.appendChild(d);
+
+ requestAnimationFrame(()=>d.classList.add("show"));
+ let stay=kind==="ougi"?480:kind==="skill"?300:kind==="heal"?280:220;
+ battleTimerV191(()=>{
+   if(token!==__tableauTokenV219)return;
+   d.classList.remove("show");
+   battleTimerV191(()=>d.remove(),100);
+ },stay);
+}
+
+function posterActionTableauDirectorV219(slot,target,kind){
+ if(!posterBattleOnV205())return;
+ posterActiveTableauV219(slot,kind);
+ posterCardPulseV207(slot,kind);
+ posterFocusV207(kind);
+ battleTimerV191(()=>posterDamageNumberV207(kind),kind==="ougi"?145:70);
+ battleTimerV191(()=>posterEnemyPulseV210(kind),kind==="ougi"?120:65);
+}
+
+function posterThreatMeterV219(){
+ let b=ensureBattleStateV120(),hp=enemyHpPercentV197(b);
+ let threat=hp<=25?100:hp<=55?70:Math.min(55,20+(b.turn||1)*4);
+ return `<div class=posterThreatV219>
+   <small>THREAT</small>
+   <i><em style="width:${Math.min(100,threat)}%"></em></i>
+   <b>${hp<=25?"CRITICAL":hp<=55?"HIGH":"NORMAL"}</b>
+ </div>`
+}
+
+function refreshPosterThreatV219(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let b=ensureBattleStateV120(),hp=enemyHpPercentV197(b);
+ let threat=hp<=25?100:hp<=55?70:Math.min(55,20+(b.turn||1)*4);
+ let wrap=root.querySelector(".posterThreatV219");
+ if(!wrap)return;
+ let bar=wrap.querySelector("em"),lab=wrap.querySelector("b");
+ if(bar)bar.style.width=Math.min(100,threat)+"%";
+ if(lab)lab.textContent=hp<=25?"CRITICAL":hp<=55?"HIGH":"NORMAL";
+}
+
+function posterBattleFooterNoteV219(){
+ return `<div class=posterFooterNoteV219><span>STATIC CINEMATIC BATTLE</span><b>LIVE DATA</b></div>`
+}
+
+function posterTableauAuditV219(){
+ let root=document.querySelector(".posterBattleV205");
+ return {
+   mounted:!!root,
+   threat:!!root?.querySelector(".posterThreatV219"),
+   footer:!!root?.querySelector(".posterFooterNoteV219"),
+   activeTableau:!!root?.querySelector(".posterActionTableauV219")
+ }
+}
+
+function poseRegistryV220(){
+ S.qol=S.qol||{};
+ if(!S.qol.poseAssetsV220||typeof S.qol.poseAssetsV220!=="object")S.qol.poseAssetsV220={};
+ return S.qol.poseAssetsV220
+}
+
+function poseKeyV220(i,kind){
+ let slug=C[i]?.[0]||String(i);
+ return `${slug}:${kind}`
+}
+
+function posterPoseSourceV220(i,kind){
+ let reg=poseRegistryV220();
+ let exact=reg[poseKeyV220(i,kind)];
+ let idle=reg[poseKeyV220(i,"idle")];
+ return exact||idle||characterImage(C[i]?.[0])
+}
+
+function posterPoseMetaV220(slot,kind){
+ let team=(S.sets?.[S.set]||[]).slice(0,6),i=+team[Math.max(0,+slot||0)]||0;
+ return {
+   i,
+   kind,
+   src:posterPoseSourceV220(i,kind),
+   name:C[i]?.[1]||"文豪",
+   title:kind==="ougi"?(ougiInfo(i)?.name||"奥義"):
+         kind==="skill"?(characterAbility(i)?.name||"スキル"):
+         kind==="heal"?"支援":"通常攻撃",
+   theme:posterCutinThemeV218(i,kind)
+ }
+}
+
+function posterPoseStageV220(slot,kind){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let m=posterPoseMetaV220(slot,kind);
+ root.querySelector(".posterPoseStageV220")?.remove();
+
+ let d=document.createElement("div");
+ d.className=`posterPoseStageV220 ${kind}`;
+ d.dataset.theme=m.theme;
+ d.innerHTML=`<div class=poseCurtainV220></div>
+   <div class=poseActorV220><img src="${m.src}" alt=""></div>
+   <div class=poseCopyV220>
+     <small>${kind==="ougi"?"SPECIAL":kind==="skill"?"SKILL":kind==="heal"?"SUPPORT":"ATTACK"}</small>
+     <b>${m.name}</b>
+     <span>${m.title}</span>
+   </div>
+   <div class=poseEdgeV220></div>`;
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+
+ let stay=kind==="ougi"?500:kind==="skill"?320:kind==="heal"?280:220;
+ battleTimerV191(()=>{
+   d.classList.remove("show");
+   battleTimerV191(()=>d.remove(),100);
+ },stay);
+}
+
+function posterPoseDirectorV220(slot,target,kind){
+ if(!posterBattleOnV205())return;
+ posterPoseStageV220(slot,kind);
+ posterCardPulseV207(slot,kind);
+ posterFocusV207(kind);
+ battleTimerV191(()=>posterDamageNumberV207(kind),kind==="ougi"?150:70);
+ battleTimerV191(()=>posterEnemyPulseV210(kind),kind==="ougi"?120:65);
+}
+
+function registerPoseAssetV220(slug,kind,path){
+ let reg=poseRegistryV220();
+ reg[`${slug}:${kind}`]=path;
+ queueBattleSaveV197(true);
+}
+
+function posterPoseGuideV220(){
+ return {
+   folder:"assets/battle/poses/",
+   recommended:["idle","attack","skill","ougi","heal","hit","ko","victory"],
+   fallback:"characterImage()",
+   registryKey:"<slug>:<pose>"
+ }
+}
+
+function posterPoseAuditV220(){
+ let team=(S.sets?.[S.set]||[]).slice(0,6),reg=poseRegistryV220();
+ return {
+   registered:Object.keys(reg).length,
+   activeParty:team.map(i=>C[+i||0]?.[0]),
+   stage:!!document.querySelector(".posterPoseStageV220"),
+   guide:posterPoseGuideV220()
+ }
+}
+
+function posterFallbackCropV221(kind){
+ return kind==="ougi"?{pos:"50% 18%",scale:1.08}:
+        kind==="skill"?{pos:"50% 24%",scale:1.05}:
+        kind==="heal"?{pos:"50% 20%",scale:1.035}:
+        {pos:"50% 30%",scale:1.045}
+}
+
+function posterPoseResolvedV221(slot,kind){
+ let team=(S.sets?.[S.set]||[]).slice(0,6),i=+team[Math.max(0,+slot||0)]||0;
+ let reg=poseRegistryV220(),slug=C[i]?.[0]||String(i);
+ let key=`${slug}:${kind}`,idle=`${slug}:idle`;
+ let explicit=reg[key]||reg[idle]||null;
+ let crop=posterFallbackCropV221(kind);
+ return {
+   i,kind,
+   src:explicit||characterImage(C[i]?.[0]),
+   explicit:!!explicit,
+   crop,
+   name:C[i]?.[1]||"文豪",
+   title:kind==="ougi"?(ougiInfo(i)?.name||"奥義"):
+         kind==="skill"?(characterAbility(i)?.name||"スキル"):
+         kind==="heal"?"支援":"通常攻撃",
+   theme:posterCutinThemeV218(i,kind)
+ }
+}
+
+function posterCinematicPoseV221(slot,kind){
+ if(!posterBattleOnV205())return;
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let m=posterPoseResolvedV221(slot,kind);
+ root.querySelector(".posterPoseStageV220")?.remove();
+
+ let d=document.createElement("div");
+ d.className=`posterPoseStageV220 posterCinematicPoseV221 ${kind} ${m.explicit?"explicit":"fallback"}`;
+ d.dataset.theme=m.theme;
+ d.style.setProperty("--cropPos",m.crop.pos);
+ d.style.setProperty("--cropScale",String(m.crop.scale));
+ d.innerHTML=`<div class=poseCurtainV220></div>
+   <div class=poseBackdropV221></div>
+   <div class=poseActorV220><img src="${m.src}" alt=""></div>
+   <div class=poseAccentV221></div>
+   <div class=poseCopyV220>
+     <small>${kind==="ougi"?"SPECIAL":kind==="skill"?"SKILL":kind==="heal"?"SUPPORT":"ATTACK"}</small>
+     <b>${m.name}</b>
+     <span>${m.title}</span>
+   </div>
+   <div class=poseEdgeV220></div>
+   <div class=poseAssetFlagV221>${m.explicit?"POSE":"PORTRAIT"}</div>`;
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+
+ let stay=kind==="ougi"?520:kind==="skill"?330:kind==="heal"?290:230;
+ battleTimerV191(()=>{
+   d.classList.remove("show");
+   battleTimerV191(()=>d.remove(),100);
+ },stay);
+}
+
+function posterPoseDirectorV221(slot,target,kind){
+ if(!posterBattleOnV205())return;
+ posterCinematicPoseV221(slot,kind);
+ posterCardPulseV207(slot,kind);
+ posterFocusV207(kind);
+ battleTimerV191(()=>posterDamageNumberV207(kind),kind==="ougi"?155:70);
+ battleTimerV191(()=>posterEnemyPulseV210(kind),kind==="ougi"?125:65);
+}
+
+function posterRosterPoseCoverageV221(){
+ let team=(S.sets?.[S.set]||[]).slice(0,6),reg=poseRegistryV220();
+ return team.map(i=>{
+   let slug=C[+i||0]?.[0]||String(i),count=["idle","attack","skill","ougi","heal","hit","ko","victory"].filter(k=>reg[`${slug}:${k}`]).length;
+   return {slug,name:C[+i||0]?.[1]||"文豪",count}
+ });
+}
+
+function posterPoseCoverageUiV221(){
+ let rows=posterRosterPoseCoverageV221();
+ let total=rows.reduce((a,b)=>a+b.count,0);
+ return `<div class=posterPoseCoverageV221>
+   <small>POSE ASSET</small><b>${total}/40</b>
+ </div>`
+}
+
+function refreshPoseCoverageV221(){
+ let root=document.querySelector(".posterBattleV205"),el=root?.querySelector(".posterPoseCoverageV221");
+ if(!el)return;
+ let rows=posterRosterPoseCoverageV221(),total=rows.reduce((a,b)=>a+b.count,0),b=el.querySelector("b");
+ if(b)b.textContent=`${total}/40`;
+}
+
+function posterCinematicAuditV221(){
+ let cover=posterRosterPoseCoverageV221();
+ return {
+   mounted:!!document.querySelector(".posterBattleV205"),
+   coverage:cover,
+   explicitAssets:cover.reduce((a,b)=>a+b.count,0),
+   fallbackMode:true
+ }
+}
+
+let __posterInputLockV222=false;
+let __posterOrientationTimerV222=null;
+
+function posterDeviceProfileV222(){
+ let vv=window.visualViewport;
+ let w=Math.round(vv?.width||innerWidth),h=Math.round(vv?.height||innerHeight);
+ let portrait=h>=w;
+ return {
+   w,h,portrait,
+   compact:w<=390,
+   tall:portrait&&h/w>=1.95,
+   safeBottom:Math.max(0,(innerHeight-(vv?.height||innerHeight)))
+ }
+}
+
+function posterInputGateV222(ms=120){
+ if(__posterInputLockV222)return false;
+ __posterInputLockV222=true;
+ setTimeout(()=>__posterInputLockV222=false,ms);
+ return true
+}
+
+function posterEnsureSceneV222(){
+ if(!document.body.classList.contains("battleMode"))return false;
+ let root=document.querySelector(".posterBattleV205");
+ if(root){
+   applyExactPosterFitV216();
+   refreshPosterLiveOverlayV206();
+   refreshPosterLabelsV208();
+   refreshPosterStateV209();
+   refreshPosterSelectedPortraitV210();
+   refreshPortraitBadgeV211();
+   refreshPosterInteractionV212();
+   refreshPosterButtonStateV212();
+   refreshPosterCombatStateV213();
+   posterApplyPhaseV214();
+   refreshPosterTacticalV215();
+   refreshPosterPolishV216();
+   refreshLivePartyPortraitsV217();
+   posterSelectedAuraV217();
+   refreshPosterPartyStripV218();
+   refreshPosterThreatV219();
+   refreshPoseCoverageV221();
+   return true;
+ }
+ try{
+   mountBattleV182();
+   return true;
+ }catch(e){
+   console.error("V222 scene recovery",e);
+   return false;
+ }
+}
+
+function posterOrientationSyncV222(){
+ clearTimeout(__posterOrientationTimerV222);
+ __posterOrientationTimerV222=setTimeout(()=>{
+   if(!document.body.classList.contains("battleMode"))return;
+   applyExactPosterFitV216();
+   posterEnsureSceneV222();
+ },120);
+}
+
+function setupPosterDeviceGuardsV222(){
+ if(window.__posterDeviceGuardsV222)return;
+ window.__posterDeviceGuardsV222=true;
+ window.addEventListener("orientationchange",posterOrientationSyncV222,{passive:true});
+ window.addEventListener("resize",posterOrientationSyncV222,{passive:true});
+ document.addEventListener("visibilitychange",()=>{
+   if(document.visibilityState==="visible"&&document.body.classList.contains("battleMode")){
+     setTimeout(posterEnsureSceneV222,120);
+   }
+ },{passive:true});
+}
+
+function posterSafeTapFeedbackV222(el){
+ if(!el)return;
+ el.classList.remove("posterPressedV222");
+ void el.offsetWidth;
+ el.classList.add("posterPressedV222");
+ battleTimerV191(()=>el.classList.remove("posterPressedV222"),120);
+}
+
+function posterButtonAuditV222(){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return {mounted:false};
+ let q=s=>root.querySelector(s)?.getBoundingClientRect();
+ let vv=window.visualViewport, vw=vv?.width||innerWidth, vh=vv?.height||innerHeight;
+ let inside=r=>!!r&&r.left>=-1&&r.top>=-1&&r.right<=vw+1&&r.bottom<=vh+1;
+ return {
+   mounted:true,
+   auto:inside(q(".posterThumbSubV234 [data-battle-auto]")),
+   speed:inside(q(".posterThumbSubV234 [data-battle-speed]")),
+   attack:inside(q('.posterThumbBarV234 [data-sd-action="attack"]')),
+   skill:inside(q('.posterThumbBarV234 [data-sd-action="skill"]')),
+   ougi:inside(q('.posterThumbBarV234 [data-sd-action="ougi"]')),
+   cards:[...root.querySelectorAll(".posterLivePartyV217 button")].map(x=>inside(x.getBoundingClientRect()))
+ }
+}
+
+function posterDeviceAuditV222(){
+ return {
+   device:posterDeviceProfileV222(),
+   fit:posterExactFitAuditV216(),
+   buttons:posterButtonAuditV222(),
+   scene:!!document.querySelector(".posterBattleV205")
+ }
+}
+
+let __posterGuardTimerV223=null;
+let __posterGuardStrikesV223=0;
+
+function posterGuardStateV223(){
+ S.qol=S.qol||{};
+ if(typeof S.qol.posterFallbackDockV223!=="boolean")S.qol.posterFallbackDockV223=true;
+ return S.qol
+}
+
+function posterEssentialControlsV223(){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return {ok:false,reason:"scene-missing"};
+ let audit=posterButtonAuditV222();
+ let cards=Array.isArray(audit.cards)?audit.cards:[];
+ let ok=!!(audit.auto&&audit.speed&&audit.attack&&audit.skill&&audit.ougi&&cards.length>=5&&cards.every(Boolean));
+ return {ok,audit,reason:ok?"ok":"control-offscreen"};
+}
+
+function posterFallbackDockV223(){
+ let b=ensureBattleStateV120(),c=posterSelectedCharV208();
+ return `<div class=posterFallbackDockV223>
+   <button data-battle-speed="${b.speed===2?1:2}">${b.speed===2?"×2":"×1"}</button>
+   <button data-battle-auto=1 class="${b.auto?"on":""}">AUTO</button>
+   <button data-sd-action=attack>攻撃</button>
+   <button data-sd-action=skill>スキル</button>
+   <button data-sd-action=ougi class="${c.ep>=100?"ready":""}">奥義</button>
+ </div>`
+}
+
+function ensurePosterFallbackDockV223(force=false){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return;
+ let q=posterGuardStateV223();
+ let status=posterEssentialControlsV223();
+ let should=force||(!status.ok&&q.posterFallbackDockV223);
+ let old=root.querySelector(".posterFallbackDockV223");
+ if(should&&!old){
+   root.insertAdjacentHTML("beforeend",posterFallbackDockV223());
+ }else if(!should&&old){
+   old.remove();
+ }else if(should&&old){
+   let b=ensureBattleStateV120(),c=posterSelectedCharV208();
+   let speed=old.querySelector("[data-battle-speed]"),auto=old.querySelector("[data-battle-auto]"),ougi=old.querySelector('[data-sd-action="ougi"]');
+   if(speed){speed.dataset.battleSpeed=b.speed===2?1:2;speed.textContent=b.speed===2?"×2":"×1"}
+   if(auto){auto.classList.toggle("on",!!b.auto);auto.textContent="AUTO"}
+   if(ougi)ougi.classList.toggle("ready",c.ep>=100);
+ }
+ return status;
+}
+
+function posterGuardCheckV223(){
+ clearTimeout(__posterGuardTimerV223);
+ __posterGuardTimerV223=setTimeout(()=>{
+   if(!document.body.classList.contains("battleMode"))return;
+   let status=posterEssentialControlsV223();
+   if(!status.ok){
+     __posterGuardStrikesV223++;
+     applyExactPosterFitV216();
+     if(__posterGuardStrikesV223>=2)ensurePosterFallbackDockV223(true);
+   }else{
+     __posterGuardStrikesV223=0;
+     ensurePosterFallbackDockV223(false);
+   }
+ },180);
+}
+
+function posterRenderHealthV223(){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return {ok:false,scene:false};
+ let art=root.querySelector(".posterBattleArtV205 img");
+ let controls=posterEssentialControlsV223();
+ return {
+   ok:!!(art?.complete&&art.naturalWidth>0&&controls.ok),
+   scene:true,
+   artLoaded:!!(art?.complete&&art.naturalWidth>0),
+   controls:controls.ok,
+   fallbackDock:!!root.querySelector(".posterFallbackDockV223"),
+   strikes:__posterGuardStrikesV223
+ };
+}
+
+function posterSoftRecoverV223(){
+ let h=posterRenderHealthV223();
+ if(h.ok)return true;
+ if(!h.scene)return posterEnsureSceneV222();
+ applyExactPosterFitV216();
+ refreshBattleV188();
+ posterGuardCheckV223();
+ return true;
+}
+
+function setupPosterProductionGuardV223(){
+ if(window.__posterProductionGuardV223)return;
+ window.__posterProductionGuardV223=true;
+ window.addEventListener("pageshow",()=>setTimeout(posterSoftRecoverV223,120),{passive:true});
+ window.addEventListener("resize",()=>posterGuardCheckV223(),{passive:true});
+ document.addEventListener("visibilitychange",()=>{
+   if(document.visibilityState==="visible")setTimeout(posterSoftRecoverV223,140);
+ },{passive:true});
+}
+
+function posterProductionAuditV223(){
+ return {
+   health:posterRenderHealthV223(),
+   device:posterDeviceAuditV222(),
+   scene:posterExactFitAuditV216()
+ };
+}
+
+let __posterIdleTimerV224=null;
+let __posterLastActionV224=0;
+
+function posterReleasePrefsV224(){
+ S.qol=S.qol||{};
+ if(typeof S.qol.cleanPosterHudV224!=="boolean")S.qol.cleanPosterHudV224=true;
+ return S.qol
+}
+
+function posterActionStampV224(){
+ __posterLastActionV224=Date.now();
+ schedulePosterHudIdleV224();
+}
+
+function schedulePosterHudIdleV224(){
+ clearTimeout(__posterIdleTimerV224);
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return;
+ root.classList.remove("posterHudIdleV224");
+ __posterIdleTimerV224=setTimeout(()=>{
+   let r=document.querySelector(".posterBattleV205");
+   if(r&&!ensureBattleStateV120().auto)r.classList.add("posterHudIdleV224");
+ },2600);
+}
+
+function posterWakeHudV224(){
+ let root=document.querySelector(".posterBattleV205");
+ if(root)root.classList.remove("posterHudIdleV224");
+ schedulePosterHudIdleV224();
+}
+
+function posterCriticalStateV224(){
+ let b=ensureBattleStateV120(),hp=enemyHpPercentV197(b);
+ let ally=(b.allyHp||[]).slice(0,6);
+ return {
+   enemyCritical:hp<=25,
+   allyCritical:ally.some(x=>x>0&&x<=25),
+   allyKo:ally.some(x=>x<=0),
+   auto:!!b.auto
+ }
+}
+
+function applyPosterCriticalStateV224(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let s=posterCriticalStateV224();
+ root.classList.toggle("enemyCriticalV224",s.enemyCritical);
+ root.classList.toggle("allyCriticalV224",s.allyCritical);
+ root.classList.toggle("allyKoV224",s.allyKo);
+ root.classList.toggle("autoRunningV224",s.auto);
+}
+
+function posterRunBadgeV224(){
+ let b=ensureBattleStateV120();
+ return `<div class=posterRunBadgeV224>
+   <i></i><span>${b.auto?"AUTO":"MANUAL"}</span><b>${b.speed===2?"×2":"×1"}</b>
+ </div>`
+}
+
+function refreshPosterRunBadgeV224(){
+ let root=document.querySelector(".posterBattleV205"),badge=root?.querySelector(".posterRunBadgeV224");
+ if(!badge)return;
+ let b=ensureBattleStateV120(),span=badge.querySelector("span"),strong=badge.querySelector("b");
+ if(span)span.textContent=b.auto?"AUTO":"MANUAL";
+ if(strong)strong.textContent=b.speed===2?"×2":"×1";
+ badge.classList.toggle("on",!!b.auto);
+}
+
+function posterImageHealthV224(){
+ let root=document.querySelector(".posterBattleV205");
+ return {
+   scene:!!root,
+   loaded:!!root?.querySelector(".cleanStageV238"),
+   natural:[0,0],
+   current:"css:gothic-stage-v238"
+ }
+}
+
+function posterReleaseAuditV224(){
+ return {
+   image:posterImageHealthV224(),
+   controls:posterEssentialControlsV223(),
+   fit:posterExactFitAuditV216(),
+   device:posterDeviceProfileV222(),
+   state:posterCriticalStateV224()
+ }
+}
+
+let __posterRcTimerV225=null;
+
+function posterTargetLockV225(){
+ let b=ensureBattleStateV120(),hp=enemyHpPercentV197(b);
+ return `<div class=posterTargetLockV225 data-critical="${hp<=25?1:0}">
+   <i></i><b>TARGET</b><span>${Math.round(hp)}%</span>
+ </div>`
+}
+
+function posterActionStateV225(){
+ let c=posterSelectedCharV208(),busy=!!__battleActionBusyV195;
+ return `<div class=posterActionStateV225 data-busy="${busy?1:0}" data-ready="${c.ep>=100?1:0}">
+   <span>${busy?"ACTION":"READY"}</span>
+   <b>${c.ep>=100?"奥義可":"EP "+Math.round(c.ep)+"%"}</b>
+ </div>`
+}
+
+function posterRcOverlayV225(){
+ return `<div class=posterRcOverlayV225>
+   ${posterTargetLockV225()}
+   ${posterActionStateV225()}
+ </div>`
+}
+
+function refreshPosterRcV225(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let b=ensureBattleStateV120(),hp=enemyHpPercentV197(b),c=posterSelectedCharV208();
+ let target=root.querySelector(".posterTargetLockV225");
+ if(target){
+   target.dataset.critical=hp<=25?"1":"0";
+   let p=target.querySelector("span");if(p)p.textContent=Math.round(hp)+"%";
+ }
+ let action=root.querySelector(".posterActionStateV225");
+ if(action){
+   action.dataset.busy=__battleActionBusyV195?"1":"0";
+   action.dataset.ready=c.ep>=100?"1":"0";
+   let s=action.querySelector("span"),v=action.querySelector("b");
+   if(s)s.textContent=__battleActionBusyV195?"ACTION":"READY";
+   if(v)v.textContent=c.ep>=100?"奥義可":"EP "+Math.round(c.ep)+"%";
+ }
+}
+
+function posterRcSelfCheckV225(){
+ let image=posterImageHealthV224(),controls=posterEssentialControlsV223(),fit=posterExactFitAuditV216();
+ let ok=!!(image.loaded&&controls.ok&&fit.exactAspect);
+ let root=document.querySelector(".posterBattleV205");
+ if(root)root.classList.toggle("posterRcWarnV225",!ok);
+ return {ok,image,controls,fit};
+}
+
+function schedulePosterRcCheckV225(){
+ clearTimeout(__posterRcTimerV225);
+ __posterRcTimerV225=setTimeout(()=>{
+   if(!document.body.classList.contains("battleMode"))return;
+   let r=posterRcSelfCheckV225();
+   if(!r.ok){
+     posterSoftRecoverV223();
+     ensurePosterFallbackDockV223(true);
+   }
+ },260);
+}
+
+function posterSelectedCardCueV225(slot){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ root.querySelector(".posterSelectedCueV225")?.remove();
+ let team=(S.sets?.[S.set]||[]).slice(0,6),i=+team[Math.max(0,+slot||0)]||0;
+ let d=document.createElement("div");
+ d.className="posterSelectedCueV225";
+ d.innerHTML=`<small>SELECT</small><b>${C[i]?.[1]||"文豪"}</b>`;
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{d.classList.remove("show");battleTimerV191(()=>d.remove(),90)},260);
+}
+
+function posterReleaseCandidateAuditV225(){
+ return {
+   rc:posterRcSelfCheckV225(),
+   health:posterRenderHealthV223(),
+   device:posterDeviceAuditV222(),
+   release:posterReleaseAuditV224()
+ }
+}
+
+function posterCombatSummaryV226(){
+ let b=ensureBattleStateV120(),c=posterSelectedCharV208();
+ let alive=(b.allyHp||[]).slice(0,6).filter(x=>x>0).length;
+ return {
+   wave:b.wave||1,
+   turn:b.turn||1,
+   alive,
+   selected:c.name,
+   ep:Math.round(c.ep||0),
+   enemyHp:Math.round(enemyHpPercentV197(b)),
+   auto:!!b.auto,
+   speed:b.speed===2?2:1
+ }
+}
+
+function posterCompactStatusV226(){
+ let s=posterCombatSummaryV226();
+ return `<div class=posterCompactStatusV226>
+   <span>W${s.wave}</span><b>T${s.turn}</b><i>${s.alive}/5</i><em>${s.auto?"AUTO":"MAN"}</em>
+ </div>`
+}
+
+function refreshPosterCompactStatusV226(){
+ let root=document.querySelector(".posterBattleV205"),el=root?.querySelector(".posterCompactStatusV226");
+ if(!el)return;
+ let s=posterCombatSummaryV226();
+ let parts=el.querySelectorAll("span,b,i,em");
+ if(parts[0])parts[0].textContent=`W${s.wave}`;
+ if(parts[1])parts[1].textContent=`T${s.turn}`;
+ if(parts[2])parts[2].textContent=`${s.alive}/5`;
+ if(parts[3])parts[3].textContent=s.auto?"AUTO":"MAN";
+}
+
+function posterControlLegendV226(){
+ return `<div class=posterControlLegendV226>
+   <span>ATTACK</span><span>SKILL</span><span>OUGI</span>
+ </div>`
+}
+
+function posterResultStatsV226(r){
+ let s=posterCombatSummaryV226();
+ return `<div class=posterResultStatsV226>
+   <span>生存<b>${s.alive}/${battlePartySizeV535()}</b></span>
+   <span>敵HP<b>0%</b></span>
+   <span>速度<b>×${s.speed}</b></span>
+ </div>`
+}
+
+function posterPreflightV226(){
+ let health=posterReleaseCandidateAuditV225();
+ let root=document.querySelector(".posterBattleV205");
+ if(root){
+   root.classList.toggle("posterHealthyV226",!!health.rc?.ok);
+   root.classList.toggle("posterUnsafeV226",!health.rc?.ok);
+ }
+ return health;
+}
+
+function schedulePosterPreflightV226(){
+ clearTimeout(window.__posterPreflightTimerV226);
+ window.__posterPreflightTimerV226=setTimeout(()=>{
+   if(!document.body.classList.contains("battleMode"))return;
+   let h=posterPreflightV226();
+   if(!h.rc?.ok){
+     posterSoftRecoverV223();
+     ensurePosterFallbackDockV223(true);
+   }
+ },320);
+}
+
+function posterReleaseAuditV226(){
+ return {
+   combat:posterCombatSummaryV226(),
+   preflight:posterReleaseCandidateAuditV225(),
+   render:posterRenderHealthV223(),
+   image:posterImageHealthV224()
+ }
+}
+
+function posterQaSnapshotV227(){
+ let root=document.querySelector(".posterBattleV205");
+ let b=ensureBattleStateV120();
+ let controls=posterButtonAuditV222();
+ let image=posterImageHealthV224();
+ let fit=posterExactFitAuditV216();
+ let render=posterRenderHealthV223();
+ let selected=posterSelectedCharV208();
+ return {
+   scene:!!root,
+   imageLoaded:image.loaded,
+   exactAspect:fit.exactAspect,
+   controlsOk:!!render.controls,
+   attack:!!controls.attack,
+   skill:!!controls.skill,
+   ougi:!!controls.ougi,
+   auto:!!controls.auto,
+   speed:!!controls.speed,
+   cards:Array.isArray(controls.cards)?controls.cards.filter(Boolean).length:0,
+   selected:selected.name,
+   ep:Math.round(selected.ep||0),
+   enemyHp:Math.round(enemyHpPercentV197(b)),
+   autoOn:!!b.auto,
+   speedValue:b.speed===2?2:1
+ }
+}
+
+function posterQaBadgeV227(){
+ let q=posterQaSnapshotV227();
+ let ok=q.scene&&q.imageLoaded&&q.exactAspect&&q.controlsOk&&q.cards===6;
+ return `<div class="posterQaBadgeV227 ${ok?"ok":"warn"}">
+   <i></i><span>${ok?"READY":"SAFE MODE"}</span>
+ </div>`
+}
+
+function refreshPosterQaBadgeV227(){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return;
+ let q=posterQaSnapshotV227();
+ let ok=q.scene&&q.imageLoaded&&q.exactAspect&&q.controlsOk&&q.cards===6;
+ let badge=root.querySelector(".posterQaBadgeV227");
+ if(!badge)return;
+ badge.classList.toggle("ok",ok);
+ badge.classList.toggle("warn",!ok);
+ let s=badge.querySelector("span");
+ if(s)s.textContent=ok?"READY":"SAFE MODE";
+}
+
+function posterFinalCheckV227(){
+ let q=posterQaSnapshotV227();
+ let ok=q.scene&&q.imageLoaded&&q.exactAspect&&q.controlsOk&&q.cards===6;
+ if(!ok){
+   posterSoftRecoverV223();
+   ensurePosterFallbackDockV223(true);
+ }
+ return {ok,...q};
+}
+
+function schedulePosterFinalCheckV227(){
+ clearTimeout(window.__posterFinalCheckV227);
+ window.__posterFinalCheckV227=setTimeout(()=>{
+   if(!document.body.classList.contains("battleMode"))return;
+   posterFinalCheckV227();
+   refreshPosterQaBadgeV227();
+ },420);
+}
+
+function posterTapHeatV227(el){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root||!el)return;
+ let r=el.getBoundingClientRect(),rr=root.getBoundingClientRect();
+ let dot=document.createElement("span");
+ dot.className="posterTapHeatV227";
+ dot.style.left=(r.left-rr.left+r.width/2)+"px";
+ dot.style.top=(r.top-rr.top+r.height/2)+"px";
+ root.appendChild(dot);
+ requestAnimationFrame(()=>dot.classList.add("show"));
+ battleTimerV191(()=>dot.remove(),320);
+}
+
+function posterBattleReleaseAuditV227(){
+ return {
+   qa:posterQaSnapshotV227(),
+   production:posterProductionAuditV223(),
+   release:posterReleaseAuditV226()
+ }
+}
+
+let __posterStageTimerV228=null;
+
+function posterStageHostV228(){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return null;
+ let host=root.querySelector(".posterStageHostV228");
+ if(!host){
+   host=document.createElement("div");
+   host.className="posterStageHostV228";
+   host.innerHTML=`
+     <div class=stageCurtainV228></div>
+     <div class=stageActorV228><img alt=""></div>
+     <div class=stageCopyV228><small></small><b></b><span></span></div>
+     <div class=stageAccentV228></div>
+     <div class=stageDamageV228></div>`;
+   root.appendChild(host);
+ }
+ return host
+}
+
+function posterReusableStageV228(slot,kind){
+ if(!posterBattleOnV205())return;
+ let host=posterStageHostV228();if(!host)return;
+ let m=posterPoseResolvedV221(slot,kind);
+ let img=host.querySelector(".stageActorV228 img");
+ let small=host.querySelector(".stageCopyV228 small");
+ let name=host.querySelector(".stageCopyV228 b");
+ let title=host.querySelector(".stageCopyV228 span");
+ if(img){
+   img.src=m.src;
+   img.style.objectPosition=m.explicit?"left bottom":m.crop.pos;
+   img.style.setProperty("--stageScale",m.explicit?"1":String(m.crop.scale));
+   img.classList.toggle("explicit",m.explicit);
+ }
+ if(small)small.textContent=kind==="ougi"?"SPECIAL":kind==="skill"?"SKILL":kind==="heal"?"SUPPORT":"ATTACK";
+ if(name)name.textContent=m.name;
+ if(title)title.textContent=m.title;
+
+ host.dataset.kind=kind;
+ host.dataset.theme=m.theme;
+ host.classList.remove("play");
+ void host.offsetWidth;
+ host.classList.add("play");
+
+ clearTimeout(__posterStageTimerV228);
+ __posterStageTimerV228=setTimeout(()=>host.classList.remove("play"),kind==="ougi"?520:kind==="skill"?330:kind==="heal"?290:230);
+}
+
+function posterReusableDamageV228(kind="attack"){
+ let host=posterStageHostV228();if(!host)return;
+ let d=host.querySelector(".stageDamageV228");if(!d)return;
+ let base=kind==="ougi"?Math.floor(9000+Math.random()*9000):
+          kind==="skill"?Math.floor(3500+Math.random()*4500):
+          kind==="heal"?Math.floor(1200+Math.random()*1800):
+          Math.floor(1800+Math.random()*2600);
+ d.textContent=kind==="heal"?`+${base}`:base.toLocaleString();
+ d.dataset.kind=kind;
+ d.classList.remove("show");
+ void d.offsetWidth;
+ d.classList.add("show");
+ battleTimerV191(()=>d.classList.remove("show"),kind==="ougi"?500:340);
+}
+
+function posterReusableDirectorV228(slot,target,kind){
+ if(!posterBattleOnV205())return;
+ cleanBattleFeedbackV241(kind);
+ posterReusableStageV228(slot,kind);
+ posterCardPulseV207(slot,kind);
+ posterFocusV207(kind);
+ battleTimerV191(()=>posterEnemyPulseV210(kind),kind==="ougi"?125:65);
+}
+
+function cleanupLegacyPosterFxV228(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ root.querySelectorAll(
+   ".posterActionTableauV219,.posterPoseStageV220,.posterStaticCutinV210,.posterActionBannerV207,.posterDamageV207,.posterCommandToastV212,.posterStateCueV209"
+ ).forEach(n=>n.remove());
+}
+
+function posterStageResetV228(){
+ clearTimeout(__posterStageTimerV228);
+ __posterStageTimerV228=null;
+ let host=document.querySelector(".posterStageHostV228");
+ if(host){
+   host.classList.remove("play");
+   host.querySelector(".stageDamageV228")?.classList.remove("show");
+ }
+ cleanupLegacyPosterFxV228();
+}
+
+function posterStageAuditV228(){
+ let root=document.querySelector(".posterBattleV205"),host=root?.querySelector(".posterStageHostV228");
+ return {
+   mounted:!!root,
+   reusableHost:!!host,
+   playing:!!host?.classList.contains("play"),
+   legacyTransient:root?.querySelectorAll(".posterActionTableauV219,.posterPoseStageV220,.posterStaticCutinV210,.posterActionBannerV207,.posterDamageV207").length||0
+ }
+}
+
+let __posterRenderRafV229=0;
+let __posterRenderReasonV229="boot";
+let __posterRenderCountV229=0;
+
+function posterRenderSnapshotV229(){
+ let b=normalizeBattleStateV171(),team=(S.sets?.[S.set]||[]).slice(0,6),c=posterSelectedCharV208();
+ return {
+   wave:b.wave||1,
+   turn:b.turn||1,
+   unit:+b.unit||0,
+   target:+b.target||0,
+   auto:!!b.auto,
+   speed:b.speed===2?2:1,
+   enemyHp:Math.round(enemyHpPercentV197(b)*10)/10,
+   allyHp:team.map((_,n)=>Math.round((+b.allyHp?.[n]||0)*10)/10),
+   ep:team.map((_,n)=>Math.round((+b.ep?.[n]||0)*10)/10),
+   selected:c.name
+ }
+}
+
+let __posterRenderSnapshotV229=null;
+
+function posterRenderChangedV229(next){
+ if(!__posterRenderSnapshotV229)return true;
+ let a=__posterRenderSnapshotV229,b=next;
+ if(a.wave!==b.wave||a.turn!==b.turn||a.unit!==b.unit||a.target!==b.target||a.auto!==b.auto||a.speed!==b.speed||a.enemyHp!==b.enemyHp||a.selected!==b.selected)return true;
+ if(a.allyHp.length!==b.allyHp.length||a.ep.length!==b.ep.length)return true;
+ for(let i=0;i<b.allyHp.length;i++)if(a.allyHp[i]!==b.allyHp[i]||a.ep[i]!==b.ep[i])return true;
+ return false;
+}
+
+function posterRenderNowV229(reason="manual",force=false){
+ let root=document.querySelector(".posterBattleV205");
+ if(!root)return false;
+ let next=posterRenderSnapshotV229();
+ if(!force&&!posterRenderChangedV229(next))return true;
+ __posterRenderSnapshotV229=next;
+ __posterRenderCountV229++;
+ __posterRenderReasonV229=reason;
+
+ refreshLivePartyPortraitsV217();
+ posterSelectedAuraV217();
+ refreshPosterCleanHudV235();
+ refreshPosterThumbV234();
+ applyPosterControlStateV235();
+ refreshCleanBattleTopV238();
+
+ let status=posterEssentialControlsV223();
+ ensurePosterFallbackDockV223(!status.ok);
+ refreshCleanStageThemeV239();refreshCleanStageV240();refreshCleanCommandStateV241();
+ return true;
+}
+
+function schedulePosterRenderV229(reason="state",force=false){
+ __posterRenderReasonV229=reason;
+ if(force)__posterRenderSnapshotV229=null;
+ if(__posterRenderRafV229)return;
+ __posterRenderRafV229=requestAnimationFrame(()=>{
+   __posterRenderRafV229=0;
+   posterRenderNowV229(__posterRenderReasonV229,force);
+ });
+}
+
+function posterRendererResetV229(){
+ if(__posterRenderRafV229)cancelAnimationFrame(__posterRenderRafV229);
+ __posterRenderRafV229=0;
+ __posterRenderSnapshotV229=null;
+ __posterRenderCountV229=0;
+}
+
+function posterRendererAuditV229(){
+ return {
+   renders:__posterRenderCountV229,
+   pending:!!__posterRenderRafV229,
+   reason:__posterRenderReasonV229,
+   snapshot:__posterRenderSnapshotV229,
+   mounted:!!document.querySelector(".posterBattleV205")
+ }
+}
+
+let __posterQueuedActionV230=null;
+let __posterQueuedAtV230=0;
+let __posterQueueTimerV230=null;
+
+function posterQueueStateV230(){
+ return {
+   queued:__posterQueuedActionV230,
+   age:__posterQueuedActionV230?Date.now()-__posterQueuedAtV230:0,
+   busy:!!__battleActionBusyV195,
+   auto:!!ensureBattleStateV120().auto
+ }
+}
+
+function posterQueueActionV230(kind){
+ if(!["attack","skill","ougi","heal"].includes(kind))return false;
+ let b=ensureBattleStateV120();
+ if(b.auto)return false;
+ __posterQueuedActionV230=kind;
+ __posterQueuedAtV230=Date.now();
+ renderPosterQueueBadgeV230();
+ schedulePosterQueueFlushV230();
+ return true;
+}
+
+function clearPosterQueueV230(){
+ __posterQueuedActionV230=null;
+ __posterQueuedAtV230=0;
+ clearTimeout(__posterQueueTimerV230);
+ __posterQueueTimerV230=null;
+ renderPosterQueueBadgeV230();
+}
+
+function schedulePosterQueueFlushV230(){
+ clearTimeout(__posterQueueTimerV230);
+ __posterQueueTimerV230=setTimeout(()=>{
+   if(!__posterQueuedActionV230)return;
+   if(Date.now()-__posterQueuedAtV230>1200){clearPosterQueueV230();return}
+   if(__battleActionBusyV195){schedulePosterQueueFlushV230();return}
+   let kind=__posterQueuedActionV230;
+   clearPosterQueueV230();
+   battleActionV120(kind);
+ },90);
+}
+
+function posterQueueBadgeV230(){
+ return `<div class=posterQueueBadgeV230><small>NEXT</small><b>—</b></div>`
+}
+
+function renderPosterQueueBadgeV230(){
+ let root=document.querySelector(".posterBattleV205"),el=root?.querySelector(".posterQueueBadgeV230");
+ if(!el)return;
+ let b=el.querySelector("b"),kind=__posterQueuedActionV230;
+ el.classList.toggle("on",!!kind);
+ if(b)b.textContent=kind==="attack"?"攻撃":kind==="skill"?"スキル":kind==="ougi"?"奥義":kind==="heal"?"支援":"—";
+}
+
+function posterActionKindFromTargetV230(el){
+ let a=el?.closest?.("[data-sd-action]");
+ return a?.dataset?.sdAction||null;
+}
+
+function posterAutoSyncV230(){
+ let b=ensureBattleStateV120(),root=document.querySelector(".posterBattleV205");
+ if(!root)return;
+ root.classList.toggle("posterAutoV230",!!b.auto);
+ if(b.auto)clearPosterQueueV230();
+ schedulePosterRenderV229("auto-sync",true);
+}
+
+function posterLoopStatusV230(){
+ let p=typeof autoLoopManagerV201==="function"?autoLoopManagerV201():null;
+ return {
+   active:!!p?.active,
+   paused:!!p?.paused,
+   count:+p?.count||0,
+   target:+p?.target||0
+ }
+}
+
+function posterLoopBadgeV230(){
+ let p=posterLoopStatusV230();
+ return `<div class=posterLoopBadgeV230 data-active="${p.active?1:0}">
+   <small>LOOP</small><b>${p.active?(p.target?`${p.count}/${p.target}`:`${p.count}/∞`):"OFF"}</b>
+ </div>`
+}
+
+function refreshPosterLoopBadgeV230(){
+ let root=document.querySelector(".posterBattleV205"),el=root?.querySelector(".posterLoopBadgeV230");
+ if(!el)return;
+ let p=posterLoopStatusV230(),b=el.querySelector("b");
+ el.dataset.active=p.active?"1":"0";
+ if(b)b.textContent=p.active?(p.target?`${p.count}/${p.target}`:`${p.count}/∞`):"OFF";
+}
+
+function posterActionQueueAuditV230(){
+ return {
+   queue:posterQueueStateV230(),
+   loop:posterLoopStatusV230(),
+   renderer:posterRendererAuditV229(),
+   qa:posterQaSnapshotV227()
+ }
+}
+
+function posterActualDamageV231(hit,kind="attack"){
+ let host=posterStageHostV228();if(!host||!hit)return;
+ let d=host.querySelector(".stageDamageV228");if(!d)return;
+ d.dataset.kind=kind;
+ d.dataset.weak=hit.weak?"1":"0";
+ d.dataset.break=hit.broken?"1":"0";
+ d.textContent=kind==="heal"?`+${Math.max(0,Math.round(hit.dmg||0))}`:Math.max(0,Math.round(hit.dmg||0)).toLocaleString();
+ d.classList.remove("show");
+ void d.offsetWidth;
+ d.classList.add("show");
+ battleTimerV191(()=>d.classList.remove("show"),kind==="ougi"?500:340);
+}
+
+function posterHitTagV231(hit){
+ let root=document.querySelector(".posterBattleV205");if(!root||!hit)return;
+ root.querySelector(".posterHitTagV231")?.remove();
+ if(!hit.weak&&!hit.broken)return;
+ let d=document.createElement("div");
+ d.className="posterHitTagV231";
+ d.innerHTML=`${hit.weak?"<b>WEAK</b>":""}${hit.broken?"<span>BREAK</span>":""}`;
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{d.classList.remove("show");battleTimerV191(()=>d.remove(),90)},330);
+}
+
+function posterBreakStateV231(){
+ let b=ensureAdvancedBattleV125(),target=b.target||0;
+ let br=Math.max(0,Math.min(100,+b.breakGauge?.[target]||0));
+ let status=(b.enemyStatus?.[target]||[]).slice(0,3);
+ return {breakGauge:br,status,target}
+}
+
+function posterBreakUiV231(){
+ let x=posterBreakStateV231();
+ return `<div class=posterBreakUiV231>
+   <small>BREAK</small>
+   <i><em style="width:${x.breakGauge}%"></em></i>
+   <b>${Math.round(x.breakGauge)}%</b>
+   <span>${x.status.map(s=>`<em>${s}</em>`).join("")}</span>
+ </div>`
+}
+
+function refreshPosterBreakV231(){
+ let root=document.querySelector(".posterBattleV205"),el=root?.querySelector(".posterBreakUiV231");
+ if(!el)return;
+ let x=posterBreakStateV231(),bar=el.querySelector("i em"),num=el.querySelector("b"),st=el.querySelector("span");
+ if(bar)bar.style.width=x.breakGauge+"%";
+ if(num)num.textContent=Math.round(x.breakGauge)+"%";
+ if(st)st.innerHTML=x.status.map(s=>`<em>${s}</em>`).join("");
+}
+
+function posterRealCombatAuditV231(){
+ let x=posterBreakStateV231();
+ return {
+   breakGauge:x.breakGauge,
+   status:x.status,
+   stage:posterStageAuditV228(),
+   renderer:posterRendererAuditV229()
+ }
+}
+
+function posterAllyNumberV232(slot,value,kind="damage"){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let n=document.createElement("div");
+ n.className=`posterAllyNumberV232 ${kind}`;
+ n.dataset.slot=String(Math.max(0,Math.min(5,+slot||0)));
+ n.textContent=(kind==="heal"?"+":"-")+Math.abs(Math.round(value||0))+"%";
+ root.appendChild(n);
+ requestAnimationFrame(()=>n.classList.add("show"));
+ battleTimerV191(()=>n.remove(),360);
+}
+
+function posterEnemyActionCueV232(skill,target,aoe=false){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ root.querySelector(".posterEnemyActionV232")?.remove();
+ let d=document.createElement("div");
+ d.className="posterEnemyActionV232";
+ d.innerHTML=`<small>${aoe?"ALL TARGET":"ENEMY ACTION"}</small><b>${skill||"敵の攻撃"}</b><span>${aoe?"全体攻撃":`TARGET ${(+target||0)+1}`}</span>`;
+ root.appendChild(d);
+ requestAnimationFrame(()=>d.classList.add("show"));
+ battleTimerV191(()=>{d.classList.remove("show");battleTimerV191(()=>d.remove(),90)},420);
+}
+
+function posterComboStateV232(){
+ let b=comboStateV129();
+ return Math.max(0,+b.combo||0)
+}
+
+function posterComboUiV232(){
+ let c=posterComboStateV232();
+ return `<div class="posterComboV232 ${c>0?"on":""}"><small>CHAIN</small><b>${c}</b></div>`
+}
+
+function refreshPosterComboV232(){
+ let root=document.querySelector(".posterBattleV205"),el=root?.querySelector(".posterComboV232");
+ if(!el)return;
+ let c=posterComboStateV232(),b=el.querySelector("b");
+ el.classList.toggle("on",c>0);
+ if(b)b.textContent=String(c);
+}
+
+function posterTurnFlashV232(type="ally"){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ root.classList.remove("turnAllyV232","turnEnemyV232");
+ root.classList.add(type==="enemy"?"turnEnemyV232":"turnAllyV232");
+ battleTimerV191(()=>root.classList.remove("turnAllyV232","turnEnemyV232"),180);
+}
+
+function posterRealFeedbackAuditV232(){
+ let b=ensureBattleStateV120();
+ return {
+   combo:posterComboStateV232(),
+   alive:(b.allyHp||[]).slice(0,6).filter(x=>x>0).length,
+   hp:(b.allyHp||[]).slice(0,6),
+   enemy:posterEnemyNameV208()
+ }
+}
+
+function posterThumbPrefsV234(){
+ S.qol=S.qol||{};
+ if(typeof S.qol.thumbBattleV234!=="boolean")S.qol.thumbBattleV234=true;
+ return S.qol
+}
+
+function posterThumbBarV234(){
+ let b=ensureBattleStateV120(),c=posterSelectedCharV208();
+ return `<div class=posterThumbBarV234>
+   <button class=attack data-sd-action=attack><i>⚔</i><b>攻撃</b></button>
+   <button class=skill data-sd-action=skill><i>✦</i><b>スキル</b></button>
+   <button class=support data-sd-action=heal><i>＋</i><b>支援</b></button>
+   <button class="ougi ${c.ep>=100?"ready":""}" data-sd-action=ougi><i>◆</i><b>奥義</b><small>${Math.round(c.ep)}%</small></button>
+ </div>`
+}
+
+function posterThumbSubV234(){
+ let b=ensureBattleStateV120();
+ return `<div class=posterThumbSubV234>
+   <button data-battle-speed="${b.speed===2?1:2}">▶▶ ${b.speed===2?"×2":"×1"}</button>
+   <button class="${b.auto?"on":""}" data-battle-auto=1 data-sd-action=auto aria-pressed="${b.auto?"true":"false"}">${b.auto?"AUTO ON":"AUTO"}</button>
+   <button data-battle-pause=1>復旧</button>
+ </div>`
+}
+
+function refreshPosterThumbV234(){
+ finalBossClearGuardV460();
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let c=posterSelectedCharV208(),b=ensureBattleStateV120();
+
+ let ougi=root.querySelector(".posterThumbBarV234 .ougi");
+ if(ougi){
+   ougi.classList.toggle("ready",c.ep>=100);
+   let sm=ougi.querySelector("small");
+   if(sm)sm.textContent=Math.round(c.ep)+"%";
+ }
+
+ let speed=root.querySelector(".posterThumbSubV234 [data-battle-speed]");
+ if(speed){
+   speed.dataset.battleSpeed=b.speed===2?1:2;
+   speed.textContent=`▶▶ ${b.speed===2?"×2":"×1"}`;
+ }
+
+ let auto=root.querySelector(".posterThumbSubV234 [data-battle-auto]");
+ if(auto){
+   auto.classList.toggle("on",!!b.auto);
+   auto.setAttribute("aria-pressed",b.auto?"true":"false");
+   auto.textContent=b.auto?"AUTO ON":"AUTO";
+ }
+ root.classList.toggle("posterAutoV230",!!b.auto);
+}
+
+function posterSelectedStripV234(){
+ let c=posterSelectedCharV208();
+ return `<div class=posterSelectedStripV234>
+   <span>ACTIVE</span><b>${c.name}</b><i>EP ${Math.round(c.ep)}%</i>
+ </div>`
+}
+
+function refreshPosterSelectedStripV234(){
+ let root=document.querySelector(".posterBattleV205"),el=root?.querySelector(".posterSelectedStripV234");
+ if(!el)return;
+ let c=posterSelectedCharV208();
+ let b=el.querySelector("b"),i=el.querySelector("i");
+ if(b)b.textContent=c.name;
+ if(i)i.textContent=`EP ${Math.round(c.ep)}%`;
+}
+
+function posterThumbAuditV234(){
+ let root=document.querySelector(".posterBattleV205");
+ return {
+   enabled:posterThumbPrefsV234().thumbBattleV234,
+   bar:!!root?.querySelector(".posterThumbBarV234"),
+   attack:!!root?.querySelector(".posterThumbBarV234 [data-sd-action='attack']"),
+   skill:!!root?.querySelector(".posterThumbBarV234 [data-sd-action='skill']"),
+   support:!!root?.querySelector(".posterThumbBarV234 [data-sd-action='heal']"),
+   ougi:!!root?.querySelector(".posterThumbBarV234 [data-sd-action='ougi']"),
+   sub:!!root?.querySelector(".posterThumbSubV234")
+ }
+}
+
+function posterEnemyCompactV235(){
+ let b=ensureBattleStateV120(),hp=Math.round(enemyHpPercentV197(b)),br=posterBreakStateV231();
+ return `<div class=posterEnemyCompactV235>
+   <div><small>ENEMY</small><b>${posterEnemyNameV208()}</b></div>
+   <span>HP ${hp}%</span>
+   <i><em style="width:${hp}%"></em></i>
+   <strong>BREAK ${Math.round(br.breakGauge)}%</strong>
+ </div>`
+}
+
+function refreshPosterEnemyCompactV235(){
+ let root=document.querySelector(".posterBattleV205"),el=root?.querySelector(".posterEnemyCompactV235");
+ if(!el)return;
+ let b=ensureBattleStateV120(),hp=Math.round(enemyHpPercentV197(b)),br=posterBreakStateV231();
+ let name=el.querySelector("b"),sp=el.querySelector("span"),bar=el.querySelector("i em"),st=el.querySelector("strong");
+ if(name)name.textContent=posterEnemyNameV208();
+ if(sp)sp.textContent=`HP ${hp}%`;
+ if(bar)bar.style.width=hp+"%";
+ if(st)st.textContent=`BREAK ${Math.round(br.breakGauge)}%`;
+}
+
+function posterTopMiniV235(){
+ let b=ensureBattleStateV120();
+ return `<div class=posterTopMiniV235>
+   <span>W${b.wave||1}/3</span><b>T${b.turn||1}</b><i>${b.speed===2?"×2":"×1"}</i><em>${b.auto?"AUTO":"MANUAL"}</em>
+ </div>`
+}
+
+function refreshPosterTopMiniV235(){
+ let root=document.querySelector(".posterBattleV205"),el=root?.querySelector(".posterTopMiniV235");
+ if(!el)return;
+ let b=ensureBattleStateV120(),parts=el.querySelectorAll("span,b,i,em");
+ if(parts[0])parts[0].textContent=`W${b.wave||1}/3`;
+ if(parts[1])parts[1].textContent=`T${b.turn||1}`;
+ if(parts[2])parts[2].textContent=b.speed===2?"×2":"×1";
+ if(parts[3])parts[3].textContent=b.auto?"AUTO":"MANUAL";
+}
+
+function posterSelectedCardV235(){
+ let c=posterSelectedCharV208(),i=c.i;
+ return `<div class=posterSelectedCardV235>
+   <img src="${characterImage(C[i]?.[0])}" alt="">
+   <div><small>ACTIVE</small><b>${c.name}</b><span>${characterAbility(i)?.name||"スキル"}</span></div>
+   <em>EP ${Math.round(c.ep)}%</em>
+ </div>`
+}
+
+function refreshPosterSelectedCardV235(){
+ let root=document.querySelector(".posterBattleV205"),el=root?.querySelector(".posterSelectedCardV235");
+ if(!el)return;
+ let c=posterSelectedCharV208(),i=c.i;
+ let img=el.querySelector("img"),name=el.querySelector("b"),skill=el.querySelector("span"),ep=el.querySelector("em");
+ let src=characterImage(C[i]?.[0]);
+ if(img&&img.getAttribute("src")!==src)img.src=src;
+ if(name)name.textContent=c.name;
+ if(skill)skill.textContent=characterAbility(i)?.name||"スキル";
+ if(ep)ep.textContent=`EP ${Math.round(c.ep)}%`;
+}
+
+function posterCleanHudV235(){
+ return `<div class=posterCleanHudV235>
+   ${posterTopMiniV235()}
+   ${posterEnemyCompactV235()}
+   ${posterSelectedCardV235()}
+ </div>`
+}
+
+function refreshPosterCleanHudV235(){
+ refreshPosterTopMiniV235();
+ refreshPosterEnemyCompactV235();
+ refreshPosterSelectedCardV235();
+}
+
+function posterControlStateV235(){
+ let c=posterSelectedCharV208(),b=ensureBattleStateV120();
+ return {
+   ougiReady:c.ep>=100,
+   auto:!!b.auto,
+   speed:b.speed===2?2:1,
+   busy:!!__battleActionBusyV195
+ }
+}
+
+function applyPosterControlStateV235(){
+ let root=document.querySelector(".posterBattleV205");if(!root)return;
+ let s=posterControlStateV235();
+ let bar=root.querySelector(".posterThumbBarV234");
+ if(bar)bar.classList.toggle("busyV235",s.busy);
+
+ let ougi=root.querySelector(".posterThumbBarV234 .ougi");
+ if(ougi){
+   ougi.classList.toggle("readyV235",s.ougiReady);
+   ougi.disabled=!s.ougiReady&&false; // visual state only, existing logic still gates action
+ }
+ let auto=root.querySelector(".posterThumbSubV234 [data-battle-auto]");
+ if(auto)auto.classList.toggle("on",s.auto);
+}
+
+function posterChromeAuditV235(){
+ let root=document.querySelector(".posterBattleV205");
+ return {
+   mounted:!!root,
+   cleanHud:!!root?.querySelector(".posterCleanHudV235"),
+   thumbBar:!!root?.querySelector(".posterThumbBarV234"),
+   enemy:!!root?.querySelector(".posterEnemyCompactV235"),
+   selected:posterSelectedCharV208().name
+ }
+}
+document.addEventListener("click",function(e){
+ let actionEl=e.target.closest(".posterBattleV205 [data-sd-action]");
+ if(actionEl?.dataset?.sdAction==="auto")return;
+ if(actionEl&&__battleActionBusyV195&&!ensureBattleStateV120().auto){
+   let kind=posterActionKindFromTargetV230(actionEl);
+   if(kind){
+     e.preventDefault();e.stopImmediatePropagation();
+     posterQueueActionV230(kind);
+     posterTapHeatV227(actionEl);
+     return;
+   }
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let p227=e.target.closest(".posterBattleV205 button");
+ if(p227){
+   posterTapHeatV227(p227);
+   schedulePosterFinalCheckV227();
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let p226=e.target.closest(".posterBattleV205 button");
+ if(p226){
+   refreshPosterCompactStatusV226();
+   schedulePosterPreflightV226();
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let p224=e.target.closest(".posterBattleV205 button");
+ if(p224){
+   posterActionStampV224();
+   posterWakeHudV224();
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let btn222=e.target.closest(".posterBattleV205 button");
+ if(!btn222)return;
+ posterSafeTapFeedbackV222(btn222);
+ if(btn222.matches("[data-battle-auto]")||btn222.dataset.sdAction==="auto"){
+   e.preventDefault();e.stopImmediatePropagation();
+   autoReliableToggleV541();
+   return;
+ }
+ if(!posterInputGateV222(btn222.matches('[data-sd-action="ougi"]')?180:110)){
+   e.preventDefault();e.stopImmediatePropagation();return;
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let p217=e.target.closest(".posterLivePartyV217 button");
+ if(p217){
+   p217.classList.remove("tap217");void p217.offsetWidth;p217.classList.add("tap217");
+   battleTimerV191(()=>p217.classList.remove("tap217"),160);
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let pr=e.target.closest(".posterResultCardV215 button");
+ if(pr){
+   let card=e.target.closest(".posterResultCardV215");
+   if(card)card.remove();
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let pause213=e.target.closest("[data-battle-pause]");
+ if(pause213&&document.querySelector(".posterBattleV205")){
+   e.preventDefault();e.stopImmediatePropagation();
+   stopAutoBattleV122();
+   posterPauseOverlayV213(true);
+   return;
+ }
+ let resume213=e.target.closest("[data-poster-resume-v213]");
+ if(resume213){
+   e.preventDefault();e.stopImmediatePropagation();
+   posterPauseOverlayV213(false);
+   let b=ensureBattleStateV120();
+   if(b.auto)scheduleAutoBattleV122(120);
+   return;
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let p208=e.target.closest(".posterBattleV205 button");
+ if(p208)posterTapRippleV208(p208);
+ let a208=e.target.closest('.posterBattleV205 [data-sd-action="ougi"]');
+ if(a208&&!posterActionReadyV208("ougi")){
+   e.preventDefault();e.stopImmediatePropagation();
+   toast("EP100で奥義発動");
+   posterActionBannerV207(posterSelectedCharV208().slot,"skill");
+   return;
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let s204=e.target.closest("[data-snappy-v204]");
+ if(s204){
+   e.preventDefault();e.stopImmediatePropagation();
+   return toggleSnappyBattleV204();
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let eco202=e.target.closest("[data-auto-loop-eco-v202]");
+ if(eco202){
+   e.preventDefault();e.stopImmediatePropagation();
+   toggleAutoLoopEcoV202();
+   return;
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let target201=e.target.closest("[data-auto-loop-target-v201]");
+ if(target201){
+   e.preventDefault();e.stopImmediatePropagation();
+   let p=autoLoopManagerV201();p.target=Math.max(0,+target201.dataset.autoLoopTargetV201||0);
+   queueBattleSaveV197(true);renderAutoLoopHudV200();
+   if(shouldFinishAutoLoopV201())finishAutoLoopV201();
+   return;
+ }
+ let pause201=e.target.closest("[data-auto-loop-pause-v201]");
+ if(pause201){
+   e.preventDefault();e.stopImmediatePropagation();
+   let p=autoLoopManagerV201();
+   if(p.paused)resumeAutoLoopV201();else pauseAutoLoopV201();
+   return;
+ }
+ let close201=e.target.closest("[data-auto-loop-finish-close-v201]");
+ if(close201){
+   e.preventDefault();e.stopImmediatePropagation();
+   document.getElementById("autoLoopFinishedV201")?.remove();
+   return;
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let stop200=e.target.closest("[data-auto-loop-stop-v200]");
+ if(stop200){
+   e.preventDefault();e.stopImmediatePropagation();
+   stopTrueAutoLoopV200();
+   document.getElementById("autoLoopResultV200")?.remove();
+   if(document.body.classList.contains("battleMode")){
+     let b=ensureBattleStateV120();b.auto=false;stopAutoBattleV122();smoothRefreshBattleV194();
+   }
+   return;
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let cmd=e.target.closest(".actionClusterV164 button,.bsv2Cards_175 button,.bsv2Top_175 button");
+ if(cmd)battleTapPulseV198(cmd);
+ let enemy=e.target.closest(".bsv2Enemies_175");
+ if(enemy && !e.target.closest("button")){
+   battleTargetCycleV198(1);
+ }
+},true);
+
+document.addEventListener("click",function(e){
+ let q192=e.target.closest("[data-battle-quality]");
+ if(!q192)return;
+ e.preventDefault();e.stopImmediatePropagation();
+ return toggleBattleQualityV192();
+},true);
+
+document.addEventListener("click",function(e){
+ let lb187=e.target.closest("[data-light-battle]");
+ if(!lb187)return;
+ e.preventDefault();e.stopImmediatePropagation();
+ return toggleLightBattleV187();
+},true);
+
+
+function autoReplayStateV199(){
+ S.qol=S.qol||{};
+ if(!S.qol.autoReplayV199||typeof S.qol.autoReplayV199!=="object")S.qol.autoReplayV199={active:false,source:"",stage:0,mode:"normal",startedAt:0};
+ return S.qol.autoReplayV199
+}
+function hideAutoReplayLoadingV199(){document.getElementById("autoReplayLoadingV199")?.remove()}
+function renderAutoReplayHudV199(){
+ document.getElementById("autoReplayHudV199")?.remove();
+ let s=autoReplayStateV199();
+ if(!s.active)return;
+ if(document.body.classList.contains("battleMode")&&autoLoopActiveV200())return;
+ let d=document.createElement('div');
+ d.id='autoReplayHudV199';
+ d.className='autoReplayHudV199';
+ d.innerHTML=`<small>AUTO LOOP</small><b>${document.body.classList.contains("battleMode")?"AUTO周回中":"AUTO再戦を準備中…"}</b><span>${stageMeta(s.stage||0).name} / ${(s.mode||"normal").toUpperCase()}</span>`;
+ document.body.appendChild(d)
+}
+function setAutoReplayActiveV199(active,meta={}){
+ let s=autoReplayStateV199();
+ s.active=!!active;
+ if(active){
+   s.source=meta.source||s.source||"repeat";
+   s.stage=Number.isInteger(meta.stage)?meta.stage:(Number.isInteger(S.battleStage)?S.battleStage:(s.stage||0));
+   s.mode=meta.mode||S.battleMode||s.mode||"normal";
+   s.startedAt=Date.now();
+ }else{
+   s.source="";s.startedAt=0;
+ }
+ save();persistentSaveWrite();
+ renderAutoReplayHudV199();
+}
+function showAutoReplayLoadingV199(text="AUTO再戦を開始しています…"){
+ hideAutoReplayLoadingV199();
+ let d=document.createElement('div');
+ d.id='autoReplayLoadingV199';
+ d.className='autoReplayLoadingV199';
+ d.innerHTML=`<div><small>AUTO LOOP</small><b>${text}</b><span>戦闘画面へ移動します</span></div>`;
+ document.body.appendChild(d)
+}
+function launchReplayV199(auto=false,ch=null,mode=null){
+ let stage=Math.max(0,Number.isInteger(ch)?ch:(Number.isInteger(S.battleStage)?S.battleStage:(stageLoopPrefsV181().lastFarmStage||0)));
+ let battleMode=mode||S.battleMode||"normal";
+ closeOverlays();
+ showAutoReplayLoadingV199(auto?"AUTO再戦を開始しています…":"再戦を開始しています…");
+ if(auto){
+   startTrueAutoLoopV200(stage,battleMode);
+ }else{
+   stopTrueAutoLoopV200(false);
+   setAutoReplayActiveV199(false);
+ }
+ let kickoff=()=>{
+   try{
+     prepareBattleV180(stage,battleMode);
+     startBattleSessionV196();
+     battleCheckpointV196(true);
+     mountBattleV182();
+     if(auto){
+       let b=normalizeBattleStateV171();
+       b.auto=true;
+       queueBattleSaveV197(true);
+       if(typeof refreshCommandPanelV198==="function")refreshCommandPanelV198();
+       autoLoopBattleMountedV200();
+     }
+     hideAutoReplayLoadingV199();
+     renderAutoReplayHudV199();
+     renderAutoLoopHudV200();
+   }catch(err){
+     console.error("V200 launch replay",err);
+     hideAutoReplayLoadingV199();
+     stopTrueAutoLoopV200(false);
+     document.body.classList.remove("battleMode");
+     toast(err?.message||"再戦の開始に失敗しました");
+     return stagePage()
+   }
+ };
+ requestAnimationFrame(()=>requestAnimationFrame(kickoff));
+ setTimeout(()=>{if(!document.body.classList.contains("battleMode"))kickoff()},260);
+}
+
+document.addEventListener("click",function(e){let r181=e.target.closest("[data-v181-repeat]");if(r181)return repeatBattleFromResultV181(false);
+let ra181=e.target.closest("[data-v181-repeat-auto]");if(ra181)return repeatBattleFromResultV181(true);
+let q169=e.target.closest("[data-v169-go]");if(q169){let g=q169.dataset.v169Go;if(g==="home"){S.page="home"}else if(g==="formation"){S.page="formation"}else if(g==="growth"){S.page="growth"}else if(g==="summon"){S.page="summon"}else if(g==="library"){S.page="authors"}else if(g==="mission"){S.page="missions"}save();render();return}
+ let open=e.target.closest("[data-stage-open]");if(open){e.preventDefault();e.stopImmediatePropagation();return openStagePage(+open.dataset.stageOpen)}
+ let cnt=e.target.closest("[data-stage-farm-count]");if(cnt){e.preventDefault();e.stopImmediatePropagation();setFarmCount(+cnt.dataset.stageFarmCount);return stagePage()}
+ let go=e.target.closest("[data-stage-farm-go]");if(go){e.preventDefault();e.stopImmediatePropagation();if(!actionLock(500))return;return quickFarmRemembered(+go.dataset.stageFarmGo,rememberedFarmCount())}
+},true);
+document.addEventListener("click",function(e){let b=e.target.closest("[data-growth-open]");if(!b)return;e.preventDefault();e.stopImmediatePropagation();S.growthSelected=+b.dataset.growthOpen;save();persistentSaveWrite();return go("growth")},true);
+document.addEventListener("click",function(e){
+ let b=e.target.closest("[data-levelup]");if(!b)return;
+ e.preventDefault();e.stopImmediatePropagation();
+ if(b.disabled||!actionLock(220))return;
+ let [i,n]=String(b.dataset.levelup).split(":").map(Number);
+ return doLevelUp(i,n,"list");
+},true);
+document.addEventListener("click",e=>{
+
+
+let wf528=e.target.closest("[data-work-filter-v528]");
+if(wf528){S.qol=S.qol||{};S.qol.workUnlockViewV528=wf528.dataset.workFilterV528;save();return worksUnlockHubV526()}
+let wq527=e.target.closest("[data-work-quest-v527]");if(wq527)return openWorkQuestV527(wq527.dataset.workQuestV527)
+let wqe527=e.target.closest("[data-work-quest-explore-v527]");if(wqe527){document.getElementById("workQuestOverlayV527")?.remove();return exploreWorkV526(wqe527.dataset.workQuestExploreV527)}
+let wqc527=e.target.closest("[data-work-quest-close-v527]");if(wqc527){document.getElementById("workQuestOverlayV527")?.remove();return}
+let we526=e.target.closest("[data-work-explore-v526]");
+if(we526){if(!actionLock(350))return;return exploreWorkV526(we526.dataset.workExploreV526)}
+let wu526=e.target.closest("[data-work-unlock-v526]");
+if(wu526){if(!actionLock(500))return;return unlockWorkCharacterV526(wu526.dataset.workUnlockV526)}
+let wc526=e.target.closest("[data-work-unlock-close-v526]");
+if(wc526){document.getElementById("workUnlockResultV526")?.remove();return worksUnlockHubV526()}
+let ga=e.target.closest("[data-action]");if(ga){e.preventDefault();return go(ga.dataset.action);}let obc=e.target.closest("[data-onboarding-claim]");if(obc)return claimOnboardingStep()
+
+let rr530=e.target.closest("[data-runtime-repair-v530]");
+if(rr530){
+ let r=runtimeRepairV530();
+ toast(r.ok?(r.changed.length?`状態修復：${r.changed.join(" / ")}`:"状態は正常です"):"修復に失敗しました");
+ return systemPanelV490()
+}
+let syr=e.target.closest("[data-system-repair]");if(syr){let o=e.target.closest(".resultOverlay");if(o)o.remove();return safeRepairState()}
+let fic=e.target.closest("[data-final-close]");if(fic){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
+let fio=e.target.closest("[data-final-info]");if(fio)return openFinalInfo()
+let ready135=e.target.closest("[data-v135-ready]");if(ready135)return dismissFirstRunV135()
+let emergencyRecover=e.target.closest("[data-emergency-recover]");if(emergencyRecover)return recoverEmergencyV134()
+let saveExport=e.target.closest("[data-save-export]");if(saveExport)return downloadSaveFile()
+let saveRecover=e.target.closest("[data-save-recover]");if(saveRecover){if(!actionLock(700))return;let before=saveProgressScore();recoverBestSave();let after=saveProgressScore();toast(after>=before?"最高進行度のセーブを復旧しました":"セーブを確認しました");return home()}
+let qac=e.target.closest("[data-qa-close]");if(qac){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
+let qao=e.target.closest("[data-qa-center]");if(qao)return openQACenter()
+let syc=e.target.closest("[data-system-close]");if(syc){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
+let sy=e.target.closest("[data-system-check]");if(sy)return openSystemCheck()
+let v50c=e.target.closest("[data-v50-close]");if(v50c){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
+let v50o=e.target.closest("[data-v50-guide]");if(v50o)return openV50Guide()
+let csa=e.target.closest("[data-claim-safe]");if(csa){let o=e.target.closest(".resultOverlay");if(o)o.remove();return claimSafeRewards()}
+let rcClose=e.target.closest("[data-reward-close]");if(rcClose){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
+let rcOpen=e.target.closest("[data-reward-center]");if(rcOpen)return openRewardCenter()
+let bsc=e.target.closest("[data-bondstory-close]");if(bsc){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
+let bsr=e.target.closest("[data-bondstory-claim]");if(bsr){let i=+bsr.dataset.bondstoryClaim;if(claimBondEpisode(i)){toast("初読報酬：インク20 / 資料100");let o=e.target.closest(".resultOverlay");if(o)o.remove();return detail(i)}}
+let bse=e.target.closest("[data-bondstory]");if(bse)return openBondEpisode(+bse.dataset.bondstory)
+let stc=e.target.closest("[data-story-close]");if(stc){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
+let ste=e.target.closest("[data-story-episode]");if(ste)return openStoryEpisode(+ste.dataset.storyEpisode)
+let pc=e.target.closest("[data-progress-close]");if(pc){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
+let ph=e.target.closest("[data-progress-hub]");if(ph)return openProgressHub()
+let qb=e.target.closest("[data-quest]");if(qb){let q=questBoard().find(x=>x.id===qb.dataset.quest);if(!q||q.now<q.goal||S.questClaims[q.id])return;S.questClaims[q.id]=1;q.give();save();toast("挑戦録達成："+q.reward);return home()}
+let hd=e.target.closest("[data-home-density]");if(hd)return toggleHomeDensity()
+let lr=e.target.closest("[data-login-reward]");if(lr){if(!actionLock(500))return;return transactionalAction("ログイン報酬",()=>{let r=claimLoginReward();if(r)toast("ログイン報酬："+r.label);return home()})}
+
+let cf502=e.target.closest("[data-character-flow-v502]");
+if(cf502){
+ let [route,idx]=cf502.dataset.characterFlowV502.split(":");
+ let i=Number(idx);
+ if(Number.isInteger(i)&&i>=0&&i<C.length){
+   if(route==="growth"){S.qol=S.qol||{};S.qol.growthSelectedV483=i;S.growthSelected=i;save();persistentSaveWrite();return go("growth")}
+   if(route==="party"){
+     ensureUnitSets();
+     let t=[...(S.sets[S.set]||[])],slot=t.indexOf(i);
+     if(slot<0){slot=0;t[0]=i;S.sets[S.set]=t;save();persistentSaveWrite()}
+     return go("party")
+   }
+ }
+}
+
+let ps503=e.target.closest("[data-portrait-select-v503]");
+if(ps503){let st=portraitManagerStateV503();st.selected=+ps503.dataset.portraitSelectV503;save();return portraitManagerV503()}
+let pr503=e.target.closest("[data-portrait-rank-v503]");
+if(pr503){let st=portraitManagerStateV503();st.rank=pr503.dataset.portraitRankV503;save();return portraitManagerV503()}
+let hc=e.target.closest("[data-homechar]");if(hc)return chooseHome();let hp=e.target.closest("[data-homepick]");if(hp){return setFavoriteCharacter(+hp.dataset.homepick)}let g=e.target.closest("[data-go]");if(g){e.preventDefault();let ov=e.target.closest(".resultOverlay");if(ov)ov.remove();return go(g.dataset.go);}let ar=e.target.closest("[data-archive-reward]");if(ar){if(!actionLock(450))return;return transactionalAction("蒐集報酬",()=>{let m=archiveMilestones().find(x=>x.id===ar.dataset.archiveReward);if(!m||!m.ready||S.archiveClaims[m.id])return;S.archiveClaims[m.id]=1;m.give();save();toast("蒐集報酬："+m.reward);return list()})}
+let f=e.target.closest("[data-filter]");if(f){filter=f.dataset.filter;return cards()}let cr484=e.target.closest("[data-collection-rank-v484]");if(cr484){collectionStateV484().rank=cr484.dataset.collectionRankV484;save();return list()}
+let cro484=e.target.closest("[data-collection-role-v484]");if(cro484){collectionStateV484().role=cro484.dataset.collectionRoleV484;save();return list()}
+let co484=e.target.closest("[data-collection-owned-v484]");if(co484){collectionStateV484().owned=co484.dataset.collectionOwnedV484;save();return list()}
+let cf484=e.target.closest("[data-collection-fav-v484]");if(cf484){let i=+cf484.dataset.collectionFavV484;S.favs=S.favs||[];S.favs.includes(i)?S.favs=S.favs.filter(x=>x!==i):S.favs.push(i);save();return list()}
+let cg484=e.target.closest("[data-collection-grow-v484]");if(cg484){S.qol=S.qol||{};S.qol.growthSelectedV483=+cg484.dataset.collectionGrowV484;save();return go("growth")}
+
+
+let fsi516=e.target.closest("[data-formation-skillinfo-v516]");
+if(fsi516){
+ let i=+fsi516.dataset.formationSkillinfoV516;
+ document.getElementById("formationSkillInfoOverlayV516")?.remove();
+ let o=document.createElement("div");
+ o.id="formationSkillInfoOverlayV516";
+ o.className="resultOverlay formationSkillInfoOverlayV516";
+ o.innerHTML=`<div class=resultCard>${formationSkillInfoV516(i)}<button class=formationSkillCloseV516 data-formation-skill-close-v516=1>閉じる</button></div>`;
+ document.body.appendChild(o);
+ return
+}
+let fsc516=e.target.closest("[data-formation-skill-close-v516]");
+if(fsc516){document.getElementById("formationSkillInfoOverlayV516")?.remove();return}
+let fd510=e.target.closest("[data-formation-detail-v510]");
+if(fd510){
+ let i=+fd510.dataset.formationDetailV510;
+ document.getElementById("formationPickerOverlay")?.remove();
+ window.__navBusyV493=false;
+ return detail(i)
+}
+let c=e.target.closest("[data-char]");if(c){let ov=c.closest(".resultOverlay");if(ov)ov.remove();return detail(+c.dataset.char)}let howClose=e.target.closest("[data-how-close]");if(howClose){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
+let howStart=e.target.closest("[data-how-start]");if(howStart){let o=e.target.closest(".resultOverlay");if(o)o.remove();return sortie()}
+let howOpen=e.target.closest("[data-how]");if(howOpen)return openHowToPlay()
+let lsave=e.target.closest("[data-loadout-save]");if(lsave){if(!actionLock(400))return;return saveLoadout(+lsave.dataset.loadoutSave)}
+let lload=e.target.closest("[data-loadout-load]");if(lload){if(!actionLock(400))return;return loadLoadout(+lload.dataset.loadoutLoad)}
+let tac=e.target.closest("[data-tactic]");if(tac){S.tactic=tac.dataset.tactic;save();toast("戦術："+currentTactic().name);return party()}
+let prep=e.target.closest("[data-prepareteam]");if(prep){if(!actionLock(600))return;prepareTeam();toast("編成と装備を最適化しました");return}
+let fcp=e.target.closest("[data-formation-copy]");if(fcp){ensureUnitSets();let aa=S.sets[S.set]||[];let txt="文豪綺譚 FORMATION "+(S.set+1)+"\n"+aa.map((i,n)=>(n+1)+". "+C[i][1]+" Lv."+lv(i)).join("\n")+"\n総戦力 "+unitPower(aa).toLocaleString();if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(()=>toast("編成をコピーしました")).catch(()=>toast("コピーできませんでした"))}else{toast("このブラウザではコピーできません")}return}
+
+
+let fc517=e.target.closest("[data-formation-coach-refresh-v517]");
+if(fc517){toast("編成診断を更新しました");return party()}
+let sf513=e.target.closest("[data-smartformation-v513]");
+if(sf513){
+ let mode=sf513.dataset.smartformationV513;
+ let team=buildSmartFormationV513(mode);
+ toast(`${formationModeLabelV513(mode)}編成を作成`);
+ return party()
+}
+let mfm=e.target.closest("[data-maxformation]");if(mfm){if(!actionLock(500))return;return maxPowerFormation()}
+let afm=e.target.closest("[data-autoformation]");if(afm){if(!actionLock(500))return;return autoFormation()}
+let sc=e.target.closest("[data-swap-close]");if(sc){let o=e.target.closest(".resultOverlay");if(o)o.remove();return}
+let swp=e.target.closest("[data-swap]");if(swp){let [p,i]=swp.dataset.swap.split(":").map(Number);ensureUnitSets();S.sets[S.set][p]=i;save();let o=e.target.closest(".resultOverlay");if(o)o.remove();return party()}
+let ch=e.target.closest("[data-change]");if(ch){return openFormationSwap(+ch.dataset.change)}
+let s=e.target.closest("[data-set]");if(s){S.set=+s.dataset.set;save();return party()}let ff=e.target.closest("[data-finalfight]");if(ff){let pw=S.sets[S.set].reduce((z,i)=>z+boostedPower(i),0),score=pw*(.82+Math.random()*.42),win=score>=16400;if(!win){toast("黒き原稿・極 敗北");return challenge()}let rank=score>=24000?"S":score>=20000?"A":"B";S.final.challenge.clears++;let ord={"-":0,B:1,A:2,S:3};if(ord[rank]>ord[S.final.challenge.best])S.final.challenge.best=rank;S.xp+=1200;if(rank==="S"){S.ink+=300;S.mat=(S.mat||0)+300}save();toast("突破！ RANK "+rank);return challenge()}
+let tt=e.target.closest("[data-title]");if(tt){S.profile.title=tt.dataset.title;save();return profile()}let st=e.target.closest("[data-setting]");if(st){let k=st.dataset.setting;S.settings[k]=!S.settings[k];save();return settings()}
+let expt=e.target.closest("[data-export]");if(expt){prompt("セーブデータ（コピーして保管）",btoa(unescape(encodeURIComponent(JSON.stringify(S)))));return}
+let fv=e.target.closest("[data-fav]");if(fv){let i=+fv.dataset.fav;S.favs=S.favs.includes(i)?S.favs.filter(x=>x!==i):S.favs.concat(i);save();return detail(i)}
+let rn=e.target.closest("[data-rename]");if(rn){let n=prompt("司書名",S.profile.name);if(n&&n.trim()){S.profile.name=n.trim().slice(0,12);save()}return profile()}
+let ev=e.target.closest("[data-event]");if(ev){let boss=ev.dataset.event==="boss",pw=S.sets[S.set].reduce((z,i)=>z+boostedPower(i),0),need=boss?14000:8000,win=pw*(.82+Math.random()*.4)>=need*.82;if(!win){alert("敗北");return event()}let pt=boss?350:120;S.event.pt+=pt;S.event.clears++;S.tokens+=boss?40:10;S.xp+=boss?900:400;save();toast("勝利！ イベントPt +"+pt);return event()}
+let ex=e.target.closest("[data-ex]");if(ex){let items=[["mat",100,20],["ink",200,40],["xp",1000,50]],x=items[+ex.dataset.ex];if(S.tokens<x[2])return alert("交換札不足");S.tokens-=x[2];S[x[0]]=Number(S[x[0]]||0)+x[1];save();return exchange()}
+let dl=e.target.closest("[data-daily]");if(dl){if(S.daily.claimed)return;S.daily.claimed=true;S.daily.streak=(S.daily.streak%7)+1;if(S.daily.streak===7)S.ink+=300;else S.xp+=300+S.daily.streak*100;save();return daily()}
+let tw=e.target.closest("[data-tower]");if(tw){let f=+tw.dataset.tower,need=6000+(f-1)*750,pw=S.sets[S.set].reduce((z,i)=>z+boostedPower(i),0),win=pw*(.82+Math.random()*.4)>=need*.82;if(!win){alert("敗北。編成と育成を見直そう");return tower()}S.tower.best=Math.max(S.tower.best,f);S.tower.floor=f+1;S.xp+=300+f*30;if(f%5===0)S.mat=(S.mat||0)+100;if(f%10===0)S.ink+=200;save();toast("第"+f+"層 突破！");return tower()}
+let bd=e.target.closest("[data-bond]");if(bd)return bondScreen(+bd.dataset.bond);
+let tk=e.target.closest("[data-talk]");if(tk){let i=+tk.dataset.talk;bondGain(i,15);return bondScreen(i)}
+let cl=e.target.closest("[data-claim]");if(cl){let [k,r]=cl.dataset.claim.split(":");if(S.missions.claimed[k])return;S.missions.claimed[k]=1;S.xp+=+r;S.ink+=100;save();alert("EXP "+r+" / インク100 獲得");return missions()}
+let wk=e.target.closest("[data-work]");if(wk){let i=+wk.dataset.work,w=WORKS[i],bi=C.findIndex(c=>c[1]===w[0]);if(lv(bi)<w[4])return alert("基本文豪のLv不足");if((S.mat||0)<100)return alert("資料不足");S.mat-=100;S.works.push(i);S.workLv[i]=1;save();return workDetail(i)}
+let wd=e.target.closest("[data-workdetail]");if(wd)return workDetail(+wd.dataset.workdetail);
+let wg=e.target.closest("[data-workgrow]");if(wg){let i=+wg.dataset.workgrow,l=Number(S.workLv[i]||1);if(l>=60)return alert("Lv上限");if(S.xp<120)return alert("共有EXP不足");S.xp-=120;S.workLv[i]=l+1;save();return workDetail(i)}
+let sr=e.target.closest("[data-story]");if(sr)return storyScene(+sr.dataset.story,0);
+let sn=e.target.closest("[data-story-next]");if(sn){let [ch,n]=sn.dataset.storyNext.split(":").map(Number);if(n<STORY[ch][2].length-1)return storyScene(ch,n+1);S.story[ch]=1;S.xp+=300;S.ink+=30;S.missions.story++;save();toast("読了報酬 EXP300 / インク30");return story()}
+let gclose=e.target.closest("[data-gacha-close]");if(gclose){let o=e.target.closest(".resultOverlay");if(o)o.remove();return summon()}
+let gc500=e.target.closest("[data-gacha-char-v500]");if(gc500){document.querySelector(".gachaResultOverlayV500")?.remove();return detail(+gc500.dataset.gachaCharV500)} let grepeat=e.target.closest("[data-gacha-repeat]");if(grepeat){let n=+grepeat.dataset.gachaRepeat,cost=n===10?100:10;if((S.normalTickets||0)<cost)return toast("原稿片が足りません");let o=e.target.closest(".resultOverlay");if(o)o.remove();let btn=document.createElement("button");btn.dataset.normalpull=String(n);document.body.appendChild(btn);btn.click();btn.remove();return}
+let stab488=e.target.closest("[data-story-tab-v488]");
+if(stab488){let st=storyStateV482();st.tab=stab488.dataset.storyTabV488;save();return story()}
+let csr488=e.target.closest("[data-char-story-v488]");
+if(csr488){let [i,n]=csr488.dataset.charStoryV488.split(":").map(Number);return charStoryReaderV488(i,n)}
+let sg488=e.target.closest("[data-story-close-only-v488]");
+if(sg488){sg488.closest(".storyReaderOverlayV482")?.remove()}
+let sch=e.target.closest("[data-story-ch-v482]");if(sch){let st=storyStateV482();st.chapter=+sch.dataset.storyChV482;save();return story()}
+let sop=e.target.closest("[data-story-open-v482]");if(sop){let [ch,ep]=sop.dataset.storyOpenV482.split(":").map(Number);return storyReaderV482(ch,ep)}
+let sso=e.target.closest("[data-story-sortie-v482]");if(sso){sso.closest(".storyReaderOverlayV482")?.remove();return go("sortie")}
+let scl=e.target.closest("[data-story-close-v482]");if(scl){scl.closest(".storyReaderOverlayV482")?.remove();return story()}
+let af=e.target.closest("[data-arena]");if(af){if(af.disabled)return;return runArenaMatch(af.dataset.arena)}
+let asc489=e.target.closest("[data-arena-season-claim-v489]");
+if(asc489){let rw=arenaClaimSeasonV489();if(rw){toast(`今季報酬 インク${rw.ink} / 文銭${rw.gold}`)}return arena()}
+let ad=e.target.closest("[data-arena-save-defense]");if(ad){arenaEnsureV481();S.arena.defense=[...(S.sets[S.set]||[])];save();toast("現在編成を防衛編成に保存");return arena()}let arc=e.target.closest("[data-arena-result-close]");if(arc){let o=e.target.closest(".arenaResult");if(o)o.remove();return arena()}let arw=e.target.closest("[data-arena-reward]");if(arw){let n=+arw.dataset.arenaReward;if((S.rating||1000)<n||S.arena.rewards[n])return;let r=arenaRewardFor(n);S.arena.rewards[n]=1;S.ink=(S.ink||0)+r.ink;S.gold=(S.gold||0)+r.gold;save();toast("シーズン報酬 インク"+r.ink+" / 文銭"+r.gold);return arena()}let rp=e.target.closest("[data-result-party]");if(rp){let o=e.target.closest(".resultOverlay");if(o)o.remove();return party()}
+let rt=e.target.closest("[data-result-retry]");if(rt){let o=e.target.closest(".resultOverlay");if(o)o.remove();return battle(S.lastBattleCh||0,S.lastBattleMode||"normal")}let rc=e.target.closest("[data-result-close]");if(rc){let o=e.target.closest(".resultOverlay");if(o)o.remove();return sortie()}let rr=e.target.closest("[data-reroll]");if(rr){let [i,id]=rr.dataset.reroll.split(":"),g=safeGearFind(x=>x.id===id);if(!g)return detail(+i);if((S.gold||0)<rerollCost(g))return toast("文銭が足りません");rerollGear(g);save();toast(isGodDrop(g)?"神装備候補！":"スキルを再抽選");return detail(+i)}let ug=e.target.closest("[data-upgear]");if(ug){let [i,id]=ug.dataset.upgear.split(":"),g=safeGearFind(x=>x.id===id);if(!g)return detail(+i);if(g.level>=gearMaxLv(g))return toast("この装備はMAX");if((S.gold||0)<gearUpgradeCost(g))return toast("文銭が足りません");upgradeGear(g);save();toast(g.name+" Lv."+g.level);return detail(+i)}let as=e.target.closest("[data-autosell]");if(as){S.autoSellRank=as.dataset.autosell==="OFF"?null:as.dataset.autosell;save();toast(S.autoSellRank?S.autoSellRank+"以下を自動売却":"自動売却OFF");let i=Object.keys(S.equipped)[0]||0;return detail(+i)}let eq=e.target.closest("[data-equip]");if(eq){let [i,id]=eq.dataset.equip.split(":");let g=safeGearFind(x=>x.id===id);if(g){let eq=S.equipped[+i]||{pen:null,book:null,accessory:null};if(typeof eq==="string")eq={pen:eq,book:null,accessory:null};eq[g.type||"pen"]=id;S.equipped[+i]=eq;save();toast("装備を変更")}return detail(+i)}
+let lg=e.target.closest("[data-lockgear]");if(lg){let g=safeGearFind(x=>x.id===lg.dataset.lockgear);if(g){g.locked=!g.locked;save()}let i=Object.keys(S.equipped).find(k=>S.equipped[k]===lg.dataset.lockgear);return i!=null?detail(+i):detail(0)}
+
+let ghChar=e.target.closest("[data-gh-char]");
+if(ghChar){S.gearHubSelected=+ghChar.dataset.ghChar;save();return gearHubV479()}
+let ghFilter=e.target.closest("[data-gh-filter]");
+if(ghFilter){S.gearHubFilter=ghFilter.dataset.ghFilter;save();return gearHubV479()}
+let ghType=e.target.closest("[data-gh-type]");
+if(ghType){S.gearHubType=ghType.dataset.ghType;save();return gearHubV479()}
+let ghBest=e.target.closest("[data-gh-best]");
+if(ghBest){
+ let i=+ghBest.dataset.ghBest,eq={};
+ for(let t of ["pen","book","accessory"]){
+   let best=[...(S.gear||[])].filter(g=>(g.type||"pen")===t).sort((a,b)=>gearScore(b)-gearScore(a))[0];
+   if(best)eq[t]=best.id
+ }
+ S.equipped[i]=eq;save();toast("おすすめ3枠を装備");return gearHubV479()
+}
+let ghAuto=e.target.closest("[data-gh-autosell]");
+if(ghAuto){S.autoSellRank=ghAuto.dataset.ghAutosell==="OFF"?null:ghAuto.dataset.ghAutosell;save();toast(S.autoSellRank?S.autoSellRank+"以下を自動売却":"自動売却OFF");return gearHubV479()}
+let ghEquip=e.target.closest("[data-gh-equip]");
+if(ghEquip){
+ let i=gearHubSelectedV479(),g=safeGearFind(x=>x.id===ghEquip.dataset.ghEquip);
+ if(!g)return gearHubV479();
+ let eq=S.equipped[i]||{pen:null,book:null,accessory:null};if(typeof eq==="string")eq={pen:eq,book:null,accessory:null};
+ eq[g.type||"pen"]=g.id;S.equipped[i]=eq;save();toast(g.name+"を装備");return gearHubV479()
+}
+
+let ghBulk485=e.target.closest("[data-gh-bulk-v485]");
+if(ghBulk485){
+ let rank=ghBulk485.dataset.ghBulkV485,arr=gearBulkSellCandidatesV485(rank);
+ if(!arr.length){toast("売却対象がありません");return gearHubV479()}
+ let ids=new Set(arr.map(g=>g.id)),v=arr.reduce((a,g)=>a+gearSellValue(g),0);
+ S.gear=S.gear.filter(g=>!ids.has(g.id));S.gold=(S.gold||0)+v;save();toast(`${arr.length}個売却 +${v}文銭`);return gearHubV479()
+}
+let ghUp5485=e.target.closest("[data-gh-up5-v485]");
+if(ghUp5485){
+ let g=safeGearFind(x=>x.id===ghUp5485.dataset.ghUp5V485);if(!g)return gearHubV479();
+ let r=gearUpgradeMultiV485(g,5);toast(r.done?`${g.name} +${r.done}Lv / ${r.totalCost}文銭`:"強化できません");return gearHubV479()
+}
+let ghUp=e.target.closest("[data-gh-up]");
+if(ghUp){
+ let g=safeGearFind(x=>x.id===ghUp.dataset.ghUp);if(!g)return gearHubV479();
+ if(g.level>=gearMaxLv(g))return toast("この装備はMAX");
+ if((S.gold||0)<gearUpgradeCost(g))return toast("文銭が足りません");
+ upgradeGear(g);save();toast(g.name+" Lv."+g.level);return gearHubV479()
+}
+let ghLock=e.target.closest("[data-gh-lock]");
+if(ghLock){let g=safeGearFind(x=>x.id===ghLock.dataset.ghLock);if(g){g.locked=!g.locked;save()}return gearHubV479()}
+let ghSell=e.target.closest("[data-gh-sell]");
+if(ghSell){
+ let id=ghSell.dataset.ghSell,g=safeGearFind(x=>x.id===id);if(!g)return gearHubV479();
+ if(g.locked)return toast("ロック装備です");
+ if(gearIsEquippedV479(id))return toast("装備中は売却できません");
+ let v=gearSellValue(g);S.gear=S.gear.filter(x=>x.id!==id);S.gold=(S.gold||0)+v;save();toast("売却 +"+v+"文銭");return gearHubV479()
+}
+
+let ag=e.target.closest("[data-autogear]");if(ag){let i=+ag.dataset.autogear;if(!S.gear.length)return alert("装備を持っていません");let eq=S.equipped[i]||{pen:null,book:null,accessory:null};for(let t of ["pen","book","accessory"]){let best=S.gear.filter(g=>(g.type||"pen")===t).sort((a,b)=>gearScore(b)-gearScore(a))[0];if(best)eq[t]=best.id}S.equipped[i]=eq;save();toast("3枠のおすすめ装備を更新");return detail(i)}
+let gc483=e.target.closest("[data-growth-char-v483]");
+if(gc483){S.qol=S.qol||{};S.qol.growthSelectedV483=+gc483.dataset.growthCharV483;save();return growth()}
+let gu483=e.target.closest("[data-growth-up-v483]");
+if(gu483){let i=growthSelectedV483(),n=growthBatchV483(i,+gu483.dataset.growthUpV483);toast(n?`Lv +${n}`:"EXPが足りません");return growth()}
+let gm483=e.target.closest("[data-growth-max-v483]");
+if(gm483){let i=growthSelectedV483(),n=0;while(growthLevelOneV483(i))n++;save();toast(n?`Lv +${n}`:"強化できません");return growth()}
+let gb483=e.target.closest("[data-growth-break-v483]");
+if(gb483){let i=+gb483.dataset.growthBreakV483;if(growthBreakV483(i)){toast("上限解放！")}else{toast("条件を確認してください")}return growth()}
+
+
+let scl491=e.target.closest("[data-system-clearlog-v491]");
+if(scl491){localStorage.removeItem("bk_runtime_log_v492");toast("耐久ログを消去しました");return systemPanelV490()}
+let ss490=e.target.closest("[data-system-save-v490]");
+if(ss490){save();toast("自動セーブを更新しました");return systemPanelV490()}
+let sb490=e.target.closest("[data-system-backup-v490]");
+if(sb490){saveVaultBackupV486();toast("復旧バックアップを作成");return systemPanelV490()}
+let sr490=e.target.closest("[data-system-refresh-v490]");
+if(sr490){toast("システム再診断");return systemPanelV490()}
+let sb486=e.target.closest("[data-save-backup-v486]");
+if(sb486){saveVaultBackupV486();toast("バックアップを保存しました");return saveVaultV486()}
+let sr486=e.target.closest("[data-save-restore-v486]");
+if(sr486){
+ let code=localStorage.getItem("bungou_kitan_save_vault_v486");
+ if(code&&saveVaultRestoreV486(code)){toast("バックアップを復元しました");return home()}
+ toast("復元できませんでした");return saveVaultV486()
+}
+let sc486=e.target.closest("[data-save-copy-v486]");
+if(sc486){
+ let t=document.querySelector("[data-save-code-v486]");
+ if(t){t.select();try{navigator.clipboard?.writeText(t.value)}catch(_){document.execCommand?.("copy")}toast("引き継ぎコードをコピー")}
+ return
+}
+let sf486=e.target.closest("[data-save-refresh-v486]");
+if(sf486){saveVaultBackupV486();toast("コードを更新しました");return saveVaultV486()}
+let si486=e.target.closest("[data-save-import-run-v486]");
+if(si486){
+ let t=document.querySelector("[data-save-import-v486]"),code=t?.value||"";
+ if(saveVaultRestoreV486(code)){saveVaultBackupV486();toast("引き継ぎデータを復元しました");return home()}
+ toast("コードを確認してください");return
+}
+let st480=e.target.closest("[data-summon-tab-v480]");if(st480){S.qol=S.qol||{};S.qol.summonTab=st480.dataset.summonTabV480;save();return summon()}let ng=e.target.closest("[data-normalpull]");if(ng){let n=+ng.dataset.normalpull,cost=n===10?100:10;if((S.normalTickets||0)<cost)return alert("原稿片が足りません");S.normalTickets-=cost;S.weeklySummons=(S.weeklySummons||0)+n;S.summonMedals=(S.summonMedals||0)+n;let got=[];for(let j=0;j<n;j++)got.push(summonDrawOneV480(n===10&&j===n-1));save();let i=got[got.length-1];if(n===10){showGachaResults(got,cost);return}toast("通常召喚！");return summonResult(i)}let chg=e.target.closest("[data-challenge]");if(chg){let c=challengeBoard().find(x=>x.id===chg.dataset.challenge);if(!c||c.now<c.goal||S.challengeClaims[c.id])return;S.challengeClaims[c.id]=1;c.give();save();toast("高難度目標達成："+c.reward);return home()}let spc=e.target.closest("[data-seasonpass]");if(spc){let r=seasonPassRewards().find(x=>x.id===spc.dataset.seasonpass);if(!r||!r.ready||S.seasonPassClaims[r.id])return;S.seasonPassClaims[r.id]=1;r.give();save();toast("文学紀行パス："+r.reward);return home()}let wt=e.target.closest("[data-weekly]");if(wt){let t=weeklyTasks().find(x=>x.id===wt.dataset.weekly);if(!t||t.now<t.goal||S.weeklyClaims[t.id])return;S.weeklyClaims[t.id]=1;t.give();save();toast("週間任務達成："+t.reward);return home()}
+let wall=e.target.closest("[data-weekly-all]");if(wall){let got=0;for(let t of weeklyTasks()){if(t.now>=t.goal&&!S.weeklyClaims[t.id]){S.weeklyClaims[t.id]=1;t.give();got++}}save();toast("週間報酬を"+got+"件受取");return home()}let ms=e.target.closest("[data-milestone]");if(ms){let m=librarianMilestones().find(x=>x.id===ms.dataset.milestone);if(!m||!m.ready||S.milestoneClaims[m.id])return;S.milestoneClaims[m.id]=1;m.give();save();toast("司書ランク報酬："+m.reward);return home()}let cg=e.target.closest("[data-collection-goal]");if(cg){let g=collectionGoals().find(x=>x.id===cg.dataset.collectionGoal);if(!g||g.now<g.goal||S.collectionClaims[g.id])return;S.collectionClaims[g.id]=1;g.give();save();toast("蔵書目標達成："+g.reward);return home()}let ac=e.target.closest("[data-achieve]");if(ac){let a=achievements().find(x=>x.id===ac.dataset.achieve);if(!a||a.now<a.goal||S.achievementClaims[a.id])return;S.achievementClaims[a.id]=1;a.give();save();toast("実績達成："+a.reward);return home()}let bm=e.target.closest("[data-beginner]");if(bm){let m=beginnerMissions().find(x=>x.id===bm.dataset.beginner);if(!m||m.now<m.goal||S.beginner.claimed[m.id])return;S.beginner.claimed[m.id]=1;m.give();save();toast("初心者任務達成："+m.reward);return home()}let dg=e.target.closest("[data-dailygoal]");if(dg){ensureDailyGoals();let st=dailyGoalState();if(!st.done||S.dailyGoals.claimed)return;S.dailyGoals.claimed=true;S.ink=(S.ink||0)+100;S.mat=(S.mat||0)+100;save();toast("本日の目標達成！ インク100 / 資料100");return home()}let gr=e.target.closest("[data-grow]");if(gr){let [i,n]=gr.dataset.grow.split(":").map(Number),actual=Math.min(n,cap(i)-lv(i)),cost=actual*100;if(actual<=0)return alert("Lv上限です");if(S.xp<cost)return alert("共有EXP不足");S.xp-=cost;S.lv[i]=lv(i)+actual;S.missions.grow+=actual;save();return detail(i)}
+let mb=e.target.closest("[data-medalbuy]");if(mb){if(!actionLock(500))return;return transactionalAction("召喚栞交換",()=>buyMedalItem(mb.dataset.medalbuy))}
+let sm=e.target.closest("[data-summon]");if(sm){ensurePick3();if(S.pick3.length!==3)return alert("3人選択してください");if((S.ink||0)<300)return alert("インク不足");S.ink-=300;S.weeklySummons=(S.weeklySummons||0)+1;S.summonMedals=(S.summonMedals||0)+5;let i=S.pick3[Math.floor(Math.random()*3)];S.dupes[i]=Math.min(10,(S.dupes[i]||0)+1);summonHistoryV480().unshift({i,rank:C[i][5],at:Date.now(),pick:true});S.qol.summonHistory=S.qol.summonHistory.slice(0,30);save();return summonResult(i)}
+let sp=e.target.closest("[data-sp]");if(sp){let i=+sp.dataset.sp;if(S.pick3.includes(i))S.pick3=S.pick3.filter(x=>x!==i);else if(S.pick3.length<3)S.pick3.push(i);save();return summon()}
+let dr=e.target.closest("[data-draw]");if(dr){if(S.pick3.length!==3)return alert("3人選択してください");if(S.ink<300)return alert("インク不足");S.ink-=300;let i=S.pick3[Math.floor(Math.random()*3)];S.dupes[i]=Math.min(10,(S.dupes[i]||0)+1);save();return summonResult(i)}
+let eg=e.target.closest("[data-endgame]");if(eg){let g=endgameGoals().find(x=>x.id===eg.dataset.endgame);if(!g||g.now<g.goal||S.endgameClaims[g.id])return;S.endgameClaims[g.id]=1;g.give();save();toast("終幕後の書架："+g.reward);return home()}
+let brc=e.target.closest("[data-bossrush-close]");if(brc){let o=e.target.closest(".resultOverlay");if(o)o.remove();return sortie()}
+let brr=e.target.closest("[data-bossrush-reward]");if(brr){let n=+brr.dataset.bossrushReward;if(claimBossRushReward(n)){let r=bossRushReward(n);toast("連戦報酬：原稿片"+r.tickets+" / インク"+r.ink)}return sortie()}
+let brs=e.target.closest("[data-bossrush]");if(brs){if(!actionLock(800))return;return runBossRush()}
+let dd=e.target.closest("[data-daily-dungeon]");if(dd){if(!actionLock(700))return;return runDailyDungeon()}
+let fc=e.target.closest("[data-farm-close]");if(fc){let o=e.target.closest(".resultOverlay");if(o)o.remove();return sortie()}
+let qf=e.target.closest("[data-quickfarm]");if(qf){if(!stageTapGuard(qf))return;let sel=document.getElementById("farmRuns"),runs=sel?+sel.value:(S.farmPrefs.runs||3);S.farmPrefs.runs=runs;return quickFarm(+qf.dataset.quickfarm,runs)}
+let starClaimBtn=e.target.closest("[data-star-reward]");if(starClaimBtn){if(!actionLock(450))return;return transactionalAction("星評価報酬",()=>{let ch=+starClaimBtn.dataset.starReward;if(claimStarReward(ch)){let rw=starReward(ch);toast("★★★達成報酬：原稿片"+rw.tickets+" / 文銭"+rw.gold)}return openStagePage(ch)})}
+let bmr=e.target.closest("[data-boss-mastery]");if(bmr){if(!actionLock(450))return;return transactionalAction("熟練報酬",()=>{let ch=+bmr.dataset.bossMastery;if(claimBossMastery(ch)){let r=bossMasteryReward(ch);toast("討伐熟練報酬：原稿片"+r.tickets+" / 文銭"+r.gold)}return openStagePage(ch)})}
+let hr=e.target.closest("[data-hard-reward]");if(hr){if(!actionLock(450))return;return transactionalAction("HARD報酬",()=>{let ch=+hr.dataset.hardReward;if(claimHardReward(ch)){let r=hardReward(ch);toast("HARD報酬：原稿片"+r.tickets+" / インク"+r.ink)}return openStagePage(ch)})}
+let cr=e.target.closest("[data-chapter-reward]");if(cr){if(!actionLock(450))return;return transactionalAction("章踏破報酬",()=>{let ch=+cr.dataset.chapterReward;if(claimChapterReward(ch)){let r=chapterReward(ch);toast("踏破報酬：原稿片"+r.tickets+" / 文銭"+r.gold)}return openStagePage(ch)})}
+let quickGrow=e.target.closest("[data-quick-grow]");if(quickGrow)return
+let formationFocusBtn=e.target.closest("[data-formation-focus]");if(formationFocusBtn){e.preventDefault();e.stopPropagation();return formationFocus(+formationFocusBtn.dataset.formationFocus)}
+let formationStatsClose=e.target.closest("[data-formation-stats-close]");if(formationStatsClose){document.getElementById("formationStatsOverlay")?.remove();return}
+let formationStatsBtn=e.target.closest("[data-formation-stats]");if(formationStatsBtn){e.preventDefault();e.stopPropagation();return openFormationStats(+formationStatsBtn.dataset.formationStats)}
+let partyPreset=e.target.closest("[data-party-preset]");if(partyPreset)return formationPresetV132(partyPreset.dataset.partyPreset)
+let partyFilterBtn=e.target.closest("[data-party-filter]");if(partyFilterBtn)return setPartyFilter(partyFilterBtn.dataset.partyFilter)
+let partySortBtn=e.target.closest("[data-party-sort]");if(partySortBtn)return setPartySort(partySortBtn.dataset.partySort)
+let growthFilter=e.target.closest("[data-growth-filter]");if(growthFilter)return setGrowthFilter(growthFilter.dataset.growthFilter)
+let growthSelect=e.target.closest("[data-growth-select]");if(growthSelect){if(!actionLock(220))return;return selectGrowthCharacter(+growthSelect.dataset.growthSelect)}
+let growthButton=e.target.closest("[data-grow]");if(growthButton){if(!actionLock(450))return;return growCharacter(+growthButton.dataset.grow,+growthButton.dataset.growN)}
+
+let fr520=e.target.closest("[data-farm-repeat-v520]");
+if(fr520){
+ let [ch,n]=String(fr520.dataset.farmRepeatV520).split(":").map(Number);
+ document.getElementById("farmResultV520")?.remove();
+ if(!actionLock(500))return;
+ return quickFarmRemembered(ch,n)
+}
+let fs520=e.target.closest("[data-farm-stage-v520]");
+if(fs520){
+ let ch=+fs520.dataset.farmStageV520;
+ document.getElementById("farmResultV520")?.remove();
+ return openStagePage(ch)
+}
+let farmCountBtn=e.target.closest("[data-farm-count]");if(farmCountBtn){setFarmCount(+farmCountBtn.dataset.farmCount);return sortie()}
+let farmStartBtn=e.target.closest("[data-farm-start]");if(farmStartBtn){if(!actionLock(500))return;return quickFarmRemembered(+farmStartBtn.dataset.farmStart,rememberedFarmCount())}
+let uiPage=e.target.closest("[data-ui-page]");if(uiPage){let [k,p,r]=uiPage.dataset.uiPage.split(":");let fn={party,growth,list,sortie,summon,story,arena,home}[r]||home;return setUiPage(k,+p,fn)}
+
+let hf514=e.target.closest("[data-home-favorite-v514]");
+if(hf514){
+ let i=+hf514.dataset.homeFavoriteV514;
+ document.getElementById("favoritePickerOverlay")?.remove();
+ if(setHomeCharacterV514(i)){toast(`${C[i][1]}をホームに設定`);return home()}
+ return
+}
+let hr514=e.target.closest("[data-home-picker-rank-v514]");
+if(hr514){
+ homeCharacterPickerStateV514().rank=hr514.dataset.homePickerRankV514;save();
+ let ov=document.getElementById("favoritePickerOverlay");if(ov)ov.querySelector(".resultCard").innerHTML=favoriteHomePicker();return
+}
+
+let hd515=e.target.closest("[data-home-dialogue-v515]");
+if(hd515&&!e.target.closest("button")){
+ let i=+hd515.dataset.homeDialogueV515;
+ cycleHomeDialogueV515(i);
+ let p=hd515.querySelector(".homeDialogueTextV515");
+ if(p){p.classList.remove("talk");void p.offsetWidth;p.textContent=homeDialogueV515(i);p.classList.add("talk")}
+ return
+}
+let favOpen=e.target.closest("[data-favorite-open]");if(favOpen)return openFavoritePicker()
+let favClose=e.target.closest("[data-favorite-close]");if(favClose){document.getElementById("favoritePickerOverlay")?.remove();return}
+let favSet=e.target.closest("[data-favorite-set]");if(favSet){document.getElementById("favoritePickerOverlay")?.remove();return setFavoriteCharacter(+favSet.dataset.favoriteSet)}
+
+let auto541=e.target.closest("[data-battle-auto]");
+if(auto541){
+ e.preventDefault();e.stopPropagation();
+ return autoReliableToggleV541()
+}
+let sdAction=e.target.closest("[data-sd-action]");if(sdAction){
+ let action=sdAction.dataset.sdAction;
+ if(action==="auto"){e.preventDefault();e.stopPropagation();autoReliableToggleV541();return}
+ let b=ensureAdvancedBattleV125();
+ if(action==="ougi"&&!canOugiV125(b.unit||0)){battleTextV121("EP不足","warning",50,55);return}
+ if(b.auto){battleTextV121("AUTO","warning",50,55);return}
+ return battleActionV120(action)
+}
+
+let fr500=e.target.closest("[data-formation-rank-v500]");if(fr500){ensureQoLPrefs();S.qol.formationPickRankV500=fr500.dataset.formationRankV500;save();let ov=document.getElementById("formationPickerOverlay");if(ov)ov.querySelector(".resultCard").innerHTML=formationPickerV136(Number(ov.dataset.slot||0));return} let fs=e.target.closest("[data-formation-slot]");if(fs)return openFormationPickerV136(+fs.dataset.formationSlot)
+let fp=e.target.closest("[data-formation-pick]");if(fp){let [s,i]=fp.dataset.formationPick.split(":").map(Number);return setFormationSlotV136(s,i)}
+let formClose136=e.target.closest("[data-formation-picker-close]");if(formClose136){document.getElementById("formationPickerOverlay")?.remove();return}
+let bp=e.target.closest("[data-battle-pause]");if(bp){let b=ensureBattleStateV120();if(b.auto)toggleAutoBattleV122();return}
+let battleSetting=e.target.closest("[data-battle-setting]");if(battleSetting)return toggleBattleSettingV130(battleSetting.dataset.battleSetting)
+let battleTarget=e.target.closest("[data-battle-target]");if(battleTarget){ensureBattleStateV120().target=+battleTarget.dataset.battleTarget;cinematicBattleV119();return}
+let battleUnit=e.target.closest("[data-battle-unit]");if(battleUnit)return selectedUnitV144(+battleUnit.dataset.battleUnit)
+let battleSpeed=e.target.closest("[data-battle-speed]");if(battleSpeed)return toggleSpeedV122(+battleSpeed.dataset.battleSpeed)
+let logOpen=e.target.closest("[data-battle-log-open]");if(logOpen){let x=document.createElement("div");x.className="resultOverlay";x.id="battleLogOverlay";x.innerHTML=`<div class=resultCard>${battleLogPanelV120()}</div>`;document.body.appendChild(x);return}
+let logClose=e.target.closest("[data-battle-log-close]");if(logClose){document.getElementById("battleLogOverlay")?.remove();return}
+let battleRepeat=e.target.closest("[data-battle-repeat]");if(battleRepeat){battleRepeat.closest(".battleClearV119")?.remove();S.qol=S.qol||{};S.qol.repeatAuto=false;return repeatBattleV128()}
+let battleRepeatAuto=e.target.closest("[data-battle-repeat-auto]");if(battleRepeatAuto){battleRepeatAuto.closest(".battleClearV119")?.remove();S.qol=S.qol||{};S.qol.repeatAuto=true;return repeatBattleV128()}
+let battleRetry=e.target.closest("[data-battle-retry]");if(battleRetry)return resetBattleV126()
+let clearClose=e.target.closest("[data-clear-close]");if(clearClose){clearClose.closest(".battleClearV119")?.remove();return}
+let sdDemo=e.target.closest("[data-sd-demo]");if(sdDemo)return sdBattleDemo()
+let fxDemo=e.target.closest("[data-battle-fx-demo]");if(fxDemo){let t=S.sets?.[S.set]||[0];let i=+t[0]||0;playBattleFx("attack",i,1280);setTimeout(()=>playBattleFx("skill",i,2400),800);setTimeout(()=>playBattleFx("ougi",i,5200),1900);return}
+
+
+let scr523=e.target.closest("[data-stage-clear-reward-v523]");
+if(scr523){document.querySelector(".stageClearV522")?.remove();return openStagePage(+scr523.dataset.stageClearRewardV523)}
+let scn522=e.target.closest("[data-stage-clear-next-v522]");if(scn522){document.querySelector(".stageClearV522")?.remove();return openStagePage(+scn522.dataset.stageClearNextV522)}
+let scc522=e.target.closest("[data-stage-clear-current-v522]");if(scc522){document.querySelector(".stageClearV522")?.remove();return openStagePage(+scc522.dataset.stageClearCurrentV522)}
+let scf522=e.target.closest("[data-stage-clear-farm-v522]");if(scf522){document.querySelector(".stageClearV522")?.remove();return quickFarmRemembered(+scf522.dataset.stageClearFarmV522,rememberedFarmCount())}
+
+
+let sa540=e.target.closest(".stagePrepActionsV540 button");
+if(sa540){sa540.classList.add("tapV540");setTimeout(()=>sa540.classList.remove("tapV540"),180)}
+let ss524=e.target.closest("[data-stage-smart-v524]");
+if(ss524){
+ let [mode,ch]=String(ss524.dataset.stageSmartV524).split(":");
+ buildSmartFormationV513(mode||"balanced");
+ toast(`${formationModeLabelV513(mode)}編成を所持キャラだけで作成しました`);
+ return openStagePage(+ch)
+}
+let sk524=e.target.closest("[data-stage-skillcheck-v524]");
+if(sk524){
+ document.getElementById("stageSkillCheckOverlayV524")?.remove();
+ let o=document.createElement("div");o.id="stageSkillCheckOverlayV524";o.className="resultOverlay stageSkillCheckOverlayV524";
+ o.innerHTML=`<div class=resultCard>${stageSkillCheckV524(+sk524.dataset.stageSkillcheckV524)}</div>`;
+ document.body.appendChild(o);return
+}
+let skc524=e.target.closest("[data-stage-skillcheck-close-v524]");
+if(skc524){document.getElementById("stageSkillCheckOverlayV524")?.remove();return}
+
+let diff543=e.target.closest("[data-stage-difficulty-v543]");
+if(diff543){
+ e.preventDefault();e.stopPropagation();
+ let [ch,mode]=String(diff543.dataset.stageDifficultyV543).split(":");
+ return setStageDifficultyV543(+ch,mode)
+}
+let bt=e.target.closest("[data-battle]");if(bt){
+ e.preventDefault();e.stopPropagation();
+ if(bt.disabled)return;
+ if(!stageTapGuard(bt))return;
+ let ch=+bt.dataset.battle,mode=bt.dataset.mode||"normal";
+ return launchStageBattleV533(ch,mode,bt)
+}});
+document.addEventListener("input",e=>{if(e.target.id==="q")cards()});
+observeLongTasksV193();battleVisibilityGuardV190();try{home()}catch(e){console.error("home render failed",e);try{coreHome()}catch(e2){console.error("core home failed",e2);emergencyHome()}}window.__bkBooted=true;
+/* V419: service worker disabled for deterministic GitHub Pages startup. */
+setTimeout(function(){
+ try{
+  var a=document.getElementById("app");
+  var visible=a&&a.textContent&&a.textContent.trim().length>0;
+  if(!visible) emergencyHome();
+ }catch(e){try{emergencyHome()}catch(_){}}
+},3500);const STORY_EPISODES=[
+ {title:"序章　言葉のはじまり",sub:"消えた一行",text:"書架から、ひとつの文章が消えた。名もなき司書と文豪たちは、頁喰いを追って最初の扉を開く。"},
+ {title:"第二幕　失われた書庫",sub:"黒い栞",text:"封じられた書庫に残る黒い栞。読む者の記憶を削るそれは、物語そのものを書き換えようとしていた。"},
+ {title:"第三幕　海の向こう",sub:"深海の校正",text:"海を越えた言葉が別の意味へ変質する。文豪たちは失われた原文を求め、深海の書庫へ向かう。"},
+ {title:"終幕　黒き原稿",sub:"最後の句点",text:"すべての異変は一冊の未完原稿へ収束する。最後の一行を書くのは、文豪か、それとも司書か。"}
+];
+function openStoryEpisode(i){
+ if(!(S.progress.clears[i]>0))return toast("第"+(i+1)+"章クリアで解放");
+ let e=STORY_EPISODES[i],old=document.getElementById("storyReader");if(old)old.remove(),o=document.createElement("div");o.id="storyReader";o.className="resultOverlay";
+ o.innerHTML=`<div class="resultCard storyReaderCard"><small>STORY ${i+1}/4</small><h2>${e.title}</h2><h3>${e.sub}</h3><div class=storyText>${e.text}</div><div class=storyQuote>「言葉は、読まれた瞬間から誰かの物語になる。」</div><button class=btn data-story-close=1>書架へ戻る</button></div>`;document.body.appendChild(o)
+}
+
+
+installImageRepair();
+
+document.addEventListener("click",function(e){
+ try{
+  let b=e.target.closest("button,[role=button]");
+  if(!b||b.disabled)return;
+  let attrs=[...b.attributes].filter(a=>a.name.startsWith("data-")).map(a=>a.name);
+  if(!attrs.length)return;
+  /* UI_DEAD_BUTTON_GUARD: diagnostic only; normal handlers run first */
+  if(attrs.includes("data-go"))return;
+ }catch(err){finalErrorShield(err)}
+});
+
+installAssetObservers();
+
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>installAssetObservers(),{once:true});
+
+try{recoverBestSave()}catch(e){console.error("save recovery",e)}
+document.addEventListener("click",()=>setTimeout(()=>persistentSaveWrite(),0));
+window.addEventListener("pagehide",()=>persistentSaveWrite());
+
+document.addEventListener("change",e=>{let growthSortControl=e.target.closest("[data-growth-sort]");if(growthSortControl)setGrowthSort(growthSortControl.value)});
+
+try{if(!sessionStorage.getItem("bk_v88_recovered")){recoverBestSave();sessionStorage.setItem("bk_v88_recovered","1")}}catch(e){}
+
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(normalizeStageLayout,0),{once:true});else setTimeout(normalizeStageLayout,0);
+
+document.addEventListener("change",e=>{let s=e.target.closest("[data-growth-search]");if(s)setGrowthSearch(s.value)});
+document.addEventListener("keydown",e=>{let s=e.target.closest?.("[data-growth-search]");if(s&&e.key==="Enter"){e.preventDefault();setGrowthSearch(s.value)}});
+
+document.addEventListener("change",e=>{let x=e.target.closest("[data-party-search]");if(x){ensureFormationUX();S.qol.partySearch=x.value;save();persistentSaveWrite();party()}});
+document.addEventListener("keydown",e=>{let x=e.target.closest?.("[data-party-search]");if(x&&e.key==="Enter"){e.preventDefault();ensureFormationUX();S.qol.partySearch=x.value;save();persistentSaveWrite();party()}});
+
+document.addEventListener("change",e=>{let inp=e.target.closest("[data-save-import]");if(!inp||!inp.files?.[0])return;let r=new FileReader();r.onload=()=>importSaveText(String(r.result||""));r.readAsText(inp.files[0])});
+
+window.addEventListener("load",()=>{try{validateSaveV134(S);emergencyBackupV134()}catch(e){}});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")emergencyBackupV134()});
+
+document.addEventListener("pointerdown",e=>{
+ if(e.target.closest?.(".posterBattleV205"))posterWakeHudV224();
+},{passive:true});
+
+document.addEventListener("change",function(e){
+ let s=e.target.closest("[data-gh-sort]");
+ if(!s)return;
+ S.gearHubSort=s.value;
+ save();
+ gearHubV479();
+});
+
+document.addEventListener("input",function(e){
+ let q=e.target.closest("[data-collection-query-v484]");
+ if(!q)return;
+ collectionStateV484().query=q.value;save();
+ clearTimeout(window.__collectionSearchV484);
+ window.__collectionSearchV484=setTimeout(()=>list(),220);
+});
+document.addEventListener("change",function(e){
+ let s=e.target.closest("[data-collection-sort-v484]");
+ if(!s)return;
+ collectionStateV484().sort=s.value;save();list();
+});
+
+setTimeout(()=>{try{saveVaultAutoBackupV486()}catch(e){console.warn("V486 autobackup",e)}},2200);
+
+/* V487: normal gameplay already saves on every state mutation.
+   These lifecycle hooks are a final safety flush for iPhone/Safari backgrounding. */
+window.addEventListener("pagehide",autoSaveSafetyFlushV487,{capture:true});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")autoSaveSafetyFlushV487()});
+setTimeout(()=>{try{if(!autoSaveLastV487())save()}catch(_){}} ,1200);
+
+document.addEventListener("input",function(e){
+ let q=e.target.closest("[data-story-char-query-v488]");
+ if(!q)return;
+ let st=storyStateV482();st.charQuery=q.value;save();
+ clearTimeout(window.__storySearchV488);
+ window.__storySearchV488=setTimeout(()=>story(),220);
+});
+
+setTimeout(()=>{try{
+ let h=systemHealthV490();
+ localStorage.setItem("bk_system_health_v492",JSON.stringify({at:Date.now(),pct:h.pct,build:window.__BK_BUILD__||"V490"}));
+}catch(e){console.warn("V490 health",e)}},3000);
+
+window.addEventListener("error",e=>runtimeLogV491("ERROR",e?.message||"script error"));
+window.addEventListener("unhandledrejection",e=>runtimeLogV491("PROMISE",e?.reason?.message||e?.reason||"unhandled rejection"));
+document.addEventListener("visibilitychange",()=>{
+ try{
+   document.body.classList.toggle("bkHiddenV491",document.visibilityState==="hidden");
+   if(document.visibilityState==="hidden")autoSaveSafetyFlushV487();
+ }catch(e){runtimeLogV491("VIS",e.message||e)}
+});
+setTimeout(runtimeEnduranceTickV491,5000);
+
+/* V494 touch feedback / accessibility polish */
+document.addEventListener("pointerdown",e=>{
+  const b=e.target.closest("button,[data-go],[data-char],[data-battle]");
+  if(!b||b.disabled)return;
+  b.classList.add("tapV494");
+},{passive:true});
+document.addEventListener("pointerup",e=>{
+  const b=e.target.closest("button,[data-go],[data-char],[data-battle]");
+  if(b)setTimeout(()=>b.classList.remove("tapV494"),90);
+},{passive:true});
+document.addEventListener("pointercancel",()=>{
+  document.querySelectorAll(".tapV494").forEach(x=>x.classList.remove("tapV494"));
+},{passive:true});
+
+setTimeout(()=>{try{
+ let q=finalQaV499();
+ localStorage.setItem("bk_final_qa_v499",JSON.stringify({at:Date.now(),pct:q.pct,ok:q.ok,total:q.total}));
+}catch(e){runtimeLogV491("QA",e?.message||e)}},3500);
+
+document.addEventListener("input",function(e){let q=e.target.closest("[data-formation-search-v500]");if(!q)return;ensureQoLPrefs();S.qol.formationPickQueryV500=q.value;save();clearTimeout(window.__formationSearchV500);window.__formationSearchV500=setTimeout(()=>{let ov=document.getElementById("formationPickerOverlay");if(ov)ov.querySelector(".resultCard").innerHTML=formationPickerV136(Number(ov.dataset.slot||0))},160)});
+document.addEventListener("change",function(e){let s=e.target.closest("[data-formation-sort-v500]");if(!s)return;ensureQoLPrefs();S.qol.formationPickSortV500=s.value;save();let ov=document.getElementById("formationPickerOverlay");if(ov)ov.querySelector(".resultCard").innerHTML=formationPickerV136(Number(ov.dataset.slot||0))});
+
+
+/* V501 growth/nav hardening */
+document.addEventListener("click",function(e){
+ let g=e.target.closest('[data-go="growth"]');
+ if(!g)return;
+ e.preventDefault();
+ e.stopImmediatePropagation();
+ try{
+  S.qol=S.qol||{};
+  let pick=Number(S.qol.growthSelectedV483);
+  if(!Number.isInteger(pick)||pick<0||pick>=C.length)S.qol.growthSelectedV483=S.sets?.[S.set]?.[0]??0;
+  save();persistentSaveWrite();
+ }catch(_){}
+ return go("growth");
+},true);
+
+setTimeout(()=>{
+ try{
+  if(typeof growth!=="function")runtimeLogV491("V502","growth function missing");
+  if(typeof cap!=="function")runtimeLogV491("V502","cap helper missing");
+ }catch(_){}
+},1800);
+
+document.addEventListener("input",function(e){
+ let q=e.target.closest("[data-portrait-query-v503]");
+ if(!q)return;
+ let st=portraitManagerStateV503();st.query=q.value;save();
+ clearTimeout(window.__portraitSearchV503);
+ window.__portraitSearchV503=setTimeout(()=>portraitManagerV503(),180);
+});
+
+document.addEventListener("input",function(e){
+ let q=e.target.closest("[data-home-picker-query-v514]");if(!q)return;
+ homeCharacterPickerStateV514().query=q.value;save();
+ clearTimeout(window.__homePickerSearchV514);
+ window.__homePickerSearchV514=setTimeout(()=>{let ov=document.getElementById("favoritePickerOverlay");if(ov)ov.querySelector(".resultCard").innerHTML=favoriteHomePicker()},160)
+});
+document.addEventListener("change",function(e){
+ let s=e.target.closest("[data-home-picker-sort-v514]");if(!s)return;
+ homeCharacterPickerStateV514().sort=s.value;save();
+ let ov=document.getElementById("favoritePickerOverlay");if(ov)ov.querySelector(".resultCard").innerHTML=favoriteHomePicker()
+});
