@@ -5,7 +5,7 @@
     "file": "assets/characters/akiko.webp",
     "width": 720,
     "height": 960,
-    "bytes": 156804
+    "bytes": 130626
   },
   {
     "slug": "akiko_kimi",
@@ -19,9 +19,9 @@
     "slug": "aku",
     "name": "芥川 龍之介",
     "file": "assets/characters/aku.webp",
-    "width": 480,
-    "height": 914,
-    "bytes": 102528
+    "width": 720,
+    "height": 960,
+    "bytes": 118582
   },
   {
     "slug": "aku_jigoku",
@@ -42,10 +42,10 @@
   {
     "slug": "akutagawa2",
     "name": "泉 鏡花",
-    "file": "assets/characters/akutagawa2.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 137496
+    "file": "assets/characters/izumi.webp",
+    "width": 720,
+    "height": 960,
+    "bytes": 132238
   },
   {
     "slug": "amagi_rin",
@@ -107,9 +107,9 @@
     "slug": "dazai",
     "name": "太宰 治",
     "file": "assets/characters/dazai.webp",
-    "width": 480,
-    "height": 914,
-    "bytes": 104730
+    "width": 720,
+    "height": 960,
+    "bytes": 115246
   },
   {
     "slug": "dazai_melos",
@@ -181,7 +181,7 @@
     "file": "assets/characters/hagiwara.webp",
     "width": 720,
     "height": 960,
-    "bytes": 166710
+    "bytes": 136166
   },
   {
     "slug": "hanamura_towa",
@@ -203,9 +203,9 @@
     "slug": "higuchi",
     "name": "樋口 一葉",
     "file": "assets/characters/higuchi.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 136618
+    "width": 720,
+    "height": 960,
+    "bytes": 142154
   },
   {
     "slug": "hoshikawa_iri",
@@ -267,17 +267,17 @@
     "slug": "kawabata",
     "name": "川端 康成",
     "file": "assets/characters/kawabata.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 131500
+    "width": 720,
+    "height": 960,
+    "bytes": 118496
   },
   {
     "slug": "kenji",
     "name": "宮沢 賢治",
     "file": "assets/characters/kenji.webp",
-    "width": 480,
-    "height": 914,
-    "bytes": 119450
+    "width": 720,
+    "height": 960,
+    "bytes": 113994
   },
   {
     "slug": "kenji_ame",
@@ -381,7 +381,7 @@
     "file": "assets/characters/mishima.webp",
     "width": 720,
     "height": 960,
-    "bytes": 148144
+    "bytes": 132184
   },
   {
     "slug": "mishima_shiosai",
@@ -421,15 +421,15 @@
     "file": "assets/characters/nakajima.webp",
     "width": 720,
     "height": 960,
-    "bytes": 138712
+    "bytes": 132786
   },
   {
     "slug": "ogai",
     "name": "森 鴎外",
     "file": "assets/characters/ogai.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 124010
+    "width": 720,
+    "height": 960,
+    "bytes": 120124
   },
   {
     "slug": "orwell",
@@ -459,9 +459,9 @@
     "slug": "ranpo",
     "name": "江戸川 乱歩",
     "file": "assets/characters/ranpo.webp",
-    "width": 480,
-    "height": 914,
-    "bytes": 105426
+    "width": 720,
+    "height": 960,
+    "bytes": 117472
   },
   {
     "slug": "ranpo_dsaka",
@@ -485,7 +485,7 @@
     "file": "assets/characters/sakaguchi.webp",
     "width": 720,
     "height": 960,
-    "bytes": 134974
+    "bytes": 127758
   },
   {
     "slug": "sakuraba_otoha",
@@ -555,9 +555,9 @@
     "slug": "soseki",
     "name": "夏目 漱石",
     "file": "assets/characters/soseki.webp",
-    "width": 480,
-    "height": 914,
-    "bytes": 100778
+    "width": 720,
+    "height": 960,
+    "bytes": 118000
   },
   {
     "slug": "soseki_neko",
@@ -595,9 +595,9 @@
     "slug": "tanizaki",
     "name": "谷崎 潤一郎",
     "file": "assets/characters/tanizaki.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 160564
+    "width": 720,
+    "height": 960,
+    "bytes": 111612
   },
   {
     "slug": "tolstoy",
