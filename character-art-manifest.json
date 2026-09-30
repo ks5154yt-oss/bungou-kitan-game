@@ -13,7 +13,7 @@
     "file": "assets/characters/akiko_kimi.webp",
     "width": 648,
     "height": 864,
-    "bytes": 137764
+    "bytes": 131588
   },
   {
     "slug": "aku",
@@ -29,7 +29,7 @@
     "file": "assets/characters/aku_jigoku.webp",
     "width": 648,
     "height": 864,
-    "bytes": 49484
+    "bytes": 43444
   },
   {
     "slug": "aku_kumo",
@@ -37,7 +37,7 @@
     "file": "assets/characters/aku_kumo.webp",
     "width": 648,
     "height": 864,
-    "bytes": 77970
+    "bytes": 119110
   },
   {
     "slug": "akutagawa2",
@@ -117,7 +117,7 @@
     "file": "assets/characters/dazai_melos.webp",
     "width": 648,
     "height": 864,
-    "bytes": 67200
+    "bytes": 117502
   },
   {
     "slug": "dazai_shayo",
@@ -181,7 +181,7 @@
     "file": "assets/characters/hagiwara.webp",
     "width": 720,
     "height": 960,
-    "bytes": 199612
+    "bytes": 166710
   },
   {
     "slug": "hanamura_towa",
@@ -245,7 +245,7 @@
     "file": "assets/characters/kajii.webp",
     "width": 720,
     "height": 960,
-    "bytes": 197510
+    "bytes": 165756
   },
   {
     "slug": "kamishiro_ren",
@@ -285,7 +285,7 @@
     "file": "assets/characters/kenji_ame.webp",
     "width": 648,
     "height": 864,
-    "bytes": 54560
+    "bytes": 129518
   },
   {
     "slug": "kisaragi_maya",
@@ -309,7 +309,7 @@
     "file": "assets/characters/kobayashi.webp",
     "width": 720,
     "height": 960,
-    "bytes": 207824
+    "bytes": 172870
   },
   {
     "slug": "koizumi",
@@ -317,7 +317,7 @@
     "file": "assets/characters/koizumi.webp",
     "width": 720,
     "height": 960,
-    "bytes": 190540
+    "bytes": 179360
   },
   {
     "slug": "kujo_maya",
@@ -501,7 +501,7 @@
     "file": "assets/characters/seicho.webp",
     "width": 720,
     "height": 960,
-    "bytes": 185522
+    "bytes": 163354
   },
   {
     "slug": "shakespeare",
@@ -573,7 +573,7 @@
     "file": "assets/characters/soseki_yume.webp",
     "width": 648,
     "height": 864,
-    "bytes": 31388
+    "bytes": 102988
   },
   {
     "slug": "tachibana_kanade",
@@ -653,7 +653,7 @@
     "file": "assets/characters/yokomitsu.webp",
     "width": 720,
     "height": 960,
-    "bytes": 145880
+    "bytes": 183206
   },
   {
     "slug": "yuragi_sena",
