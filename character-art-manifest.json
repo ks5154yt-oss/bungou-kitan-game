@@ -5,7 +5,7 @@
     "file": "assets/characters/akiko.webp",
     "width": 720,
     "height": 960,
-    "bytes": 182774
+    "bytes": 156804
   },
   {
     "slug": "akiko_kimi",
@@ -21,7 +21,7 @@
     "file": "assets/characters/aku.webp",
     "width": 480,
     "height": 914,
-    "bytes": 74542
+    "bytes": 102528
   },
   {
     "slug": "aku_jigoku",
@@ -45,7 +45,7 @@
     "file": "assets/characters/akutagawa2.webp",
     "width": 648,
     "height": 864,
-    "bytes": 182280
+    "bytes": 137496
   },
   {
     "slug": "amagi_rin",
@@ -101,7 +101,7 @@
     "file": "assets/characters/chuuya.webp",
     "width": 480,
     "height": 914,
-    "bytes": 55570
+    "bytes": 121492
   },
   {
     "slug": "dazai",
@@ -109,7 +109,7 @@
     "file": "assets/characters/dazai.webp",
     "width": 480,
     "height": 914,
-    "bytes": 62202
+    "bytes": 104730
   },
   {
     "slug": "dazai_melos",
@@ -125,7 +125,7 @@
     "file": "assets/characters/dazai_shayo.webp",
     "width": 648,
     "height": 864,
-    "bytes": 34604
+    "bytes": 130728
   },
   {
     "slug": "dostoevsky",
@@ -205,7 +205,7 @@
     "file": "assets/characters/higuchi.webp",
     "width": 648,
     "height": 864,
-    "bytes": 185742
+    "bytes": 136618
   },
   {
     "slug": "hoshikawa_iri",
@@ -269,7 +269,7 @@
     "file": "assets/characters/kawabata.webp",
     "width": 648,
     "height": 864,
-    "bytes": 168344
+    "bytes": 131500
   },
   {
     "slug": "kenji",
@@ -277,7 +277,7 @@
     "file": "assets/characters/kenji.webp",
     "width": 480,
     "height": 914,
-    "bytes": 83530
+    "bytes": 119450
   },
   {
     "slug": "kenji_ame",
@@ -381,7 +381,7 @@
     "file": "assets/characters/mishima.webp",
     "width": 720,
     "height": 960,
-    "bytes": 219800
+    "bytes": 148144
   },
   {
     "slug": "mishima_shiosai",
@@ -421,7 +421,7 @@
     "file": "assets/characters/nakajima.webp",
     "width": 720,
     "height": 960,
-    "bytes": 228300
+    "bytes": 138712
   },
   {
     "slug": "ogai",
@@ -429,7 +429,7 @@
     "file": "assets/characters/ogai.webp",
     "width": 648,
     "height": 864,
-    "bytes": 198346
+    "bytes": 124010
   },
   {
     "slug": "orwell",
@@ -461,7 +461,7 @@
     "file": "assets/characters/ranpo.webp",
     "width": 480,
     "height": 914,
-    "bytes": 62172
+    "bytes": 105426
   },
   {
     "slug": "ranpo_dsaka",
@@ -469,7 +469,7 @@
     "file": "assets/characters/ranpo_dsaka.webp",
     "width": 648,
     "height": 864,
-    "bytes": 39310
+    "bytes": 143300
   },
   {
     "slug": "saionji_mio",
@@ -485,7 +485,7 @@
     "file": "assets/characters/sakaguchi.webp",
     "width": 720,
     "height": 960,
-    "bytes": 180148
+    "bytes": 134974
   },
   {
     "slug": "sakuraba_otoha",
@@ -557,7 +557,7 @@
     "file": "assets/characters/soseki.webp",
     "width": 480,
     "height": 914,
-    "bytes": 59026
+    "bytes": 100778
   },
   {
     "slug": "soseki_neko",
@@ -565,7 +565,7 @@
     "file": "assets/characters/soseki_neko.webp",
     "width": 648,
     "height": 864,
-    "bytes": 39552
+    "bytes": 118510
   },
   {
     "slug": "soseki_yume",
@@ -597,7 +597,7 @@
     "file": "assets/characters/tanizaki.webp",
     "width": 648,
     "height": 864,
-    "bytes": 201154
+    "bytes": 160564
   },
   {
     "slug": "tolstoy",
