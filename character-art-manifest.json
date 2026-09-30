@@ -147,9 +147,9 @@
     "slug": "doyle_baskerville",
     "name": "コナン・ドイル",
     "file": "assets/characters/doyle_baskerville.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 62754
+    "width": 720,
+    "height": 960,
+    "bytes": 105262
   },
   {
     "slug": "dumas",
@@ -387,9 +387,9 @@
     "slug": "mishima_shiosai",
     "name": "三島 由紀夫",
     "file": "assets/characters/mishima_shiosai.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 131652
+    "width": 720,
+    "height": 960,
+    "bytes": 89304
   },
   {
     "slug": "mizuki_kanade",
@@ -413,7 +413,7 @@
     "file": "assets/characters/murasaki.webp",
     "width": 720,
     "height": 960,
-    "bytes": 213984
+    "bytes": 134866
   },
   {
     "slug": "nakajima",
@@ -451,9 +451,9 @@
     "slug": "poe_morgue",
     "name": "E・A・ポー",
     "file": "assets/characters/poe_morgue.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 81424
+    "width": 720,
+    "height": 960,
+    "bytes": 127554
   },
   {
     "slug": "ranpo",
