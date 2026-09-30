@@ -531,25 +531,25 @@
     "slug": "shinonome_yaya",
     "name": "東雲 夜々",
     "file": "assets/characters/shinonome_yaya.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 128966
+    "width": 720,
+    "height": 960,
+    "bytes": 172730
   },
   {
     "slug": "shirakawa_fumi",
     "name": "白河 文",
     "file": "assets/characters/shirakawa_fumi.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 122184
+    "width": 720,
+    "height": 960,
+    "bytes": 164920
   },
   {
     "slug": "shirogane_noa",
     "name": "白銀 ノア",
     "file": "assets/characters/shirogane_noa.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 145788
+    "width": 720,
+    "height": 960,
+    "bytes": 165450
   },
   {
     "slug": "soseki",
@@ -579,9 +579,9 @@
     "slug": "tachibana_kanade",
     "name": "橘 カナデ",
     "file": "assets/characters/tachibana_kanade.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 161326
+    "width": 720,
+    "height": 960,
+    "bytes": 170964
   },
   {
     "slug": "tachibana_mei",
@@ -619,9 +619,9 @@
     "slug": "tsukishima_shiori",
     "name": "月島 栞",
     "file": "assets/characters/tsukishima_shiori.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 101726
+    "width": 720,
+    "height": 960,
+    "bytes": 166806
   },
   {
     "slug": "verne",
@@ -643,9 +643,9 @@
     "slug": "yakumo_saku",
     "name": "八雲 朔",
     "file": "assets/characters/yakumo_saku.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 151726
+    "width": 720,
+    "height": 960,
+    "bytes": 157594
   },
   {
     "slug": "yokomitsu",
