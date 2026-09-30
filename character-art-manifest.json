@@ -53,7 +53,7 @@
     "file": "assets/characters/amagi_rin.webp",
     "width": 648,
     "height": 864,
-    "bytes": 150526
+    "bytes": 147186
   },
   {
     "slug": "amemiya_mio",
@@ -61,7 +61,7 @@
     "file": "assets/characters/amemiya_mio.webp",
     "width": 720,
     "height": 960,
-    "bytes": 191052
+    "bytes": 144586
   },
   {
     "slug": "andersen",
@@ -69,7 +69,7 @@
     "file": "assets/characters/andersen.webp",
     "width": 720,
     "height": 960,
-    "bytes": 154262
+    "bytes": 156742
   },
   {
     "slug": "aonami_sui",
@@ -77,7 +77,7 @@
     "file": "assets/characters/aonami_sui.webp",
     "width": 648,
     "height": 864,
-    "bytes": 165032
+    "bytes": 131622
   },
   {
     "slug": "asakura_renka",
@@ -85,7 +85,7 @@
     "file": "assets/characters/asakura_renka.webp",
     "width": 648,
     "height": 864,
-    "bytes": 114922
+    "bytes": 123448
   },
   {
     "slug": "ayatsuji_yui",
@@ -93,7 +93,7 @@
     "file": "assets/characters/ayatsuji_yui.webp",
     "width": 648,
     "height": 864,
-    "bytes": 152940
+    "bytes": 139356
   },
   {
     "slug": "chuuya",
@@ -133,7 +133,7 @@
     "file": "assets/characters/dostoevsky.webp",
     "width": 720,
     "height": 960,
-    "bytes": 172150
+    "bytes": 169314
   },
   {
     "slug": "doyle",
@@ -141,7 +141,7 @@
     "file": "assets/characters/doyle.webp",
     "width": 720,
     "height": 960,
-    "bytes": 136570
+    "bytes": 134956
   },
   {
     "slug": "doyle_baskerville",
@@ -157,7 +157,7 @@
     "file": "assets/characters/dumas.webp",
     "width": 720,
     "height": 960,
-    "bytes": 162538
+    "bytes": 150502
   },
   {
     "slug": "fallback",
@@ -173,7 +173,7 @@
     "file": "assets/characters/fuyutsuki_shiori.webp",
     "width": 648,
     "height": 864,
-    "bytes": 114630
+    "bytes": 126644
   },
   {
     "slug": "hagiwara",
@@ -189,7 +189,7 @@
     "file": "assets/characters/hanamura_towa.webp",
     "width": 648,
     "height": 864,
-    "bytes": 145590
+    "bytes": 126046
   },
   {
     "slug": "hemingway",
@@ -197,7 +197,7 @@
     "file": "assets/characters/hemingway.webp",
     "width": 720,
     "height": 960,
-    "bytes": 187278
+    "bytes": 193420
   },
   {
     "slug": "higuchi",
@@ -213,7 +213,7 @@
     "file": "assets/characters/hoshikawa_iri.webp",
     "width": 648,
     "height": 864,
-    "bytes": 116686
+    "bytes": 148864
   },
   {
     "slug": "hoshino_ruri",
@@ -221,7 +221,7 @@
     "file": "assets/characters/hoshino_ruri.webp",
     "width": 648,
     "height": 864,
-    "bytes": 146412
+    "bytes": 129716
   },
   {
     "slug": "kafka",
@@ -229,7 +229,7 @@
     "file": "assets/characters/kafka.webp",
     "width": 720,
     "height": 960,
-    "bytes": 106724
+    "bytes": 111126
   },
   {
     "slug": "kagami_kei",
@@ -237,7 +237,7 @@
     "file": "assets/characters/kagami_kei.webp",
     "width": 648,
     "height": 864,
-    "bytes": 128002
+    "bytes": 126130
   },
   {
     "slug": "kajii",
@@ -253,7 +253,7 @@
     "file": "assets/characters/kamishiro_ren.webp",
     "width": 648,
     "height": 864,
-    "bytes": 133564
+    "bytes": 138766
   },
   {
     "slug": "karasuma_touka",
@@ -261,7 +261,7 @@
     "file": "assets/characters/karasuma_touka.webp",
     "width": 648,
     "height": 864,
-    "bytes": 62948
+    "bytes": 125864
   },
   {
     "slug": "kawabata",
@@ -437,7 +437,7 @@
     "file": "assets/characters/orwell.webp",
     "width": 720,
     "height": 960,
-    "bytes": 159526
+    "bytes": 170024
   },
   {
     "slug": "poe",
@@ -445,7 +445,7 @@
     "file": "assets/characters/poe.webp",
     "width": 720,
     "height": 960,
-    "bytes": 173880
+    "bytes": 165486
   },
   {
     "slug": "poe_morgue",
@@ -509,7 +509,7 @@
     "file": "assets/characters/shakespeare.webp",
     "width": 720,
     "height": 960,
-    "bytes": 157306
+    "bytes": 146244
   },
   {
     "slug": "shinomiya_kanade",
@@ -605,7 +605,7 @@
     "file": "assets/characters/tolstoy.webp",
     "width": 720,
     "height": 960,
-    "bytes": 177516
+    "bytes": 182496
   },
   {
     "slug": "tsukino_ran",
@@ -629,7 +629,7 @@
     "file": "assets/characters/verne.webp",
     "width": 720,
     "height": 960,
-    "bytes": 206932
+    "bytes": 199604
   },
   {
     "slug": "wilde",
@@ -637,7 +637,7 @@
     "file": "assets/characters/wilde.webp",
     "width": 720,
     "height": 960,
-    "bytes": 223338
+    "bytes": 201664
   },
   {
     "slug": "yakumo_saku",
