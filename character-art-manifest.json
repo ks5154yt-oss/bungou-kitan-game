@@ -491,9 +491,9 @@
     "slug": "sakuraba_otoha",
     "name": "桜庭 音羽",
     "file": "assets/characters/sakuraba_otoha.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 123590
+    "width": 720,
+    "height": 960,
+    "bytes": 122582
   },
   {
     "slug": "seicho",
@@ -515,17 +515,17 @@
     "slug": "shinomiya_kanade",
     "name": "四宮 奏",
     "file": "assets/characters/shinomiya_kanade.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 89884
+    "width": 720,
+    "height": 960,
+    "bytes": 117498
   },
   {
     "slug": "shinonome_hina",
     "name": "東雲 陽菜",
     "file": "assets/characters/shinonome_hina.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 57200
+    "width": 720,
+    "height": 960,
+    "bytes": 133294
   },
   {
     "slug": "shinonome_yaya",
@@ -587,9 +587,9 @@
     "slug": "tachibana_mei",
     "name": "橘 芽衣",
     "file": "assets/characters/tachibana_mei.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 77966
+    "width": 720,
+    "height": 960,
+    "bytes": 112176
   },
   {
     "slug": "tanizaki",
@@ -611,9 +611,9 @@
     "slug": "tsukino_ran",
     "name": "月野 蘭",
     "file": "assets/characters/tsukino_ran.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 141998
+    "width": 720,
+    "height": 960,
+    "bytes": 113778
   },
   {
     "slug": "tsukishima_shiori",
@@ -659,8 +659,8 @@
     "slug": "yuragi_sena",
     "name": "揺木 セナ",
     "file": "assets/characters/yuragi_sena.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 66100
+    "width": 720,
+    "height": 960,
+    "bytes": 115664
   }
 ]
