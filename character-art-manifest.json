@@ -291,17 +291,17 @@
     "slug": "kisaragi_maya",
     "name": "如月 真綾",
     "file": "assets/characters/kisaragi_maya.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 97384
+    "width": 720,
+    "height": 960,
+    "bytes": 118924
   },
   {
     "slug": "kisaragi_rei",
     "name": "如月 玲",
     "file": "assets/characters/kisaragi_rei.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 165638
+    "width": 720,
+    "height": 960,
+    "bytes": 108300
   },
   {
     "slug": "kobayashi",
@@ -323,25 +323,25 @@
     "slug": "kujo_maya",
     "name": "九条 真夜",
     "file": "assets/characters/kujo_maya.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 127626
+    "width": 720,
+    "height": 960,
+    "bytes": 113374
   },
   {
     "slug": "kuon_setsuna",
     "name": "久遠 刹那",
     "file": "assets/characters/kuon_setsuna.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 68564
+    "width": 720,
+    "height": 960,
+    "bytes": 124040
   },
   {
     "slug": "kurokawa_yoru",
     "name": "黒川 夜",
     "file": "assets/characters/kurokawa_yoru.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 161588
+    "width": 720,
+    "height": 960,
+    "bytes": 105436
   },
   {
     "slug": "kurose_rin",
@@ -349,31 +349,31 @@
     "file": "assets/characters/kurose_rin.webp",
     "width": 720,
     "height": 960,
-    "bytes": 161836
+    "bytes": 117300
   },
   {
     "slug": "mikage_akari",
     "name": "御影 灯",
     "file": "assets/characters/mikage_akari.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 141016
+    "width": 720,
+    "height": 960,
+    "bytes": 169596
   },
   {
     "slug": "mikazuki_aya",
     "name": "三日月 綾",
     "file": "assets/characters/mikazuki_aya.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 171486
+    "width": 720,
+    "height": 960,
+    "bytes": 170908
   },
   {
     "slug": "minase_yura",
     "name": "水瀬 由良",
     "file": "assets/characters/minase_yura.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 90594
+    "width": 720,
+    "height": 960,
+    "bytes": 161474
   },
   {
     "slug": "mishima",
@@ -395,17 +395,17 @@
     "slug": "mizuki_kanade",
     "name": "水城 奏",
     "file": "assets/characters/mizuki_kanade.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 131676
+    "width": 720,
+    "height": 960,
+    "bytes": 159702
   },
   {
     "slug": "momose_ruka",
     "name": "百瀬 瑠花",
     "file": "assets/characters/momose_ruka.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 140470
+    "width": 720,
+    "height": 960,
+    "bytes": 137878
   },
   {
     "slug": "murasaki",
@@ -475,9 +475,9 @@
     "slug": "saionji_mio",
     "name": "西園寺 澪",
     "file": "assets/characters/saionji_mio.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 135840
+    "width": 720,
+    "height": 960,
+    "bytes": 176568
   },
   {
     "slug": "sakaguchi",
