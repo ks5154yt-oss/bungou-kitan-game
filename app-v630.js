@@ -14579,105 +14579,27 @@ window.__BK_MAIN_CHARACTER_IDS__=[...MAIN_CHARACTER_IDS_V619];
   window.__bkHomeFixV630=true;
 })();
 
-/* ===== BUNGO KITAN V630 FUNCTION RELIABILITY PATCH 2026-10-02 ===== */
+
+/* ===== BUNGO KITAN V630: iPhone 10-pull result polish ===== */
 (()=>{
-  /* 1) HOME CHARACTER: old saves must never point at an unowned / unavailable unit. */
-  const _ensureFavoriteHomeV630 = typeof ensureFavoriteHome === 'function' ? ensureFavoriteHome : null;
-  ensureFavoriteHome = function(){
-    try{ _ensureFavoriteHomeV630?.(); }catch(_){}
-    try{
-      ensureCoreState?.();
-      S.qol = (S.qol && typeof S.qol === 'object') ? S.qol : {};
-      const owned = (typeof ownedFormationPoolV542 === 'function' ? ownedFormationPoolV542() : [])
-        .filter(i=>Number.isInteger(i) && i>=0 && i<C.length);
-      let i = Number(S.qol.favoriteCharacter);
-      if(!Number.isInteger(i) || i<0 || i>=C.length || (typeof selectableCharacterV531==='function' && !selectableCharacterV531(i))){
-        i = owned[0];
-        if(!Number.isInteger(i)) i = Number(S.sets?.[S.set]?.find?.(x=>Number.isInteger(+x))) || 0;
-        S.qol.favoriteCharacter = i;
-      }
-      S.homeChar = i;
-      return i;
-    }catch(_){ return 0; }
-  };
-
-  /* 2) STAGE UNLOCK: normalize old/corrupt save arrays before every decision. */
-  const _stageUnlockedV521_V630 = typeof stageUnlockedV521 === 'function' ? stageUnlockedV521 : null;
-  stageUnlockedV521 = function(ch){
-    try{ normalizeStageProgressV521?.(); }catch(_){}
-    ch = Math.max(0,Math.min(3,Number(ch)||0));
-    if(ch===0) return true;
-    const prev = Number(S.progress?.clears?.[ch-1] || 0);
-    return Number.isFinite(prev) && prev > 0;
-  };
-
-  /* 3) QUICK FARM: recover a stale running flag left by refresh / interruption. */
-  const _quickFarmStateV520_V630 = typeof quickFarmStateV520 === 'function' ? quickFarmStateV520 : null;
-  quickFarmStateV520 = function(){
-    let fs;
-    try{ fs = _quickFarmStateV520_V630 ? _quickFarmStateV520_V630() : null; }catch(_){}
-    S.qol = (S.qol && typeof S.qol === 'object') ? S.qol : {};
-    if(!fs || typeof fs !== 'object') fs = S.qol.farmV520 = {running:false};
-    const age = Date.now() - Number(fs.startedAt || 0);
-    if(fs.running && (!Number.isFinite(age) || age > 15000)){
-      fs.running = false;
-      fs.recoveredAt = Date.now();
-      try{ save(); persistentSaveWrite?.(); }catch(_){}
-    }
-    return fs;
-  };
-
-  /* 4) RECOMMENDED FORMATION: only owned units, no duplicates, preserve a usable team. */
-  const _recommendedFormationV595_V630 = typeof recommendedFormationV595 === 'function' ? recommendedFormationV595 : null;
-  recommendedFormationV595 = function(ctx = (typeof formationTargetStateV595==='function' ? formationTargetStateV595() : {ch:0,mode:'normal'})){
-    let raw=[];
-    try{ raw = _recommendedFormationV595_V630 ? _recommendedFormationV595_V630(ctx) : []; }catch(_){}
-    const owned = (typeof ownedFormationPoolV542==='function' ? ownedFormationPoolV542() : [])
-      .filter(i=>Number.isInteger(i) && i>=0 && i<C.length);
-    const out=[];
-    for(const i of (Array.isArray(raw)?raw:[])) if(owned.includes(i) && !out.includes(i)) out.push(i);
-    for(const i of owned){ if(out.length>=6) break; if(!out.includes(i)) out.push(i); }
-    return out.slice(0,6);
-  };
-
-  const _applyRecommendedFormationV595_V630 = typeof applyRecommendedFormationV595 === 'function' ? applyRecommendedFormationV595 : null;
-  applyRecommendedFormationV595 = function(show=true){
-    try{ ensureUnitSets?.(); }catch(_){}
-    const ctx = typeof formationTargetStateV595==='function' ? formationTargetStateV595() : {ch:0,mode:'normal'};
-    const pick = recommendedFormationV595(ctx);
-    if(!pick.length){ try{ toast('所持キャラがいません'); }catch(_){} return []; }
-    S.sets[S.set] = pick;
-    try{ save(); persistentSaveWrite?.(); }catch(_){}
-    if(show){
-      try{
-        const m = formationAdvisorMetricsV595(pick,ctx);
-        toast(`第${ctx.ch+1}章 ${String(ctx.mode||'normal').toUpperCase()} おすすめ編成 / 適性 ${m.grade}`);
-      }catch(_){ try{ toast('おすすめ編成に変更しました'); }catch(__){} }
-    }
-    return pick;
-  };
-
-  /* 5) AUTO: watchdog restarts AUTO only when it is ON but every loop has stopped. */
-  let __v630AutoWatchdog = null;
-  function autoWatchdogV630(){
-    try{
-      if(!document.body.classList.contains('battleMode')) return;
-      const b = typeof ensureAdvancedBattleV125==='function' ? ensureAdvancedBattleV125() : ensureBattleStateV120();
-      if(!b?.auto) return;
-      const hardTimer = typeof __autoHardTimerV430 !== 'undefined' && !!__autoHardTimerV430;
-      const hardBusy = typeof __autoHardBusyV430 !== 'undefined' && !!__autoHardBusyV430;
-      const nativeTimer = typeof autoBattleTimerV122 !== 'undefined' && !!autoBattleTimerV122;
-      const coreTimer = typeof __autoCoreTimerV427 !== 'undefined' && !!__autoCoreTimerV427;
-      if(!hardTimer && !hardBusy && !nativeTimer && !coreTimer){
-        try{ __autoHardTimerV430 = setTimeout(autoHardActionV430,90); }catch(_){ try{ scheduleAutoBattleV122?.(120); }catch(__){} }
-      }
-      try{ syncAutoUiV427?.(); refreshPosterThumbV234?.(); }catch(_){}
-    }catch(_){}
+  const ID='bk-v630-gacha-result-polish';
+  if(!document.getElementById(ID)){
+    const s=document.createElement('style'); s.id=ID;
+    s.textContent=`
+    .gachaResultOverlayV500.gachaResultOverlayV573{align-items:flex-start!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;padding:max(14px,env(safe-area-inset-top)) 14px calc(118px + env(safe-area-inset-bottom))!important}
+    .gachaResultPanelV500.gachaResultPanelV573{width:min(100%,720px)!important;max-height:none!important;overflow:visible!important;margin:0 auto!important;padding-bottom:12px!important}
+    .gachaResultGridV500{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;padding-bottom:10px!important}
+    .gachaMiniV500.gachaMiniV573{min-height:132px!important;padding:8px!important;gap:9px!important;overflow:hidden!important}
+    .gachaMiniImgV500{width:88px!important;min-width:88px!important;height:112px!important;border-radius:10px!important;overflow:hidden!important;position:relative!important}
+    .gachaMiniImgV500 img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:50% 34%!important;filter:none!important;opacity:1!important}
+    .gachaMiniTextV500{min-width:0!important}.gachaMiniTextV500 small{font-size:10px!important;line-height:1.25!important;opacity:.84!important}
+    .gachaMiniTextV500 b{display:block!important;font-size:14px!important;line-height:1.25!important;margin:3px 0!important;white-space:normal!important}
+    .gachaNewBadgeV573,.gachaDupBadgeV573{position:absolute!important;top:5px!important;left:5px!important;z-index:5!important;padding:3px 6px!important;border-radius:999px!important;background:rgba(3,12,20,.88)!important;border:1px solid rgba(224,190,105,.72)!important;color:#fff1bf!important;font-size:10px!important;font-weight:800!important;letter-spacing:.08em!important;text-shadow:0 1px 2px #000!important;opacity:1!important}
+    .gachaActions.gachaActionsV500{position:sticky!important;bottom:calc(8px + env(safe-area-inset-bottom))!important;z-index:20!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin-top:12px!important;padding:9px!important;border-radius:14px!important;background:rgba(4,16,27,.96)!important;box-shadow:0 -10px 26px rgba(0,0,0,.35)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important}
+    .gachaActions.gachaActionsV500 button{min-height:58px!important;font-size:16px!important;font-weight:800!important}
+    @media(max-width:390px){.gachaResultOverlayV500.gachaResultOverlayV573{padding-left:10px!important;padding-right:10px!important}.gachaMiniV500.gachaMiniV573{min-height:122px!important;padding:7px!important;gap:7px!important}.gachaMiniImgV500{width:76px!important;min-width:76px!important;height:102px!important}.gachaMiniTextV500 b{font-size:13px!important}}
+    `;
+    document.head.appendChild(s);
   }
-  if(__v630AutoWatchdog) clearInterval(__v630AutoWatchdog);
-  __v630AutoWatchdog = setInterval(autoWatchdogV630,700);
-
-  /* Repair state once on load. */
-  try{ normalizeStageProgressV521?.(); ensureFavoriteHome(); quickFarmStateV520(); sanitizeAllFormationsV542?.(); save(); }catch(_){}
-  window.__bkFunctionReliabilityV630 = true;
+  window.__bkGachaResultPolishV630=true;
 })();
