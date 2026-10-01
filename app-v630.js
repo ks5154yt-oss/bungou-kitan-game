@@ -14578,3 +14578,106 @@ window.__BK_MAIN_CHARACTER_IDS__=[...MAIN_CHARACTER_IDS_V619];
   new MutationObserver(fix).observe(document.documentElement,{subtree:true,childList:true});
   window.__bkHomeFixV630=true;
 })();
+
+/* ===== BUNGO KITAN V630 FUNCTION RELIABILITY PATCH 2026-10-02 ===== */
+(()=>{
+  /* 1) HOME CHARACTER: old saves must never point at an unowned / unavailable unit. */
+  const _ensureFavoriteHomeV630 = typeof ensureFavoriteHome === 'function' ? ensureFavoriteHome : null;
+  ensureFavoriteHome = function(){
+    try{ _ensureFavoriteHomeV630?.(); }catch(_){}
+    try{
+      ensureCoreState?.();
+      S.qol = (S.qol && typeof S.qol === 'object') ? S.qol : {};
+      const owned = (typeof ownedFormationPoolV542 === 'function' ? ownedFormationPoolV542() : [])
+        .filter(i=>Number.isInteger(i) && i>=0 && i<C.length);
+      let i = Number(S.qol.favoriteCharacter);
+      if(!Number.isInteger(i) || i<0 || i>=C.length || (typeof selectableCharacterV531==='function' && !selectableCharacterV531(i))){
+        i = owned[0];
+        if(!Number.isInteger(i)) i = Number(S.sets?.[S.set]?.find?.(x=>Number.isInteger(+x))) || 0;
+        S.qol.favoriteCharacter = i;
+      }
+      S.homeChar = i;
+      return i;
+    }catch(_){ return 0; }
+  };
+
+  /* 2) STAGE UNLOCK: normalize old/corrupt save arrays before every decision. */
+  const _stageUnlockedV521_V630 = typeof stageUnlockedV521 === 'function' ? stageUnlockedV521 : null;
+  stageUnlockedV521 = function(ch){
+    try{ normalizeStageProgressV521?.(); }catch(_){}
+    ch = Math.max(0,Math.min(3,Number(ch)||0));
+    if(ch===0) return true;
+    const prev = Number(S.progress?.clears?.[ch-1] || 0);
+    return Number.isFinite(prev) && prev > 0;
+  };
+
+  /* 3) QUICK FARM: recover a stale running flag left by refresh / interruption. */
+  const _quickFarmStateV520_V630 = typeof quickFarmStateV520 === 'function' ? quickFarmStateV520 : null;
+  quickFarmStateV520 = function(){
+    let fs;
+    try{ fs = _quickFarmStateV520_V630 ? _quickFarmStateV520_V630() : null; }catch(_){}
+    S.qol = (S.qol && typeof S.qol === 'object') ? S.qol : {};
+    if(!fs || typeof fs !== 'object') fs = S.qol.farmV520 = {running:false};
+    const age = Date.now() - Number(fs.startedAt || 0);
+    if(fs.running && (!Number.isFinite(age) || age > 15000)){
+      fs.running = false;
+      fs.recoveredAt = Date.now();
+      try{ save(); persistentSaveWrite?.(); }catch(_){}
+    }
+    return fs;
+  };
+
+  /* 4) RECOMMENDED FORMATION: only owned units, no duplicates, preserve a usable team. */
+  const _recommendedFormationV595_V630 = typeof recommendedFormationV595 === 'function' ? recommendedFormationV595 : null;
+  recommendedFormationV595 = function(ctx = (typeof formationTargetStateV595==='function' ? formationTargetStateV595() : {ch:0,mode:'normal'})){
+    let raw=[];
+    try{ raw = _recommendedFormationV595_V630 ? _recommendedFormationV595_V630(ctx) : []; }catch(_){}
+    const owned = (typeof ownedFormationPoolV542==='function' ? ownedFormationPoolV542() : [])
+      .filter(i=>Number.isInteger(i) && i>=0 && i<C.length);
+    const out=[];
+    for(const i of (Array.isArray(raw)?raw:[])) if(owned.includes(i) && !out.includes(i)) out.push(i);
+    for(const i of owned){ if(out.length>=6) break; if(!out.includes(i)) out.push(i); }
+    return out.slice(0,6);
+  };
+
+  const _applyRecommendedFormationV595_V630 = typeof applyRecommendedFormationV595 === 'function' ? applyRecommendedFormationV595 : null;
+  applyRecommendedFormationV595 = function(show=true){
+    try{ ensureUnitSets?.(); }catch(_){}
+    const ctx = typeof formationTargetStateV595==='function' ? formationTargetStateV595() : {ch:0,mode:'normal'};
+    const pick = recommendedFormationV595(ctx);
+    if(!pick.length){ try{ toast('所持キャラがいません'); }catch(_){} return []; }
+    S.sets[S.set] = pick;
+    try{ save(); persistentSaveWrite?.(); }catch(_){}
+    if(show){
+      try{
+        const m = formationAdvisorMetricsV595(pick,ctx);
+        toast(`第${ctx.ch+1}章 ${String(ctx.mode||'normal').toUpperCase()} おすすめ編成 / 適性 ${m.grade}`);
+      }catch(_){ try{ toast('おすすめ編成に変更しました'); }catch(__){} }
+    }
+    return pick;
+  };
+
+  /* 5) AUTO: watchdog restarts AUTO only when it is ON but every loop has stopped. */
+  let __v630AutoWatchdog = null;
+  function autoWatchdogV630(){
+    try{
+      if(!document.body.classList.contains('battleMode')) return;
+      const b = typeof ensureAdvancedBattleV125==='function' ? ensureAdvancedBattleV125() : ensureBattleStateV120();
+      if(!b?.auto) return;
+      const hardTimer = typeof __autoHardTimerV430 !== 'undefined' && !!__autoHardTimerV430;
+      const hardBusy = typeof __autoHardBusyV430 !== 'undefined' && !!__autoHardBusyV430;
+      const nativeTimer = typeof autoBattleTimerV122 !== 'undefined' && !!autoBattleTimerV122;
+      const coreTimer = typeof __autoCoreTimerV427 !== 'undefined' && !!__autoCoreTimerV427;
+      if(!hardTimer && !hardBusy && !nativeTimer && !coreTimer){
+        try{ __autoHardTimerV430 = setTimeout(autoHardActionV430,90); }catch(_){ try{ scheduleAutoBattleV122?.(120); }catch(__){} }
+      }
+      try{ syncAutoUiV427?.(); refreshPosterThumbV234?.(); }catch(_){}
+    }catch(_){}
+  }
+  if(__v630AutoWatchdog) clearInterval(__v630AutoWatchdog);
+  __v630AutoWatchdog = setInterval(autoWatchdogV630,700);
+
+  /* Repair state once on load. */
+  try{ normalizeStageProgressV521?.(); ensureFavoriteHome(); quickFarmStateV520(); sanitizeAllFormationsV542?.(); save(); }catch(_){}
+  window.__bkFunctionReliabilityV630 = true;
+})();
