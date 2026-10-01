@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#071827">
-<title>文豪綺譚 V629 FULL CHARACTER VIEW</title>
+<title>文豪綺譚 V630 FULL CHARACTER VIEW</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="styles-v599.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="styles-v599.css"></noscript>
@@ -29,7 +29,7 @@ body{overflow:hidden}
 
 
 <style id="v606-character-full-view">
-/* V629: キャラ画像の見切れを防ぎ、原画全体をできるだけ表示 */
+/* V630: キャラ画像の見切れを防ぎ、原画全体をできるだけ表示 */
 #app img[src*="assets/characters/"],
 #app img[src*="/assets/characters/"],
 #app .portraitContainV506,
@@ -77,7 +77,7 @@ body{overflow:hidden}
 
 
 <style id="v629-ui-polish">
-/* ===== V629 MOBILE UI POLISH ===== */
+/* ===== V630 MOBILE UI POLISH ===== */
 html,body{
   overscroll-behavior:none;
   -webkit-text-size-adjust:100%;
@@ -300,9 +300,286 @@ body.noScrollGame{
 }
 </style>
 
+<style id="v630-home-layout-fix">
+/* ===== V630 HOME LAYOUT FIX : based on iPhone screenshot ===== */
+@media (max-width: 430px){
+  body.premiumHomeModeV571 #app{
+    padding-bottom:0 !important;
+  }
+  #app .premiumHomeV236{
+    position:relative !important;
+    inset:auto !important;
+    display:block !important;
+    width:100% !important;
+    height:100dvh !important;
+    min-height:0 !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    overscroll-behavior-y:contain;
+    -webkit-overflow-scrolling:touch;
+    padding:0 0 calc(96px + env(safe-area-inset-bottom)) !important;
+    scroll-padding-bottom:calc(100px + env(safe-area-inset-bottom));
+  }
+
+  /* Header becomes part of document flow instead of consuming a large absolute area. */
+  #app .premiumHomeHeaderV236{
+    position:relative !important;
+    inset:auto !important;
+    width:auto !important;
+    height:auto !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:calc(14px + env(safe-area-inset-top)) 18px 10px !important;
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) 54px !important;
+    grid-template-areas:
+      "brand favorite"
+      "resources resources" !important;
+    align-items:center !important;
+    gap:10px 12px !important;
+    z-index:10 !important;
+  }
+  #app .premiumHomeBrandV236{
+    grid-area:brand !important;
+    position:relative !important;
+    inset:auto !important;
+    min-width:0 !important;
+  }
+  #app .premiumHomeBrandV236 small{font-size:8px !important;letter-spacing:.28em !important}
+  #app .premiumHomeBrandV236 b{font-size:26px !important;line-height:1.1 !important}
+  #app .premiumHomeFavoriteV236{
+    grid-area:favorite !important;
+    position:relative !important;
+    inset:auto !important;
+    width:52px !important;
+    height:52px !important;
+    min-height:52px !important;
+    justify-self:end !important;
+  }
+  #app .premiumHomeResourcesV236{
+    grid-area:resources !important;
+    position:relative !important;
+    inset:auto !important;
+    width:100% !important;
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:6px !important;
+    margin:0 !important;
+  }
+  #app .premiumHomeResourcesV236 > span{
+    min-width:0 !important;
+    min-height:55px !important;
+    padding:7px 9px !important;
+  }
+  #app .premiumHomeResourcesV236 small{font-size:9px !important}
+  #app .premiumHomeResourcesV236 b{font-size:20px !important;line-height:1.08 !important}
+
+  /* Hero is a self-contained card. No overlap with the NEXT STORY card. */
+  #app .premiumHomeHeroV236{
+    position:relative !important;
+    inset:auto !important;
+    width:calc(100% - 32px) !important;
+    height:310px !important;
+    min-height:310px !important;
+    margin:6px 16px 0 !important;
+    overflow:hidden !important;
+    border-radius:18px !important;
+    z-index:5 !important;
+  }
+  #app .premiumHomeHeroGlowV236,
+  #app .premiumHomeHeroShadeV236{
+    pointer-events:none !important;
+  }
+  #app .premiumHomeHeroArtV236{
+    position:absolute !important;
+    left:0 !important;
+    right:auto !important;
+    top:0 !important;
+    bottom:0 !important;
+    width:52% !important;
+    height:100% !important;
+    max-width:52% !important;
+    max-height:100% !important;
+    object-fit:contain !important;
+    object-position:center bottom !important;
+    transform:none !important;
+  }
+  #app .premiumHomeIdentityV236{
+    position:absolute !important;
+    left:auto !important;
+    right:10px !important;
+    top:12px !important;
+    bottom:12px !important;
+    width:50% !important;
+    max-width:50% !important;
+    min-height:0 !important;
+    padding:4px 0 0 12px !important;
+    overflow:hidden !important;
+    z-index:4 !important;
+  }
+  #app .premiumHomeMetaV236{margin:0 0 5px !important}
+  #app .premiumHomeMetaV236 span{font-size:12px !important;padding:4px 12px !important}
+  #app .premiumHomeMetaV236 small{font-size:9px !important}
+  #app .premiumHomeIdentityV236 h1{
+    font-size:clamp(27px,8vw,36px) !important;
+    line-height:1.06 !important;
+    margin:4px 0 8px !important;
+    white-space:nowrap !important;
+  }
+  #app .premiumHomeAbilityV236{
+    padding:7px 10px !important;
+    margin:0 0 5px !important;
+  }
+  #app .premiumHomeAbilityV236 small{font-size:8px !important}
+  #app .premiumHomeAbilityV236 b{
+    display:block !important;
+    font-size:14px !important;
+    line-height:1.25 !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+  }
+  #app .homeDialogueTextV515{
+    font-size:11px !important;
+    line-height:1.3 !important;
+    margin:4px 0 2px !important;
+    display:-webkit-box !important;
+    -webkit-line-clamp:2 !important;
+    -webkit-box-orient:vertical !important;
+    overflow:hidden !important;
+  }
+  #app .homeDialogueMetaV515{
+    display:flex !important;
+    gap:5px !important;
+    margin:0 0 5px !important;
+    font-size:8px !important;
+  }
+  #app .premiumHomeDetailV245{
+    position:absolute !important;
+    left:12px !important;
+    right:0 !important;
+    bottom:0 !important;
+    width:calc(100% - 12px) !important;
+    min-height:38px !important;
+    height:38px !important;
+    padding:7px 10px !important;
+    font-size:11px !important;
+  }
+
+  /* All command cards stay below hero, never floating over it. */
+  #app .premiumHomeCommandV236{
+    position:relative !important;
+    inset:auto !important;
+    width:calc(100% - 32px) !important;
+    height:auto !important;
+    min-height:0 !important;
+    margin:10px 16px 0 !important;
+    padding:0 !important;
+    transform:none !important;
+    z-index:6 !important;
+  }
+  #app .premiumHomeSortieV236{
+    position:relative !important;
+    inset:auto !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:82px !important;
+    margin:0 0 8px !important;
+    padding:12px 14px !important;
+  }
+  #app .premiumHomeSortieV236 small{font-size:8px !important}
+  #app .premiumHomeSortieV236 b{font-size:17px !important;line-height:1.22 !important}
+  #app .premiumHomeSortieV236 span{font-size:9px !important}
+
+  #app .premiumHomeSecondaryV236{
+    position:relative !important;
+    inset:auto !important;
+    width:100% !important;
+    height:auto !important;
+    margin:0 0 8px !important;
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:7px !important;
+  }
+  #app .premiumHomeSecondaryV236 button{
+    min-height:72px !important;
+    height:auto !important;
+    padding:10px 12px !important;
+  }
+  #app .premiumHomeSecondaryV236 button small{font-size:10px !important}
+  #app .premiumHomeSecondaryV236 button b{font-size:17px !important}
+
+  #app .premiumHomeShortcutsV236{
+    position:relative !important;
+    inset:auto !important;
+    width:100% !important;
+    height:auto !important;
+    margin:0 !important;
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:7px !important;
+  }
+  #app .premiumHomeShortcutsV236 button{
+    min-height:78px !important;
+    height:auto !important;
+    padding:9px 4px !important;
+  }
+  #app .premiumHomeShortcutsV236 button i{font-size:18px !important}
+  #app .premiumHomeShortcutsV236 button b{font-size:15px !important}
+  #app .premiumHomeShortcutsV236 button small{font-size:9px !important}
+
+  /* Hide diagnostic/developer-only footer clutter on the mobile home. */
+  #app .premiumHomeStatusV236,
+  #app .premiumHomeSaveV486,
+  #app .premiumHomeSystemV490,
+  #app .premiumHomeReadyBadgeV499{
+    display:none !important;
+  }
+
+  /* Bottom nav floats above content, content gets its own scroll clearance. */
+  #app .primaryNavV116{
+    position:fixed !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:0 !important;
+    transform:translateX(-50%) !important;
+    width:min(100%,760px) !important;
+    height:calc(68px + env(safe-area-inset-bottom)) !important;
+    min-height:68px !important;
+    padding:0 8px env(safe-area-inset-bottom) !important;
+    z-index:1900 !important;
+  }
+  #app .primaryNavV116 button{
+    min-width:0 !important;
+    min-height:58px !important;
+    padding:5px 2px !important;
+  }
+  #app .primaryNavV116 button i{font-size:20px !important}
+  #app .primaryNavV116 button b{font-size:11px !important}
+
+  /* World backdrop remains behind everything. */
+  #app .premiumHomeWorldV236,
+  #app .premiumHomeWorldShadeV236{
+    position:fixed !important;
+    inset:0 !important;
+    pointer-events:none !important;
+  }
+}
+
+@media (max-width: 390px){
+  #app .premiumHomeHeaderV236{padding-left:14px !important;padding-right:14px !important}
+  #app .premiumHomeHeroV236,
+  #app .premiumHomeCommandV236{width:calc(100% - 24px) !important;margin-left:12px !important;margin-right:12px !important}
+  #app .premiumHomeHeroV236{height:296px !important;min-height:296px !important}
+  #app .premiumHomeIdentityV236 h1{font-size:27px !important}
+  #app .premiumHomeSecondaryV236 button{min-height:68px !important}
+  #app .premiumHomeShortcutsV236 button{min-height:72px !important}
+}
+</style>
+
 </head><body class="noScrollGame">
-<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V629</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
-<div id="app"><div id="v412Boot"><div class="brand"><small>BUNGO KITAN · BUILD V629</small><b>文豪綺譚</b></div><div class="line"></div><div class="status"><i class="dot"></i>書架を開いています…</div></div></div>
+<button id=manualRescue onclick="document.getElementById('bootRecovery').classList.add('show')" style="position:fixed;right:7px;top:calc(env(safe-area-inset-top) + 6px);z-index:997;background:#071827cc;color:#a98a53;border:1px solid #725f3e;border-radius:7px;font-size:8px;padding:4px 6px">復旧</button><div class=bootMark>文豪綺譚 V630</div><div id=bootRecovery><h1>文豪綺譚</h1><p>画面の読み込みを復旧できます。</p><div class=recoverNote>通常は「再読み込み」。セーブ異常時は「バックアップから復旧」を使用してください。</div><button onclick="location.reload()">再読み込み</button><button onclick="var b=localStorage.getItem('bk12_backup');if(b){localStorage.setItem('bk12',b);location.reload()}">バックアップから復旧</button><button onclick="localStorage.removeItem('bk12');location.reload()">セーブを初期化して起動</button></div>
+<div id="app"><div id="v412Boot"><div class="brand"><small>BUNGO KITAN · BUILD V630</small><b>文豪綺譚</b></div><div class="line"></div><div class="status"><i class="dot"></i>書架を開いています…</div></div></div>
 <script id="v407-early-asset-resolver">
 (()=>{
   const PAGE='https://ks5154yt-oss.github.io/bungou-kitan-game/assets/';
@@ -349,7 +626,7 @@ body.noScrollGame{
   window.__bkStableBootV419=true;
 })();
 </script>
-<script src="app-v629.js"></script>
+<script src="app-v630.js"></script>
 
 <button id=uiTopButton class="uiTopHidden" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button><script>
 (()=>{const b=document.getElementById("uiTopButton");if(!b)return;const s=()=>b.classList.toggle("uiTopHidden",window.scrollY<420);window.addEventListener("scroll",s,{passive:true});s()})();
