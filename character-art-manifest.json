@@ -11,9 +11,9 @@
     "slug": "akiko_kimi",
     "name": "与謝野 晶子",
     "file": "assets/characters/akiko_kimi.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 131588
+    "width": 720,
+    "height": 960,
+    "bytes": 153636
   },
   {
     "slug": "aku",
@@ -27,17 +27,17 @@
     "slug": "aku_jigoku",
     "name": "芥川 龍之介",
     "file": "assets/characters/aku_jigoku.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 43444
+    "width": 720,
+    "height": 960,
+    "bytes": 58200
   },
   {
     "slug": "aku_kumo",
     "name": "芥川 龍之介",
     "file": "assets/characters/aku_kumo.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 119110
+    "width": 720,
+    "height": 960,
+    "bytes": 144724
   },
   {
     "slug": "akutagawa2",
@@ -51,9 +51,9 @@
     "slug": "amagi_rin",
     "name": "天城 凛",
     "file": "assets/characters/amagi_rin.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 147186
+    "width": 720,
+    "height": 960,
+    "bytes": 164836
   },
   {
     "slug": "amemiya_mio",
@@ -69,39 +69,39 @@
     "file": "assets/characters/andersen.webp",
     "width": 720,
     "height": 960,
-    "bytes": 156742
+    "bytes": 126942
   },
   {
     "slug": "aonami_sui",
     "name": "青波 翠",
     "file": "assets/characters/aonami_sui.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 131622
+    "width": 720,
+    "height": 960,
+    "bytes": 147118
   },
   {
     "slug": "asakura_renka",
     "name": "朝倉 蓮花",
     "file": "assets/characters/asakura_renka.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 123448
+    "width": 720,
+    "height": 960,
+    "bytes": 139196
   },
   {
     "slug": "ayatsuji_yui",
     "name": "綾辻 結",
     "file": "assets/characters/ayatsuji_yui.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 139356
+    "width": 720,
+    "height": 960,
+    "bytes": 158044
   },
   {
     "slug": "chuuya",
     "name": "中原 中也",
     "file": "assets/characters/chuuya.webp",
-    "width": 480,
-    "height": 914,
-    "bytes": 121492
+    "width": 720,
+    "height": 960,
+    "bytes": 131020
   },
   {
     "slug": "dazai",
@@ -115,17 +115,17 @@
     "slug": "dazai_melos",
     "name": "太宰 治",
     "file": "assets/characters/dazai_melos.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 117502
+    "width": 720,
+    "height": 960,
+    "bytes": 141482
   },
   {
     "slug": "dazai_shayo",
     "name": "太宰 治",
     "file": "assets/characters/dazai_shayo.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 130728
+    "width": 720,
+    "height": 960,
+    "bytes": 145942
   },
   {
     "slug": "dostoevsky",
@@ -133,7 +133,7 @@
     "file": "assets/characters/dostoevsky.webp",
     "width": 720,
     "height": 960,
-    "bytes": 169314
+    "bytes": 135134
   },
   {
     "slug": "doyle",
@@ -141,7 +141,7 @@
     "file": "assets/characters/doyle.webp",
     "width": 720,
     "height": 960,
-    "bytes": 134956
+    "bytes": 122676
   },
   {
     "slug": "doyle_baskerville",
@@ -157,7 +157,7 @@
     "file": "assets/characters/dumas.webp",
     "width": 720,
     "height": 960,
-    "bytes": 150502
+    "bytes": 139000
   },
   {
     "slug": "fallback",
@@ -171,9 +171,9 @@
     "slug": "fuyutsuki_shiori",
     "name": "冬月 詩織",
     "file": "assets/characters/fuyutsuki_shiori.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 126644
+    "width": 720,
+    "height": 960,
+    "bytes": 139068
   },
   {
     "slug": "hagiwara",
@@ -187,9 +187,9 @@
     "slug": "hanamura_towa",
     "name": "花村 永遠",
     "file": "assets/characters/hanamura_towa.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 126046
+    "width": 720,
+    "height": 960,
+    "bytes": 144256
   },
   {
     "slug": "hemingway",
@@ -197,7 +197,7 @@
     "file": "assets/characters/hemingway.webp",
     "width": 720,
     "height": 960,
-    "bytes": 193420
+    "bytes": 137956
   },
   {
     "slug": "higuchi",
@@ -211,17 +211,17 @@
     "slug": "hoshikawa_iri",
     "name": "星川 伊織",
     "file": "assets/characters/hoshikawa_iri.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 148864
+    "width": 720,
+    "height": 960,
+    "bytes": 169624
   },
   {
     "slug": "hoshino_ruri",
     "name": "星野 ルリ",
     "file": "assets/characters/hoshino_ruri.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 129716
+    "width": 720,
+    "height": 960,
+    "bytes": 145766
   },
   {
     "slug": "kafka",
@@ -229,15 +229,15 @@
     "file": "assets/characters/kafka.webp",
     "width": 720,
     "height": 960,
-    "bytes": 111126
+    "bytes": 130518
   },
   {
     "slug": "kagami_kei",
     "name": "鏡 慧",
     "file": "assets/characters/kagami_kei.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 126130
+    "width": 720,
+    "height": 960,
+    "bytes": 141930
   },
   {
     "slug": "kajii",
@@ -251,17 +251,17 @@
     "slug": "kamishiro_ren",
     "name": "神代 レン",
     "file": "assets/characters/kamishiro_ren.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 138766
+    "width": 720,
+    "height": 960,
+    "bytes": 153518
   },
   {
     "slug": "karasuma_touka",
     "name": "烏丸 灯花",
     "file": "assets/characters/karasuma_touka.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 125864
+    "width": 720,
+    "height": 960,
+    "bytes": 139452
   },
   {
     "slug": "kawabata",
@@ -283,9 +283,9 @@
     "slug": "kenji_ame",
     "name": "宮沢 賢治",
     "file": "assets/characters/kenji_ame.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 129518
+    "width": 720,
+    "height": 960,
+    "bytes": 138612
   },
   {
     "slug": "kisaragi_maya",
@@ -437,7 +437,7 @@
     "file": "assets/characters/orwell.webp",
     "width": 720,
     "height": 960,
-    "bytes": 170024
+    "bytes": 125770
   },
   {
     "slug": "poe",
@@ -445,7 +445,7 @@
     "file": "assets/characters/poe.webp",
     "width": 720,
     "height": 960,
-    "bytes": 165486
+    "bytes": 125110
   },
   {
     "slug": "poe_morgue",
@@ -467,9 +467,9 @@
     "slug": "ranpo_dsaka",
     "name": "江戸川 乱歩",
     "file": "assets/characters/ranpo_dsaka.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 143300
+    "width": 720,
+    "height": 960,
+    "bytes": 159068
   },
   {
     "slug": "saionji_mio",
@@ -509,7 +509,7 @@
     "file": "assets/characters/shakespeare.webp",
     "width": 720,
     "height": 960,
-    "bytes": 146244
+    "bytes": 143194
   },
   {
     "slug": "shinomiya_kanade",
@@ -563,17 +563,17 @@
     "slug": "soseki_neko",
     "name": "夏目 漱石",
     "file": "assets/characters/soseki_neko.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 118510
+    "width": 720,
+    "height": 960,
+    "bytes": 132662
   },
   {
     "slug": "soseki_yume",
     "name": "夏目 漱石",
     "file": "assets/characters/soseki_yume.webp",
-    "width": 648,
-    "height": 864,
-    "bytes": 102988
+    "width": 720,
+    "height": 960,
+    "bytes": 107286
   },
   {
     "slug": "tachibana_kanade",
@@ -605,7 +605,7 @@
     "file": "assets/characters/tolstoy.webp",
     "width": 720,
     "height": 960,
-    "bytes": 182496
+    "bytes": 140688
   },
   {
     "slug": "tsukino_ran",
@@ -629,7 +629,7 @@
     "file": "assets/characters/verne.webp",
     "width": 720,
     "height": 960,
-    "bytes": 199604
+    "bytes": 151948
   },
   {
     "slug": "wilde",
@@ -637,7 +637,7 @@
     "file": "assets/characters/wilde.webp",
     "width": 720,
     "height": 960,
-    "bytes": 201664
+    "bytes": 154272
   },
   {
     "slug": "yakumo_saku",
